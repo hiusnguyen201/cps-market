@@ -21,6 +21,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        "address",
+        "avatar",
+        "phone",
+        "address",
+        "gender",
+        "role_id"
     ];
 
     /**
@@ -39,6 +45,15 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'name' => "string",
+        'email' => "string",
+        'password' => "string",
+        "avatar" => "string",
+        "phone" => "string",
+        "address" => "string",
+        "status" => "integer",
+        "gender" => "integer",
+        "role_id" => "integer",
+        "created_at" => "datetime",
     ];
 }
