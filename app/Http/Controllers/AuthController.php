@@ -99,8 +99,6 @@ class AuthController extends Controller
 
     public function sendOtpToEmail($email, $otp)
     {
-        $email = "ongbeo111@gmail.com";
-
         Mail::raw("Your OTP is: $otp", function ($message) use ($email) {
             $message->to($email)->subject('OTP Verification');
         });
