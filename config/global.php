@@ -1,8 +1,16 @@
 <?php
 
 $GENDERS = [
-    ['value' => 0, 'name' => 'Male'],
-    ['value' => 1, 'name' => 'Female'],
-    ['value' => 2, 'name' => 'Other']
+    'Male',
+    'Female',
+     'Other'
 ];
-return ['genders' => $GENDERS];
+
+
+$USER_STATUS = [
+    'Inactive',
+    'Active',
+     'Locked'
+];
+
+return ['genders' => $GENDERS, 'user_status' => $USER_STATUS];
