@@ -9,6 +9,8 @@ class User_Otp extends Model
 {
     use HasFactory;
 
+    protected $table = 'user_otp';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -16,7 +18,7 @@ class User_Otp extends Model
      */
     protected $fillable = [
         "otp",
-        "userId"
+        "user_id"
     ];
 
     /**
@@ -26,6 +28,6 @@ class User_Otp extends Model
      */
     protected $casts = [
         'otp' => "string",
-        'userId' => "integer"
+        'user_id' => "integer"
     ];
 }
