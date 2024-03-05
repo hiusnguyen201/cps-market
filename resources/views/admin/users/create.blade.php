@@ -18,7 +18,7 @@
                             Something wrong!
                         </div>
                     @endif
-                        
+
                     @if (session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
@@ -26,9 +26,9 @@
                     @endif
 
                     @if (session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
                     @endif
 
                     <div class="form-group">
@@ -59,7 +59,9 @@
                         <label for="address">Address</label>
                         <input type="text" name="address" class="form-control" id="address"
                             placeholder="Enter address..." value="{{ old('address') }}">
-
+                        @error('address')
+                            <span style="color: red">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form-group">
 
@@ -68,13 +70,14 @@
                         <div class="d-flex align-items-center justify-content-start">
                             @for ($i = 0; $i < count($genders); $i++)
                                 @if (!old('gender'))
-                                <input  type="radio" name="gender" id="{{ $genders[$i] }}" value="{{ $i }}">
+                                    <input type="radio" name="gender" id="{{ $genders[$i] }}"
+                                        value="{{ $i }}">
                                 @else
-                                <input {{ old('gender') == $i ? 'checked' : '' }} type="radio" name="gender"
-                                id="{{ $genders[$i] }}" value="{{ $i }}">
+                                    <input {{ old('gender') == $i ? 'checked' : '' }} type="radio" name="gender"
+                                        id="{{ $genders[$i] }}" value="{{ $i }}">
                                 @endif
 
-                                <label class="mr-2" for="{{ $genders[$i] }}">{{ $genders[$i] }}</label> 
+                                <label class="mr-2" for="{{ $genders[$i] }}">{{ $genders[$i] }}</label>
                             @endfor
                         </div>
                         @error('gender')

@@ -22,17 +22,17 @@ Route::prefix('admin')->group(function () {
 
         Route::get('/', [UserController::class, 'home']);
 
+        Route::get('/details/{user}', [UserController::class, 'details']);
 
-        Route::get('/create', [UserController::class, 'createUser'] );
-        Route::post('/create', [UserController::class, 'handleCreateUser']); 
+        Route::get('/create', [UserController::class, 'create'] );
+        Route::post('/create', [UserController::class, 'handleCreate']); 
 
-        Route::get('/edit/{user}', [UserController::class, 'editUser']);
-        Route::post('/edit/{user}', [UserController::class, 'updateUser']);
+        Route::get('/edit/{user}', [UserController::class, 'edit']);
+        Route::post('/edit/{user}', [UserController::class, 'handleUpdate']);
 
-        Route::delete('/',[UserController::class, 'deleteUser']);
+        Route::delete('/',[UserController::class, 'handleDelete']);
 
     });
 
 
 });
-
