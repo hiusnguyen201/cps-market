@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
 
-
+// Admin
 Route::prefix('admin')->group(function () {
 
     Route::prefix('users')->group(function () {
@@ -35,4 +39,26 @@ Route::prefix('admin')->group(function () {
     });
 
 
+});
+
+// Auth
+Route::prefix('auth')->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout'])
+    ->name('logout');
+    
+    Route::get('/login', [AuthController::class, 'login'])
+        ->middleware('checklogin::class');
+
+    Route::post('/login', [AuthController::class, 'store'])
+        ->name('login');
+
+    Route::get('/otp', [AuthController::class, 'OTPverify'])
+        ->name('OTPverify')
+        ->middleware('checklogin::class');
+
+    Route::post('/otp', [AuthController::class, 'OTPverify_POST'])
+        ->name('OTP_POST');
+
+    Route::get('/otp/resend', [AuthController::class, 'resendOtp'])
+        ->name('resendOtp');
 });
