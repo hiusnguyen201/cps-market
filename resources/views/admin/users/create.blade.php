@@ -26,7 +26,7 @@
                     @endif
 
                     @if (session('error'))
-                    <div class="alert alert-warning">
+                    <div class="alert alert-danger">
                         {{ session('error') }}
                     </div>
                     @endif
@@ -62,16 +62,20 @@
 
                     </div>
                     <div class="form-group">
+
                         <label for="gender">Gender</label>
 
                         <div class="d-flex align-items-center justify-content-start">
+                            @for ($i = 0; $i < count($genders); $i++)
+                                @if (!old('gender'))
+                                <input  type="radio" name="gender" id="{{ $genders[$i] }}" value="{{ $i }}">
+                                @else
+                                <input {{ old('gender') == $i ? 'checked' : '' }} type="radio" name="gender"
+                                id="{{ $genders[$i] }}" value="{{ $i }}">
+                                @endif
 
-                            @foreach ($genders as $gender)
-                                <input {{ old('gender') == $gender['value'] ? 'checked' : '' }} type="radio" name="gender"
-                                    id="{{ $gender['name'] }}" value="{{ $gender['value'] }}">
-                                <label class="mr-2" for="{{ $gender['name'] }}">{{ $gender['name'] }}</label>
-                            @endforeach
-
+                                <label class="mr-2" for="{{ $genders[$i] }}">{{ $genders[$i] }}</label> 
+                            @endfor
                         </div>
                         @error('gender')
                             <span style="color: red">{{ $message }}</span>
