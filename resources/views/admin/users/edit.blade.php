@@ -26,7 +26,7 @@
                     @endif
 
                     @if (session('error'))
-                    <div class="alert alert-warning">
+                    <div class="alert alert-danger">
                         {{ session('error') }}
                     </div>
                     @endif
@@ -58,24 +58,23 @@
                     <div class="form-group">
                         <label for="address">Address</label>
                         <input type="text" name="address" class="form-control" id="address"
-                            placeholder="Enter address..." value="{{ old('address')??$user->address }}">
+                            placeholder="Enter address..." value="{{ old('address') ?? $user->address }}">
 
                     </div>
                     <div class="form-group">
                         <label for="gender">Gender</label>
 
                         <div class="d-flex align-items-center justify-content-start">
-
-                            @foreach ($genders as $gender)
-                                <input {{ (old('gender')??$user->gender) == $gender['value'] ? 'checked' : '' }} type="radio" name="gender"
-                                    id="{{ $gender['name'] }}" value="{{ $gender['value'] }}">
-                                <label class="mr-2" for="{{ $gender['name'] }}">{{ $gender['name'] }}</label>
-                            @endforeach
-
+                            @for ($i = 0; $i < count($genders); $i++)
+                                <input {{ old('gender') ?? $user->gender  == $i ? 'checked' : '' }} type="radio" name="gender"
+                                id="{{ $genders[$i] }}" value="{{ $i }}">
+                                <label class="mr-2" for="{{ $genders[$i] }}">{{ $genders[$i] }}</label> 
+                            @endfor
                         </div>
                         @error('gender')
                             <span style="color: red">{{ $message }}</span>
                         @enderror
+                        <input type="hidden" name="id" value="{{ $user->id }}">
                     </div>
                     <div class="form-group">
                         <label for="role">Role</label>
