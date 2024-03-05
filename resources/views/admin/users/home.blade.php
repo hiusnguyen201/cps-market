@@ -30,7 +30,7 @@
         <form action="" class="form-inline" >
             <div class="form-group">
                 
-                <input class="form-control" name="key_search" id="" placeholder="Search by Email...">
+                <input class="form-control" name="key_search" id="" placeholder="Search by Name & Email...">
             </div>
 
             <button type="submit" class="btn btn-primary">
