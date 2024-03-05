@@ -26,6 +26,20 @@
 
     <div class="table-responsive">
         <h1>User list</h1>
+
+        <form action="" class="form-inline" >
+            <div class="form-group">
+                
+                <input class="form-control" name="key_search" id="" placeholder="Search by Email...">
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+
+        <hr>
+
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
@@ -41,7 +55,7 @@
                     <th>Address</th>
                     <th>Status</th>
                     <th>Role</th>
-                    <th>Operation</th>
+                    <th class="text-right">Operation</th>
                 </tr>
 
             </thead>
@@ -75,7 +89,7 @@
 
 
 
-                        <td>
+                        <td class="text-right">
                             <a class="btn btn-primary" href="/admin/users/edit/{{ $user->id }}" role="button">
                                 <i class="fas fa-pen"></i>
                             </a>

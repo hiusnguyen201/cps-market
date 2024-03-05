@@ -14,8 +14,12 @@ class UserController extends Controller
 {
     public function home()
     {
+     
         $users = User::paginate(15);
-        return view('admin.users.home', ['users' => $users,  'user_status' => config('global.user_status')]);
+        if ($key_search = request()->key_search) {
+            $users = User::orderBy('id','ASC')->where('email','like', '%'. $key_search . '%')-> paginate(15);
+        }
+        return view('admin.users.home', ['users' => $users, compact('users'), 'user_status' => config('global.user_status')]);
     }
 
     public function createUser()
