@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\category\CategoryRequest;
+use App\Http\Requests\admin\CategoryRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 
@@ -11,34 +11,34 @@ class CategoryController extends Controller
 
     public function home(Request $request)
     {
-        $categories = Category::paginate(10);
-        
-        if ($kw = request()->kw) {
-            $categories = Category::orderBy('id', 'ASC')
-                ->where(function ($query) use ($kw) {
-                    $query->where('name', 'like', '%' . $kw . '%');
+        $kw = $request->kw;
+        $categories = Category::orderBy('id', 'ASC')
+            ->where(function ($query) use ($kw) {
+                $query->where('name', 'like', '%' . $kw . '%');
+            });
+        $categories = $categories->paginate($request->limit ?? 10);
 
-                })
-                ->paginate(10);
-
-                
-
-            
-        }
         return view('admin.categories.category', [
             'categories' => $categories,
+            'limit_page' => config('global.limit_page'),
             'breadcumbs' => ['titles' => ['Categories']],
             'title' => 'Manage Categories',
             compact('categories')
         ]);
+    }
 
-
-
+    public function details(Category $category)
+    {
+        return view('admin.categories.details', [
+            'category' => $category,
+            'user_status' => config('global.user_status'),
+            'breadcumbs' => ['titles' => ['Categories', 'Details'], 'title_links' => ["/admin/categories"]],
+            'title' => 'Details category'
+        ]);
     }
 
     public function create()
     {
-        
         return view('admin.categories.create', [
             'breadcumbs' => ['titles' => ['Category', 'Create'], 'title_links' => ["/categories"]],
             'title' => 'Create category'
@@ -47,26 +47,22 @@ class CategoryController extends Controller
 
     public function handleCreate(CategoryRequest $request)
     {
-        
         try {
-            
+
             Category::create([
                 'name' => $request['name']
-                
             ]);
-            
+
             session()->flash('success', 'create category was successful!');
         } catch (\Exception $err) {
             session()->flash('error', 'create category was not successful!');
         }
-
         return redirect()->back();
     }
 
 
     public function edit(Category $category)
     {
-  
         return view('admin.categories.edit', [
             'category' => $category,
             'breadcumbs' => ['titles' => ['Categories', 'Edit'], 'title_links' => ["/admin/categories"]],
@@ -77,14 +73,13 @@ class CategoryController extends Controller
     public function handleUpdate(Category $category, CategoryRequest $request)
     {
         try {
-            $request->request->add(['updated_at' => date(config('global.date_format'))] );
+            $request->request->add(['updated_at' => date(config('global.date_format'))]);
             $category->fill($request->input());
             $category->save();
             session()->flash('success', 'update category was successful!');
         } catch (\Exception $err) {
             session()->flash('error', 'Edit category was not successful!');
         }
-
         return redirect()->back();
     }
 
@@ -96,7 +91,6 @@ class CategoryController extends Controller
             if (!is_array($categoryIds)) {
                 $categoryIds = [$categoryIds];
             }
-
             foreach ($categoryIds as $index => $categoryIds) {
                 $categoryIds = Category::find($categoryIds);
 
@@ -104,15 +98,12 @@ class CategoryController extends Controller
                     session()->flash('error', 'Delete category was not successful! in position ' . $index);
                     return redirect()->back();
                 }
-
                 $categoryIds->delete();
                 session()->flash('success', 'Delete category was successful!');
-
             }
         } catch (\Exception $err) {
             session()->flash('error', 'Delete category was not successful!');
         }
-
         return redirect()->back();
     }
 

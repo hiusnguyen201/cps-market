@@ -12,7 +12,8 @@
             <!-- form start -->
             <form action="" method="POST">
                 <div class="card-body">
-
+                    
+                    <input type="hidden" name="id" value="{{ $category->id }}">
                     @if ($errors->any())
                         <div class="alert alert-danger text-center">
                             Something wrong!

@@ -42,6 +42,7 @@ Route::prefix('admin')->group(function () {
      //categories
      Route::prefix('categories')->group(function (){
         Route::get('/',[CategoryController::class, 'home']);
+        Route::get('/details/{category}', [CategoryController::class, 'details']);
         
         Route::get('/create', [CategoryController::class, 'create']);
         Route::post('/create', [CategoryController::class, 'handleCreate']);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\category;
+namespace App\Http\Requests\admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
@@ -26,7 +26,7 @@ class CategoryRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'name' => 'required|string|max:100',
+            'name' => 'required|string|max:100|unique:categories,name' . ($request->id? ','. $request->id : ''),
             
         ];
     }
@@ -36,6 +36,7 @@ class CategoryRequest extends FormRequest
             'name.required' => ':attribute is required',
             'name.string' => ':attribute Invalid ',
             'name.max' => ':attribute have invalid length characters',
+            'name.unique' => ':attribute is existed'
            
         ];
     }

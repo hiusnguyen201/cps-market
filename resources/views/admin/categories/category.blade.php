@@ -23,15 +23,29 @@
             </div>
         @endif
 
-        <form action="" class="form-inline" >
-            <div class="form-group">
-
-                <input class="form-control" name="kw" id="" placeholder="Search by Name...">
+        <form action="" class="d-flex align-items-center mb-2" method="GET">
+            <div class="col-1 px-0 mr-2">
+                <select name="limit" id="" class="form-control">
+                    @if (!is_null($limit_page))
+                        @foreach ($limit_page as $limit)
+                            <option {{ request()->limit == $limit ? 'selected' : '' }} value="{{ $limit }}">
+                                {{ $limit }} </option>
+                        @endforeach
+                    @else
+                        <option selected value="10">10</option>
+                    @endif
+                </select>
             </div>
-
-            <button type="submit" class="btn btn-primary">
-                <i class="fas fa-search"></i>
-            </button>
+           
+            <div class="col-3 px-0 ml-auto">
+                <div class="form-group d-flex mb-0">
+                    <input class="form-control" name="keyword" id="" placeholder="Search by keyword"
+                        value="{{ request()->keyword }}">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
         </form>
 
         <div class="table-responsive">
@@ -58,7 +72,7 @@
                                         value="{{ $category->id }}">
                                 </div>
                             </td>
-                            <td>{{ $category->name }}</td>
+                            <td><a href="/admin/categories/details/{{ $category->id }}">{{ $category->name }}</a></td>
 
                         <td class="text-right">
                             <a class="btn btn-primary" href="/admin/categories/edit/{{ $category->id }}" role="button">
