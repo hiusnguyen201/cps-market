@@ -38,7 +38,7 @@ class UserController extends Controller
             'roles' => $roles,
             'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Users']],
-            'title' => 'Manage users'
+            'title' => 'Manage Users'
         ]);
     }
 
@@ -48,7 +48,7 @@ class UserController extends Controller
             'user' => $user,
             'user_status' => config('constants.user_status'),
             'breadcumbs' => ['titles' => ['Users', 'Details'], 'title_links' => ["/admin/users"]],
-            'title' => 'Details user'
+            'title' => 'Details User'
         ]);
     }
 
@@ -58,7 +58,7 @@ class UserController extends Controller
         return view('admin.users.create', [
             'roles' => $roles, 'genders' => config('constants.genders'),
             'breadcumbs' => ['titles' => ['Users', 'Create'], 'title_links' => ["/admin/users"]],
-            'title' => 'Create user'
+            'title' => 'Create User'
         ]);
     }
 
@@ -93,7 +93,7 @@ class UserController extends Controller
             'roles' => $roles,
             'genders' => config('constants.genders'),
             'breadcumbs' => ['titles' => ['Users', 'Edit'], 'title_links' => ["/admin/users"]],
-            'title' => 'Edit user'
+            'title' => 'Edit User'
         ]);
     }
 
