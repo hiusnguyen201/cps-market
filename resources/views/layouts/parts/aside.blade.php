@@ -55,6 +55,15 @@
                         </p>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a href="/admin/brands" class="nav-link active">
+                        <i class="far fas fa-user"></i>
+                        <p>
+                            Brand
+                        </p>
+                    </a>
+                </li>
                 
             </ul>
         </nav>

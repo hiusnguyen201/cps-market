@@ -40,8 +40,8 @@ Route::prefix('admin')->group(function () {
 
     });
 
+    //Brands
     Route::prefix('brands')->group(function () {
-
         Route::get('/', [BrandController::class, 'home']);
 
         Route::get('/details/{brand}', [BrandController::class, 'details']);
@@ -55,7 +55,6 @@ Route::prefix('admin')->group(function () {
         Route::delete('/',[BrandController::class, 'handleDelete']);
 
     });
-
 });
 
 // Auth

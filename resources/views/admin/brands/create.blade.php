@@ -16,6 +16,7 @@
                     @if ($errors->any())
                         <div class="alert alert-danger text-center">
                             Something wrong!
+                            <li>{{ $errors }}</li>
                         </div>
                     @endif
 
@@ -32,8 +33,8 @@
                     @endif
 
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" class="form-control" id="name" placeholder="Enter name..."
+                        <label for="name">Brand Name</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Enter brand name..."
                             value="{{ old('name') }}">
                         @error('name')
                             <span style="color: red">{{ $message }}</span>
@@ -44,11 +45,11 @@
                         <label for="category">Category</label>
                         <select name="category" id="category" class="form-control">
                             <option value="">- - - Select a category - - - </option>
+
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}" {{ old('category') == $category->id ? 'selected' : '' }}>
                                     {{ $category->name }}</option>
                             @endforeach
-
                         </select>
                         @error('category')
                             <span style="color: red">{{ $message }}</span>

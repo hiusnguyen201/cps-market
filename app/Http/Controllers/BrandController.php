@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Models\Category;
-use App\Http\Requests\Admin\UserRequest;
+use App\Http\Requests\Admin\BrandRequest;
 
 
 class BrandController extends Controller
@@ -15,28 +15,33 @@ class BrandController extends Controller
         //Search bar
         $kw = $request->keyword;
 
-        $brands = Brand::where(function ($query) use ($kw) {
+        $brands = Brand::with('category')->where(function ($query) use ($kw) {
             $query->orWhere('name', 'like', '%' . $kw . '%');
         });
+        $categories = Category::all();
+
+        if($request->category) {
+            $brands = $brands->where('category_id', $request->category);
+        }
 
         $brands = $brands->paginate($request->limit ?? 10);
-
+        
         return view('admin.brands.home', [
             'brands' => $brands, compact('brands'),
-            // 'user_status' => config('global.user_status'),
+            'categories' => $categories,
             'limit_page' => config('global.limit_page'),
-            'breadcumbs' => ['titles' => ['brands']],
+            'breadcumbs' => ['titles' => ['Brands']],
             'title' => 'Manage brands'
         ]);
     }
 
     public function details(Brand $brand)
     {
-        return view('admin.users.details', [
+        return view('admin.brands.details', [
             'brand' => $brand,
-            'user_status' => config('global.user_status'),
-            'breadcumbs' => ['titles' => ['Users', 'Details'], 'title_links' => ["/admin/users"]],
-            'title' => 'Details user'
+            'breadcumbs' => ['titles' => ['Brands', 'Details'],
+            'title_links' => ["/admin/brands"]],
+            'title' => 'Details brand'
         ]);
     }
 
@@ -45,7 +50,7 @@ class BrandController extends Controller
         $categories = Category::all();
         return view('admin.brands.create', [
             'categories' => $categories,
-            'breadcumbs' => ['titles' => ['Users', 'Create'],
+            'breadcumbs' => ['titles' => ['Brands', 'Create'],
             'title_links' => ["/admin/brands"]],
             'title' => 'Create brand'
         ]);
@@ -56,11 +61,12 @@ class BrandController extends Controller
         try {
             Brand::create([
                 'name' => $request['name'],
+                'category_id' => $request['category'],
             ]);
 
-            session()->flash('success', 'create user was successful!');
+            session()->flash('success', 'create brand was successful!');
         } catch (\Exception $err) {
-            session()->flash('error', 'create user was not successful!');
+            session()->flash('error', 'create brand was not successful!');
         }
 
         return redirect()->back();
@@ -69,22 +75,24 @@ class BrandController extends Controller
 
     public function edit(Brand $brand)
     {
+        $categories = Category::all();
         return view('admin.brands.edit', [
             'brand' => $brand,
-            'breadcumbs' => ['titles' => ['Brands', 'Edit'], 'title_links' => ["/admin/brands"]],
-            'title' => 'Edit user'
+            'categories' => $categories,
+            'breadcumbs' => ['titles' => ['Brands', 'Brand'], 'title_links' => ["/admin/brands"]],
+            'title' => 'Edit brand'
         ]);
     }
 
-    public function handleUpdate(User $user, UserRequest $request)
+    public function handleUpdate(Brand $brand, BrandRequest $request)
     {
         try {
             $request->request->add(['updated_at' => date(config('global.date_format'))]);
-            $user->fill($request->input());
-            $user->save();
-            session()->flash('success', 'update user was successful!');
+            $brand->fill($request->input());
+            $brand->save();
+            session()->flash('success', 'Update brand was successful!');
         } catch (\Exception $err) {
-            session()->flash('error', 'Edit user was not successful!');
+            session()->flash('error', 'Edit brand was not successful!');
         }
 
         return redirect()->back();
@@ -93,25 +101,25 @@ class BrandController extends Controller
     public function handleDelete(Request $request)
     {
         try {
-            $userIds = $request->id;
+            $brandIds = $request->id;
 
-            if (!is_array($userIds)) {
-                $userIds = [$userIds];
+            if (!is_array($brandIds)) {
+                $brandIds = [$brandIds];
             }
 
-            foreach ($userIds as $index => $userId) {
-                $user = User::find($userId);
+            foreach ($brandIds as $index => $brandIds) {
+                $brand = Brand::find($brandIds);
 
-                if (is_null($user)) {
-                    session()->flash('error', 'Delete user was not successful! in position ' . $index);
+                if (is_null($brand)) {
+                    session()->flash('error', 'Delete brand was not successful! in position ' . $index);
                     return redirect()->back();
                 }
 
-                $user->delete();
-                session()->flash('success', 'Delete user was successful!');
+                $brand->delete();
+                session()->flash('success', 'Delete brand was successful!');
             }
         } catch (\Exception $err) {
-            session()->flash('error', 'Delete user was not successful!');
+            session()->flash('error', 'Delete brand was not successful!');
         }
 
         return redirect()->back();

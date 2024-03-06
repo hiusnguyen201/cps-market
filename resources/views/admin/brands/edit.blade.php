@@ -2,7 +2,7 @@
 @section('content')
     <div class="card">
 
-        <div class="card card-primary">
+        <div class="card card-primary mb-0">
             <div class="card-header">
                 <h3 class="card-title">
                     <h1>Edit user</h1>
@@ -16,6 +16,7 @@
                     @if ($errors->any())
                         <div class="alert alert-danger text-center">
                             Something wrong!
+                            <li>{{ $errors }}</li>
                         </div>
                     @endif
 
@@ -32,60 +33,22 @@
                     @endif
 
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name">Brand Name</label>
                         <input type="text" name="name" class="form-control" id="name" placeholder="Enter name..."
-                            value="{{ old('name') ?? $user->name }}">
+                            value="{{ old('name') ?? $brand->name }}">
                         @error('name')
                             <span style="color: red">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" class="form-control" id="email"
-                            placeholder="Enter email..." value="{{ old('email') ?? $user->email }}">
-                        @error('email')
-                            <span style="color: red">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="tel" name="phone" class="form-control" id="phone"
-                            placeholder="Enter phone..." value="{{ old('phone') ?? $user->phone }}">
-                        @error('phone')
-                            <span style="color: red">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <input type="text" name="address" class="form-control" id="address"
-                            placeholder="Enter address..." value="{{ old('address') ?? $user->address }}">
-                        @error('address')
-                            <span style="color: red">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">Gender</label>
 
-                        <div class="d-flex align-items-center justify-content-start">
-                            @for ($i = 0; $i < count($genders); $i++)
-                                <input {{ old('gender') ?? $user->gender == $i ? 'checked' : '' }} type="radio"
-                                    name="gender" id="{{ $genders[$i] }}" value="{{ $i }}">
-                                <label class="mr-2" for="{{ $genders[$i] }}">{{ $genders[$i] }}</label>
-                            @endfor
-                        </div>
-                        @error('gender')
-                            <span style="color: red">{{ $message }}</span>
-                        @enderror
-                        <input type="hidden" name="id" value="{{ $user->id }}">
-                    </div>
                     <div class="form-group">
-                        <label for="role">Role</label>
-                        <select name="role" id="role" class="form-control">
-                            <option value="">- - - Select a role - - - </option>
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->id }}"
-                                    {{ (old('role') ?? $user->role_id) == $role->id ? 'selected' : '' }}>
-                                    {{ $role->name }}</option>
+                        <label for="category">Category</label>
+                        <select name="category" id="category" class="form-control">
+                            <option value="">- - - Select a category - - - </option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}"
+                                    {{ (old('category') ?? $category->id) == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}</option>
                             @endforeach
 
                         </select>
@@ -98,7 +61,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">update</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
                 @csrf
             </form>
