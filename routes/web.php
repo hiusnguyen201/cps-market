@@ -3,6 +3,7 @@
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BrandController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,21 @@ Route::prefix('admin')->group(function () {
 
     });
 
+    Route::prefix('brands')->group(function () {
+
+        Route::get('/', [BrandController::class, 'home']);
+
+        Route::get('/details/{brand}', [BrandController::class, 'details']);
+
+        Route::get('/create', [BrandController::class, 'create'] );
+        Route::post('/create', [BrandController::class, 'handleCreate']); 
+
+        Route::get('/edit/{brand}', [BrandController::class, 'edit']);
+        Route::post('/edit/{brand}', [BrandController::class, 'handleUpdate']);
+
+        Route::delete('/',[BrandController::class, 'handleDelete']);
+
+    });
 
 });
 
