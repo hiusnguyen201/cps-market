@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +18,32 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+// Admin
+Route::prefix('admin')->group(function () {
+    Route::get("/", [DashboardController::class, 'home']);
+
+    Route::prefix('users')->group(function () {
+        Route::get('/', [UserController::class, 'home']);
+        Route::get('/details/{user}', [UserController::class, 'details']);
+        Route::get('/create', [UserController::class, 'create']);
+        Route::post('/create', [UserController::class, 'handleCreate']);
+        Route::get('/edit/{user}', [UserController::class, 'edit']);
+        Route::post('/edit/{user}', [UserController::class, 'handleUpdate']);
+        Route::delete('/', [UserController::class, 'handleDelete']);
+    });
+});
+
+// Auth
+Route::prefix('auth')->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout']);
+    Route::get('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'handleLocalLogin']);
+
+    Route::prefix('otp')->group(function () {
+        Route::get('/', [AuthController::class, 'otp']);
+        Route::post('/', [AuthController::class, 'handleVerifyOtp']);
+        Route::get('/resend', [AuthController::class, 'handleResendOtp']);
+    });
 });
