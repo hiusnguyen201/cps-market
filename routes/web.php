@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -32,6 +33,17 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{user}', [UserController::class, 'edit']);
         Route::post('/edit/{user}', [UserController::class, 'handleUpdate']);
         Route::delete('/', [UserController::class, 'handleDelete']);
+    });
+
+    //categories
+    Route::prefix('categories')->group(function () {
+        Route::get('/', [CategoryController::class, 'home']);
+        Route::get('/details/{category}', [CategoryController::class, 'details']);
+        Route::get('/create', [CategoryController::class, 'create']);
+        Route::post('/create', [CategoryController::class, 'handleCreate']);
+        Route::get('/edit/{category}', [CategoryController::class, 'edit']);
+        Route::post('/edit/{category}', [CategoryController::class, 'handleUpdate']);
+        Route::delete('/', [CategoryController::class, 'handleDelete']);
     });
 });
 
