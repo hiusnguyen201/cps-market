@@ -1,7 +1,3 @@
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-<!--Stylesheet-->
 <style media="screen">
     *,
     *:before,
@@ -69,7 +65,7 @@
         border: none;
     }
 
-    form h3 {
+    form h1 {
         font-size: 32px;
         font-weight: 500;
         line-height: 42px;
@@ -139,35 +135,32 @@
     }
 </style>
 
-
-
 <div class="background">
     <div class="shape"></div>
     <div class="shape"></div>
 </div>
 
-<form method="POST" action="{{ route('login') }}">
-    @csrf
-    <h3>Login</h3>
+<form method="POST">
+    <h1>Login</h1>
 
-    @if ($errors->any())
-    <div class="alert alert-danger">Account information is incorrect</div>
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
     @endif
 
     <label for="email">Email</label>
     <input type="email" placeholder="Email" id="email" name="email" value="{{ old('email') }}">
 
     <label for="password">Password</label>
-    <input type="password" placeholder="Mật khẩu" id="password" name="password">
+    <input type="password" placeholder="Password" id="password" name="password">
 
-    <input type="checkbox" name="remember" id="remember">
-    <label for="remember">Remember Me</label>
+    @csrf
 
     <button type="submit">Login</button>
 
     <div class="social">
-        <div class="go"><i class="fab fa-google"></i> Google</div>
-        <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
+        <div class="go d-flex align-items-center"><i class="fab fa-google"></i> Google</div>
+        <div class="fb d-flex align-items-center"><i class="fab fa-facebook"></i> Facebook</div>
     </div>
-
 </form>
