@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\User_Otp;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Mockery\VerificationDirector;
 use Illuminate\Support\Facades\Mail;
-use Nette\Utils\Random;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\OtpRequest;
 
 class AuthController extends Controller
 {
@@ -19,99 +17,81 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function store(Request $request)
+    public function handleLocalLogin(LoginRequest $request)
     {
-        $credentials =  $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
 
-        if (Auth::validate($credentials)) {
-
-            if ($request->has('remember')) {
-                $request->session()->put('remember', true);
-            } else {
-                $request->session()->put('remember', false);
-            }
-
-            // Lấy thông tin người dùng từ email
-            $user = User::where('email', $credentials['email'])->first();
-            $request->session()->put('user', $user);
-
-            $userOTP = $this->generateOTP($user->id);
-            $this->sendOtpToEmail($user->email, $userOTP);
-
-            return redirect()->route('OTPverify');
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $this->sendOtpToEmail($user);
+            session()->flash('success', "We've sent a verification code to your email");
+            return redirect("/auth/otp");
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        session()->flash('error', 'Email or password is incorrect');
+        return redirect()->back();
     }
 
-    public function OTPverify()
+    public function sendOtpToEmail($user)
     {
-        return view('auth.loginOTP');
-    }
+        $user_otp_exists = User_Otp::where('user_id', $user->id);
 
-    public function OTPverify_POST(Request $request)
-    {
-        $request->validate([
-            'otp' => 'required'
-        ]);
-
-        $user = $request->session()->get('user');
-        $remember = $request->session()->get('remember');
-
-        $userOTP = User_Otp::where('user_id', $user->id)->first();
-
-        if ($request->otp != $userOTP->otp) {
-            // OTP không hợp lệ
-            return back()->withErrors([
-                'otp' => 'Invalid OTP. Please try again.',
-            ]);
+        if (!is_null($user_otp_exists)) {
+            $user_otp_exists->delete();
         }
 
-        // OTP hợp lệ
-        Auth::login($user, $remember);
-        $this->deleteOTP($user->id);
+        $user_otp_new = User_Otp::create([
+            'otp' => mt_rand(100000, 999999),
+            'expire' => date('Y-m-d H:i:s', strtotime(now()) + 60 * env('OTP_EXPIRE_MINUTES', 1)),
+            'user_id' => $user->id
+        ]);
 
-        $response = redirect('/');
-        return $response;
-    }
-
-    public function generateOTP($id)
-    {
-        $this->deleteOTP($id);
-
-        $otp = mt_rand(100000, 999999);
-        User_Otp::updateOrCreate(
-            ['otp' => $otp],
-            ['user_id' => $id]
-        );
-        return $otp;
-    }
-
-    public function deleteOTP($id)
-    {
-        User_Otp::where('user_id', $id)->delete();
-    }
-
-    public function sendOtpToEmail($email, $otp)
-    {
-        Mail::raw("Your OTP is: $otp", function ($message) use ($email) {
-            $message->to($email)->subject('OTP Verification');
+        Mail::raw("Your OTP is: $user_otp_new->otp", function ($message) use ($user) {
+            $message->to($user->email)->subject('OTP Verification');
         });
+
+        return true;
     }
 
-    public function resendOtp(Request $request)
+    public function otp()
     {
-        $user = $request->session()->get('user');
+        return view('auth.otp');
+    }
 
-        $userOTP = $this->generateOTP($user->id);
-        $this->sendOtpToEmail($user->email, $userOTP);
+    public function handleVerifyOtp(OtpRequest $request)
+    {
+        $user = Auth::user();
+        $user_otp = User_Otp::where('user_id', $user->id)->where('otp', $request->otp)->first();
 
-        return redirect()->back()->with('success', 'OTP has been resent.');
+        if (is_null($user_otp)) {
+            session()->flash('error', 'Invalid Otp! Please try again.');
+            return redirect()->back();
+        }
+
+        if (strtotime($user_otp->expire) - strtotime(now()) < 0) {
+            $user_otp->delete();
+            session()->flash('error', 'Otp is expired!');
+            return redirect()->back();
+        }
+
+        Auth::login($user, true);
+        $user_otp->delete();
+
+        if ($user->role->name === 'customer') {
+            return redirect("/");
+        } else {
+            return redirect("/admin");
+        }
+    }
+
+    public function handleResendOtp()
+    {
+        $this->sendOtpToEmail(Auth::user());
+        session()->flash('success', 'Otp has been resent!');
+        return redirect("/auth/otp");
     }
 
     public function logout()
@@ -119,18 +99,5 @@ class AuthController extends Controller
         session()->flush();
         auth()->logout();
         return redirect('/');
-    }
-
-    public function register() {
-        return view('auth.register');
-    }
-
-    public function storeRegister(Request $request) {
-        $credentials =  $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'password' => 'required'
-        ]);
     }
 }

@@ -14,17 +14,17 @@ class UserController extends Controller
     public function home(Request $request)
     {
         $kw = $request->keyword;
-        
-        $users = User::where(function ($query) use ($kw){
+
+        $users = User::where(function ($query) use ($kw) {
             $query->orWhere('name', 'like', '%' . $kw . '%');
             $query->orWhere('email', 'like', '%' . $kw . '%');
         });
 
-        if($request->role) {
+        if ($request->role) {
             $users = $users->where('role_id', $request->role);
         }
 
-        if($request->status) {
+        if ($request->status) {
             $users = $users->where('status', $request->status);
         }
 
@@ -33,20 +33,20 @@ class UserController extends Controller
         $roles = Role::all();
 
         return view('admin.users.home', [
-            'users' => $users, compact('users'), 
-            'user_status' => config('global.user_status'), 
-            'roles' => $roles, 
-            'limit_page' => config('global.limit_page'), 
+            'users' => $users, compact('users'),
+            'user_status' => config('constants.user_status'),
+            'roles' => $roles,
+            'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Users']],
             'title' => 'Manage users'
         ]);
     }
 
-    public function details (User $user) 
+    public function details(User $user)
     {
         return view('admin.users.details', [
-            'user' => $user, 
-            'user_status' => config('global.user_status'),
+            'user' => $user,
+            'user_status' => config('constants.user_status'),
             'breadcumbs' => ['titles' => ['Users', 'Details'], 'title_links' => ["/admin/users"]],
             'title' => 'Details user'
         ]);
@@ -56,7 +56,7 @@ class UserController extends Controller
     {
         $roles = Role::all();
         return view('admin.users.create', [
-            'roles' => $roles, 'genders' => config('global.genders'),
+            'roles' => $roles, 'genders' => config('constants.genders'),
             'breadcumbs' => ['titles' => ['Users', 'Create'], 'title_links' => ["/admin/users"]],
             'title' => 'Create user'
         ]);
@@ -91,7 +91,7 @@ class UserController extends Controller
         return view('admin.users.edit', [
             'user' => $user,
             'roles' => $roles,
-            'genders' => config('global.genders'),
+            'genders' => config('constants.genders'),
             'breadcumbs' => ['titles' => ['Users', 'Edit'], 'title_links' => ["/admin/users"]],
             'title' => 'Edit user'
         ]);
@@ -100,7 +100,7 @@ class UserController extends Controller
     public function handleUpdate(User $user, UserRequest $request)
     {
         try {
-            $request->request->add(['updated_at' => date(config('global.date_format'))] );
+            $request->request->add(['updated_at' => now()]);
             $user->fill($request->input());
             $user->save();
             session()->flash('success', 'update user was successful!');
@@ -130,7 +130,6 @@ class UserController extends Controller
 
                 $user->delete();
                 session()->flash('success', 'Delete user was successful!');
-
             }
         } catch (\Exception $err) {
             session()->flash('error', 'Delete user was not successful!');

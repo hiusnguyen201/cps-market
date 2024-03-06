@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('user_otp', function (Blueprint $table) {
             $table->id();
-            $table->string("otp", 150);
+            $table->string("otp", 15);
             $table->integer("user_id");
+            $table->timestamp("expire");
             $table->timestamps();
         });
     }
