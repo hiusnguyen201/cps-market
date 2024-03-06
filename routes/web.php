@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 // Admin
 Route::prefix('admin')->group(function () {
-
+    //user
     Route::prefix('users')->group(function () {
 
         Route::get('/', [UserController::class, 'home']);
@@ -36,6 +36,21 @@ Route::prefix('admin')->group(function () {
         Route::post('/edit/{user}', [UserController::class, 'handleUpdate']);
 
         Route::delete('/', [UserController::class, 'handleDelete']);
+
+    });
+
+     //categories
+     Route::prefix('categories')->group(function (){
+        Route::get('/',[CategoryController::class, 'home']);
+        
+        Route::get('/create', [CategoryController::class, 'create']);
+        Route::post('/create', [CategoryController::class, 'handleCreate']);
+        
+
+        Route::get('/edit/{category}', [CategoryController::class, 'edit']);
+        Route::post('/edit/{category}', [CategoryController::class, 'handleUpdate']);
+
+        Route::delete('/', [CategoryController::class, 'handleDelete']);
 
     });
 
@@ -64,17 +79,4 @@ Route::prefix('auth')->group(function () {
         ->name('resendOtp');
 });
 
-    //categories
-    Route::prefix('categories')->group(function (){
-        Route::get('/',[CategoryController::class, 'home']);
-        
-        Route::get('/create', [CategoryController::class, 'create']);
-        Route::post('/create', [CategoryController::class, 'handleCreate']);
-        
-
-        Route::get('/edit/{category}', [CategoryController::class, 'edit']);
-        Route::post('/edit/{category}', [CategoryController::class, 'handleUpdate']);
-
-        Route::delete('/', [CategoryController::class, 'handleDelete']);
-
-    });
+   

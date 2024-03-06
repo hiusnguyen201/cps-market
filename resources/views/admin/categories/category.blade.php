@@ -3,11 +3,10 @@
     <div class="card py-2 px-3">
         <div class="d-flex mb-2">
             <div class="col-2 px-0 mr-2">
-                <a href="/categories/create" class="btn btn-success w-100 py-2">Create</a>
+                <a href="/admin/categories/create" class="btn btn-success w-100 py-2">Create</a>
             </div>
             <div class="col-2 px-0 mr-2">
-                <button class="btn btn-danger w-100 py-2" data-toggle="modal" data-target="#modal-deleteAll">Delete
-                    All</button>
+                <button class="btn btn-danger w-100 py-2" data-toggle="modal" data-target="#modal-deleteAll">Delete All</button>
             </div>
         </div>
 
@@ -62,7 +61,7 @@
                             <td>{{ $category->name }}</td>
 
                         <td class="text-right">
-                            <a class="btn btn-primary" href="/categories/edit/{{ $category->id }}" role="button">
+                            <a class="btn btn-primary" href="/admin/categories/edit/{{ $category->id }}" role="button">
                                 <i class="fas fa-pen"></i>
                             </a>
                             <button type="button" class="btn btn-danger" data-toggle="modal"
