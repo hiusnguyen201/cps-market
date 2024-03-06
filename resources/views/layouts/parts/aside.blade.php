@@ -46,6 +46,15 @@
                         </p>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a href="/categories" class="nav-link active">
+                        <i class="far fas fa-user"></i>
+                        <p>
+                            Category
+                        </p>
+                    </a>
+                </li>
                 
             </ul>
         </nav>
