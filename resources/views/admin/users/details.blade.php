@@ -31,9 +31,15 @@
                                 </div>
                             </div>
                             <div class="form-group row align-items-center">
+                                <label for="inputExperience" class="col-sm-2 col-form-label">Gender:</label>
+                                <div class="col-sm-10">
+                                    {{ is_null($user->gender) ? '' : array_search($user->gender, $genders) }}
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-center">
                                 <label for="inputExperience" class="col-sm-2 col-form-label">Status:</label>
                                 <div class="col-sm-10">
-                                    {{ $user_status[$user->status] }}
+                                    {{ array_search($user->status, $user_status) }}
                                 </div>
                             </div>
                             <div class="form-group row align-items-center">

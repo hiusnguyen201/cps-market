@@ -49,7 +49,8 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="address">Address</label>
+                        <label for="address"><span>Addresss</span><span
+                                class="ml-1 text-black-50">(optional)</span></label>
                         <input type="text" name="address" class="form-control" id="address"
                             placeholder="Enter address..." value="{{ old('address') ?? $user->address }}">
                         @error('address')
@@ -57,14 +58,14 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="gender">Gender</label>
-
+                        <label for="gender"><span>Gender</span><span class="ml-1 text-black-50">(optional)</span></label>
                         <div class="d-flex align-items-center justify-content-start">
-                            @for ($i = 0; $i < count($genders); $i++)
-                                <input {{ old('gender') ?? $user->gender == $i ? 'checked' : '' }} type="radio"
-                                    name="gender" id="{{ $genders[$i] }}" value="{{ $i }}">
-                                <label class="mr-2" for="{{ $genders[$i] }}">{{ $genders[$i] }}</label>
-                            @endfor
+                            @foreach ($genders as $key => $value)
+                                <input {{ (old('gender') ?? $user->gender) == $value ? 'checked' : '' }} type="radio"
+                                    name="gender" value="{{ $value }}">
+
+                                <label class="mr-2">{{ $key }}</label>
+                            @endforeach
                         </div>
                         @error('gender')
                             <span style="color: red">{{ $message }}</span>
@@ -80,7 +81,6 @@
                                     {{ (old('role') ?? $user->role_id) == $role->id ? 'selected' : '' }}>
                                     {{ $role->name }}</option>
                             @endforeach
-
                         </select>
                         @error('role')
                             <span style="color: red">{{ $message }}</span>

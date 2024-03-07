@@ -20,12 +20,12 @@ class BrandController extends Controller
         });
         $categories = Category::all();
 
-        if($request->category) {
+        if ($request->category) {
             $brands = $brands->where('category_id', $request->category);
         }
 
         $brands = $brands->paginate($request->limit ?? 10);
-        
+
         return view('admin.brands.home', [
             'brands' => $brands, compact('brands'),
             'categories' => $categories,
@@ -39,8 +39,10 @@ class BrandController extends Controller
     {
         return view('admin.brands.details', [
             'brand' => $brand,
-            'breadcumbs' => ['titles' => ['Brands', 'Details'],
-            'title_links' => ["/admin/brands"]],
+            'breadcumbs' => [
+                'titles' => ['Brands', 'Details'],
+                'title_links' => ["/admin/brands"]
+            ],
             'title' => 'Details brand'
         ]);
     }
@@ -50,8 +52,10 @@ class BrandController extends Controller
         $categories = Category::all();
         return view('admin.brands.create', [
             'categories' => $categories,
-            'breadcumbs' => ['titles' => ['Brands', 'Create'],
-            'title_links' => ["/admin/brands"]],
+            'breadcumbs' => [
+                'titles' => ['Brands', 'Create'],
+                'title_links' => ["/admin/brands"]
+            ],
             'title' => 'Create brand'
         ]);
     }
@@ -65,7 +69,8 @@ class BrandController extends Controller
             ]);
 
             session()->flash('success', 'Create brand was successful!');
-        } catch (\Exception $err) {
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
             session()->flash('error', 'Create brand was not successful!');
         }
 
@@ -91,7 +96,8 @@ class BrandController extends Controller
             $brand->fill($request->input());
             $brand->save();
             session()->flash('success', 'Update brand was successful!');
-        } catch (\Exception $err) {
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
             session()->flash('error', 'Edit brand was not successful!');
         }
 
@@ -118,7 +124,8 @@ class BrandController extends Controller
                 $brand->delete();
                 session()->flash('success', 'Delete brand was successful!');
             }
-        } catch (\Exception $err) {
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
             session()->flash('error', 'Delete brand was not successful!');
         }
 

@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\User_Otp;
-use Illuminate\Http\Request;
+use App\Models\Role;
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\OtpRequest;
+use App\Http\Requests\Auth\InfoSocialRequest;
+use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function login()
+    public function localLogin()
     {
         return view('auth.login');
     }
@@ -33,6 +35,43 @@ class AuthController extends Controller
 
         session()->flash('error', 'Email or password is incorrect');
         return redirect()->back();
+    }
+
+    public function infoSocial()
+    {
+        $social_user_info = session()->get('social_user_info');
+
+        if (!$social_user_info) {
+            return redirect("/auth/login");
+        }
+
+        return view("auth.socialUpdateInfo", ['name' => $social_user_info[0]['name'], 'email' => $social_user_info[0]['email']]);
+    }
+
+    public function handleUpdateInfoSocial(InfoSocialRequest $request)
+    {
+        try {
+            $social_user_info = session()->get('social_user_info')[0];
+
+            $role = Role::where("name", 'customer')->first();
+            $user = User::create([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'phone' => $request['phone'],
+                'role_id' => $role['id'],
+                'google_id' => $social_user_info['provider'] == 'google' ? $social_user_info['id'] : null,
+                'facebook_id' => $social_user_info['provider'] == 'facebook' ? $social_user_info['id'] : null
+            ]);
+
+            session()->forget('social_user_info');
+            session()->flash('success', "We've sent a verification code to your email");
+            $this->sendOtpToEmail($user);
+            return redirect("/auth/otp");
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+            session()->flash("error", "Update info account failed");
+            return redirect()->back();
+        }
     }
 
     public function sendOtpToEmail($user)
@@ -71,6 +110,8 @@ class AuthController extends Controller
             return redirect()->back();
         }
 
+        User::where("id", $user['id'])->update(['status' => config("constants.user_status.Active")]);
+
         if (strtotime($user_otp->expire) - strtotime(now()) < 0) {
             $user_otp->delete();
             session()->flash('error', 'Otp is expired!');
@@ -99,5 +140,52 @@ class AuthController extends Controller
         session()->flush();
         auth()->logout();
         return redirect('/');
+    }
+
+    public function socialLogin($provider = null)
+    {
+        if (!config("services.$provider")) abort('404');
+        return Socialite::driver($provider)->redirect();
+    }
+
+    public function handleSocialLogin($provider = null)
+    {
+        /*
+            Khi mà social trả về thông tin người dùng
+            - Cần kiểm tra người dùng có tồn tại với email đc trả về hay ko
+                + Ko tồn tại, render /auth/update-info-social -> tao user (Inactive) -> xác nhận otp (active)
+                + Nếu tồn tại, update id của social vào user đó, kiem tra active -> /auth/update-inactive-account
+        */
+
+        $social_user_info = Socialite::driver($provider)->user();
+        if (!$social_user_info) return redirect()->back();
+        $social_user_info['provider'] = $provider;
+
+        try {
+            $exist_user = User::where(["email" => $social_user_info['email']])->first();
+            if (is_null($exist_user)) {
+                if (!session()->get('social_user_info')) session()->push("social_user_info", $social_user_info);
+                return redirect("/auth/info-social");
+            }
+
+            User::where("id", $exist_user['id'])->update([
+                'google_id' => $provider == 'google' ? $social_user_info['id'] : null,
+                'facebook_id' => $provider == 'facebook' ? $social_user_info['id'] : null
+            ]);
+
+            if ($exist_user->status == config("constants.user_status.Inactive")) {
+                Auth::login($exist_user);
+                session()->flash('success', "We've sent a verification code to your email");
+                $this->sendOtpToEmail($exist_user);
+                return redirect("/auth/otp");
+            } else {
+                Auth::login($exist_user, true);
+                return redirect("/");
+            }
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+            session()->flash('error', "Login with social error");
+            return redirect("/auth/login");
+        }
     }
 }
