@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>AdminLTE 3 | Dashboard</title>
+    <title>{{ $title }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -34,16 +34,16 @@
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
         <!-- Navbar -->
-        @include('layouts/parts/navbar')
+        @include('layouts.admin.parts.navbar')
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        @include('layouts/parts/aside')
+        @include('layouts.admin.parts.aside')
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            @include('layouts/parts/breadcrumb')
+            @include('layouts.admin.parts.breadcrumb')
             <!-- /.content-header -->
 
             <!-- Main content -->
@@ -114,15 +114,13 @@
     <!-- checked selector -->
     <script>
         $("form.form-delete-all").submit((event) => {
-            const formCheckboxChecked = $("input.form-check-input:checked:not(#selectAll)");   
-            for ( var i = 0; i < formCheckboxChecked.length; i++ ){
-                $("form.form-delete-all").append(`<input type="hidden" name="id[${i}]" value="${formCheckboxChecked[i].value}">`)
+            const formCheckboxChecked = $("input.form-check-input:checked:not(#selectAll)");
+            for (var i = 0; i < formCheckboxChecked.length; i++) {
+                $("form.form-delete-all").append(
+                    `<input type="hidden" name="id[${i}]" value="${formCheckboxChecked[i].value}">`)
             }
         });
     </script>
-
-
-
 </body>
 
 </html>

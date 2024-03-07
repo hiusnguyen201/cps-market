@@ -1,4 +1,4 @@
-@extends('layouts.index')
+@extends('layouts.admin.index')
 @section('content')
     <div class="card py-2 px-3">
         <div class="d-flex mb-2">
@@ -10,7 +10,6 @@
                     All</button>
             </div>
         </div>
-
 
         @if (session('success'))
             <div class="alert alert-success">

@@ -1,6 +1,3 @@
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
 <!--Stylesheet-->
 <style media="screen">
     *,
@@ -9,6 +6,10 @@
         padding: 0;
         margin: 0;
         box-sizing: border-box;
+    }
+
+    a {
+        text-decoration: none
     }
 
     body {
@@ -69,7 +70,7 @@
         border: none;
     }
 
-    form h3 {
+    form h1 {
         font-size: 32px;
         font-weight: 500;
         line-height: 42px;
@@ -99,7 +100,10 @@
         color: #e5e5e5;
     }
 
-    button {
+    button,
+    form a {
+        display: block;
+        text-align: center;
         margin-top: 50px;
         width: 100%;
         background-color: #ffffff;
@@ -146,27 +150,30 @@
     <div class="shape"></div>
 </div>
 
-<form method="POST" action="{{ route('OTP_POST') }}">
-    @csrf
-    <h3>Login</h3>
+<form method="POST">
+    <h1>Verify Otp</h1>
 
-    @if ($errors->any())
-    <div class="alert alert-danger">Invalid OTP code</div>
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
     @endif
 
     @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
     @endif
-
 
     <label for="text">OTP</label>
     <input type="text" placeholder="OTP" id="otp" name="otp">
+    @error('otp')
+        <span style="color: red">{{ $message }}</span>
+    @enderror
 
-    <a href="{{ route('resendOtp') }}">
-        <button type="button">Resend OTP</button>
-    </a>
+    @csrf
+
+    <a href="/auth/otp/resend">Resend OTP</a>
 
     <button type="submit">Login</button>
 </form>

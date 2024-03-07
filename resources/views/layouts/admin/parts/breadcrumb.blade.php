@@ -6,7 +6,7 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/admin/users">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
                     @if (!is_null($breadcumbs))
                         @foreach ($breadcumbs['titles'] as $index => $slice_of_bread)
                             @if (count($breadcumbs['titles']) == +$index + 1)

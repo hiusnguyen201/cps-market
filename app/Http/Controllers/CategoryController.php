@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\category\CategoryRequest;
+use App\Http\Requests\admin\CategoryRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 
@@ -11,80 +11,75 @@ class CategoryController extends Controller
 
     public function home(Request $request)
     {
-        $categories = Category::paginate(15);
-        
-        if ($kw = request()->kw) {
-            $categories = Category::orderBy('id', 'ASC')
-                ->where(function ($query) use ($kw) {
-                    $query->where('name', 'like', '%' . $kw . '%');
+        $kw = $request->keyword;
 
-                })
-                ->paginate(15);
+        $categories = Category::where(function ($query) use ($kw) {
+            $query->orWhere('name', 'like', '%' . $kw . '%');
+        });
 
-                
+        $categories = $categories->paginate($request->limit ?? 10);
 
-            
-        }
-        return view('Categories.category', [
+        return view('admin.categories.home', [
             'categories' => $categories,
+            'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Categories']],
             'title' => 'Manage Categories',
             compact('categories')
         ]);
+    }
 
-
-
+    public function details(Category $category)
+    {
+        return view('admin.categories.details', [
+            'category' => $category,
+            'user_status' => config('constants.user_status'),
+            'breadcumbs' => ['titles' => ['Categories', 'Details'], 'title_links' => ["/admin/categories"]],
+            'title' => 'Details Category'
+        ]);
     }
 
     public function create()
     {
-        
-        return view('Categories.create', [
-            'breadcumbs' => ['titles' => ['Category', 'Create'], 'title_links' => ["/categories"]],
-            'title' => 'Create category'
+        return view('admin.categories.create', [
+            'breadcumbs' => ['titles' => ['Categories', 'Create'], 'title_links' => ["/admin/categories"]],
+            'title' => 'Create Category'
         ]);
     }
 
     public function handleCreate(CategoryRequest $request)
     {
-        
         try {
-            
             Category::create([
                 'name' => $request['name']
-                
             ]);
-            
-            session()->flash('success', 'create user was successful!');
-        } catch (\Exception $err) {
-            session()->flash('error', 'create user was not successful!');
-        }
 
+            session()->flash('success', 'create category was successful!');
+        } catch (\Exception $err) {
+            session()->flash('error', 'create category was not successful!');
+        }
         return redirect()->back();
     }
 
 
     public function edit(Category $category)
     {
-  
-        return view('Categories.edit', [
+        return view('admin.categories.edit', [
             'category' => $category,
-            'breadcumbs' => ['titles' => ['Users', 'Edit'], 'title_links' => ["/admin/users"]],
-            'title' => 'Edit user'
+            'breadcumbs' => ['titles' => ['Categories', 'Edit'], 'title_links' => ["/admin/categories"]],
+            'title' => 'Edit Category'
         ]);
     }
 
     public function handleUpdate(Category $category, CategoryRequest $request)
     {
         try {
-            $request->request->add(['updated_at' => date(config('global.date_format'))] );
+            $request->request->add(['updated_at' => date(config('constants.date_format'))]);
             $category->fill($request->input());
             $category->save();
-            session()->flash('success', 'update user was successful!');
+            session()->flash('success', 'update category was successful!');
         } catch (\Exception $err) {
-            session()->flash('error', 'Edit user was not successful!');
+            session()->flash('error', 'Edit category was not successful!');
         }
-
         return redirect()->back();
     }
 
@@ -97,23 +92,20 @@ class CategoryController extends Controller
                 $categoryIds = [$categoryIds];
             }
 
-            foreach ($categoryIds as $index => $categoryIds) {
-                $categoryIds = Category::find($categoryIds);
+            foreach ($categoryIds as $index => $categoryId) {
+                $category = Category::find($categoryId);
 
-                if (is_null($categoryIds)) {
-                    session()->flash('error', 'Delete user was not successful! in position ' . $index);
+                if (is_null($category)) {
+                    session()->flash('error', 'Delete category was not successful! in position ' . $index);
                     return redirect()->back();
                 }
-
-                $categoryIds->delete();
-                session()->flash('success', 'Delete user was successful!');
-
+                $category->delete();
+                session()->flash('success', 'Delete category was successful!');
             }
         } catch (\Exception $err) {
-            session()->flash('error', 'Delete user was not successful!');
+            session()->flash('error', 'Delete category was not successful!');
         }
 
         return redirect()->back();
     }
-
 }

@@ -18,7 +18,8 @@ class User_Otp extends Model
      */
     protected $fillable = [
         "otp",
-        "user_id"
+        "user_id",
+        "expire"
     ];
 
     /**

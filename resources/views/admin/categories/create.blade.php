@@ -1,11 +1,11 @@
-@extends('layouts.index')
+@extends('layouts.admin.index')
 @section('content')
     <div class="card">
 
         <div class="card card-primary">
             <div class="card-header">
                 <h3 class="card-title">
-                    <h1>Edit category</h1>
+                    <h1>Create new category</h1>
                 </h3>
             </div>
             <!-- /.card-header -->
@@ -34,18 +34,18 @@
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" name="name" class="form-control" id="name" placeholder="Enter name..."
-                            value="{{ old('name') ?? $category->name }}">
+                            value="{{ old('name') }}">
                         @error('name')
                             <span style="color: red">{{ $message }}</span>
                         @enderror
                     </div>
-                    
+
 
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">update</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
                 @csrf
             </form>
