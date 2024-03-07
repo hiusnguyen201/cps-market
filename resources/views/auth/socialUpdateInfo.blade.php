@@ -43,8 +43,7 @@
     }
 
     form {
-        height: 520px;
-        width: 400px;
+        min-width: 450px;
         background-color: rgba(255, 255, 255, 0.13);
         position: absolute;
         transform: translate(-50%, -50%);
@@ -141,7 +140,7 @@
 </div>
 
 <form method="POST">
-    <h1>Login</h1>
+    <h1>Update info account</h1>
 
     @if (session('error'))
         <div class="alert alert-danger">
@@ -149,20 +148,32 @@
         </div>
     @endif
 
-    <label for="email">Email</label>
-    <input type="email" placeholder="Email" id="email" name="email" value="{{ old('email') }}">
+    <div class="mb-3">
+        @csrf
+        <label class="mt-0" for="name">Name</label>
+        <input type="text" name="name" value="{{ old('name') ?? $name }}">
+        @error('name')
+            <span style="color: red">{{ $message }}</span>
+        @enderror
+    </div>
 
-    <label for="password">Password</label>
-    <input type="password" placeholder="Password" id="password" name="password">
+    <div class="mb-3">
+        <label for="name">Email</label>
+        <input type="email" name="email" value="{{ old('email') ?? $email }}">
+        @error('email')
+            <span style="color: red">{{ $message }}</span>
+        @enderror
+    </div>
 
-    @csrf
+    <div class="mb-3">
+        <label for="name">Phone</label>
+        <input type="tel" name="phone" value="{{ old('phone') }}">
+        @error('phone')
+            <span style="color: red">{{ $message }}</span>
+        @enderror
+    </div>
 
-    <button type="submit">Login</button>
-
-    <div class="social">
-        <div class="go d-flex align-items-center"><a href="/auth/google/redirect"><i class="fab fa-google"></i>
-                Google</a></div>
-        <div class="fb d-flex align-items-center"><a href="/auth/facebook/redirect"><i class="fab fa-facebook"></i>
-                Facebook</a></div>
+    <div class="d-grid">
+        <button type="submit">Confirm</button>
     </div>
 </form>

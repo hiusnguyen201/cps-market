@@ -37,7 +37,7 @@
                 <li class="nav-item">
                     <a href="/admin/brands"
                         class="nav-link {{ in_array('Brands', $breadcumbs['titles']) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-list"></i>
+                        <i class="nav-icon fas fa-copyright"></i>
                         <p>
                             Brands
                         </p>

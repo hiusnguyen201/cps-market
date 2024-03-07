@@ -54,7 +54,8 @@ class CategoryController extends Controller
             ]);
 
             session()->flash('success', 'create category was successful!');
-        } catch (\Exception $err) {
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
             session()->flash('error', 'create category was not successful!');
         }
         return redirect()->back();
@@ -77,7 +78,8 @@ class CategoryController extends Controller
             $category->fill($request->input());
             $category->save();
             session()->flash('success', 'update category was successful!');
-        } catch (\Exception $err) {
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
             session()->flash('error', 'Edit category was not successful!');
         }
         return redirect()->back();
@@ -102,7 +104,8 @@ class CategoryController extends Controller
                 $category->delete();
                 session()->flash('success', 'Delete category was successful!');
             }
-        } catch (\Exception $err) {
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
             session()->flash('error', 'Delete category was not successful!');
         }
 

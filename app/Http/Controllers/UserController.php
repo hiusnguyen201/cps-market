@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Admin\UserRequest;
 
+use function PHPSTORM_META\type;
+
 class UserController extends Controller
 {
     public function home(Request $request)
@@ -47,6 +49,7 @@ class UserController extends Controller
         return view('admin.users.details', [
             'user' => $user,
             'user_status' => config('constants.user_status'),
+            'genders' => config('constants.genders'),
             'breadcumbs' => ['titles' => ['Users', 'Details'], 'title_links' => ["/admin/users"]],
             'title' => 'Details User'
         ]);
@@ -77,7 +80,8 @@ class UserController extends Controller
             ]);
 
             session()->flash('success', 'create user was successful!');
-        } catch (\Exception $err) {
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
             session()->flash('error', 'create user was not successful!');
         }
 
@@ -104,7 +108,8 @@ class UserController extends Controller
             $user->fill($request->input());
             $user->save();
             session()->flash('success', 'update user was successful!');
-        } catch (\Exception $err) {
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
             session()->flash('error', 'Edit user was not successful!');
         }
 
@@ -131,7 +136,8 @@ class UserController extends Controller
                 $user->delete();
                 session()->flash('success', 'Delete user was successful!');
             }
-        } catch (\Exception $err) {
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
             session()->flash('error', 'Delete user was not successful!');
         }
 

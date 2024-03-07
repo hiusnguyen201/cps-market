@@ -101,83 +101,77 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone }}</td>
                             <td>
-                                @for ($i = 0; $i < count($user_status); $i++)
-                                    @if ($i == $user->status)
-                                        {{ $user_status[$i] }}
-                                    @break
-                                @endif
-                            @endfor
-                        </td>
-                        <td>
-                            {{ $user->role->name }}
-                        </td>
-                        <td class="text-right">
-                            <a class="btn btn-primary" href="/admin/users/edit/{{ $user->id }}" role="button">
-                                <i class="fas fa-pen"></i>
-                            </a>
-                            <button type="button" class="btn btn-danger" data-toggle="modal"
-                                data-target="#modal-delete-{{ $user->id }}">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <div class="modal " id="modal-delete-{{ $user->id }}" aria-modal="true" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Warning!</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Are you really want delete?</p>
-                                </div>
-                                <div class="modal-footer justify-content-between">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <form action="" method="POST">
-                                        <input type="hidden" name="id" value="{{ $user->id }}">
-                                        <button class="btn btn-primary" type="submit">Submit</button>
-                                        <input type="hidden" name="_method" value="delete">
-                                        @csrf
-                                    </form>
+                                {{ array_search($user->status, $user_status) }}
+                            <td>
+                                {{ $user->role->name }}
+                            </td>
+                            <td class="text-right">
+                                <a class="btn btn-primary" href="/admin/users/edit/{{ $user->id }}" role="button">
+                                    <i class="fas fa-pen"></i>
+                                </a>
+                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                    data-target="#modal-delete-{{ $user->id }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <div class="modal " id="modal-delete-{{ $user->id }}" aria-modal="true" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Warning!</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you really want delete?</p>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <form action="" method="POST">
+                                            <input type="hidden" name="id" value="{{ $user->id }}">
+                                            <button class="btn btn-primary" type="submit">Submit</button>
+                                            <input type="hidden" name="_method" value="delete">
+                                            @csrf
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-            </tbody>
-        </table>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginate -->
+        <div class="d-flex ml-auto">
+            {{ $users->appends(Request::all())->links() }}
+        </div>
     </div>
 
-    <!-- Paginate -->
-    <div class="d-flex ml-auto">
-        {{ $users->appends(Request::all())->links() }}
-    </div>
-</div>
-
-<!-- Modal delete -->
-<div class="modal " id="modal-deleteAll" aria-modal="true" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Warning!</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Are you really want delete?</p>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <form class="form-delete-all" action="" method="POST">
-                    <button class="btn btn-primary btn-deleteAll" type="submit">Submit</button>
-                    <input type="hidden" name="_method" value="delete">
-                    @csrf
-                </form>
+    <!-- Modal delete -->
+    <div class="modal " id="modal-deleteAll" aria-modal="true" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Warning!</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you really want delete?</p>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <form class="form-delete-all" action="" method="POST">
+                        <button class="btn btn-primary btn-deleteAll" type="submit">Submit</button>
+                        <input type="hidden" name="_method" value="delete">
+                        @csrf
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
