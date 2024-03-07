@@ -64,9 +64,9 @@ class BrandController extends Controller
                 'category_id' => $request['category'],
             ]);
 
-            session()->flash('success', 'create brand was successful!');
+            session()->flash('success', 'Create brand was successful!');
         } catch (\Exception $err) {
-            session()->flash('error', 'create brand was not successful!');
+            session()->flash('error', 'Create brand was not successful!');
         }
 
         return redirect()->back();

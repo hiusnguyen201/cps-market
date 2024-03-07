@@ -22,13 +22,13 @@
                         <div class="form-group row align-items-center">
                             <label for="inputExperience" class="col-sm-2 col-form-label">Created At:</label>
                             <div class="col-sm-10">
-                                {{ date(config('global.date_format'), strtotime($brand->created_at)) }}
+                                {{ date(config('constants.date_format'), strtotime($brand->created_at)) }}
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
                             <label for="inputExperience" class="col-sm-2 col-form-label">Updated At:</label>
                             <div class="col-sm-10">
-                                {{ date(config('global.date_format'), strtotime($brand->updated_at)) }}
+                                {{ date(config('constants.date_format'), strtotime($brand->updated_at)) }}
                             </div>
                         </div>
                     </form>
