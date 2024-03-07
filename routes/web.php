@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\DashboardController;
 
 /*
@@ -35,6 +36,21 @@ Route::prefix('admin')->group(function () {
         Route::delete('/', [UserController::class, 'handleDelete']);
     });
 
+    //Brands
+    Route::prefix('brands')->group(function () {
+        Route::get('/', [BrandController::class, 'home']);
+
+        Route::get('/details/{brand}', [BrandController::class, 'details']);
+
+        Route::get('/create', [BrandController::class, 'create']);
+        Route::post('/create', [BrandController::class, 'handleCreate']);
+
+        Route::get('/edit/{brand}', [BrandController::class, 'edit']);
+        Route::post('/edit/{brand}', [BrandController::class, 'handleUpdate']);
+
+        Route::delete('/', [BrandController::class, 'handleDelete']);
+    });
+    
     //categories
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'home']);
