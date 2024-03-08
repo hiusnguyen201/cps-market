@@ -88,7 +88,7 @@
 
                     <td><a href="/admin/brands/details/{{ $brand->id }}">{{ $brand->name }}</a></td>
 
-                    <td>{{ $brand->category->name }}</td>
+                    <td><a href="/admin/categories/details/{{ $brand->category->id }}">{{ $brand->category->name }}</a></td>
 
                     <td class="text-right">
                         <a class="btn btn-primary" href="/admin/brands/edit/{{ $brand->id }}" role="button">
