@@ -11,6 +11,8 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\OtpRequest;
 use App\Http\Requests\Auth\InfoSocialRequest;
 use App\Models\User;
+use App\Http\Requests\Auth\RegisterRequest;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -32,7 +34,7 @@ class AuthController extends Controller
             session()->flash('success', "We've sent a verification code to your email");
             return redirect("/auth/otp");
         }
-
+        
         session()->flash('error', 'Email or password is incorrect');
         return redirect()->back();
     }
@@ -186,6 +188,30 @@ class AuthController extends Controller
             error_log($e->getMessage());
             session()->flash('error', "Login with social error");
             return redirect("/auth/login");
+        }
+    }
+
+    public function localRegister() {
+        return view('auth.register');
+    }
+
+    public function handleLocalRegister(RegisterRequest $request) {
+
+        $role = Role::where("name", 'customer')->first();
+        
+        $user = User::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'role_id' => $role['id'],
+            'password' => Hash::make($request->password),
+        ]);
+
+        if ($user) {
+            Auth::login($user);
+            $this->sendOtpToEmail($user);
+            session()->flash('success', "Registration successful! We've sent a verification code to your email");
+            return redirect("/auth/otp");
         }
     }
 }
