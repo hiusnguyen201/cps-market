@@ -142,35 +142,37 @@
 <form method="POST">
     <h1>Register</h1>
 
-    @if ($errors->any())
-    <div class="alert alert-danger text-center">
-        <li>{{ $errors }}</li>
-    </div>
-    @endif
-
     <label for="name">Name</label>
-    <input type="text" id="name" name="name" value="{{ old('name') }}" required autofocus>
+    <input type="text" id="name" name="name" value="{{ old('name') }}">
+    @error('name')
+        <span style="color: red">{{ $message }}</span>
+    @enderror
 
     <label for="phone">Phone</label>
-    <input type="tel" id="phone" name="phone" value="{{ old('phone') }}" required>
+    <input type="tel" id="phone" name="phone" value="{{ old('phone') }}">
+    @error('phone')
+        <span style="color: red">{{ $message }}</span>
+    @enderror
 
     <label for="email">Email</label>
-    <input type="email" id="email" name="email" value="{{ old('email') }}" required>
+    <input type="email" id="email" name="email" value="{{ old('email') }}">
+    @error('email')
+        <span style="color: red">{{ $message }}</span>
+    @enderror
 
     <label for="password">Password</label>
-    <input type="password" id="password" name="password" required>
+    <input type="password" id="password" name="password">
+    @error('password')
+        <span style="color: red">{{ $message }}</span>
+    @enderror
 
     <label for="password_confirmation">Confirm Password</label>
-    <input type="password" id="password_confirmation" name="password_confirmation" required>
+    <input type="password" id="password_confirmation" name="password_confirmation">
+    @error('password_confirmation')
+        <span style="color: red">{{ $message }}</span>
+    @enderror
 
     @csrf
 
     <button type="submit">Register</button>
-
-    <div class="social">
-        <div class="go d-flex align-items-center"><a href="/auth/google/redirect"><i class="fab fa-google"></i>
-                Google</a></div>
-        <div class="fb d-flex align-items-center"><a href="/auth/facebook/redirect"><i class="fab fa-facebook"></i>
-                Facebook</a></div>
-    </div>
 </form>

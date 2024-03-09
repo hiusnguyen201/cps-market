@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:100',
-            'email' => 'required|email|max:100|unique:users,email' . ($request->id ? ',' . $request->id : ''),
+            'email' => 'required|email|max:150|unique:users,email' . ($request->id ? ',' . $request->id : ''),
             'phone' => ['required', 'string', 'min:10', 'max:15', 'regex:/^(84|0[3|5|7|8|9])+([0-9]{8})\b/'],
             'gender' => 'integer',
             'role' => 'required|integer',

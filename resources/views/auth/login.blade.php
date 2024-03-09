@@ -43,7 +43,6 @@
     }
 
     form {
-        height: 520px;
         width: 400px;
         background-color: rgba(255, 255, 255, 0.13);
         position: absolute;
@@ -96,7 +95,7 @@
     }
 
     button {
-        margin-top: 50px;
+        margin-top: 30px;
         width: 100%;
         background-color: #ffffff;
         color: #080710;
@@ -154,7 +153,7 @@
 
     <label for="password">Password</label>
     <input type="password" placeholder="Password" id="password" name="password">
-
+    <a href="/auth/register">Sign Up</a>
     @csrf
 
     <button type="submit">Login</button>
