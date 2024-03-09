@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User_Otp;
 use App\Models\Role;
+use Illuminate\Support\Carbon;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -11,6 +12,13 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\OtpRequest;
 use App\Http\Requests\Auth\InfoSocialRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+
 
 class AuthController extends Controller
 {
@@ -144,7 +152,8 @@ class AuthController extends Controller
 
     public function socialLogin($provider = null)
     {
-        if (!config("services.$provider")) abort('404');
+        if (!config("services.$provider"))
+            abort('404');
         return Socialite::driver($provider)->redirect();
     }
 
@@ -158,13 +167,15 @@ class AuthController extends Controller
         */
 
         $social_user_info = Socialite::driver($provider)->user();
-        if (!$social_user_info) return redirect()->back();
+        if (!$social_user_info)
+            return redirect()->back();
         $social_user_info['provider'] = $provider;
 
         try {
             $exist_user = User::where(["email" => $social_user_info['email']])->first();
             if (is_null($exist_user)) {
-                if (!session()->get('social_user_info')) session()->push("social_user_info", $social_user_info);
+                if (!session()->get('social_user_info'))
+                    session()->push("social_user_info", $social_user_info);
                 return redirect("/auth/info-social");
             }
 
@@ -188,4 +199,57 @@ class AuthController extends Controller
             return redirect("/auth/login");
         }
     }
+
+    // --- Forget Password Function ---
+    public function showForgetPasswordForm()
+    {
+        return view('auth.forgetPassword');
+    }
+
+    public function submitForgetPasswordForm(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users'
+        ]);
+        $token = Str::random(64);
+        DB::table('password_resets')->insert([
+            'email' => $request->email,
+            'token' => $token,
+            'created_at' => Carbon::now()
+        ]);
+        Mail::send("emails.forget-Password", ['token' => $token], function ($message) use ($request){
+            $message->to($request->email);
+            $message->subject("Reset Password");
+        });
+        return redirect()->to(route("show.forgetpassword.get"))
+        ->with("success", "We have send email to reset password.");
+    }
+
+    public function showResetPasswordForm($token)
+    {
+        return view('auth.forgetPasswordLink', compact('token'));
+    }
+
+    public function submitResetPasswordForm(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users',
+            'password' => 'required|string|min:6|confirmed',
+            'password_confirmation' => "required"
+        ]);
+        $updatePassword = DB::table('password_resets')
+        ->where([
+            "email" => $request->email,
+            "token" => $request->token
+        ])->first();
+        if (!$updatePassword) {
+            return redirect()->to(route('show.resetpassword.get'))->with("error", "Invalid");
+        }
+        User::where("email", $request->email)
+        ->update(["password" => Hash::make($request->password)]);
+        DB::table("password_resets")->where(["email" => $request->email])->delete();
+        return redirect()->to(route("login"))->with("success", "Password reset success");
+    }
+
+
 }

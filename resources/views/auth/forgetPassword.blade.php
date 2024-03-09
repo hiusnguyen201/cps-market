@@ -141,30 +141,35 @@
     <div class="shape"></div>
 </div>
 
-<form method="POST">
-    <h1>Login</h1>
+<form action="{{ route('show.forgetpassword.get') }}" method="POST">
+    <h1>Forgot Password</h1>
 
+
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-danger text-center">
+                {{ $error }}
+            </div>
+        @endforeach
+    @endif
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     @if (session('error'))
         <div class="alert alert-danger">
             {{ session('error') }}
         </div>
     @endif
 
-    <label for="email">Email</label>
-    <input type="email" placeholder="Email" id="email" name="email" value="{{ old('email') }}">
 
-    <label for="password">Password</label>
-    <input type="password" placeholder="Password" id="password" name="password">
+    <label class="form-label">Email</label>
+    <input type="email" class="form-control" placeholder="Email..." id="email" name="email"
+        value="{{ old('email') }}">
 
     @csrf
-    <a  href="/auth/forget-password">Foget password?</a>
+    <button type="submit">Send link</button>
 
-    <button type="submit">Login</button>
 
-    <div class="social">
-        <div class="go d-flex align-items-center"><a href="/auth/google/redirect"><i class="fab fa-google"></i>
-                Google</a></div>
-        <div class="fb d-flex align-items-center"><a href="/auth/facebook/redirect"><i class="fab fa-facebook"></i>
-                Facebook</a></div>
-    </div>
 </form>
