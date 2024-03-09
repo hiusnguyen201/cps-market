@@ -166,11 +166,6 @@
     @csrf
     <input type="hidden"  name="token" value="{{ $token }}">
 
-
-    <label class="form-label">Email</label>
-    <input type="email" class="form-control"   name="email" value="{{ old('email') }}">
-
-
     <label class="form-label">Enter new password</label>
     <input type="password" class="form-control"   name="password" value="{{ old('email') }}">
 

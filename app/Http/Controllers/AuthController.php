@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PasswordResets;
 use App\Models\User_Otp;
 use App\Models\Role;
 use Illuminate\Support\Carbon;
@@ -211,43 +212,64 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email|exists:users'
         ]);
-        $token = Str::random(64);
-        DB::table('password_resets')->insert([
-            'email' => $request->email,
-            'token' => $token,
-            'created_at' => Carbon::now()
-        ]);
-        Mail::send("emails.forget-Password", ['token' => $token], function ($message) use ($request){
+
+
+        try {
+            $token = Str::random(64);
+            PasswordResets::insert([
+                'email' => $request->email,
+                'token' => $token,
+                'created_at' => Carbon::now(),
+                'expires_at' => Carbon::now()->addMinutes(3)
+            ]);
+        } catch (\Exception $err) {
+            return redirect()->to(route("show.forgetpassword.get"))
+                ->with("error", "Email was sent. Please wait a few minutes to try again!");
+        }
+        Mail::send("emails.forget-Password", ['token' => $token], function ($message) use ($request) {
             $message->to($request->email);
             $message->subject("Reset Password");
         });
         return redirect()->to(route("show.forgetpassword.get"))
-        ->with("success", "We have send email to reset password.");
+            ->with("success", "We have send email to reset password.");
     }
 
     public function showResetPasswordForm($token)
     {
+        $passwordReset = PasswordResets::where('token', $token)->first();
+
+        if (!$passwordReset) {
+            return redirect()->to(route("show.forgetpassword.get"))
+                ->with("error", "Invalid token or token has expired. Please try again!");
+        }
+
+        if (Carbon::now()->gt($passwordReset->expires_at)) {
+            PasswordResets::where('token', $token)->delete();
+            return redirect()->to(route("show.forgetpassword.get"))
+                ->with("error", "Token has expired. Please try again!");
+        }
+
         return view('auth.forgetPasswordLink', compact('token'));
     }
 
     public function submitResetPasswordForm(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:users',
+
             'password' => 'required|string|min:6|confirmed',
             'password_confirmation' => "required"
         ]);
-        $updatePassword = DB::table('password_resets')
-        ->where([
-            "email" => $request->email,
+        $updatePassword = PasswordResets::where([
             "token" => $request->token
         ])->first();
         if (!$updatePassword) {
-            return redirect()->to(route('show.resetpassword.get'))->with("error", "Invalid");
+            $url = route('show.resetpassword.get', ['token' => $request->token]);
+            return redirect()->to($url)->with("error", "Invalid");
         }
-        User::where("email", $request->email)
-        ->update(["password" => Hash::make($request->password)]);
-        DB::table("password_resets")->where(["email" => $request->email])->delete();
+
+        User::where("email", $updatePassword->email)
+            ->update(["password" => Hash::make($request->password)]);
+        PasswordResets::where(["email" => $updatePassword->email])->delete();
         return redirect()->to(route("login"))->with("success", "Password reset success");
     }
 
