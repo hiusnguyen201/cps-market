@@ -34,7 +34,7 @@ class AuthController extends Controller
             session()->flash('success', "We've sent a verification code to your email");
             return redirect("/auth/otp");
         }
-        
+
         session()->flash('error', 'Email or password is incorrect');
         return redirect()->back();
     }
@@ -112,7 +112,9 @@ class AuthController extends Controller
             return redirect()->back();
         }
 
-        User::where("id", $user['id'])->update(['status' => config("constants.user_status.Active")]);
+        if (!$user['status'] == config("constants.user_status.Inactive")) {
+            User::where("id", $user['id'])->update(['status' => config("constants.user_status.Active"), 'email_verified_at' => date(now())]);
+        }
 
         if (strtotime($user_otp->expire) - strtotime(now()) < 0) {
             $user_otp->delete();
@@ -139,8 +141,9 @@ class AuthController extends Controller
 
     public function logout()
     {
-        session()->flush();
-        auth()->logout();
+        Auth::logout();
+        session()->invalidate();
+        session()->regenerateToken();
         return redirect('/');
     }
 
@@ -191,14 +194,15 @@ class AuthController extends Controller
         }
     }
 
-    public function localRegister() {
+    public function register()
+    {
         return view('auth.register');
     }
 
-    public function handleLocalRegister(RegisterRequest $request) {
-
+    public function handleRegister(RegisterRequest $request)
+    {
         $role = Role::where("name", 'customer')->first();
-        
+
         $user = User::create([
             'name' => $request->name,
             'phone' => $request->phone,

@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,6 +81,6 @@ Route::prefix('auth')->group(function () {
     Route::get('/{provider?}/redirect', [AuthController::class, 'socialLogin']);
     Route::get('/{provider?}/callback', [AuthController::class, 'handleSocialLogin']);
 
-    Route::get('/register', [AuthController::class, 'localRegister']);
-    Route::post('/register', [AuthController::class, 'handleLocalRegister']);
+    Route::get('/register', [AuthController::class, 'register']);
+    Route::post('/register', [AuthController::class, 'handleRegister']);
 });
