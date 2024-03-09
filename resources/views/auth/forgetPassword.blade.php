@@ -141,16 +141,16 @@
     <div class="shape"></div>
 </div>
 
-<form action="{{ route('show.forgetpassword.get') }}" method="POST">
+<form method="POST">
     <h1>Forgot Password</h1>
 
 
     @if ($errors->any())
-        @foreach ($errors->all() as $error)
+       
             <div class="alert alert-danger text-center">
-                {{ $error }}
+                Something Wrong!
             </div>
-        @endforeach
+        
     @endif
     @if (session('success'))
         <div class="alert alert-success">
@@ -167,7 +167,9 @@
     <label class="form-label">Email</label>
     <input type="email" class="form-control" placeholder="Email..." id="email" name="email"
         value="{{ old('email') }}">
-
+    @error('email')
+        <span style="color: red">{{ $message }}</span>
+    @enderror
     @csrf
     <button type="submit">Send link</button>
 

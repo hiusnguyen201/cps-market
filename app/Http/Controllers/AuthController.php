@@ -15,10 +15,9 @@ use App\Http\Requests\Auth\InfoSocialRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+use App\Http\Requests\Auth\ForgetPassword\ForgetPasswordRequest;
+use App\Http\Requests\Auth\ForgetPassword\ResetPasswordRequest;
 
 
 class AuthController extends Controller
@@ -207,30 +206,35 @@ class AuthController extends Controller
         return view('auth.forgetPassword');
     }
 
-    public function submitForgetPasswordForm(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email|exists:users'
-        ]);
 
+    public function submitForgetPasswordForm(ForgetPasswordRequest $request)
+    {
+        
+        $token = null;
+        do {
+            $token = Str::random(64);
+            $resetPassword = PasswordResets::firstOrNew([
+                'token' => $token,
+            ]);
+        } while ($resetPassword->exists);
 
         try {
-            $token = Str::random(64);
             PasswordResets::insert([
-                'email' => $request->email,
+                'email' => $request['email'],
                 'token' => $token,
                 'created_at' => Carbon::now(),
-                'expires_at' => Carbon::now()->addMinutes(3)
+                'expires_at' => Carbon::now()->addMinutes(env('PASS_RESET_EXPIRE_MINUTES')),
             ]);
         } catch (\Exception $err) {
-            return redirect()->to(route("show.forgetpassword.get"))
-                ->with("error", "Email was sent. Please wait a few minutes to try again!");
+            return redirect('/auth/forget-password')
+                ->with("error", "Email was sent. Please check your mail!");
         }
+        
         Mail::send("emails.forget-Password", ['token' => $token], function ($message) use ($request) {
-            $message->to($request->email);
+            $message->to($request['email']);
             $message->subject("Reset Password");
         });
-        return redirect()->to(route("show.forgetpassword.get"))
+        return redirect('/auth/forget-password')
             ->with("success", "We have send email to reset password.");
     }
 
@@ -239,38 +243,35 @@ class AuthController extends Controller
         $passwordReset = PasswordResets::where('token', $token)->first();
 
         if (!$passwordReset) {
-            return redirect()->to(route("show.forgetpassword.get"))
+            return redirect('/auth/forget-password')
                 ->with("error", "Invalid token or token has expired. Please try again!");
         }
 
         if (Carbon::now()->gt($passwordReset->expires_at)) {
             PasswordResets::where('token', $token)->delete();
-            return redirect()->to(route("show.forgetpassword.get"))
+            return redirect('/auth/forget-password')
                 ->with("error", "Token has expired. Please try again!");
         }
 
         return view('auth.forgetPasswordLink', compact('token'));
     }
 
-    public function submitResetPasswordForm(Request $request)
+    public function submitResetPasswordForm(ResetPasswordRequest $request)
     {
-        $request->validate([
-
-            'password' => 'required|string|min:6|confirmed',
-            'password_confirmation' => "required"
-        ]);
+        
         $updatePassword = PasswordResets::where([
             "token" => $request->token
         ])->first();
         if (!$updatePassword) {
-            $url = route('show.resetpassword.get', ['token' => $request->token]);
+            $url = '/auth/reset-password/' . $request->token;
             return redirect()->to($url)->with("error", "Invalid");
-        }
-
+          }
+          
         User::where("email", $updatePassword->email)
-            ->update(["password" => Hash::make($request->password)]);
+            ->update(["password" => Hash::make($request['password'])]);
         PasswordResets::where(["email" => $updatePassword->email])->delete();
-        return redirect()->to(route("login"))->with("success", "Password reset success");
+        return redirect('/auth/login')->with('success', 'Password reset successful');
+
     }
 
 

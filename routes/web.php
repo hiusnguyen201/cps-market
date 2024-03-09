@@ -66,13 +66,13 @@ Route::prefix('admin')->group(function () {
 // Auth
 Route::prefix('auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
-    Route::get('/login', [AuthController::class, 'localLogin'])->name('login');
+    Route::get('/login', [AuthController::class, 'localLogin']);
     Route::post('/login', [AuthController::class, 'handleLocalLogin']);
 
-    Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm'])->name('show.forgetpassword.get');
-    Route::post('/forget-password', [AuthController::class, 'submitForgetPasswordForm'])->name('show.forgetpassword.post');
-    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('show.resetpassword.get');
-    Route::post('/reset-password', [AuthController::class, 'submitResetPasswordForm'])->name('show.resetpassword.post');
+    Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm']);
+    Route::post('/forget-password', [AuthController::class, 'submitForgetPasswordForm']);
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm']);
+    Route::post('/reset-password/{token}', [AuthController::class, 'submitResetPasswordForm']);
 
     Route::get('/info-social', [AuthController::class, 'infoSocial']);
     Route::post('/info-social', [AuthController::class, 'handleUpdateInfoSocial']);

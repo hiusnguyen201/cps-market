@@ -169,7 +169,7 @@
     <input type="password" placeholder="Password" id="password" name="password">
 
     @csrf
-    <a  href="/auth/forget-password">Foget password?</a>
+    <a  href="/auth/forget-password">Forget password?</a>
 
     <button type="submit">Login</button>
 
