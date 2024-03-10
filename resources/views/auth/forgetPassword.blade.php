@@ -43,6 +43,7 @@
     }
 
     form {
+        height: 520px;
         width: 400px;
         background-color: rgba(255, 255, 255, 0.13);
         position: absolute;
@@ -96,7 +97,7 @@
     }
 
     button {
-        margin-top: 30px;
+        margin-top: 50px;
         width: 100%;
         background-color: #ffffff;
         color: #080710;
@@ -141,14 +142,15 @@
 </div>
 
 <form method="POST">
-    <h1>Login</h1>
+    <h1>Forgot Password</h1>
+
 
     @if ($errors->any())
-        @foreach ($errors->all() as $error)
+       
             <div class="alert alert-danger text-center">
-                {{ $error }}
+                Something Wrong!
             </div>
-        @endforeach
+        
     @endif
     @if (session('success'))
         <div class="alert alert-success">
@@ -161,21 +163,15 @@
         </div>
     @endif
 
-    <label for="email">Email</label>
-    <input type="email" placeholder="Email" id="email" name="email" value="{{ old('email') }}">
 
-    <label for="password">Password</label>
-    <input type="password" placeholder="Password" id="password" name="password">
-    <a href="/auth/register">Sign Up</a>
+    <label class="form-label">Email</label>
+    <input type="email" class="form-control" placeholder="Email..." id="email" name="email"
+        value="{{ old('email') }}">
+    @error('email')
+        <span style="color: red">{{ $message }}</span>
+    @enderror
     @csrf
-    <a  href="/auth/forget-password">Forget password?</a>
+    <button type="submit">Send link</button>
 
-    <button type="submit">Login</button>
 
-    <div class="social">
-        <div class="go d-flex align-items-center"><a href="/auth/google/redirect"><i class="fab fa-google"></i>
-                Google</a></div>
-        <div class="fb d-flex align-items-center"><a href="/auth/facebook/redirect"><i class="fab fa-facebook"></i>
-                Facebook</a></div>
-    </div>
 </form>

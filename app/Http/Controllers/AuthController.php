@@ -2,17 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use Laravel\Socialite\Facades\Socialite;
+
+use App\Models\PasswordResets;
 use App\Models\User_Otp;
 use App\Models\Role;
-use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\OtpRequest;
 use App\Http\Requests\Auth\InfoSocialRequest;
-use App\Models\User;
+use App\Http\Requests\Auth\ForgetPasswordRequest;
+use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Http\Requests\Auth\RegisterRequest;
-use Illuminate\Support\Facades\Hash;
+
 
 class AuthController extends Controller
 {
@@ -149,7 +159,8 @@ class AuthController extends Controller
 
     public function socialLogin($provider = null)
     {
-        if (!config("services.$provider")) abort('404');
+        if (!config("services.$provider"))
+            abort('404');
         return Socialite::driver($provider)->redirect();
     }
 
@@ -163,13 +174,15 @@ class AuthController extends Controller
         */
 
         $social_user_info = Socialite::driver($provider)->user();
-        if (!$social_user_info) return redirect()->back();
+        if (!$social_user_info)
+            return redirect()->back();
         $social_user_info['provider'] = $provider;
 
         try {
             $exist_user = User::where(["email" => $social_user_info['email']])->first();
             if (is_null($exist_user)) {
-                if (!session()->get('social_user_info')) session()->push("social_user_info", $social_user_info);
+                if (!session()->get('social_user_info'))
+                    session()->push("social_user_info", $social_user_info);
                 return redirect("/auth/info-social");
             }
 
@@ -217,5 +230,81 @@ class AuthController extends Controller
             session()->flash('success', "Registration successful! We've sent a verification code to your email");
             return redirect("/auth/otp");
         }
+    }
+
+    public function showForgetPasswordForm()
+    {
+        return view('auth.forgetPassword');
+    }
+
+
+    public function submitForgetPasswordForm(ForgetPasswordRequest $request)
+    {
+        //search
+        $resetPassword = PasswordResets::where('email', $request['email'])->first();
+        if ($resetPassword) {
+            if (Carbon::now()->gt($resetPassword['expire_at'])) {
+                PasswordResets::where('email', $request['email'])->delete();
+            } else {
+                return redirect('/auth/forget-password')
+                    ->with("error", "Email was sent. Please check your mail again!");
+            }
+        }
+
+        $token = null;
+        do {
+            $token = Str::random(64);
+            $resetPassword = PasswordResets::firstOrNew([
+                'token' => $token,
+            ]);
+        } while ($resetPassword->exists);
+
+        PasswordResets::insert([
+            'email' => $request['email'],
+            'token' => $token,
+            'created_at' => Carbon::now(),
+            'expire_at' => Carbon::now()->addMinutes(env('PASS_RESET_EXPIRE_MINUTES')),
+        ]);
+        Mail::send("mail.forget-Password", ['token' => $token], function ($message) use ($request) {
+            $message->to($request['email']);
+            $message->subject("Reset Password");
+        });
+        return redirect('/auth/forget-password')
+            ->with("error", "Email was sent. Please check your mail!");
+    }
+
+    public function showResetPasswordForm($token)
+    {
+        $passwordReset = PasswordResets::where('token', $token)->first();
+
+        if (!$passwordReset) {
+            return redirect('/auth/forget-password')
+                ->with("error", "Invalid link or link has expired. Please try again!");
+        }
+
+        if (Carbon::now()->gt($passwordReset->expire_at)) {
+            PasswordResets::where('token', $token)->delete();
+            return redirect('/auth/forget-password')
+                ->with("error", "Link has expired. Please try again!");
+        }
+
+        return view('auth.forgetPasswordLink', compact('token'));
+    }
+
+    public function submitResetPasswordForm(ResetPasswordRequest $request)
+    {
+
+        $updatePassword = PasswordResets::where([
+            "token" => $request->token
+        ])->first();
+        if (!$updatePassword) {
+            $url = '/auth/reset-password/' . $request->token;
+            return redirect()->to($url)->with("error", "Invalid");
+        }
+
+        User::where("email", $updatePassword->email)
+            ->update(["password" => Hash::make($request['password'])]);
+        PasswordResets::where(["email" => $updatePassword->email])->delete();
+        return redirect('/auth/login')->with('success', 'Password reset successful');
     }
 }
