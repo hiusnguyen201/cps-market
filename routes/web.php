@@ -69,6 +69,11 @@ Route::prefix('auth')->group(function () {
     Route::get('/login', [AuthController::class, 'localLogin']);
     Route::post('/login', [AuthController::class, 'handleLocalLogin']);
 
+    Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm']);
+    Route::post('/forget-password', [AuthController::class, 'submitForgetPasswordForm']);
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm']);
+    Route::post('/reset-password/{token}', [AuthController::class, 'submitResetPasswordForm']);
+
     Route::get('/info-social', [AuthController::class, 'infoSocial']);
     Route::post('/info-social', [AuthController::class, 'handleUpdateInfoSocial']);
 

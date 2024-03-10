@@ -43,6 +43,7 @@
     }
 
     form {
+        height: 520px;
         width: 400px;
         background-color: rgba(255, 255, 255, 0.13);
         position: absolute;
@@ -96,7 +97,7 @@
     }
 
     button {
-        margin-top: 30px;
+        margin-top: 50px;
         width: 100%;
         background-color: #ffffff;
         color: #080710;
@@ -141,14 +142,14 @@
 </div>
 
 <form method="POST">
-    <h1>Login</h1>
+    <h1>Reset Password</h1>
 
     @if ($errors->any())
-        @foreach ($errors->all() as $error)
+       
             <div class="alert alert-danger text-center">
-                {{ $error }}
+                Something Wrong!
             </div>
-        @endforeach
+
     @endif
     @if (session('success'))
         <div class="alert alert-success">
@@ -161,21 +162,26 @@
         </div>
     @endif
 
-    <label for="email">Email</label>
-    <input type="email" placeholder="Email" id="email" name="email" value="{{ old('email') }}">
 
-    <label for="password">Password</label>
-    <input type="password" placeholder="Password" id="password" name="password">
-    <a href="/auth/register">Sign Up</a>
     @csrf
-    <a  href="/auth/forget-password">Forget password?</a>
+    <input type="hidden" name="token" value="{{ $token }}">
 
-    <button type="submit">Login</button>
+    <label class="form-label">Enter new password</label>
+    <input type="password" class="form-control" name="password" value="{{ old('email') }}">
+    @error('password')
+        <span style="color: red">{{ $message }}</span>
+    @enderror
 
-    <div class="social">
-        <div class="go d-flex align-items-center"><a href="/auth/google/redirect"><i class="fab fa-google"></i>
-                Google</a></div>
-        <div class="fb d-flex align-items-center"><a href="/auth/facebook/redirect"><i class="fab fa-facebook"></i>
-                Facebook</a></div>
+    <label class="form-label">Confirm Password</label>
+    <input type="password" class="form-control" name="password_confirmation" value="{{ old('email') }}">
+    @error('password_confirmation')
+        <span style="color: red">{{ $message }}</span>
+    @enderror
+
+    <div class="col-md-6 offset-md-4">
+        <button type="submit" class="btn btn-primary">
+            Reset Password
+        </button>
     </div>
+
 </form>
