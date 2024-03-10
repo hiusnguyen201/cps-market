@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Auth\ForgetPassword;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -29,11 +29,12 @@ class ForgetPasswordRequest extends FormRequest
         ];
     }
 
-    public function messages(){
+    public function messages()
+    {
         return [
             'email.required' => ':attribute is required',
             'email.email' => ':attribute invalid',
-            'email.exists' => ':attribute is not registered',
+            'email.exists' => ':attribute not found',
         ];
     }
 

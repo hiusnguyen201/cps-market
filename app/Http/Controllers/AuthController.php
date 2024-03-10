@@ -9,7 +9,6 @@ use App\Models\User_Otp;
 use App\Models\Role;
 use App\Models\User;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -19,9 +18,9 @@ use Illuminate\Support\Str;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\OtpRequest;
 use App\Http\Requests\Auth\InfoSocialRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ForgetPasswordRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
-use App\Http\Requests\Auth\RegisterRequest;
 
 
 class AuthController extends Controller
@@ -96,7 +95,7 @@ class AuthController extends Controller
 
         $user_otp_new = User_Otp::create([
             'otp' => mt_rand(100000, 999999),
-            'expire' => date('Y-m-d H:i:s', strtotime(now()) + 60 * env('OTP_EXPIRE_MINUTES', 1)),
+            'expire' => Carbon::now()->addMinutes(env('OTP_EXPIRE_MINUTES', 1)),
             'user_id' => $user->id
         ]);
 
@@ -123,10 +122,10 @@ class AuthController extends Controller
         }
 
         if (!$user['status'] == config("constants.user_status.Inactive")) {
-            User::where("id", $user['id'])->update(['status' => config("constants.user_status.Active"), 'email_verified_at' => date(now())]);
+            User::where("id", $user['id'])->update(['status' => config("constants.user_status.Active"), 'email_verified_at' => Carbon::now()]);
         }
 
-        if (strtotime($user_otp->expire) - strtotime(now()) < 0) {
+        if (Carbon::now()->gt($user_otp->expire)) {
             $user_otp->delete();
             session()->flash('error', 'Otp is expired!');
             return redirect()->back();
@@ -237,7 +236,6 @@ class AuthController extends Controller
         return view('auth.forgetPassword');
     }
 
-
     public function submitForgetPasswordForm(ForgetPasswordRequest $request)
     {
         //search
@@ -247,30 +245,30 @@ class AuthController extends Controller
                 PasswordResets::where('email', $request['email'])->delete();
             } else {
                 return redirect('/auth/forget-password')
-                    ->with("error", "Email was sent. Please check your mail again!");
+                    ->with("success", "Mail was sent. Please check your mail again!");
             }
         }
 
         $token = null;
         do {
             $token = Str::random(64);
-            $resetPassword = PasswordResets::firstOrNew([
-                'token' => $token,
-            ]);
-        } while ($resetPassword->exists);
+            $resetPassword = PasswordResets::where('token', $token)->first();
+        } while ($resetPassword);
 
-        PasswordResets::insert([
+        PasswordResets::create([
             'email' => $request['email'],
             'token' => $token,
             'created_at' => Carbon::now(),
-            'expire_at' => Carbon::now()->addMinutes(env('PASS_RESET_EXPIRE_MINUTES')),
+            'expire_at' => Carbon::now()->addMinutes(env('PASS_RESET_EXPIRE_MINUTES', 1)),
         ]);
+
         Mail::send("mail.forget-Password", ['token' => $token], function ($message) use ($request) {
             $message->to($request['email']);
             $message->subject("Reset Password");
         });
+
         return redirect('/auth/forget-password')
-            ->with("error", "Email was sent. Please check your mail!");
+            ->with("success", "Mail was sent. Please check your mail!");
     }
 
     public function showResetPasswordForm($token)

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Auth\ForgetPassword;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -29,7 +29,8 @@ class ResetPasswordRequest extends FormRequest
         ];
     }
 
-    public function messages(){
+    public function messages()
+    {
         return [
             'password.required' => ':attribute is required',
             'password.min' => ':attribute needs at least 6 characters',
@@ -42,7 +43,7 @@ class ResetPasswordRequest extends FormRequest
     {
         return [
             'password' => "password",
-            'password_confirmation' => "Password_confirmation"
+            'password_confirmation' => "Password Confirmation"
 
         ];
     }
