@@ -209,6 +209,16 @@ class AuthController extends Controller
 
     public function submitForgetPasswordForm(ForgetPasswordRequest $request)
     {
+        //search
+        $resetPassword = PasswordResets::where('email', $request['email'])->first();
+        if ($resetPassword) {
+            if (Carbon::now()->gt($resetPassword['expire_at'])) {
+                PasswordResets::where('email', $request['email'])->delete();
+            } else {
+                return redirect('/auth/forget-password')
+                    ->with("error", "Email was sent. Please check your mail again!");
+            }
+        }
 
         $token = null;
         do {
@@ -218,43 +228,18 @@ class AuthController extends Controller
             ]);
         } while ($resetPassword->exists);
 
-        $resetPassword = PasswordResets::where('email', $request['email'])->first();
-
-        if ($resetPassword) {
-            if (Carbon::now()->gt($resetPassword['expires_at'])) {
-                PasswordResets::where('email', $request['email'])->delete();
-                PasswordResets::insert([
-                    'email' => $request['email'],
-                    'token' => $token,
-                    'created_at' => Carbon::now(),
-                    'expires_at' => Carbon::now()->addMinutes(env('PASS_RESET_EXPIRE_MINUTES')),
-                ]);
-                Mail::send("emails.forget-Password", ['token' => $token], function ($message) use ($request) {
-                    $message->to($request['email']);
-                    $message->subject("Reset Password");
-                });
-                return redirect('/auth/forget-password')
-                    ->with("error", "New email was sent. Please check your mail!");
-            } else {
-                return redirect('/auth/forget-password')
-                    ->with("error", "Email was sent. Please check your mail again!");
-            }
-        } else {
-            PasswordResets::insert([
-                'email' => $request['email'],
-                'token' => $token,
-                'created_at' => Carbon::now(),
-                'expires_at' => Carbon::now()->addMinutes(env('PASS_RESET_EXPIRE_MINUTES')),
-            ]);
-            Mail::send("emails.forget-Password", ['token' => $token], function ($message) use ($request) {
-                $message->to($request['email']);
-                $message->subject("Reset Password");
-            });
-            return redirect('/auth/forget-password')
-                ->with("error", "Email was sent. Please check your mail!");
-        }
-
-
+        PasswordResets::insert([
+            'email' => $request['email'],
+            'token' => $token,
+            'created_at' => Carbon::now(),
+            'expire_at' => Carbon::now()->addMinutes(env('PASS_RESET_EXPIRE_MINUTES')),
+        ]);
+        Mail::send("mail.forget-Password", ['token' => $token], function ($message) use ($request) {
+            $message->to($request['email']);
+            $message->subject("Reset Password");
+        });
+        return redirect('/auth/forget-password')
+            ->with("error", "Email was sent. Please check your mail!");
 
     }
 
@@ -267,7 +252,7 @@ class AuthController extends Controller
                 ->with("error", "Invalid link or link has expired. Please try again!");
         }
 
-        if (Carbon::now()->gt($passwordReset->expires_at)) {
+        if (Carbon::now()->gt($passwordReset->expire_at)) {
             PasswordResets::where('token', $token)->delete();
             return redirect('/auth/forget-password')
                 ->with("error", "Link has expired. Please try again!");

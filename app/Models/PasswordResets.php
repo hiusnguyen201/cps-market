@@ -13,7 +13,7 @@ class PasswordResets extends Model
         'email',
         'token',
         'created_at',
-        'expires_at',
+        'expire_at',
     ];
 
     
