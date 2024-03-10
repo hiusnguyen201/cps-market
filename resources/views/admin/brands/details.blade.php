@@ -12,12 +12,15 @@
                                 {{ $brand->name }}
                             </div>
                         </div>
+
+                        @foreach($categories as $category)
                         <div class="form-group row align-items-center">
                             <label for="inputEmail" class="col-sm-2 col-form-label">Category:</label>
                             <div class="col-sm-10">
-                                {{ $brand->category->name }}
+                                <a href="/admin/categories/details/{{ $category->id }}">{{ $category->name }}</a>
                             </div>
                         </div>
+                        @endforeach
 
                         <div class="form-group row align-items-center">
                             <label for="inputExperience" class="col-sm-2 col-form-label">Created At:</label>

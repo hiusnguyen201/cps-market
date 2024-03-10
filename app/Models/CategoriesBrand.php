@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Brand extends Model
+class CategoriesBrand extends Model
 {
     use HasFactory;
-    use SoftDeletes;
-    protected $table = 'brands';
+
+    protected $table = 'categories_brands';
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +17,8 @@ class Brand extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        "name",
+        "brand_id",
+        "category_id",
     ];
 
     /**
@@ -27,11 +27,17 @@ class Brand extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'name' => "string",
+        'brand_id' => "integer",
+        'category_id' => "integer",
     ];
 
-    public function categories()
+    public function brand()
     {
-        return $this->belongsToMany(Category::class, 'categories_brands', 'brand_id', 'category_id');
+        return $this->belongsTo(Brand::class, 'brand_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }
