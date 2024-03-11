@@ -12,10 +12,11 @@
                                 {{ $brand->name }}
                             </div>
                         </div>
+
                         <div class="form-group row align-items-center">
-                            <label for="inputEmail" class="col-sm-2 col-form-label">Category:</label>
+                            <label for="inputCategory" class="col-sm-2 col-form-label">Category:</label>
                             <div class="col-sm-10">
-                                {{ $brand->category->name }}
+                                <a href="/admin/categories/details/{{ $brand->categories[0]->id }}">{{ $brand->categories[0]->name }}</a>
                             </div>
                         </div>
 

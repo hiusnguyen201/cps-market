@@ -88,7 +88,7 @@
 
                     <td><a href="/admin/brands/details/{{ $brand->id }}">{{ $brand->name }}</a></td>
 
-                    <td><a href="/admin/categories/details/{{ $brand->category->id }}">{{ $brand->category->name }}</a></td>
+                    <td><a href="/admin/categories/details/{{ $brand->categories[0]->id }}">{{ $brand->categories[0]->name }}</a></td>
 
                     <td class="text-right">
                         <a class="btn btn-primary" href="/admin/brands/edit/{{ $brand->id }}" role="button">
@@ -133,6 +133,7 @@
     <div class="d-flex ml-auto">
         {{ $brands->appends(Request::all())->links() }}
     </div>
+
 </div>
 
 <!-- Modal delete -->
