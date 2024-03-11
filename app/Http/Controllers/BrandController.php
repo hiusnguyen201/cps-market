@@ -6,37 +6,41 @@ use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Http\Requests\Admin\BrandRequest;
-
+use Illuminate\Support\Facades\DB;
 
 class BrandController extends Controller
 {
     public function home(Request $request)
     {
-        //Search bar
         $kw = $request->keyword;
 
-        $brands = Brand::with('category')->where(function ($query) use ($kw) {
-            $query->orWhere('name', 'like', '%' . $kw . '%');
+        // Áp dụng điều kiện tìm kiếm nếu có
+        $brands = Brand::where(function ($query) use ($request) {
+            $query->orWhere('name', 'like', '%' . $request->keyword . '%');
+        })->whereHas('categories', function ($query) use ($request) {
+            if ($request->category) {
+                $query->where('categories.id', $request->category);
+            }
         });
-        $categories = Category::all();
 
-        if ($request->category) {
-            $brands = $brands->where('category_id', $request->category);
-        }
-
+        // Thực hiện phân trang
         $brands = $brands->paginate($request->limit ?? 10);
 
+        $categories = Category::all();
+
         return view('admin.brands.home', [
-            'brands' => $brands, compact('brands'),
+            'brands' => $brands,
             'categories' => $categories,
-            'limit_page' => config('global.limit_page'),
+            'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Brands']],
             'title' => 'Manage brands'
         ]);
     }
 
+
     public function details(Brand $brand)
     {
+        $brand->categories()->get();
         return view('admin.brands.details', [
             'brand' => $brand,
             'breadcumbs' => [
@@ -63,10 +67,12 @@ class BrandController extends Controller
     public function handleCreate(BrandRequest $request)
     {
         try {
-            Brand::create([
+
+            $brand = Brand::create([
                 'name' => $request['name'],
-                'category_id' => $request['category'],
             ]);
+
+            $brand->categories()->attach($request['category']);
 
             session()->flash('success', 'Create brand was successful!');
         } catch (\Exception $e) {
@@ -81,6 +87,7 @@ class BrandController extends Controller
     public function edit(Brand $brand)
     {
         $categories = Category::all();
+        $brand->categories()->get();
         return view('admin.brands.edit', [
             'brand' => $brand,
             'categories' => $categories,
@@ -93,8 +100,12 @@ class BrandController extends Controller
     {
         try {
             $request->request->add(['updated_at' => date(config('global.date_format'))]);
-            $brand->fill($request->input());
+            $brand->fill([
+                'name' => $request->input('name'),
+            ]);
             $brand->save();
+            $brand->categories()->detach();
+            $brand->categories()->attach($request['category']);
             session()->flash('success', 'Update brand was successful!');
         } catch (\Exception $e) {
             error_log($e->getMessage());
@@ -120,7 +131,7 @@ class BrandController extends Controller
                     session()->flash('error', 'Delete brand was not successful! in position ' . $index);
                     return redirect()->back();
                 }
-
+                $brand->categories()->detach(); 
                 $brand->delete();
                 session()->flash('success', 'Delete brand was successful!');
             }

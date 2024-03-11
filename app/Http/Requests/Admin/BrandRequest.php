@@ -36,15 +36,15 @@ class BrandRequest extends FormRequest
             'name.required' => ':attribute is required',
             'name.string' => ':attribute Invalid ',
             'name.max' => ':attribute have invalid length characters',
-            'role.required' => ':attribute is required',
-            'role.integer' => ':attribute invalid',
+            'category.required' => ':attribute is required',
+            'category.integer' => ':attribute Invalid ',
         ];
     }
     public function attributes()
     {
         return [
             'name' => "Name",
-            'category' => "Category",
+            'category' => 'Category',
         ];
     }
 }

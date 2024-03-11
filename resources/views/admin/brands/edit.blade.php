@@ -46,13 +46,17 @@
                         <select name="category" id="category" class="form-control">
                             <option value="">- - - Select a category - - - </option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}"
-                                    {{ (old('category') ?? $category->id) == $category->id ? 'selected' : '' }}>
-                                    {{ $category->name }}</option>
-                            @endforeach
 
+                                @foreach ($brand->categories as $current_category)
+                                <option value="{{ $category->id }}"
+                                    {{ $category->id == $current_category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                                @endforeach
+
+                            @endforeach
                         </select>
-                        @error('role')
+                        @error('category')
                             <span style="color: red">{{ $message }}</span>
                         @enderror
                     </div>

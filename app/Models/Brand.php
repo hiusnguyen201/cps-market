@@ -19,7 +19,6 @@ class Brand extends Model
      */
     protected $fillable = [
         "name",
-        "category_id"
     ];
 
     /**
@@ -29,11 +28,10 @@ class Brand extends Model
      */
     protected $casts = [
         'name' => "string",
-        'category_id' => "integer"
     ];
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class, 'categories_brands', 'brand_id', 'category_id');
     }
 }
