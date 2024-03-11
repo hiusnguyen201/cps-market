@@ -2,118 +2,78 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>AdminLTE 3 | Dashboard</title>
+    <meta charset="UTF-8">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="images/favicon.png" rel="shortcut icon">
+    <title>Ludus - Electronics, Apparel, Computers, Books, DVDs & more</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet"
-        href="{{ asset('adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <!-- JQVMap -->
-    <link rel="stylesheet" href="{{ asset('adminlte/plugins/jqvmap/jqvmap.min.css') }}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="{{ asset('adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="{{ asset('adminlte/plugins/daterangepicker/daterangepicker.css') }}">
-    <!-- summernote -->
-    <link rel="stylesheet" href="{{ asset('adminlte/plugins/summernote/summernote-bs4.min.css') }}">
+
+    <!--====== Vendor Css ======-->
+    <link rel="stylesheet" href="{{ asset('ludus/css/vendor.css') }}">
+
+    <!--====== Utility-Spacing ======-->
+    <link rel="stylesheet" href="{{ asset('ludus/css/utility.css') }}">
+
+    <!--====== App ======-->
+    <link rel="stylesheet" href="{{ asset('ludus/css/app.css') }}">
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
-    <div class="wrapper">
-        <!-- Navbar -->
-        @include('layouts.customer.parts.navbar')
-        <!-- /.navbar -->
+<body class="config">
+    <div class="preloader is-active">
+        <div class="preloader__wrap">
 
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Main content -->
-            <section class="content">
-                <div class="container-fluid">
-                    @yield('content')
-                </div><!-- /.container-fluid -->
-            </section>
-            <!-- /.content -->
+            <img class="preloader__img" src="images/preloader.png" alt="">
         </div>
-        <!-- /.content-wrapper -->
-
-
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-        </aside>
-        <!-- /.control-sidebar -->
     </div>
-    <!-- ./wrapper -->
 
-    <!-- jQuery -->
-    <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
+    <!--====== Main App ======-->
+    <div id="app">
+        <!--====== Main Header ======-->
+        @include('layouts.customer.parts.navbar')
 
-    <!-- jQuery UI 1.11.4 -->
-    <script src="{{ asset('adminlte/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+        <!--====== App Content ======-->
+        <div class="app-content">
+            @yield('content')
+        </div>
+        <!--====== End - App Content ======-->
+
+        <!--====== Main Footer ======-->
+        @include('layouts.customer.parts.footer')
+
+    </div>
+    <!--====== End - Main App ======-->
+
+
+    <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
     <script>
-        $.widget.bridge('uibutton', $.ui.button)
+        window.ga = function() {
+            ga.q.push(arguments)
+        };
+        ga.q = [];
+        ga.l = +new Date;
+        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('send', 'pageview')
     </script>
-    <!-- Bootstrap 4 -->
-    <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- ChartJS -->
-    <script src="{{ asset('adminlte/plugins/chart.js/Chart.min.js') }}"></script>
-    <!-- Sparkline -->
-    <script src="{{ asset('adminlte/plugins/sparklines/sparkline.js') }}"></script>
-    <!-- JQVMap -->
-    <script src="{{ asset('adminlte/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
-    <script src="{{ asset('adminlte/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
-    <!-- jQuery Knob Chart -->
-    <script src="{{ asset('adminlte/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
-    <!-- daterangepicker -->
-    <script src="{{ asset('adminlte/plugins/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('adminlte/plugins/daterangepicker/daterangepicker.js') }}"></script>
-    <!-- Tempusdominus Bootstrap 4 -->
-    <script src="{{ asset('adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-    <!-- Summernote -->
-    <script src="{{ asset('adminlte/plugins/summernote/summernote-bs4.min.js') }}"></script>
-    <!-- overlayScrollbars -->
-    <script src="{{ asset('adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-    <!-- AdminLTE App -->
-    <script src="{{ asset('adminlte/dist/js/adminlte.js') }}"></script>
+    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{{ asset('adminlte/dist/js/pages/dashboard.js') }}"></script>
+    <!--====== Vendor Js ======-->
+    <script src="{{ asset('ludus/js/vendor.js') }}"></script>
 
-    <!-- select All check box in home -->
-    <script defer>
-        $("#selectAll").on("click", function() {
-            if ($(this).is(":checked")) {
-                $(".form-check-input").prop("checked", true);
-            } else {
-                $(".form-check-input").prop("checked", false);
-            }
-        });
-    </script>
+    <!--====== jQuery Shopnav plugin ======-->
+    <script src="{{ asset('ludus/js/jquery.shopnav.js') }}"></script>
 
-    <!-- checked selector -->
-    <script>
-        $("form.form-delete-all").submit((event) => {
-            const formCheckboxChecked = $("input.form-check-input:checked:not(#selectAll)");
-            for (var i = 0; i < formCheckboxChecked.length; i++) {
-                $("form.form-delete-all").append(
-                    `<input type="hidden" name="id[${i}]" value="${formCheckboxChecked[i].value}">`)
-            }
-        });
-    </script>
+    <!--====== App ======-->
+    <script src="{{ asset('ludus/js/app.js') }}"></script>
+
+
 </body>
 
 </html>
