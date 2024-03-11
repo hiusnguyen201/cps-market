@@ -83,15 +83,12 @@
                     <td>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" name="id" value="{{ $brand->id }}">
-                            {{ $brand->id }}
                         </div>
                     </td>
 
                     <td><a href="/admin/brands/details/{{ $brand->id }}">{{ $brand->name }}</a></td>
-                    
-                    @foreach ($brand->categories as $category)
-                    <td><a href="/admin/categories/details/{{ $category->id }}">{{ $category->name }}</a></td>
-                    @endforeach
+
+                    <td><a href="/admin/categories/details/{{ $brand->categories[0]->id }}">{{ $brand->categories[0]->name }}</a></td>
 
                     <td class="text-right">
                         <a class="btn btn-primary" href="/admin/brands/edit/{{ $brand->id }}" role="button">
@@ -133,7 +130,10 @@
     </div>
 
     <!-- Paginate -->
-    
+    <div class="d-flex ml-auto">
+        {{ $brands->appends(Request::all())->links() }}
+    </div>
+
 </div>
 
 <!-- Modal delete -->

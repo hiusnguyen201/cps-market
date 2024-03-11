@@ -7,7 +7,7 @@
                     <div class="form-group row align-items-center">
                         <label for="inputName" class="col-sm-2 col-form-label">Name:</label>
                         <div class="col-sm-10">
-                            {{ $category->name }}
+                        <a href="/admin/brands?limit=10&category={{ $category->id }}&keyword=">{{ $category->name }}</a>
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
