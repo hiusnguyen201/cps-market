@@ -12,14 +12,6 @@
             <!-- form start -->
             <form action="" method="POST">
                 <div class="card-body">
-
-                    <input type="hidden" name="id" value="{{ $category->id }}">
-                    @if ($errors->any())
-                        <div class="alert alert-danger text-center">
-                            Something wrong!
-                        </div>
-                    @endif
-
                     @if (session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
@@ -41,7 +33,7 @@
                         @enderror
                     </div>
 
-
+                    <input type="hidden" name="id" value="{{ $category->id }}">
                 </div>
                 <!-- /.card-body -->
 

@@ -12,14 +12,6 @@
             <!-- form start -->
             <form action="" method="POST">
                 <div class="card-body">
-
-                    @if ($errors->any())
-                        <div class="alert alert-danger text-center">
-                            Something wrong!
-                            <li>{{ $errors }}</li>
-                        </div>
-                    @endif
-
                     @if (session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
@@ -43,23 +35,21 @@
 
                     <div class="form-group">
                         <label for="category">Category</label>
-                        <select name="category" id="category" class="form-control">
-                            <option value="">- - - Select a category - - - </option>
+                        <select name="category[]" multiple="multiple" style="width:100%"
+                            data-placeholder="- - - Select a category - - -">
                             @foreach ($categories as $category)
-
-                                @foreach ($brand->categories as $current_category)
-                                <option value="{{ $category->id }}"
-                                    {{ $category->id == $current_category->id ? 'selected' : '' }}>
-                                    {{ $category->name }}
-                                </option>
-                                @endforeach
-
+                                <option
+                                    {{ in_array($category['id'], old('category') ?? $brand_category_ids) ? 'selected' : '' }}
+                                    value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
+
                         @error('category')
                             <span style="color: red">{{ $message }}</span>
                         @enderror
                     </div>
+
+                    <input type="hidden" name="id" value="{{ $brand->id }}">
 
                 </div>
                 <!-- /.card-body -->

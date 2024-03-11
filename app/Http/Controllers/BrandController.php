@@ -12,8 +12,6 @@ class BrandController extends Controller
 {
     public function home(Request $request)
     {
-        $kw = $request->keyword;
-
         // Áp dụng điều kiện tìm kiếm nếu có
         $brands = Brand::where(function ($query) use ($request) {
             $query->orWhere('name', 'like', '%' . $request->keyword . '%');
@@ -67,7 +65,6 @@ class BrandController extends Controller
     public function handleCreate(BrandRequest $request)
     {
         try {
-
             $brand = Brand::create([
                 'name' => $request['name'],
             ]);
@@ -87,10 +84,16 @@ class BrandController extends Controller
     public function edit(Brand $brand)
     {
         $categories = Category::all();
-        $brand->categories()->get();
+
+        $brand_category_ids = [];
+        foreach ($brand->categories as $category) {
+            array_push($brand_category_ids, $category->id);
+        }
+
         return view('admin.brands.edit', [
             'brand' => $brand,
             'categories' => $categories,
+            'brand_category_ids' => $brand_category_ids,
             'breadcumbs' => ['titles' => ['Brands', 'Brand'], 'title_links' => ["/admin/brands"]],
             'title' => 'Edit brand'
         ]);
@@ -99,13 +102,12 @@ class BrandController extends Controller
     public function handleUpdate(Brand $brand, BrandRequest $request)
     {
         try {
-            $request->request->add(['updated_at' => date(config('global.date_format'))]);
-            $brand->fill([
-                'name' => $request->input('name'),
-            ]);
+            $request->request->add(['updated_at' => now()]);
+            $brand->fill($request->all());
             $brand->save();
             $brand->categories()->detach();
             $brand->categories()->attach($request['category']);
+
             session()->flash('success', 'Update brand was successful!');
         } catch (\Exception $e) {
             error_log($e->getMessage());
@@ -131,7 +133,7 @@ class BrandController extends Controller
                     session()->flash('error', 'Delete brand was not successful! in position ' . $index);
                     return redirect()->back();
                 }
-                $brand->categories()->detach(); 
+                $brand->categories()->detach();
                 $brand->delete();
                 session()->flash('success', 'Delete brand was successful!');
             }
