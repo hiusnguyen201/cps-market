@@ -12,14 +12,6 @@
             <!-- form start -->
             <form action="" method="POST">
                 <div class="card-body">
-
-                    @if ($errors->any())
-                        <div class="alert alert-danger text-center">
-                            Something wrong!
-                            <li>{{ $errors }}</li>
-                        </div>
-                    @endif
-
                     @if (session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
@@ -34,8 +26,8 @@
 
                     <div class="form-group">
                         <label for="name">Brand Name</label>
-                        <input type="text" name="name" class="form-control" id="name" placeholder="Enter brand name..."
-                            value="{{ old('name') }}">
+                        <input type="text" name="name" class="form-control" id="name"
+                            placeholder="Enter brand name..." value="{{ old('name') }}">
                         @error('name')
                             <span style="color: red">{{ $message }}</span>
                         @enderror
@@ -43,14 +35,15 @@
 
                     <div class="form-group">
                         <label for="category">Category</label>
-                        <select name="category" id="category" class="form-control">
-                            <option value="">- - - Select a category - - - </option>
 
+                        <select name="category[]" multiple="multiple" style="width:100%"
+                            data-placeholder="- - - Select a category - - -">
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" {{ old('category') == $category->id ? 'selected' : '' }}>
-                                    {{ $category->name }}</option>
+                                <option {{ in_array($category['id'], old('category') ?? []) ? 'selected' : '' }}
+                                    value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
+
                         @error('category')
                             <span style="color: red">{{ $message }}</span>
                         @enderror

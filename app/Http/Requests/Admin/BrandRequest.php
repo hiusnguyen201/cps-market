@@ -25,8 +25,9 @@ class BrandRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'name' => 'required|string|max:100',
-            'category' => 'required|integer',
+            'name' => 'required|string|max:100|unique:brands,name' . ($request->id ? ',' . $request->id : ''),
+            'category' => 'required|array',
+            'category.*' => 'integer|min:1|exists:categories,id',
         ];
     }
 
@@ -36,8 +37,12 @@ class BrandRequest extends FormRequest
             'name.required' => ':attribute is required',
             'name.string' => ':attribute Invalid ',
             'name.max' => ':attribute have invalid length characters',
+            'name.unique' => ':attribute is existed',
             'category.required' => ':attribute is required',
-            'category.integer' => ':attribute Invalid ',
+            'category.array' => ':attribute invalid',
+            'category.*.integer' => ':attribute is not found',
+            'category.*.min' => ':attribute is not found',
+            'category.*.exists' => ':attribute not is found'
         ];
     }
     public function attributes()

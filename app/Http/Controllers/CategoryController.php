@@ -74,7 +74,7 @@ class CategoryController extends Controller
     public function handleUpdate(Category $category, CategoryRequest $request)
     {
         try {
-            $request->request->add(['updated_at' => date(config('constants.date_format'))]);
+            $request->request->add(['updated_at' => now()]);
             $category->fill($request->input());
             $category->save();
             session()->flash('success', 'update category was successful!');
