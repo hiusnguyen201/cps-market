@@ -81,7 +81,6 @@ class DatabaseSeeder extends Seeder
         for ($i=0; $i < 5; $i++) { 
             Brand::create([
                 'name' => "Brand" . $i,
-                'description' => "DES" . $i
             ]);
         }
     }

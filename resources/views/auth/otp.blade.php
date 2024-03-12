@@ -1,179 +1,195 @@
-<!--Stylesheet-->
-<style media="screen">
-    *,
-    *:before,
-    *:after {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-    }
+<!DOCTYPE html>
+<html class="no-js" lang="en">
 
-    a {
-        text-decoration: none
-    }
+<head>
+    <meta charset="UTF-8">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="images/favicon.png" rel="shortcut icon">
+    <title>Ludus - Electronics, Apparel, Computers, Books, DVDs & more</title>
 
-    body {
-        background-color: #080710;
-    }
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
+    <!--====== Vendor Css ======-->
+    <link rel="stylesheet" href="{{ asset('ludus/css/vendor.css') }}">
 
-    .background {
-        width: 430px;
-        height: 520px;
-        position: absolute;
-        transform: translate(-50%, -50%);
-        left: 50%;
-        top: 50%;
-    }
+    <!--====== Utility-Spacing ======-->
+    <link rel="stylesheet" href="{{ asset('ludus/css/utility.css') }}">
 
-    .background .shape {
-        height: 200px;
-        width: 200px;
-        position: absolute;
-        border-radius: 50%;
-    }
+    <!--====== App ======-->
+    <link rel="stylesheet" href="{{ asset('ludus/css/app.css') }}">
 
-    .shape:first-child {
-        background: linear-gradient(#1845ad,
-                #23a2f6);
-        left: -80px;
-        top: -80px;
-    }
+</head>
 
-    .shape:last-child {
-        background: linear-gradient(to right,
-                #ff512f,
-                #f09819);
-        right: -30px;
-        bottom: -80px;
-    }
+<body class="config">
+    <div class="preloader is-active">
+        <div class="preloader__wrap">
 
-    form {
-        height: 520px;
-        width: 400px;
-        background-color: rgba(255, 255, 255, 0.13);
-        position: absolute;
-        transform: translate(-50%, -50%);
-        top: 50%;
-        left: 50%;
-        border-radius: 10px;
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-        padding: 50px 35px;
-    }
-
-    form * {
-        font-family: 'Poppins', sans-serif;
-        color: #ffffff;
-        letter-spacing: 0.5px;
-        outline: none;
-        border: none;
-    }
-
-    form h1 {
-        font-size: 32px;
-        font-weight: 500;
-        line-height: 42px;
-        text-align: center;
-    }
-
-    label {
-        display: block;
-        margin-top: 30px;
-        font-size: 16px;
-        font-weight: 500;
-    }
-
-    input {
-        display: block;
-        height: 50px;
-        width: 100%;
-        background-color: rgba(255, 255, 255, 0.07);
-        border-radius: 3px;
-        padding: 0 10px;
-        margin-top: 8px;
-        font-size: 14px;
-        font-weight: 300;
-    }
-
-    ::placeholder {
-        color: #e5e5e5;
-    }
-
-    button,
-    form a {
-        display: block;
-        text-align: center;
-        margin-top: 50px;
-        width: 100%;
-        background-color: #ffffff;
-        color: #080710;
-        padding: 15px 0;
-        font-size: 18px;
-        font-weight: 600;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .social {
-        margin-top: 30px;
-        display: flex;
-    }
-
-    .social div {
-        background: red;
-        width: 150px;
-        border-radius: 3px;
-        padding: 5px 10px 10px 5px;
-        background-color: rgba(255, 255, 255, 0.27);
-        color: #eaf0fb;
-        text-align: center;
-    }
-
-    .social div:hover {
-        background-color: rgba(255, 255, 255, 0.47);
-    }
-
-    .social .fb {
-        margin-left: 25px;
-    }
-
-    .social i {
-        margin-right: 4px;
-    }
-</style>
-
-
-
-<div class="background">
-    <div class="shape"></div>
-    <div class="shape"></div>
-</div>
-
-<form method="POST">
-    <h1>Verify Otp</h1>
-
-    @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
+            <img class="preloader__img" src="images/preloader.png" alt="">
         </div>
-    @endif
+    </div>
 
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+    <!--====== Main App ======-->
+    <div id="app">
+        <!--====== Main Header ======-->
+        <header class="header--style-1 header--box-shadow">
+            @include('layouts.customer.parts.navbar')
+        </header>
+        <!--====== End - Main Header ======-->
+
+
+        <!--====== App Content ======-->
+        <div class="app-content">
+            @yield('content')
+            <!--====== Section 1 ======-->
+            <div class="u-s-p-y-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <div class="breadcrumb__wrap">
+                                <ul class="breadcrumb__list">
+                                    <li class="has-separator">
+
+                                        <a href="index.html">Home</a>
+                                    </li>
+                                    <li class="is-marked">
+
+                                        <a href="signin.html">Signin</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--====== End - Section 1 ======-->
+
+
+            <!--====== Section 2 ======-->
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Intro ======-->
+                <div class="section__intro u-s-m-b-60">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="section__text-wrap">
+                                    <h1 class="section__heading u-c-secondary">VERIFY OTP</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Intro ======-->
+
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="row row--center">
+                            <div class="col-lg-6 col-md-8 u-s-m-b-30">
+                                <div class="l-f-o">
+                                    <div class="l-f-o__pad-box">
+
+                                        <h1 class="gl-h1 text-uppercase">VERIFY OTP</h1>
+
+                                        <form class="l-f-o__form" method="POST">
+                                            @csrf
+
+                                            @if (session('success'))
+                                            <div class="alert alert-success m-1">
+                                                {{ session('success') }}
+                                            </div>
+                                            @endif
+
+                                            <div class="u-s-m-b-30">
+
+                                                <label class="gl-label" for="otp">OTP *</label>
+
+                                                <input class="input-text input-text--primary-style" type="text" id="otp" placeholder="Enter OTP" name="otp">
+                                            </div>
+
+                                            @if (session('error'))
+                                            <div class="alert alert-danger m-1">
+                                                {{ session('error') }}
+                                            </div>
+                                            @endif
+
+                                            <div class="gl-inline">
+                                                <div class="u-s-m-b-30">
+
+                                                    <button class="btn btn--e-transparent-brand-b-2" type="submit">LOGIN</button>
+                                                </div>
+                                                <div class="u-s-m-b-30">
+
+                                                    <a class="btn btn--e-transparent-brand-b-2" href="/auth/otp/resend">Resend OTP</a>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Content ======-->
+            </div>
+            <!--====== End - Section 2 ======-->
         </div>
-    @endif
+        <!--====== End - App Content ======-->
 
-    <label for="text">OTP</label>
-    <input type="text" placeholder="OTP" id="otp" name="otp">
-    @error('otp')
-        <span style="color: red">{{ $message }}</span>
-    @enderror
 
-    @csrf
+        <!--====== Main Footer ======-->
+        @include('layouts.customer.parts.footer')
 
-    <a href="/auth/otp/resend">Resend OTP</a>
+    </div>
+    <!--====== End - Main App ======-->
 
-    <button type="submit">Login</button>
-</form>
+
+    <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
+    <script>
+        window.ga = function() {
+            ga.q.push(arguments)
+        };
+        ga.q = [];
+        ga.l = +new Date;
+        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('send', 'pageview')
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+    <!--====== Vendor Js ======-->
+    <script src="{{ asset('ludus/js/vendor.js') }}"></script>
+
+    <!--====== jQuery Shopnav plugin ======-->
+    <script src="{{ asset('ludus/js/jquery.shopnav.js') }}"></script>
+
+    <!--====== App ======-->
+    <script src="{{ asset('ludus/js/app.js') }}"></script>
+
+    <!--====== Noscript ======-->
+    <noscript>
+        <div class="app-setting">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="app-setting__wrap">
+                            <h1 class="app-setting__h1">JavaScript is disabled in your browser.</h1>
+
+                            <span class="app-setting__text">Please enable JavaScript in your browser or upgrade to a JavaScript-capable browser.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </noscript>
+</body>
+
+</html>

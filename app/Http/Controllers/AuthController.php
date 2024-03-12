@@ -117,7 +117,7 @@ class AuthController extends Controller
         $user_otp = User_Otp::where('user_id', $user->id)->where('otp', $request->otp)->first();
 
         if (is_null($user_otp)) {
-            session()->flash('error', 'Invalid Otp! Please try again.');
+            session()->flash('error', 'Invalid OTP! Please try again.');
             return redirect()->back();
         }
 
