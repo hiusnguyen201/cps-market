@@ -56,11 +56,11 @@
                                 <ul class="breadcrumb__list">
                                     <li class="has-separator">
 
-                                        <a href="index.html">Home</a>
+                                        <a href="/">Home</a>
                                     </li>
                                     <li class="is-marked">
 
-                                        <a href="signin.html">Signin</a>
+                                        <a href="/auth/login">Sign in</a>
                                     </li>
                                 </ul>
                             </div>

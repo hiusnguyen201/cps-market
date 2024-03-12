@@ -56,12 +56,10 @@
                                 <ul class="breadcrumb__list">
                                     <li class="has-separator">
 
-                                        <a href="index.html">Home</a>
-                                    </li>
+                                        <a href="/">Home</a></li>
                                     <li class="is-marked">
 
-                                        <a href="signin.html">Signin</a>
-                                    </li>
+                                        <a href="/auth/forget-password">Reset</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -97,16 +95,18 @@
                                 <div class="l-f-o">
                                     <div class="l-f-o__pad-box">
 
-                                        <h1 class="gl-h1 text-uppercase">ENTER YOUR EMAIL</h1>
+                                        <h1 class="gl-h1 text-uppercase">PASSWORD RESET</h1>
+
+                                        <span class="gl-text u-s-m-b-30">Enter your email or username below and we will send you a link to reset your password.</span>
 
                                         <form class="l-f-o__form" method="POST">
                                             @csrf
 
                                             <div class="u-s-m-b-30">
 
-                                                <label class="gl-label" for="email">Email *</label>
+                                                <label class="gl-label" for="email">E-MAIL *</label>
 
-                                                <input class="input-text input-text--primary-style" type="email" id="email" placeholder="Enter your email" name="email" value="{{ old('email') }}">
+                                                <input class="input-text input-text--primary-style" type="email" id="email" placeholder="Enter E-mail" name="email" value="{{ old('email') }}">
                                             </div>
 
                                             @if ($errors->any())
@@ -124,15 +124,17 @@
                                                 {{ session('error') }}
                                             </div>
                                             @endif
-                                            
+
                                             <div class="gl-inline">
                                                 <div class="u-s-m-b-30">
 
-                                                    <button class="btn btn--e-transparent-brand-b-2" type="submit">SEND LINK</button>
+                                                    <button class="btn btn--e-transparent-brand-b-2" type="submit">Submit</button>
                                                 </div>
-                                                
                                             </div>
+                                            <div class="u-s-m-b-30">
 
+                                                <a class="gl-link" href="/auth/login">Back to Login</a>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>

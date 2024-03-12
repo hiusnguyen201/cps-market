@@ -56,11 +56,11 @@
                                 <ul class="breadcrumb__list">
                                     <li class="has-separator">
 
-                                        <a href="index.html">Home</a>
+                                        <a href="/">Home</a>
                                     </li>
                                     <li class="is-marked">
 
-                                        <a href="/auth/login">Signin</a>
+                                        <a href="/auth/login">Sign in</a>
                                     </li>
                                 </ul>
                             </div>
@@ -103,7 +103,7 @@
 
                                             <a class="l-f-o__create-link btn--e-transparent-brand-b-2" href="/auth/register">CREATE AN ACCOUNT</a>
                                         </div>
-                                        <h1 class="gl-h1">SIGNIN</h1>
+                                        <h1 class="gl-h1">SIGN IN</h1>
 
                                         <span class="gl-text u-s-m-b-30">If you have an account with us, please log in.</span>
                                         <form class="l-f-o__form" method="POST">
@@ -113,13 +113,13 @@
 
                                                     <a class="gl-s-api__btn gl-s-api__btn--fb" type="button" href="/auth/facebook/redirect"><i class="fab fa-facebook-f"></i>
 
-                                                        <span>Signin with Facebook</span></a>
+                                                        <span>Sign in with Facebook</span></a>
                                                 </div>
                                                 <div class="u-s-m-b-15">
 
                                                     <button class="gl-s-api__btn gl-s-api__btn--gplus" type="button" href="/auth/google/redirect"><i class="fab fa-google"></i>
 
-                                                        <span>Signin with Google</span></button>
+                                                        <span>Sign in with Google</span></button>
                                                 </div>
                                             </div>
 

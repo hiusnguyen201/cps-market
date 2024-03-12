@@ -56,12 +56,10 @@
                                 <ul class="breadcrumb__list">
                                     <li class="has-separator">
 
-                                        <a href="index.html">Home</a>
-                                    </li>
+                                        <a href="/">Home</a></li>
                                     <li class="is-marked">
 
-                                        <a href="/auth/login">Signin</a>
-                                    </li>
+                                        <a href="/auth/forget-password">Reset</a></li>
                                 </ul>
                             </div>
                         </div>

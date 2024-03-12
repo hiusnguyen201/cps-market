@@ -56,12 +56,10 @@
                                 <ul class="breadcrumb__list">
                                     <li class="has-separator">
 
-                                        <a href="index.html">Home</a>
-                                    </li>
+                                        <a href="index.html">Home</a></li>
                                     <li class="is-marked">
 
-                                        <a href="/auth/login">Signin</a>
-                                    </li>
+                                        <a href="/auth/register">Sign up</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -80,7 +78,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="section__text-wrap">
-                                    <h1 class="section__heading u-c-secondary">REGISTER</h1>
+                                    <h1 class="section__heading u-c-secondary">CREATE AN ACCOUNT</h1>
                                 </div>
                             </div>
                         </div>
@@ -97,9 +95,8 @@
                                 <div class="l-f-o">
                                     <div class="l-f-o__pad-box">
 
-                                        <h1 class="gl-h1">SIGNUP</h1>
+                                        <h1 class="gl-h1">PERSONAL INFORMATION</h1>
 
-                                        <span class="gl-text u-s-m-b-30">You can sign up with</span>
                                         <form class="l-f-o__form" method="POST">
                                             @csrf
                                             <div class="gl-s-api">
@@ -107,13 +104,13 @@
 
                                                     <a class="gl-s-api__btn gl-s-api__btn--fb" type="button" href="/auth/facebook/redirect"><i class="fab fa-facebook-f"></i>
 
-                                                        <span>Signup with Facebook</span></a>
+                                                        <span>Sign up with Facebook</span></a>
                                                 </div>
                                                 <div class="u-s-m-b-15">
 
                                                     <button class="gl-s-api__btn gl-s-api__btn--gplus" type="button" href="/auth/google/redirect"><i class="fab fa-google"></i>
 
-                                                        <span>Signup with Google</span></button>
+                                                        <span>Sign up with Google</span></button>
                                                 </div>
                                             </div>
 
@@ -169,14 +166,11 @@
                                                 @enderror
                                             </div>
 
-                                            <div class="gl-inline">
-                                                <div class="u-s-m-b-30">
+                                            <div class="u-s-m-b-15">
 
-                                                    <button class="btn btn--e-transparent-brand-b-2" type="submit">REGISTER</button>
-                                                </div>
+                                                <button class="btn btn--e-transparent-brand-b-2" type="submit">CREATE</button></div>
 
-                                            </div>
-
+                                            <a class="gl-link" href="/">Return to Store</a>
                                         </form>
                                     </div>
                                 </div>
