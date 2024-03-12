@@ -103,7 +103,7 @@
 
                                                 <label class="gl-label" for="password">Enter new password *</label>
 
-                                                <input class="input-text input-text--primary-style" type="password" id="password" placeholder="Enter password" name="password">
+                                                <input class="input-text input-text--primary-style" type="password" id="password" placeholder="Enter password" name="password" required>
                                                 @error('password')
                                                 <span style="color: red">{{ $message }}</span>
                                                 @enderror
@@ -113,7 +113,7 @@
 
                                                 <label class="gl-label" for="password">Confirm Password *</label>
 
-                                                <input class="input-text input-text--primary-style" type="password" id="password_confirmation" placeholder="Re-enter password" name="password_confirmation">
+                                                <input class="input-text input-text--primary-style" type="password" id="password_confirmation" placeholder="Re-enter password" name="password_confirmation" required>
                                                 @error('password_confirmation')
                                                 <span style="color: red">{{ $message }}</span>
                                                 @enderror

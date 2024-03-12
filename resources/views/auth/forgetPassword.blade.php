@@ -56,10 +56,12 @@
                                 <ul class="breadcrumb__list">
                                     <li class="has-separator">
 
-                                        <a href="/">Home</a></li>
+                                        <a href="/">Home</a>
+                                    </li>
                                     <li class="is-marked">
 
-                                        <a href="/auth/forget-password">Reset</a></li>
+                                        <a href="/auth/forget-password">Reset</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -106,24 +108,24 @@
 
                                                 <label class="gl-label" for="email">E-MAIL *</label>
 
-                                                <input class="input-text input-text--primary-style" type="email" id="email" placeholder="Enter E-mail" name="email" value="{{ old('email') }}">
-                                            </div>
+                                                <input class="input-text input-text--primary-style" type="email" id="email" placeholder="Enter E-mail" name="email" value="{{ old('email') }}" required>
 
-                                            @if ($errors->any())
-                                            <div class="alert alert-danger text-center">
-                                                Something Wrong!
+                                                @if ($errors->any())
+                                                <div class="alert alert-danger text-center">
+                                                    Something Wrong!
+                                                </div>
+                                                @endif
+                                                @if (session('success'))
+                                                <div class="alert alert-success">
+                                                    {{ session('success') }}
+                                                </div>
+                                                @endif
+                                                @if (session('error'))
+                                                <div class="alert alert-danger">
+                                                    {{ session('error') }}
+                                                </div>
+                                                @endif
                                             </div>
-                                            @endif
-                                            @if (session('success'))
-                                            <div class="alert alert-success">
-                                                {{ session('success') }}
-                                            </div>
-                                            @endif
-                                            @if (session('error'))
-                                            <div class="alert alert-danger">
-                                                {{ session('error') }}
-                                            </div>
-                                            @endif
 
                                             <div class="gl-inline">
                                                 <div class="u-s-m-b-30">

@@ -112,14 +112,13 @@
 
                                                 <label class="gl-label" for="otp">OTP *</label>
 
-                                                <input class="input-text input-text--primary-style" type="text" id="otp" placeholder="Enter OTP" name="otp">
+                                                <input class="input-text input-text--primary-style" type="text" id="otp" placeholder="Enter OTP" name="otp" required>
+                                                @if (session('error'))
+                                                <div class="alert alert-danger m-1">
+                                                    {{ session('error') }}
+                                                </div>
+                                                @endif
                                             </div>
-
-                                            @if (session('error'))
-                                            <div class="alert alert-danger m-1">
-                                                {{ session('error') }}
-                                            </div>
-                                            @endif
 
                                             <div class="gl-inline">
                                                 <div class="u-s-m-b-30">

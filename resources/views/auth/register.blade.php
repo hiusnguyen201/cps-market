@@ -120,7 +120,7 @@
 
                                                 <label class="gl-label" for="name">NAME *</label>
 
-                                                <input class="input-text input-text--primary-style" type="text" id="name" placeholder="Enter name" name="name" value="{{ old('name') }}">
+                                                <input class="input-text input-text--primary-style" type="text" id="name" placeholder="Enter name" name="name" value="{{ old('name') }}" required>
                                                 @error('name')
                                                 <span style="color: red">{{ $message }}</span>
                                                 @enderror
@@ -130,7 +130,7 @@
 
                                                 <label class="gl-label" for="phone">PHONE *</label>
 
-                                                <input class="input-text input-text--primary-style" type="tel" id="phone" placeholder="Enter phone" name="phone" value="{{ old('phone') }}">
+                                                <input class="input-text input-text--primary-style" type="tel" id="phone" placeholder="Enter phone" name="phone" value="{{ old('phone') }}" required>
                                                 @error('phone')
                                                 <span style="color: red">{{ $message }}</span>
                                                 @enderror
@@ -140,7 +140,7 @@
 
                                                 <label class="gl-label" for="email">E-MAIL *</label>
 
-                                                <input class="input-text input-text--primary-style" type="email" id="email" placeholder="Enter E-mail" name="email" value="{{ old('email') }}">
+                                                <input class="input-text input-text--primary-style" type="email" id="email" placeholder="Enter E-mail" name="email" value="{{ old('email') }}" required>
                                                 @error('email')
                                                 <span style="color: red">{{ $message }}</span>
                                                 @enderror
@@ -150,7 +150,7 @@
 
                                                 <label class="gl-label" for="password">PASSWORD *</label>
 
-                                                <input class="input-text input-text--primary-style" type="password" id="password" placeholder="Enter password" name="password">
+                                                <input class="input-text input-text--primary-style" type="password" id="password" placeholder="Enter password" name="password" required>
                                                 @error('password')
                                                 <span style="color: red">{{ $message }}</span>
                                                 @enderror
@@ -160,7 +160,7 @@
 
                                                 <label class="gl-label" for="password_confirmation">CONFIRM PASSWORD *</label>
 
-                                                <input class="input-text input-text--primary-style" type="password" id="password_confirmation" placeholder="Re-enter password" name="password_confirmation">
+                                                <input class="input-text input-text--primary-style" type="password" id="password_confirmation" placeholder="Re-enter password" name="password_confirmation" required>
                                                 @error('password_confirmation')
                                                 <span style="color: red">{{ $message }}</span>
                                                 @enderror

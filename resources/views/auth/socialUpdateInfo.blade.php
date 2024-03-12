@@ -104,7 +104,7 @@
 
                                                 <label class="gl-label" for="name">NAME *</label>
 
-                                                <input class="input-text input-text--primary-style" type="text" id="name" placeholder="Enter name" name="name" value="{{ old('name') ?? $name }}">
+                                                <input class="input-text input-text--primary-style" type="text" id="name" placeholder="Enter name" name="name" value="{{ old('name') ?? $name }}" required>
                                                 @error('name')
                                                 <span style="color: red">{{ $message }}</span>
                                                 @enderror
@@ -114,7 +114,7 @@
 
                                                 <label class="gl-label" for="phone">PHONE *</label>
 
-                                                <input class="input-text input-text--primary-style" type="tel" id="phone" placeholder="Enter phone" name="phone" value="{{ old('phone') }}">
+                                                <input class="input-text input-text--primary-style" type="tel" id="phone" placeholder="Enter phone" name="phone" value="{{ old('phone') }}" required>
                                                 @error('phone')
                                                 <span style="color: red">{{ $message }}</span>
                                                 @enderror
@@ -124,7 +124,7 @@
 
                                                 <label class="gl-label" for="email">E-MAIL *</label>
 
-                                                <input class="input-text input-text--primary-style" type="email" id="email" placeholder="Enter E-mail" name="email" value="{{ old('email') ?? $email }}">
+                                                <input class="input-text input-text--primary-style" type="email" id="email" placeholder="Enter E-mail" name="email" value="{{ old('email') ?? $email }}" required>
                                                 @error('email')
                                                 <span style="color: red">{{ $message }}</span>
                                                 @enderror

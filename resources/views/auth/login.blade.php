@@ -130,30 +130,30 @@
                                             </div>
                                             @endforeach
                                             @endif
-                                            
+
                                             <div class="u-s-m-b-30">
 
                                                 <label class="gl-label" for="email">E-MAIL *</label>
 
-                                                <input class="input-text input-text--primary-style" type="email" id="email" placeholder="Enter E-mail" name="email" value="{{ old('email') }}">
+                                                <input class="input-text input-text--primary-style" type="email" id="email" placeholder="Enter E-mail" name="email" value="{{ old('email') }}" required>
+                                                @if (session('error'))
+                                                <div class="alert alert-danger">
+                                                    {{ session('error') }}
+                                                </div>
+                                                @endif
                                             </div>
+
                                             <div class="u-s-m-b-30">
 
                                                 <label class="gl-label" for="password">PASSWORD *</label>
 
-                                                <input class="input-text input-text--primary-style" type="password" id="password" placeholder="Enter Password" name="password">
+                                                <input class="input-text input-text--primary-style" type="password" id="password" placeholder="Enter Password" name="password" required>
+                                                @if (session('success'))
+                                                <div class="alert alert-success">
+                                                    {{ session('success') }}
+                                                </div>
+                                                @endif
                                             </div>
-
-                                            @if (session('success'))
-                                            <div class="alert alert-success">
-                                                {{ session('success') }}
-                                            </div>
-                                            @endif
-                                            @if (session('error'))
-                                            <div class="alert alert-danger">
-                                                {{ session('error') }}
-                                            </div>
-                                            @endif
 
                                             <div class="gl-inline">
                                                 <div class="u-s-m-b-30">
