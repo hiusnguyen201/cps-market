@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +19,7 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'home']);
 
 // Admin
 Route::prefix('admin')->group(function () {
@@ -39,15 +38,11 @@ Route::prefix('admin')->group(function () {
     //Brands
     Route::prefix('brands')->group(function () {
         Route::get('/', [BrandController::class, 'home']);
-
         Route::get('/details/{brand}', [BrandController::class, 'details']);
-
         Route::get('/create', [BrandController::class, 'create']);
         Route::post('/create', [BrandController::class, 'handleCreate']);
-
         Route::get('/edit/{brand}', [BrandController::class, 'edit']);
         Route::post('/edit/{brand}', [BrandController::class, 'handleUpdate']);
-
         Route::delete('/', [BrandController::class, 'handleDelete']);
     });
 
@@ -69,10 +64,10 @@ Route::prefix('auth')->group(function () {
     Route::get('/login', [AuthController::class, 'localLogin']);
     Route::post('/login', [AuthController::class, 'handleLocalLogin']);
 
-    Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm']);
-    Route::post('/forget-password', [AuthController::class, 'submitForgetPasswordForm']);
-    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm']);
-    Route::post('/reset-password/{token}', [AuthController::class, 'submitResetPasswordForm']);
+    Route::get('/forget-password', [AuthController::class, 'forgetPassword']);
+    Route::post('/forget-password', [AuthController::class, 'handleForgetPassword']);
+    Route::get('/reset-password/{token}', [AuthController::class, 'changePasswordForm']);
+    Route::post('/reset-password/{token}', [AuthController::class, 'handleChangePassword']);
 
     Route::get('/info-social', [AuthController::class, 'infoSocial']);
     Route::post('/info-social', [AuthController::class, 'handleUpdateInfoSocial']);
