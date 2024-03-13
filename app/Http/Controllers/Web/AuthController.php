@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Controller;
 
 use App\Models\PasswordResets;
 use App\Models\User_Otp;

@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BrandController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Web\CategoryController;
+use App\Http\Controllers\Web\UserController;
+use App\Http\Controllers\Web\AuthController;
+use App\Http\Controllers\Web\BrandController;
+use App\Http\Controllers\Web\DashboardController;
+use App\Http\Controllers\Web\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +25,10 @@ Route::get('/', function () {
 
 // Admin
 Route::prefix('admin')->group(function () {
+    // Dashboard
     Route::get("/", [DashboardController::class, 'home']);
 
+    // Users
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'home']);
         Route::get('/details/{user}', [UserController::class, 'details']);
@@ -36,7 +39,7 @@ Route::prefix('admin')->group(function () {
         Route::delete('/', [UserController::class, 'handleDelete']);
     });
 
-    //Brands
+    // Brands
     Route::prefix('brands')->group(function () {
         Route::get('/', [BrandController::class, 'home']);
 
@@ -51,7 +54,7 @@ Route::prefix('admin')->group(function () {
         Route::delete('/', [BrandController::class, 'handleDelete']);
     });
 
-    //categories
+    // Categories
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'home']);
         Route::get('/details/{category}', [CategoryController::class, 'details']);
@@ -60,6 +63,17 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{category}', [CategoryController::class, 'edit']);
         Route::post('/edit/{category}', [CategoryController::class, 'handleUpdate']);
         Route::delete('/', [CategoryController::class, 'handleDelete']);
+    });
+
+    // Products
+    Route::prefix('products')->group(function () {
+        Route::get('/', [ProductController::class, 'home']);
+        Route::get('/details/{product}', [ProductController::class, 'details']);
+        Route::get('/create', [ProductController::class, 'create']);
+        Route::post('/create', [ProductController::class, 'handleCreate']);
+        Route::get('/edit/{product}', [ProductController::class, 'edit']);
+        Route::post('/edit/{product}', [ProductController::class, 'handleUpdate']);
+        Route::delete('/', [ProductController::class, 'handleDelete']);
     });
 });
 

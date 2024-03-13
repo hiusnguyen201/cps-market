@@ -75,7 +75,7 @@
                             </td>
                             <td><a href="/admin/categories/details/{{ $category->id }}">{{ $category->name }}</a></td>
 
-                            <td class="text-right">
+                            <td class="text-center">
                                 <a class="btn btn-primary" href="/admin/categories/edit/{{ $category->id }}" role="button">
                                     <i class="fas fa-pen"></i>
                                 </a>

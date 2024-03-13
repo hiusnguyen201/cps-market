@@ -1,0 +1,59 @@
+@media only screen and (max-width: 480px) {
+    .row {
+        flex-flow: column;
+    }
+
+    .col-2,
+    .col-3,
+    .col-9,
+    .col-6 {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+.g-2 {
+    gap: 8px;
+}
+
+.required-text {
+    color: red;
+}
+
+.title-create {
+    font-size: 20px;
+}
+
+.hide {
+    display: none;
+}
+
+.input-block + .input-block {
+    margin-top: 18px;
+}
+
+.inactive-content {
+    color: #999999;
+}
+
+.form-check-input {
+    width: 14px;
+    height: 14px;
+    margin: 0;
+    position: relative;
+}
+
+.table-img {
+    width: 50px;
+    height: 60px;
+    object-fit: contain;
+    border: 1px solid #ccc;
+}
+
+.table td {
+    border: 0;
+}
+
+.table tr {
+    border-bottom: 1px solid #dee2e6;
+}
