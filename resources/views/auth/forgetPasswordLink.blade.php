@@ -11,29 +11,18 @@
     <!--====== Section 2 ======-->
     <div class="u-s-p-b-60">
 
-        <!--====== Section Intro ======-->
-        <div class="section__intro u-s-m-b-60">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section__text-wrap">
-                            <h1 class="section__heading u-c-secondary">FORGOT PASSWORD?</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--====== End - Section Intro ======-->
 
 
         <!--====== Section Content ======-->
-        <div class="section__content">
+        <div class="section__content mt-2">
             <div class="container">
                 <div class="row row--center">
                     <div class="col-lg-6 col-md-8 u-s-m-b-30">
                         <div class="l-f-o">
                             <div class="l-f-o__pad-box">
-
+                                <div class="section__text-wrap">
+                                    <h1 class="section__heading u-c-secondary">RESET PASSWORD</h1>
+                                </div>
                                 <form class="l-f-o__form" method="POST">
                                     @csrf
                                     <input type="hidden" name="token" value="{{ $token }}">
@@ -58,21 +47,10 @@
                                         @enderror
                                     </div>
 
-                                    @if (session('success'))
-                                    <div class="alert alert-success">
-                                        {{ session('success') }}
-                                    </div>
-                                    @endif
-                                    @if (session('error'))
-                                    <div class="alert alert-danger">
-                                        {{ session('error') }}
-                                    </div>
-                                    @endif
-
                                     <div class="gl-inline">
                                         <div class="u-s-m-b-30">
 
-                                            <button class="btn btn--e-transparent-brand-b-2" type="submit">Reset Password</button>
+                                            <button class="btn btn--e-transparent-brand-b-2" style="width: 100%" type="submit">Reset Password</button>
                                         </div>
                                     </div>
 

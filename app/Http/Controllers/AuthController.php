@@ -87,9 +87,11 @@ class AuthController extends Controller
 
     public function sendOtpToEmail($user)
     {
-        $user_otp_exists = User_Otp::where('user_id', $user->id);
-
+        $user_otp_exists = User_Otp::where('user_id', $user->id)->first();
         if (!is_null($user_otp_exists)) {
+            if (Carbon::now()->lt($user_otp_exists->expire)) {
+                return true;
+            }
             $user_otp_exists->delete();
         }
 

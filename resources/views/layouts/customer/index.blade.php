@@ -24,6 +24,8 @@
 
     <!--====== App ======-->
     <link rel="stylesheet" href="{{ asset('ludus/css/app.css') }}">
+
+    
 </head>
 
 <body class="config">
@@ -72,8 +74,6 @@
 
     <!--====== App ======-->
     <script src="{{ asset('ludus/js/app.js') }}"></script>
-
-
 </body>
 
 </html>

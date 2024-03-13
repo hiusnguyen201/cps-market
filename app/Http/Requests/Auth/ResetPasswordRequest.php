@@ -42,7 +42,7 @@ class ResetPasswordRequest extends FormRequest
     public function attributes()
     {
         return [
-            'password' => "password",
+            'password' => "Password",
             'password_confirmation' => "Password Confirmation"
 
         ];

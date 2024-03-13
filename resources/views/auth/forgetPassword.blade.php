@@ -1,89 +1,76 @@
 @extends('layouts.customer.index')
 
 @section('content')
-<!--====== App Content ======-->
-<div class="app-content">
-    <!--====== Section 1 ======-->
+    <!--====== App Content ======-->
+    <div class="app-content">
+        <!--====== Section 1 ======-->
 
-    <!--====== End - Section 1 ======-->
-
-
-    <!--====== Section 2 ======-->
-    <div class="u-s-p-b-60">
-
-        <!--====== Section Intro ======-->
-        <div class="section__intro u-s-m-b-60">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section__text-wrap">
-                            <h1 class="section__heading u-c-secondary">FORGOT PASSWORD?</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--====== End - Section Intro ======-->
+        <!--====== End - Section 1 ======-->
 
 
-        <!--====== Section Content ======-->
-        <div class="section__content">
-            <div class="container">
-                <div class="row row--center">
-                    <div class="col-lg-6 col-md-8 u-s-m-b-30">
-                        <div class="l-f-o">
-                            <div class="l-f-o__pad-box">
+        <!--====== Section 2 ======-->
+        <div class="u-s-p-b-60">
 
-                                <h1 class="gl-h1 text-uppercase">PASSWORD RESET</h1>
 
-                                <span class="gl-text u-s-m-b-30">Enter your email or username below and we will send you a link to reset your password.</span>
 
-                                <form class="l-f-o__form" method="POST">
-                                    @csrf
+            <!--====== Section Content ======-->
+            <div class="section__content mt-2">
+                <div class="container">
+                    <div class="row row--center">
+                        <div class="col-lg-6 col-md-8 u-s-m-b-30">
+                            <div class="l-f-o">
+                                <div class="l-f-o__pad-box">
+                                    <div class="section__text-wrap">
+                                        <h1 class="section__heading u-c-secondary">FORGOT PASSWORD?</h1>
+                                    </div>
 
-                                    <div class="u-s-m-b-30">
+                                    <span class="gl-text u-s-m-b-30">Enter your email below and we will send you a link to
+                                        reset your password.</span>
 
-                                        <label class="gl-label" for="email">E-MAIL *</label>
-
-                                        <input class="input-text input-text--primary-style" type="email" id="email" placeholder="Enter E-mail" name="email" value="{{ old('email') }}" required>
-
-                                        @if ($errors->any())
-                                        <div class="alert alert-danger text-center">
-                                            Something Wrong!
-                                        </div>
-                                        @endif
+                                    <form class="l-f-o__form" method="POST">
+                                        @csrf
                                         @if (session('success'))
-                                        <div class="alert alert-success">
-                                            {{ session('success') }}
-                                        </div>
+                                                <span style="color: green">{{ session('success') }}</span>
                                         @endif
                                         @if (session('error'))
-                                        <div class="alert alert-danger">
-                                            {{ session('error') }}
-                                        </div>
+                                                <span style="color: red"> {{ session('error') }}</span>
                                         @endif
-                                    </div>
 
-                                    <div class="gl-inline">
                                         <div class="u-s-m-b-30">
 
-                                            <button class="btn btn--e-transparent-brand-b-2" type="submit">Submit</button>
-                                        </div>
-                                    </div>
-                                    <div class="u-s-m-b-30">
+                                            <label class="gl-label" for="email">E-MAIL *</label>
 
-                                        <a class="gl-link" href="/auth/login">Back to Login</a>
-                                    </div>
-                                </form>
+                                            <input class="input-text input-text--primary-style" type="email"
+                                                id="email" placeholder="Enter E-mail" name="email"
+                                                value="{{ old('email') }}" required>
+                                            @error('email')
+                                                <span style="color: red">{{ $message }}</span>
+                                            @enderror
+
+
+                                        </div>
+
+                                        <div class="gl-inline">
+                                            <div class="u-s-m-b-30">
+
+                                                <button class="btn btn--e-transparent-brand-b-2"
+                                                style="width: 100%" type="submit">Submit</button>
+                                            </div>
+                                        </div>
+                                        <div class="u-s-m-b-30">
+
+                                            <a class="gl-link" href="/auth/login">Back to Login</a>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!--====== End - Section Content ======-->
         </div>
-        <!--====== End - Section Content ======-->
+        <!--====== End - Section 2 ======-->
     </div>
-    <!--====== End - Section 2 ======-->
-</div>
-<!--====== End - App Content ======-->
+    <!--====== End - App Content ======-->
 @endsection
