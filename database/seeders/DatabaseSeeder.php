@@ -3,10 +3,13 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Brand;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use \App\Models\User;
 use \App\Models\Role;
+use \App\Models\Category;
 
 class DatabaseSeeder extends Seeder
 {
@@ -66,6 +69,18 @@ class DatabaseSeeder extends Seeder
                 "phone" => "0912345678",
                 "gender" => 1,
                 "role_id" => 3
+            ]);
+        }
+
+        for ($i=0; $i < 5; $i++) { 
+            Category::create([
+                'name' => "Smartphone" . $i
+            ]);
+        }
+
+        for ($i=0; $i < 5; $i++) { 
+            Brand::create([
+                'name' => "Brand" . $i,
             ]);
         }
     }

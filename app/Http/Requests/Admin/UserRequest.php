@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\admin;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
@@ -26,15 +26,16 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:100',
-            'email' => 'required|email|max:100|unique:users,email' . ($request->id? ','. $request->id : ''),
+            'email' => 'required|email|max:150|unique:users,email' . ($request->id ? ',' . $request->id : ''),
             'phone' => ['required', 'string', 'min:10', 'max:15', 'regex:/^(84|0[3|5|7|8|9])+([0-9]{8})\b/'],
-            'gender' => 'required|integer',
+            'gender' => 'integer',
             'role' => 'required|integer',
             'address' => 'max:150',
         ];
     }
 
-    public function messages() {
+    public function messages()
+    {
         return [
             'name.required' => ':attribute is required',
             'name.string' => ':attribute Invalid ',
@@ -48,14 +49,14 @@ class UserRequest extends FormRequest
             'phone.min' => ':attribute have invalid length characters',
             'phone.max' => ':attribute have invalid length characters',
             'phone.regex' => ':attribute must be vietnamese phone number',
-            'gender.required' => ':attribute is required',
             'gender.integer' => ':attribute invalid',
             'role.required' => ':attribute is required',
             'role.integer' => ':attribute invalid',
             'address.max' => ':attribute have invalid length characters',
         ];
     }
-    public function attributes() {
+    public function attributes()
+    {
         return [
             'name' => "Name",
             'email' => "Email",

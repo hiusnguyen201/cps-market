@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>AdminLTE 3 | Dashboard</title>
+    <title>{{ $title }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -17,6 +17,9 @@
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet"
         href="{{ asset('adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- JQVMap -->
@@ -74,6 +77,7 @@
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
+    <script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- ChartJS -->
@@ -109,10 +113,7 @@
                 $(".form-check-input").prop("checked", false);
             }
         });
-    </script>
 
-    <!-- checked selector -->
-    <script>
         $("form.form-delete-all").submit((event) => {
             const formCheckboxChecked = $("input.form-check-input:checked:not(#selectAll)");
             for (var i = 0; i < formCheckboxChecked.length; i++) {
@@ -120,6 +121,8 @@
                     `<input type="hidden" name="id[${i}]" value="${formCheckboxChecked[i].value}">`)
             }
         });
+
+        $("select[name='category[]']").select2();
     </script>
 </body>
 
