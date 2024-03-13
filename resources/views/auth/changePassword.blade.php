@@ -10,6 +10,9 @@
 
         <!--====== Section 2 ======-->
         <div class="u-s-p-b-60">
+
+
+
             <!--====== Section Content ======-->
             <div class="section__content mt-2">
                 <div class="container">
@@ -18,48 +21,43 @@
                             <div class="l-f-o">
                                 <div class="l-f-o__pad-box">
                                     <div class="section__text-wrap">
-                                        <h1 class="section__heading u-c-secondary">FORGOT PASSWORD?</h1>
+                                        <h1 class="section__heading u-c-secondary">RESET PASSWORD</h1>
                                     </div>
-
-                                    <span class="gl-text u-s-m-b-30">Enter your email below and we will send you a link to
-                                        reset your password.</span>
-
                                     <form class="l-f-o__form" method="POST">
                                         @csrf
-                                        @if (session('success'))
-                                            <span style="color: green">{{ session('success') }}</span>
-                                        @endif
-                                        @if (session('error'))
-                                            <span style="color: red"> {{ session('error') }}</span>
-                                        @endif
+                                        <input type="hidden" name="token" value="{{ $token }}">
 
                                         <div class="u-s-m-b-30">
 
-                                            <label class="gl-label" for="email">E-MAIL *</label>
+                                            <label class="gl-label" for="password">Enter new password *</label>
 
-                                            <input class="input-text input-text--primary-style" type="email"
-                                                id="email" placeholder="Enter E-mail" name="email"
-                                                value="{{ old('email') }}" required>
-                                            @error('email')
+                                            <input class="input-text input-text--primary-style" type="password"
+                                                id="password" placeholder="Enter password" name="password" required>
+                                            @error('password')
                                                 <span style="color: red">{{ $message }}</span>
                                             @enderror
+                                        </div>
 
+                                        <div class="u-s-m-b-30">
 
+                                            <label class="gl-label" for="password">Confirm Password *</label>
+
+                                            <input class="input-text input-text--primary-style" type="password"
+                                                id="password_confirmation" placeholder="Re-enter password"
+                                                name="password_confirmation" required>
+                                            @error('password_confirmation')
+                                                <span style="color: red">{{ $message }}</span>
+                                            @enderror
                                         </div>
 
                                         <div class="gl-inline">
                                             <div class="u-s-m-b-30">
 
                                                 <button class="btn btn--e-transparent-brand-b-2" style="width: 100%"
-                                                    type="submit">Submit</button>
+                                                    type="submit">Reset Password</button>
                                             </div>
                                         </div>
-                                        <div class="u-s-m-b-30">
-                                            <a style="color: #FF4500" href="/auth/register"><i
-                                                    class="fas fa-long-arrow-alt-left "></i>&nbsp;&nbsp;Back
-                                                to
-                                                Login</a>
-                                        </div>
+
                                     </form>
                                 </div>
                             </div>

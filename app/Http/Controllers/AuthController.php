@@ -27,7 +27,9 @@ class AuthController extends Controller
 {
     public function localLogin()
     {
-        return view('auth.login');
+        return view('auth.login', [
+            'title' => 'Login | Cps Market'
+        ]);
     }
 
     public function handleLocalLogin(LoginRequest $request)
@@ -87,9 +89,11 @@ class AuthController extends Controller
 
     public function sendOtpToEmail($user)
     {
-        $user_otp_exists = User_Otp::where('user_id', $user->id);
-
+        $user_otp_exists = User_Otp::where('user_id', $user->id)->first();
         if (!is_null($user_otp_exists)) {
+            if (Carbon::now()->lt($user_otp_exists->expire)) {
+                return true;
+            }
             $user_otp_exists->delete();
         }
 
@@ -108,7 +112,9 @@ class AuthController extends Controller
 
     public function otp()
     {
-        return view('auth.otp');
+        return view('auth.otp', [
+            'title' => 'Otp | Cps Market'
+        ]);
     }
 
     public function handleVerifyOtp(OtpRequest $request)
@@ -117,7 +123,7 @@ class AuthController extends Controller
         $user_otp = User_Otp::where('user_id', $user->id)->where('otp', $request->otp)->first();
 
         if (is_null($user_otp)) {
-            session()->flash('error', 'Invalid Otp! Please try again.');
+            session()->flash('error', 'Invalid OTP! Please try again.');
             return redirect()->back();
         }
 
@@ -208,7 +214,9 @@ class AuthController extends Controller
 
     public function register()
     {
-        return view('auth.register');
+        return view('auth.register', [
+            'title' => 'Register | Cps Market'
+        ]);
     }
 
     public function handleRegister(RegisterRequest $request)
@@ -231,12 +239,14 @@ class AuthController extends Controller
         }
     }
 
-    public function showForgetPasswordForm()
+    public function forgetPassword()
     {
-        return view('auth.forgetPassword');
+        return view('auth.forgetPassword', [
+            'title' => 'Forget Password | Cps Market'
+        ]);
     }
 
-    public function submitForgetPasswordForm(ForgetPasswordRequest $request)
+    public function handleForgetPassword(ForgetPasswordRequest $request)
     {
         //search
         $resetPassword = PasswordResets::where('email', $request['email'])->first();
@@ -271,7 +281,7 @@ class AuthController extends Controller
             ->with("success", "Mail was sent. Please check your mail!");
     }
 
-    public function showResetPasswordForm($token)
+    public function changePasswordForm($token)
     {
         $passwordReset = PasswordResets::where('token', $token)->first();
 
@@ -286,10 +296,13 @@ class AuthController extends Controller
                 ->with("error", "Link has expired. Please try again!");
         }
 
-        return view('auth.forgetPasswordLink', compact('token'));
+        return view('auth.changePassword', [
+            'title' => 'Change Password | Cps Market',
+            'token' => $token
+        ]);
     }
 
-    public function submitResetPasswordForm(ResetPasswordRequest $request)
+    public function handleChangePassword(ResetPasswordRequest $request)
     {
 
         $updatePassword = PasswordResets::where([

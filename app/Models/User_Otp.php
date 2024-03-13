@@ -29,6 +29,7 @@ class User_Otp extends Model
      */
     protected $casts = [
         'otp' => "string",
-        'user_id' => "integer"
+        'user_id' => "integer",
+        "expire" => "datetime"
     ];
 }

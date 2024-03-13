@@ -1,178 +1,132 @@
-<style media="screen">
-    *,
-    *:before,
-    *:after {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-    }
+@extends('layouts.customer.index')
 
-    body {
-        background-color: #080710;
-    }
+@section('content')
+    <!--====== App Content ======-->
+    <div class="app-content">
+        <!--====== Section 1 ======-->
 
-    .background {
-        width: 430px;
-        height: 520px;
-        position: absolute;
-        transform: translate(-50%, -50%);
-        left: 50%;
-        top: 50%;
-    }
+        <!--====== End - Section 1 ======-->
 
-    .background .shape {
-        height: 200px;
-        width: 200px;
-        position: absolute;
-        border-radius: 50%;
-    }
 
-    .shape:first-child {
-        background: linear-gradient(#1845ad,
-                #23a2f6);
-        left: -80px;
-        top: -80px;
-    }
+        <!--====== Section 2 ======-->
+        <div class="u-s-p-b-60">
 
-    .shape:last-child {
-        background: linear-gradient(to right,
-                #ff512f,
-                #f09819);
-        right: -30px;
-        bottom: -80px;
-    }
 
-    form {
-        width: 400px;
-        background-color: rgba(255, 255, 255, 0.13);
-        position: absolute;
-        transform: translate(-50%, -50%);
-        top: 50%;
-        left: 50%;
-        border-radius: 10px;
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-        padding: 50px 35px;
-    }
 
-    form * {
-        font-family: 'Poppins', sans-serif;
-        color: #ffffff;
-        letter-spacing: 0.5px;
-        outline: none;
-        border: none;
-    }
+            <!--====== Section Content ======-->
+            <div class="section__content mt-2">
+                <div class="container">
+                    <div class="row row--center">
+                        <div class="col-lg-6 col-md-8 u-s-m-b-30">
+                            <div class="l-f-o">
+                                <div class="l-f-o__pad-box">
 
-    form h1 {
-        font-size: 32px;
-        font-weight: 500;
-        line-height: 42px;
-        text-align: center;
-    }
+                                    <div class="section__text-wrap">
+                                        <h1 class="section__heading u-c-secondary">CREATE AN ACCOUNT</h1>
+                                    </div>
 
-    label {
-        display: block;
-        margin-top: 30px;
-        font-size: 16px;
-        font-weight: 500;
-    }
+                                    <form class="l-f-o__form" method="POST">
+                                        @csrf
 
-    input {
-        display: block;
-        height: 50px;
-        width: 100%;
-        background-color: rgba(255, 255, 255, 0.07);
-        border-radius: 3px;
-        padding: 0 10px;
-        margin-top: 8px;
-        font-size: 14px;
-        font-weight: 300;
-    }
 
-    ::placeholder {
-        color: #e5e5e5;
-    }
 
-    button {
-        margin-top: 50px;
-        width: 100%;
-        background-color: #ffffff;
-        color: #080710;
-        padding: 15px 0;
-        font-size: 18px;
-        font-weight: 600;
-        border-radius: 5px;
-        cursor: pointer;
-    }
 
-    .social {
-        margin-top: 30px;
-        display: flex;
-    }
+                                        <div class="u-s-m-b-30">
 
-    .social div {
-        background: red;
-        width: 150px;
-        border-radius: 3px;
-        padding: 5px 10px 10px 5px;
-        background-color: rgba(255, 255, 255, 0.27);
-        color: #eaf0fb;
-        text-align: center;
-    }
+                                            <label class="gl-label" for="name">NAME *</label>
 
-    .social div:hover {
-        background-color: rgba(255, 255, 255, 0.47);
-    }
+                                            <input class="input-text input-text--primary-style" type="text"
+                                                id="name" placeholder="Enter name" name="name"
+                                                value="{{ old('name') }}" required>
+                                            @error('name')
+                                                <span style="color: red">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 
-    .social .fb {
-        margin-left: 25px;
-    }
+                                        <div class="u-s-m-b-30">
 
-    .social i {
-        margin-right: 4px;
-    }
-</style>
+                                            <label class="gl-label" for="phone">PHONE *</label>
 
-<div class="background">
-    <div class="shape"></div>
-    <div class="shape"></div>
-</div>
+                                            <input class="input-text input-text--primary-style" type="tel"
+                                                id="phone" placeholder="Enter phone" name="phone"
+                                                value="{{ old('phone') }}" required>
+                                            @error('phone')
+                                                <span style="color: red">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 
-<form method="POST">
-    <h1>Register</h1>
+                                        <div class="u-s-m-b-30">
 
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" value="{{ old('name') }}">
-    @error('name')
-        <span style="color: red">{{ $message }}</span>
-    @enderror
+                                            <label class="gl-label" for="email">E-MAIL *</label>
 
-    <label for="phone">Phone</label>
-    <input type="tel" id="phone" name="phone" value="{{ old('phone') }}">
-    @error('phone')
-        <span style="color: red">{{ $message }}</span>
-    @enderror
+                                            <input class="input-text input-text--primary-style" type="email"
+                                                id="email" placeholder="Enter E-mail" name="email"
+                                                value="{{ old('email') }}" required>
+                                            @error('email')
+                                                <span style="color: red">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" value="{{ old('email') }}">
-    @error('email')
-        <span style="color: red">{{ $message }}</span>
-    @enderror
+                                        <div class="u-s-m-b-30">
 
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password">
-    @error('password')
-        <span style="color: red">{{ $message }}</span>
-    @enderror
+                                            <label class="gl-label" for="password">PASSWORD *</label>
 
-    <label for="password_confirmation">Confirm Password</label>
-    <input type="password" id="password_confirmation" name="password_confirmation">
-    @error('password_confirmation')
-        <span style="color: red">{{ $message }}</span>
-    @enderror
+                                            <input class="input-text input-text--primary-style" type="password"
+                                                id="password" placeholder="Enter password" name="password" required>
+                                            @error('password')
+                                                <span style="color: red">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 
-    @csrf
+                                        <div class="u-s-m-b-30">
 
-    <button type="submit">Register</button>
-</form>
+                                            <label class="gl-label" for="password_confirmation">CONFIRM PASSWORD *</label>
+
+                                            <input class="input-text input-text--primary-style" type="password"
+                                                id="password_confirmation" placeholder="Re-enter password"
+                                                name="password_confirmation" required>
+                                            @error('password_confirmation')
+                                                <span style="color: red">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="u-s-m-b-15">
+
+                                            <button class="btn btn--e-transparent-brand-b-2" style="width: 100%"
+                                                type="submit">CREATE</button>
+                                        </div>
+
+
+                                        <div class="gl-s-api">
+                                            <div class="u-s-m-b-15">
+
+                                                <a class="gl-s-api__btn gl-s-api__btn--fb" type="button"
+                                                    href="/auth/facebook/redirect"><i class="fab fa-facebook-f"></i>
+
+                                                    <span>Sign up with Facebook</span></a>
+                                            </div>
+                                            <div class="u-s-m-b-15">
+
+                                                <button class="gl-s-api__btn gl-s-api__btn--gplus" type="button"
+                                                    href="/auth/google/redirect"><i class="fab fa-google"></i>
+
+                                                    <span>Sign up with Google</span></button>
+                                            </div>
+                                        </div>
+
+                                        <p class="text-center">already have an account? &nbsp; <a class=""
+                                                style="color: #FF4500" href="/auth/login">Login now</a></p>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--====== End - Section Content ======-->
+        </div>
+        <!--====== End - Section 2 ======-->
+    </div>
+    <!--====== End - App Content ======-->
+@endsection

@@ -31,7 +31,7 @@ class BrandController extends Controller
             'categories' => $categories,
             'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Brands']],
-            'title' => 'Manage brands'
+            'title' => 'Manage brands | Cps Market'
         ]);
     }
 
@@ -45,7 +45,7 @@ class BrandController extends Controller
                 'titles' => ['Brands', 'Details'],
                 'title_links' => ["/admin/brands"]
             ],
-            'title' => 'Details brand'
+            'title' => 'Details brand | Cps Market'
         ]);
     }
 
@@ -58,7 +58,7 @@ class BrandController extends Controller
                 'titles' => ['Brands', 'Create'],
                 'title_links' => ["/admin/brands"]
             ],
-            'title' => 'Create brand'
+            'title' => 'Create brand | Cps Market'
         ]);
     }
 
@@ -95,7 +95,7 @@ class BrandController extends Controller
             'categories' => $categories,
             'brand_category_ids' => $brand_category_ids,
             'breadcumbs' => ['titles' => ['Brands', 'Brand'], 'title_links' => ["/admin/brands"]],
-            'title' => 'Edit brand'
+            'title' => 'Edit brand | Cps Market'
         ]);
     }
 
