@@ -1,3 +1,10 @@
+@if (session('success'))
+    <input hidden type="text" name="message-success" value="{{ session('success') }}">
+@endif
+@if (session('error'))
+    <input hidden type="text" name="message-error" value="{{ session('error') }}">
+@endif
+
 @extends('layouts.admin.index')
 @section('content')
     <div class="card py-2 px-3">
@@ -10,19 +17,6 @@
                     All</button>
             </div>
         </div>
-
-
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if (session('error'))
-            <div class="alert alert-warning">
-                {{ session('error') }}
-            </div>
-        @endif
 
         <form action="" class="d-flex align-items-center mb-2" method="GET">
             <div class="col-1 px-0 mr-2">
@@ -75,7 +69,7 @@
                             </td>
                             <td><a href="/admin/categories/details/{{ $category->id }}">{{ $category->name }}</a></td>
 
-                            <td class="text-right">
+                            <td class="text-center">
                                 <a class="btn btn-primary" href="/admin/categories/edit/{{ $category->id }}" role="button">
                                     <i class="fas fa-pen"></i>
                                 </a>

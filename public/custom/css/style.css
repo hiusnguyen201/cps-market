@@ -1,0 +1,144 @@
+@media only screen and (max-width: 480px) {
+    .row {
+        flex-flow: column;
+    }
+
+    .col-2,
+    .col-3,
+    .col-9,
+    .col-6 {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+.g-2 {
+    gap: 8px;
+}
+
+.required-text {
+    color: red;
+}
+
+.title-create {
+    font-size: 20px;
+}
+
+.hide {
+    display: none;
+}
+
+.input-block + .input-block {
+    margin-top: 18px;
+}
+
+.inactive-content {
+    color: #999999;
+}
+
+.form-check-input {
+    width: 14px;
+    height: 14px;
+    margin: 0;
+    position: relative;
+}
+
+.table-img {
+    width: 50px;
+    height: 60px;
+    object-fit: contain;
+    border: 1px solid #ccc;
+}
+
+.table td {
+    border: 0;
+}
+
+.table tr {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.input-file_block {
+    margin-bottom: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    border: 1px dashed #d8d8d8;
+    border-radius: 4px;
+    transition: 0.3s;
+    color: #ff4500;
+}
+
+.input-file_uploaded {
+    margin-bottom: 0;
+    border: 1px solid #d8d8d8;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.input-file_block > .input-file_image,
+.input-file_uploaded > .input-file_image {
+    width: 100%;
+    position: absolute;
+    object-fit: contain;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.input-file_block:hover {
+    background-color: #ffeae2;
+    border-color: #ff4500;
+}
+
+.input-file_block > .input-file_text,
+.input-file_uploaded > .input-file_text {
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+.multiple-input_block {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.remove-btn_block {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: auto;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    position: absolute;
+    top: 0;
+    transition: 0.3s;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 4;
+}
+
+.input-file_uploaded:hover .remove-btn_block {
+    display: flex;
+}
+
+.input-file_uploaded:hover .remove-btn_block > i {
+    cursor: pointer;
+    padding: 5px;
+}

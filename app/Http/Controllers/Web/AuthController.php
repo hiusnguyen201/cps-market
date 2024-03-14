@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Controller;
 
 use App\Models\PasswordResets;
 use App\Models\User_Otp;
@@ -21,7 +22,6 @@ use App\Http\Requests\Auth\InfoSocialRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ForgetPasswordRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
-use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {

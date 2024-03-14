@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 use App\Models\Brand;
 use App\Models\Category;
+
 use App\Http\Requests\Admin\BrandRequest;
-use Illuminate\Support\Facades\DB;
 
 class BrandController extends Controller
 {
@@ -15,10 +17,6 @@ class BrandController extends Controller
         // Áp dụng điều kiện tìm kiếm nếu có
         $brands = Brand::where(function ($query) use ($request) {
             $query->orWhere('name', 'like', '%' . $request->keyword . '%');
-        })->whereHas('categories', function ($query) use ($request) {
-            if ($request->category) {
-                $query->where('categories.id', $request->category);
-            }
         });
 
         // Thực hiện phân trang

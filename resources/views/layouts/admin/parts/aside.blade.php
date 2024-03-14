@@ -43,6 +43,15 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="/admin/products"
+                        class="nav-link {{ in_array('Products', $breadcumbs['titles']) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cubes"></i>
+                        <p>
+                            Products
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
