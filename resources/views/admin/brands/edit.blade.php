@@ -1,20 +1,15 @@
+@if (session('success'))
+    <input hidden type="text" name="message-success" value="{{ session('success') }}">
+@endif
+@if (session('error'))
+    <input hidden type="text" name="message-error" value="{{ session('error') }}">
+@endif
+
 @extends('layouts.admin.index')
 @section('content')
     <div class="card card-primary mb-0">
         <form action="" method="POST">
             <div class="card-body">
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
-
-                @if (session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
-                @endif
-
                 <div class="form-group">
                     <label for="name">Brand Name</label>
                     <input type="text" name="name" class="form-control" id="name" placeholder="Enter name..."

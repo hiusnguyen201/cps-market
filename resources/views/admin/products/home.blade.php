@@ -1,17 +1,9 @@
 @if (session('success'))
-    <div hidden class="alert alert-success">
-        {{ session('success') }}
-    </div>
+    <input hidden type="text" name="message-success" value="{{ session('success') }}">
 @endif
 @if (session('error'))
-    <div hidden class="alert alert-warning">
-        {{ session('error') }}
-    </div>
+    <input hidden type="text" name="message-error" value="{{ session('error') }}">
 @endif
-
-@php
-    setlocale(LC_MONETARY, 'vi_VN');
-@endphp
 
 @extends('layouts.admin.index')
 @section('content')
@@ -65,19 +57,19 @@
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Sold</th>
-                        <th class="text-right">Operation</th>
+                        <th width='1%' class="text-right">Operation</th>
                     </tr>
                 </thead>
                 <tbody>
                     @if (count($products) > 0)
                         @foreach ($products as $product)
                             <tr>
-                                <td>
+                                <td class="align-middle">
                                     <input type="checkbox" class="form-check-input" name="id"
                                         value="{{ $product->id }}">
                                 </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
+                                <td class="align-middle">
+                                    <a href="/admin/products/details/{{ $product->id }}" class="row align-items-center">
                                         @foreach ($product->images as $image)
                                             @if ($image->pin == 1)
                                                 <img src="{{ asset('storage/' . $image->thumbnail) }}"
@@ -85,31 +77,31 @@
                                             @break
                                         @endif
                                     @endforeach
-                                    <span class="ml-3 text-center">{{ $product->name }}</span>
-                                </div>
+                                    <span class="ml-3">{{ $product->name }}</span>
+                                </a>
                             </td>
-                            <td>
+                            <td class="align-middle">
                                 <a
                                     href="/admin/categories/details/{{ $product->category->id }}">{{ $product->category->name }}</a>
                             </td>
-                            <td>
+                            <td class="align-middle">
                                 {{ number_format($product->market_price, 0, ',', '.') }}&nbsp;₫
                             </td>
-                            <td>
+                            <td class="align-middle">
                                 {{ number_format($product->price, 0, ',', '.') }}&nbsp;₫
                             </td>
-                            <td>
+                            <td class="align-middle">
                                 {{ $product->quantity > 0 ? $product->quantity : 'Out of stock' }}
                             </td>
-                            <td>
+                            <td class="align-middle">
                                 {{ $product->sold }}
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 <a class="btn btn-warning" href="/admin/products/edit/{{ $product->id }}"
                                     role="button">
                                     <i class="fas fa-pen"></i>
                                 </a>
-                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
                                     data-target="#modal-delete-{{ $product->id }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>

@@ -1,12 +1,8 @@
 @if (session('success'))
-    <div hidden class="alert alert-success">
-        {{ session('success') }}
-    </div>
+    <input hidden type="text" name="message-success" value="{{ session('success') }}">
 @endif
 @if (session('error'))
-    <div hidden class="alert alert-danger">
-        {{ session('error') }}
-    </div>
+    <input hidden type="text" name="message-error" value="{{ session('error') }}">
 @endif
 
 @extends('layouts.admin.index')
@@ -14,9 +10,6 @@
     <form id="product" action="" enctype="multipart/form-data" method="POST">
         <div class="card card-primary px-3 py-3">
             <span class="font-weight-bold title-create mb-2">Basic information</span>
-
-
-
             <div class="card-body">
                 <div class="row align-items-start input-block">
                     <div class="col-3"><span class="mt-2">Name</span><span class="required-text ml-1">*</span></div>
@@ -29,14 +22,22 @@
                         @enderror
                     </div>
                 </div>
-
                 <div class="row align-items-start input-block">
                     <div class="col-3"><span class="mt-2">Product images</span></div>
                     <div class="col-7">
-                        <div class="image_block">
-                            <input type="file" name="product_images[]" multiple>
-                        </div>
+                        <div class="multiple-input_block">
+                            <label class="input-file_block" for="product_images[]">
+                                <img hidden class="input-file_image" src="" alt="">
+                                <i class="far fa-file-image"></i>
+                                <span class="input-file_text">Add File</span>
+                                <input class="input-file_form" hidden type="file" name="product_images[]"
+                                    id="product_images[]" multiple>
+                                <div class="remove-btn_block">
+                                    <i class="fas fa-trash"></i>
+                                </div>
+                            </label>
 
+                        </div>
                         @error('product_images')
                             <span class="required-text">{{ $message }}</span>
                         @enderror
@@ -47,9 +48,16 @@
                     <div class="col-3"><span class="mt-2"><span>Promotion Image</span><span
                                 class="required-text ml-1">*</span></span></div>
                     <div class="col-7">
-                        <div class="image_block">
-                            <input type="file" name="promotion_image">
-                        </div>
+                        <label class="input-file_block" for="promotion_image">
+                            <img hidden class="input-file_image" src="" alt="">
+                            <i class="far fa-file-image"></i>
+                            <span class="input-file_text">Add File</span>
+                            <input hidden class="input-file_form" type="file" name="promotion_image"
+                                id="promotion_image">
+                            <div class="remove-btn_block">
+                                <i class="fas fa-trash"></i>
+                            </div>
+                        </label>
 
                         @error('promotion_image')
                             <span class="required-text">{{ $message }}</span>
@@ -101,12 +109,10 @@
                     <div class="col-7">
                         <select id="product" name="brand" class="form-control">
                             <option value="">Please select</option>
-                            @if (old('category'))
-                                @foreach ($category->brands as $brand)
-                                    <option {{ old('brand') ? 'selected' : '' }} value="{{ $brand->id }}">
-                                        {{ $brand->name }}</option>
-                                @endforeach
-                            @endif
+                            @foreach ($category->brands as $brand)
+                                <option {{ old('brand') ? 'selected' : '' }} value="{{ $brand->id }}">
+                                    {{ $brand->name }}</option>
+                            @endforeach
                         </select>
 
                         @error('brand')
@@ -127,7 +133,7 @@
                     <div class="col-3"><span class="mt-2">Market Price</span><span class="required-text ml-1">*</span>
                     </div>
                     <div class="col-7">
-                        <div class="input-group mb-2">
+                        <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">₫</div>
                             </div>
@@ -144,7 +150,7 @@
                     <div class="col-3"><span class="mt-2">Price</span><span class="required-text ml-1">*</span>
                     </div>
                     <div class="col-7">
-                        <div class="input-group mb-2">
+                        <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">₫</div>
                             </div>
@@ -160,7 +166,7 @@
                     <div class="col-3"><span class="mt-2">Quantity</span><span class="required-text ml-1">*</span>
                     </div>
                     <div class="col-7">
-                        <input type="number" name="quantity" class="form-control" value="{{ old('quantity') }}">
+                        <input type="number" name="quantity" class="form-control" value="{{ old('quantity') ?? 0 }}">
 
                         @error('quantity')
                             <span class="required-text">{{ $message }}</span>

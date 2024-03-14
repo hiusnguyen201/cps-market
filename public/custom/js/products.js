@@ -46,8 +46,6 @@ selectFormCategory.change(async (e) => {
                     .find("span.inactive-text")
                     .html(inactiveText[index]);
             });
-
-            return;
         },
     });
 });

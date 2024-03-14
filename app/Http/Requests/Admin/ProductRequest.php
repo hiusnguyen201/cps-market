@@ -40,7 +40,7 @@ class ProductRequest extends FormRequest
                 'mimetypes:image/jpeg,image/png',
                 'max:2048',
             ],
-            "product_images" => "array",
+            "product_images" => "array|max:7",
             "product_images.*" => [
                 'image',
                 'mimes:jpeg,png',
@@ -55,8 +55,8 @@ class ProductRequest extends FormRequest
         return [
             'name.required' => ":attribute is required",
             'name.string' => ":attribute is invalid",
-            'name.min' => ":attribute is invalid",
-            'name.max' => ":attribute is invalid",
+            'name.min' => ":attribute must have minimum length is :min",
+            'name.max' => ":attribute must have maximum length is :max",
             'name.unique' => ":attribute is existed",
             'price.required' => ":attribute is required",
             'price.integer' => ":attribute is invalid",
@@ -82,6 +82,7 @@ class ProductRequest extends FormRequest
             "promotion_image.mimetypes" => ":attribute must be image",
             "promotion_image.max" => ":attribute exceeds :max KB",
             "product_images.array" => ":attribute is invalid",
+            "product_images.max" => ":attribute is invalid",
             "product_images.*.image" => ":attribute must be image",
             "product_images.*.mimes" => ":attribute must be image",
             "product_images.*.mimetypes" => ":attribute must be image",

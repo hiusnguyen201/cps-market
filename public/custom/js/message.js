@@ -1,11 +1,10 @@
-const successDiv = $("div.alert.alert-success");
+const successDiv = $("input[name='message-success']");
 
 if (successDiv.length) {
     Toastify({
-        text: successDiv.html(),
-        duration: 1500,
+        text: successDiv.val(),
+        duration: 2000,
         newWindow: true,
-        close: true,
         gravity: "top", // `top` or `bottom`
         position: "right", // `left`, `center` or `right`
         stopOnFocus: false, // Prevents dismissing of toast on hover
@@ -15,13 +14,12 @@ if (successDiv.length) {
     }).showToast();
 }
 
-const errorDiv = $("div.alert.alert-danger");
+const errorDiv = $("input[name='message-error']");
 if (errorDiv.length) {
     Toastify({
         text: errorDiv.html(),
-        duration: 1500,
+        duration: 2000,
         newWindow: true,
-        close: true,
         gravity: "top", // `top` or `bottom`
         position: "right", // `left`, `center` or `right`
         stopOnFocus: false, // Prevents dismissing of toast on hover

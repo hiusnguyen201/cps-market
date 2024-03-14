@@ -6,14 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Crypt;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Models\Product_Images;
 
 class ProductController extends Controller
 {
-    public function home(Request $request)
+    public function home()
     {
         $products = Product::all();
 
@@ -28,22 +27,19 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
-
         return view('admin.products.create', [
             'categories' => $categories,
             'breadcumbs' => [
                 'titles' => ['Products', 'Create'],
                 'title_links' => ["/admin/products"]
             ],
-            'title' => 'Create product'
+            'title' => 'Create product',
         ]);
     }
 
     public function handleCreate(ProductRequest $request)
     {
         try {
-            DB::beginTransaction();
-
             $product = Product::create([
                 'name' => $request->name,
                 'price' => $request->price,
@@ -54,32 +50,46 @@ class ProductController extends Controller
                 'category_id' => $request->category,
             ]);
 
-            $promotion_path = $request->file('promotion_image')->store('public');
+            $encrypted_id = Crypt::encryptString($product->id);
+            $promotion_image_path = $encrypted_id . "/" . $request->file('promotion_image')->hashName();
+            $request->file('promotion_image')->storeAs('public', $promotion_image_path);
             Product_Images::create([
-                'thumbnail' => $promotion_path,
+                'thumbnail' => $promotion_image_path,
                 'product_id' => $product->id,
                 'pin' => 1
             ]);
 
             $product_images = $request->file('product_images');
-
             if ($product_images && count($product_images) > 0) {
                 foreach ($product_images as $image) {
-                    $product_path = $image->store('public');
+                    $product_image_path = $encrypted_id . "/" . $image->hashName();
+                    $image->storeAs('public', $product_image_path);
                     Product_Images::create([
-                        'thumbnail' => $product_path,
+                        'thumbnail' => $product_image_path,
                         'product_id' => $product->id,
                     ]);
                 }
             }
 
-            DB::commit();
-            session()->flash("error", "Create product successfully");
+            session()->flash("success", "Create product successfully");
         } catch (\Exception $err) {
-            DB::rollback();
             session()->flash("error", "Create product failed");
         }
 
         return redirect()->back();
+    }
+
+    public function edit(Product $product)
+    {
+        $categories = Category::all();
+        return view('admin.products.edit', [
+            'categories' => $categories,
+            'product' => $product,
+            'breadcumbs' => [
+                'titles' => ['Products', 'Edit'],
+                'title_links' => ["/admin/products"]
+            ],
+            'title' => 'Edit product',
+        ]);
     }
 }
