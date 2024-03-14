@@ -23,64 +23,71 @@ Route::get('/', [HomeController::class, 'home']);
 
 // Admin
 Route::prefix('admin')->group(function () {
-    Route::get("/", [DashboardController::class, 'home']);
+    Route::middleware(['check.auth', 'check.admin'])->group(function () {
+        Route::get("/", [DashboardController::class, 'home']);
 
-    Route::prefix('users')->group(function () {
-        Route::get('/', [UserController::class, 'home']);
-        Route::get('/details/{user}', [UserController::class, 'details']);
-        Route::get('/create', [UserController::class, 'create']);
-        Route::post('/create', [UserController::class, 'handleCreate']);
-        Route::get('/edit/{user}', [UserController::class, 'edit']);
-        Route::post('/edit/{user}', [UserController::class, 'handleUpdate']);
-        Route::delete('/', [UserController::class, 'handleDelete']);
-    });
+        Route::prefix('users')->group(function () {
+            Route::get('/', [UserController::class, 'home']);
+            Route::get('/details/{user}', [UserController::class, 'details']);
+            Route::get('/create', [UserController::class, 'create']);
+            Route::post('/create', [UserController::class, 'handleCreate']);
+            Route::get('/edit/{user}', [UserController::class, 'edit']);
+            Route::post('/edit/{user}', [UserController::class, 'handleUpdate']);
+            Route::delete('/', [UserController::class, 'handleDelete']);
+        });
 
-    //Brands
-    Route::prefix('brands')->group(function () {
-        Route::get('/', [BrandController::class, 'home']);
-        Route::get('/details/{brand}', [BrandController::class, 'details']);
-        Route::get('/create', [BrandController::class, 'create']);
-        Route::post('/create', [BrandController::class, 'handleCreate']);
-        Route::get('/edit/{brand}', [BrandController::class, 'edit']);
-        Route::post('/edit/{brand}', [BrandController::class, 'handleUpdate']);
-        Route::delete('/', [BrandController::class, 'handleDelete']);
-    });
+        //Brands
+        Route::prefix('brands')->group(function () {
+            Route::get('/', [BrandController::class, 'home']);
+            Route::get('/details/{brand}', [BrandController::class, 'details']);
+            Route::get('/create', [BrandController::class, 'create']);
+            Route::post('/create', [BrandController::class, 'handleCreate']);
+            Route::get('/edit/{brand}', [BrandController::class, 'edit']);
+            Route::post('/edit/{brand}', [BrandController::class, 'handleUpdate']);
+            Route::delete('/', [BrandController::class, 'handleDelete']);
+        });
 
-    //categories
-    Route::prefix('categories')->group(function () {
-        Route::get('/', [CategoryController::class, 'home']);
-        Route::get('/details/{category}', [CategoryController::class, 'details']);
-        Route::get('/create', [CategoryController::class, 'create']);
-        Route::post('/create', [CategoryController::class, 'handleCreate']);
-        Route::get('/edit/{category}', [CategoryController::class, 'edit']);
-        Route::post('/edit/{category}', [CategoryController::class, 'handleUpdate']);
-        Route::delete('/', [CategoryController::class, 'handleDelete']);
+        //categories
+        Route::prefix('categories')->group(function () {
+            Route::get('/', [CategoryController::class, 'home']);
+            Route::get('/details/{category}', [CategoryController::class, 'details']);
+            Route::get('/create', [CategoryController::class, 'create']);
+            Route::post('/create', [CategoryController::class, 'handleCreate']);
+            Route::get('/edit/{category}', [CategoryController::class, 'edit']);
+            Route::post('/edit/{category}', [CategoryController::class, 'handleUpdate']);
+            Route::delete('/', [CategoryController::class, 'handleDelete']);
+        });
     });
 });
 
 // Auth
 Route::prefix('auth')->group(function () {
-    Route::get('/logout', [AuthController::class, 'logout']);
-    Route::get('/login', [AuthController::class, 'localLogin']);
-    Route::post('/login', [AuthController::class, 'handleLocalLogin']);
+    Route::middleware('check.guest')->group(function () {
+        Route::prefix('otp')->group(function () {
+            Route::get('/', [AuthController::class, 'otp']);
+            Route::post('/', [AuthController::class, 'handleVerifyOtp']);
+            Route::get('/resend', [AuthController::class, 'handleResendOtp']);
+        });
 
-    Route::get('/forget-password', [AuthController::class, 'forgetPassword']);
-    Route::post('/forget-password', [AuthController::class, 'handleForgetPassword']);
-    Route::get('/reset-password/{token}', [AuthController::class, 'changePasswordForm']);
-    Route::post('/reset-password/{token}', [AuthController::class, 'handleChangePassword']);
+        Route::get('/login', [AuthController::class, 'localLogin']);
+        Route::post('/login', [AuthController::class, 'handleLocalLogin']);
 
-    Route::get('/info-social', [AuthController::class, 'infoSocial']);
-    Route::post('/info-social', [AuthController::class, 'handleUpdateInfoSocial']);
+        Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm']);
+        Route::post('/forget-password', [AuthController::class, 'submitForgetPasswordForm']);
+        Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm']);
+        Route::post('/reset-password/{token}', [AuthController::class, 'submitResetPasswordForm']);
 
-    Route::prefix('otp')->group(function () {
-        Route::get('/', [AuthController::class, 'otp']);
-        Route::post('/', [AuthController::class, 'handleVerifyOtp']);
-        Route::get('/resend', [AuthController::class, 'handleResendOtp']);
+        Route::get('/info-social', [AuthController::class, 'infoSocial']);
+        Route::post('/info-social', [AuthController::class, 'handleUpdateInfoSocial']);
+
+        Route::get('/{provider?}/redirect', [AuthController::class, 'socialLogin']);
+        Route::get('/{provider?}/callback', [AuthController::class, 'handleSocialLogin']);
+
+        Route::get('/register', [AuthController::class, 'register']);
+        Route::post('/register', [AuthController::class, 'handleRegister']);
     });
 
-    Route::get('/{provider?}/redirect', [AuthController::class, 'socialLogin']);
-    Route::get('/{provider?}/callback', [AuthController::class, 'handleSocialLogin']);
-
-    Route::get('/register', [AuthController::class, 'register']);
-    Route::post('/register', [AuthController::class, 'handleRegister']);
+    Route::middleware('check.auth')->group(function () {
+        Route::get('/logout', [AuthController::class, 'logout']);
+    });
 });

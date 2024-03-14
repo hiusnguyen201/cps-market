@@ -5,8 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Role;
 
-class CheckLogin
+class CheckGuest
 {
     /**
      * Handle an incoming request.
@@ -17,14 +18,14 @@ class CheckLogin
      */
     public function handle(Request $request, Closure $next)
     {
-        // đã log
-        if (Auth::check()) {
-            return redirect('/');
+        $user = Auth::user();
+        if ($user) {
+            if ($user->status == config("constants.user_status.Active")) {
+                $role = Role::where("name", "customer")->first();
+                return $role ? redirect("/") : redirect("/admin");
+            }
         }
-        else {
-            // chưa log
-            return $next($request);
-        }
-        
+
+        return $next($request);
     }
 }
