@@ -21,7 +21,7 @@ use App\Http\Requests\Auth\InfoSocialRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ForgetPasswordRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
-
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -34,20 +34,76 @@ class AuthController extends Controller
 
     public function handleLocalLogin(LoginRequest $request)
     {
-        $credentials = [
+        if (!Auth::attempt([
             'email' => $request->email,
             'password' => $request->password,
-        ];
+        ])) {
+            session()->flash('error', 'Email or password is incorrect');
+            return redirect()->back();
+        }
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
+        $user = Auth::user();
+        if ($user->status == config("constants.user_status.Active")) {
+            $role = Role::where("name", "customer")->first();
+            Auth::login($user, true);
+            return $role ? redirect("/member") : redirect("/admin");
+        } else {
             $this->sendOtpToEmail($user);
             session()->flash('success', "We've sent a verification code to your email");
             return redirect("/auth/otp");
         }
+    }
 
-        session()->flash('error', 'Email or password is incorrect');
-        return redirect()->back();
+    public function otp()
+    {
+        return view('auth.otp', [
+            'title' => 'Otp | Cps Market'
+        ]);
+    }
+
+    public function handleVerifyOtp(OtpRequest $request)
+    {
+        $user = Auth::user();
+        $user_otp = User_Otp::where('user_id', $user->id)->where('otp', $request->otp)->first();
+
+        if (is_null($user_otp)) {
+            session()->flash('error', 'Invalid OTP! Please try again.');
+            return redirect()->back();
+        }
+
+        if ($user->status == config("constants.user_status.Inactive")) {
+            dd($user);
+            User::where("id", $user->id)->update(['status' => config("constants.user_status.Active"), 'email_verified_at' => Carbon::now()]);
+        }
+
+        if (Carbon::now()->gt($user_otp->expire)) {
+            $user_otp->delete();
+            session()->flash('error', 'Otp is expired!');
+            return redirect()->back();
+        }
+
+        Auth::login($user, true);
+        $user_otp->delete();
+        if ($user->role->name === 'customer') {
+            return redirect("/");
+        } else {
+            return redirect("/admin");
+        }
+    }
+
+    public function handleResendOtp()
+    {
+        $this->sendOtpToEmail(Auth::user());
+        session()->flash('success', 'Otp has been resent!');
+        return redirect("/auth/otp");
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        session()->invalidate();
+        session()->regenerateToken();
+        return redirect('/auth/login');
     }
 
     public function infoSocial()
@@ -85,81 +141,6 @@ class AuthController extends Controller
             session()->flash("error", "Update info account failed");
             return redirect()->back();
         }
-    }
-
-    public function sendOtpToEmail($user)
-    {
-        $user_otp_exists = User_Otp::where('user_id', $user->id)->first();
-        if (!is_null($user_otp_exists)) {
-            if (Carbon::now()->lt($user_otp_exists->expire)) {
-                return true;
-            }
-            $user_otp_exists->delete();
-        }
-
-        $user_otp_new = User_Otp::create([
-            'otp' => mt_rand(100000, 999999),
-            'expire' => Carbon::now()->addMinutes(env('OTP_EXPIRE_MINUTES', 1)),
-            'user_id' => $user->id
-        ]);
-
-        Mail::raw("Your OTP is: $user_otp_new->otp", function ($message) use ($user) {
-            $message->to($user->email)->subject('OTP Verification');
-        });
-
-        return true;
-    }
-
-    public function otp()
-    {
-        return view('auth.otp', [
-            'title' => 'Otp | Cps Market'
-        ]);
-    }
-
-    public function handleVerifyOtp(OtpRequest $request)
-    {
-        $user = Auth::user();
-        $user_otp = User_Otp::where('user_id', $user->id)->where('otp', $request->otp)->first();
-
-        if (is_null($user_otp)) {
-            session()->flash('error', 'Invalid OTP! Please try again.');
-            return redirect()->back();
-        }
-
-        if (!$user['status'] == config("constants.user_status.Inactive")) {
-            User::where("id", $user['id'])->update(['status' => config("constants.user_status.Active"), 'email_verified_at' => Carbon::now()]);
-        }
-
-        if (Carbon::now()->gt($user_otp->expire)) {
-            $user_otp->delete();
-            session()->flash('error', 'Otp is expired!');
-            return redirect()->back();
-        }
-
-        Auth::login($user, true);
-        $user_otp->delete();
-
-        if ($user->role->name === 'customer') {
-            return redirect("/");
-        } else {
-            return redirect("/admin");
-        }
-    }
-
-    public function handleResendOtp()
-    {
-        $this->sendOtpToEmail(Auth::user());
-        session()->flash('success', 'Otp has been resent!');
-        return redirect("/auth/otp");
-    }
-
-    public function logout()
-    {
-        Auth::logout();
-        session()->invalidate();
-        session()->regenerateToken();
-        return redirect('/');
     }
 
     public function socialLogin($provider = null)
@@ -317,5 +298,28 @@ class AuthController extends Controller
             ->update(["password" => Hash::make($request['password'])]);
         PasswordResets::where(["email" => $updatePassword->email])->delete();
         return redirect('/auth/login')->with('success', 'Password reset successful');
+    }
+
+    public function sendOtpToEmail($user)
+    {
+        $user_otp_exists = User_Otp::where('user_id', $user->id)->first();
+        if (!is_null($user_otp_exists)) {
+            if (Carbon::now()->lt($user_otp_exists->expire)) {
+                return true;
+            }
+            $user_otp_exists->delete();
+        }
+
+        $user_otp_new = User_Otp::create([
+            'otp' => mt_rand(100000, 999999),
+            'expire' => Carbon::now()->addMinutes(env('OTP_EXPIRE_MINUTES', 1)),
+            'user_id' => $user->id
+        ]);
+
+        Mail::raw("Your OTP is: $user_otp_new->otp", function ($message) use ($user) {
+            $message->to($user->email)->subject('OTP Verification');
+        });
+
+        return true;
     }
 }
