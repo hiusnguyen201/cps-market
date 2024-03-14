@@ -21,7 +21,10 @@ use App\Http\Requests\Auth\InfoSocialRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ForgetPasswordRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
-
+use App\Models\Login_Token;
+use Illuminate\Http\Request;
+use Cookie;
+use Illuminate\Http\Response;
 
 class AuthController extends Controller
 {
@@ -131,13 +134,13 @@ class AuthController extends Controller
             return redirect()->back();
         }
 
+        $login_token = Login_Token::create(['user_id' => $user->id, 'token' => Str::random()]);
         Auth::login($user, true);
         $user_otp->delete();
-
         if ($user->role->name === 'customer') {
-            return redirect("/");
+            return redirect("/")->withCookie("token", $login_token->token);
         } else {
-            return redirect("/admin");
+            return redirect("/admin")->withCookie("token", $login_token->token);
         }
     }
 
@@ -148,11 +151,21 @@ class AuthController extends Controller
         return redirect("/auth/otp");
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
         session()->invalidate();
         session()->regenerateToken();
+        $login_token = Login_Token::where(['token' => $request->cookie('token')])->first();
+
+        if ($login_token) {
+            $login_token->delete();
+            $response = new Response('Hello World');
+
+
+            $response->withCookie(cookie()->forget('token'));
+        }
+
         return redirect('/');
     }
 
