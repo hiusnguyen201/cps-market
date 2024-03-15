@@ -26,18 +26,17 @@
                     <div class="col-3"><span class="mt-2">Product images</span></div>
                     <div class="col-7">
                         <div class="multiple-input_block">
-                            <label class="input-file_block" for="product_images[]">
+                            <div class="input-file_block">
                                 <img hidden class="input-file_image" src="" alt="">
                                 <i class="far fa-file-image"></i>
                                 <span class="input-file_text">Add File</span>
-                                <input class="input-file_form" hidden type="file" name="product_images[]"
-                                    id="product_images[]" multiple>
+                                <input class="input-file_form" hidden type="file" name="product_images[]" multiple>
                                 <div class="remove-btn_block">
                                     <i class="fas fa-trash"></i>
                                 </div>
-                            </label>
-
+                            </div>
                         </div>
+
                         @error('product_images')
                             <span class="required-text">{{ $message }}</span>
                         @enderror
@@ -48,16 +47,15 @@
                     <div class="col-3"><span class="mt-2"><span>Promotion Image</span><span
                                 class="required-text ml-1">*</span></span></div>
                     <div class="col-7">
-                        <label class="input-file_block" for="promotion_image">
+                        <div class="input-file_block">
                             <img hidden class="input-file_image" src="" alt="">
                             <i class="far fa-file-image"></i>
                             <span class="input-file_text">Add File</span>
-                            <input hidden class="input-file_form" type="file" name="promotion_image"
-                                id="promotion_image">
+                            <input hidden class="input-file_form" type="file" name="promotion_image">
                             <div class="remove-btn_block">
                                 <i class="fas fa-trash"></i>
                             </div>
-                        </label>
+                        </div>
 
                         @error('promotion_image')
                             <span class="required-text">{{ $message }}</span>
