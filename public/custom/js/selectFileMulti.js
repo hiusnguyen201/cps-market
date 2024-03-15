@@ -1,11 +1,12 @@
-document
-    .querySelector("form[enctype='multipart/form-data']")
-    .addEventListener("submit", (e) => {
+const form = document.querySelector("form[enctype='multipart/form-data']");
+if (form) {
+    form.addEventListener("submit", (e) => {
         const fileInputs = document.querySelectorAll("input[type=file]");
         fileInputs.forEach((input) => {
             input.disabled = false;
         });
     });
+}
 
 const clearInputFileForm = (input, img) => {
     input.value = null;

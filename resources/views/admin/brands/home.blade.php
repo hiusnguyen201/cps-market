@@ -45,37 +45,32 @@
         </form>
 
         <div class="table-responsive">
-            <table class="table table-bordered table-hover">
+            <table class="home-table table table-hover">
                 <thead>
                     <tr>
-                        <th>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="selectAll">
-                                <label class="form-check-label" for="selectAll">&nbsp;</label>
-                            </div>
+                        <th width='1%'>
+                            <input type="checkbox" class="form-check-input" id="selectAll">
                         </th>
                         <th>Name</th>
-                        <th class="text-right">Operation</th>
+                        <th width='1%'>Operation</th>
                     </tr>
-
                 </thead>
                 <tbody>
                     @foreach ($brands as $brand)
                         <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="id"
-                                        value="{{ $brand->id }}">
-                                </div>
+                            <td class="align-middle">
+                                <input type="checkbox" class="form-check-input" id="selectAll" name="id"
+                                    value="{{ $brand->id }}">
                             </td>
 
-                            <td><a href="/admin/brands/details/{{ $brand->id }}">{{ $brand->name }}</a></td>
+                            <td class="align-middle"><a
+                                    href="/admin/brands/details/{{ $brand->id }}">{{ $brand->name }}</a></td>
 
-                            <td class="text-right">
-                                <a class="btn btn-primary" href="/admin/brands/edit/{{ $brand->id }}" role="button">
+                            <td class="text-center align-middle">
+                                <a class="btn btn-warning" href="/admin/brands/edit/{{ $brand->id }}">
                                     <i class="fas fa-pen"></i>
                                 </a>
-                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
                                     data-target="#modal-delete-{{ $brand->id }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>

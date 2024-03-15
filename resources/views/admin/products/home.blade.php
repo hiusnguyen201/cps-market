@@ -45,7 +45,7 @@
         </form>
 
         <div class="table-responsive">
-            <table class="table table-hover">
+            <table class="home-table table table-hover">
                 <thead>
                     <tr>
                         <th width='1%'>
@@ -57,7 +57,7 @@
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Sold</th>
-                        <th width='1%' class="text-right">Operation</th>
+                        <th width='1%'>Operation</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -97,8 +97,7 @@
                                 {{ $product->sold }}
                             </td>
                             <td class="text-center align-middle">
-                                <a class="btn btn-warning" href="/admin/products/edit/{{ $product->id }}"
-                                    role="button">
+                                <a class="btn btn-warning" href="/admin/products/edit/{{ $product->id }}">
                                     <i class="fas fa-pen"></i>
                                 </a>
                                 <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
