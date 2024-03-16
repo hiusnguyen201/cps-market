@@ -102,10 +102,11 @@
     <script src="{{ asset('adminlte/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <!-- overlayScrollbars -->
     <script src="{{ asset('adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-    <!-- AdminLTE App -->
-    <script src="{{ asset('adminlte/dist/js/adminlte.js') }}"></script>
     <!-- Toast js -->
     <script src="{{ asset('toastjs/toastify.js') }}"></script>
+
+    <!-- AdminLTE App -->
+    <script defer src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
 
     <script defer>
         $("#selectAll").on("click", function() {

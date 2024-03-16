@@ -20,7 +20,7 @@ class ProductController extends Controller
             'products' => $products,
             'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Products']],
-            'title' => 'Manage products'
+            'title' => 'Manage Products'
         ]);
     }
 
@@ -33,7 +33,7 @@ class ProductController extends Controller
                 'titles' => ['Products', 'Create'],
                 'title_links' => ["/admin/products"]
             ],
-            'title' => 'Create product',
+            'title' => 'Create Product',
         ]);
     }
 
@@ -89,7 +89,19 @@ class ProductController extends Controller
                 'titles' => ['Products', 'Edit'],
                 'title_links' => ["/admin/products"]
             ],
-            'title' => 'Edit product',
+            'title' => 'Edit Product',
+        ]);
+    }
+
+    public function details(Product $product)
+    {
+        return view('admin.products.details', [
+            'product' => $product,
+            'breadcumbs' => [
+                'titles' => ['Products', 'Details'],
+                'title_links' => ["/admin/products"]
+            ],
+            'title' => 'Details Product',
         ]);
     }
 }

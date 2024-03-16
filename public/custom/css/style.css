@@ -50,11 +50,11 @@
     border: 1px solid #ccc;
 }
 
-.table td {
+.home-table td {
     border: 0;
 }
 
-.table tr {
+.home-table tr {
     border-bottom: 1px solid #dee2e6;
 }
 
@@ -72,6 +72,7 @@
     border-radius: 4px;
     transition: 0.3s;
     color: #ff4500;
+    user-select: none;
 }
 
 .input-file_uploaded {
@@ -141,4 +142,26 @@
 .input-file_uploaded:hover .remove-btn_block > i {
     cursor: pointer;
     padding: 5px;
+}
+
+.product-image {
+    max-height: 500px;
+    object-fit: cover;
+}
+
+.product-image-thumb {
+    width: 100px;
+    height: 100px;
+    margin-right: 0;
+}
+
+.product-image-thumbs {
+    gap: 10px;
+    justify-content: center;
+}
+
+.product-image-thumb img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }

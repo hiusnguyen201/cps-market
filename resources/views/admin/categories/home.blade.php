@@ -44,36 +44,30 @@
         </form>
 
         <div class="table-responsive">
-            <table class="table table-bordered table-hover">
+            <table class="home-table table table-hover">
                 <thead>
                     <tr>
-                        <th>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="selectAll">
-                                <label class="form-check-label" for="selectAll">&nbsp;</label>
-                            </div>
+                        <th width='1%'>
+                            <input type="checkbox" class="form-check-input" id="selectAll">
                         </th>
                         <th>Name</th>
-                        <th class="text-right">Operation</th>
+                        <th width='1%'>Operation</th>
                     </tr>
-
                 </thead>
                 <tbody>
                     @foreach ($categories as $category)
                         <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="id"
-                                        value="{{ $category->id }}">
-                                </div>
+                            <td class="align-middle">
+                                <input type="checkbox" class="form-check-input" name="id" value="{{ $category->id }}">
                             </td>
-                            <td><a href="/admin/categories/details/{{ $category->id }}">{{ $category->name }}</a></td>
+                            <td class="align-middle"><a
+                                    href="/admin/categories/details/{{ $category->id }}">{{ $category->name }}</a></td>
 
-                            <td class="text-center">
-                                <a class="btn btn-primary" href="/admin/categories/edit/{{ $category->id }}" role="button">
+                            <td class="text-center align-middle">
+                                <a class="btn btn-warning" href="/admin/categories/edit/{{ $category->id }}">
                                     <i class="fas fa-pen"></i>
                                 </a>
-                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
                                     data-target="#modal-delete-{{ $category->id }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
