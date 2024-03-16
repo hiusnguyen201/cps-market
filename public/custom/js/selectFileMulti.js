@@ -34,7 +34,7 @@ const getInputFileForm = () => {
 
 const addInputFileForm = (parent) => {
     const element = getInputFileForm();
-    parent.after(element);
+    parent.parentNode.appendChild(element);
     element.addEventListener("click", clickInput);
     const input = element.querySelector("input.input-file_form[type=file]");
     input.addEventListener("change", handleChangeFile);
@@ -59,7 +59,14 @@ const handleChangeFile = (e) => {
 
     const removeBtn = parent.querySelector("div.remove-btn_block>i");
     removeBtn.addEventListener("click", () => {
-        if (!parent.nextElementSibling) {
+        const inputElements = document.querySelectorAll(
+            "input.input-file_form[type=file][multiple]"
+        );
+        var i = 0;
+        inputElements.forEach((input) => {
+            if (input.files.length) i++;
+        });
+        if (i >= 7) {
             addInputFileForm(parent);
         }
         parent.remove();
