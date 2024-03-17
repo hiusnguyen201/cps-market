@@ -9,6 +9,7 @@ use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\BrandController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\ProductController;
+use App\Http\Controllers\Web\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,31 +85,44 @@ Route::prefix('admin')->group(function () {
 // Auth
 Route::prefix('auth')->group(function () {
     // Route::middleware('check.guest')->group(function () {
-        Route::prefix('otp')->group(function () {
-            Route::get('/', [AuthController::class, 'otp']);
-            Route::post('/', [AuthController::class, 'handleVerifyOtp']);
-            Route::get('/resend', [AuthController::class, 'handleResendOtp']);
-        });
+    Route::prefix('otp')->group(function () {
+        Route::get('/', [AuthController::class, 'otp']);
+        Route::post('/', [AuthController::class, 'handleVerifyOtp']);
+        Route::get('/resend', [AuthController::class, 'handleResendOtp']);
+    });
 
-        Route::get('/login', [AuthController::class, 'localLogin']);
-        Route::post('/login', [AuthController::class, 'handleLocalLogin']);
+    Route::get('/login', [AuthController::class, 'localLogin']);
+    Route::post('/login', [AuthController::class, 'handleLocalLogin']);
 
-        Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm']);
-        Route::post('/forget-password', [AuthController::class, 'submitForgetPasswordForm']);
-        Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm']);
-        Route::post('/reset-password/{token}', [AuthController::class, 'submitResetPasswordForm']);
+    Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm']);
+    Route::post('/forget-password', [AuthController::class, 'submitForgetPasswordForm']);
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm']);
+    Route::post('/reset-password/{token}', [AuthController::class, 'submitResetPasswordForm']);
 
-        Route::get('/info-social', [AuthController::class, 'infoSocial']);
-        Route::post('/info-social', [AuthController::class, 'handleUpdateInfoSocial']);
+    Route::get('/info-social', [AuthController::class, 'infoSocial']);
+    Route::post('/info-social', [AuthController::class, 'handleUpdateInfoSocial']);
 
-        Route::get('/{provider?}/redirect', [AuthController::class, 'socialLogin']);
-        Route::get('/{provider?}/callback', [AuthController::class, 'handleSocialLogin']);
+    Route::get('/{provider?}/redirect', [AuthController::class, 'socialLogin']);
+    Route::get('/{provider?}/callback', [AuthController::class, 'handleSocialLogin']);
 
-        Route::get('/register', [AuthController::class, 'register']);
-        Route::post('/register', [AuthController::class, 'handleRegister']);
+    Route::get('/register', [AuthController::class, 'register']);
+    Route::post('/register', [AuthController::class, 'handleRegister']);
     // });
 
     // Route::middleware('check.auth')->group(function () {
-        Route::get('/logout', [AuthController::class, 'logout']);
+    Route::get('/logout', [AuthController::class, 'logout']);
     // });
 });
+
+Route::prefix('cart')->group(function () {
+    Route::get('/', [CartController::class, 'home']);
+
+    Route::get('/product/{id}', [CartController::class, 'handleCreate']);
+
+    Route::get('/{id}', [CartController::class, 'decreaseQuantity']);
+
+    Route::delete('/{id}', [CartController::class, 'handleDelete']);
+
+});
+
+Route::get('/checkout', [CartController::class, 'checkout']);
