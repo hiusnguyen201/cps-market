@@ -14,7 +14,7 @@ class BrandController extends Controller
         try {
             $brands = $category->brands()->get();
 
-            if ($brands && count($brands) > 0) {
+            if ($brands) {
                 return response()->json([
                     'message' => 'Success',
                     'brands' => $brands ?? []

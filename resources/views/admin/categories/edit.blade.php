@@ -15,8 +15,7 @@
                     <h1>Edit category</h1>
                 </h3>
             </div>
-            <!-- /.card-header -->
-            <!-- form start -->
+
             <form action="" method="POST">
                 <div class="card-body">
                     <div class="form-group">
@@ -28,11 +27,12 @@
                         @enderror
                     </div>
 
-                    <input type="hidden" name="id" value="{{ $category->id }}">
+
                 </div>
-                <!-- /.card-body -->
 
                 <div class="card-footer">
+                    <input type="hidden" name="id" value="{{ $category->id }}">
+                    <input type="hidden" name="_method" value="PUT">
                     <button type="submit" class="btn btn-primary">update</button>
                 </div>
                 @csrf

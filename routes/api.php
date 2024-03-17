@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BrandController;
+use App\Http\Controllers\Api\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,3 +16,5 @@ use App\Http\Controllers\Api\BrandController;
 */
 
 Route::get("/categories/{category}/brands", [BrandController::class, 'getAllByCategory']);
+Route::post("/products", [ProductController::class, 'create']);
+Route::put("/products/{product}", [ProductController::class, 'update']);

@@ -35,11 +35,12 @@
                     @enderror
                 </div>
 
-                <input type="hidden" name="id" value="{{ $brand->id }}">
 
             </div>
 
             <div class="card-footer">
+                <input type="hidden" name="id" value="{{ $brand->id }}">
+                <input type="hidden" name="_method" value="PUT">
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>
             @csrf

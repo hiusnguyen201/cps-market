@@ -92,7 +92,7 @@ class BrandController extends Controller
             'brand' => $brand,
             'categories' => $categories,
             'brand_category_ids' => $brand_category_ids,
-            'breadcumbs' => ['titles' => ['Brands', 'Brand'], 'title_links' => ["/admin/brands"]],
+            'breadcumbs' => ['titles' => ['Brands', 'Edit'], 'title_links' => ["/admin/brands"]],
             'title' => 'Edit Brand'
         ]);
     }

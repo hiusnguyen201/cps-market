@@ -1,13 +1,3 @@
-const form = document.querySelector("form[enctype='multipart/form-data']");
-if (form) {
-    form.addEventListener("submit", (e) => {
-        const fileInputs = document.querySelectorAll("input[type=file]");
-        fileInputs.forEach((input) => {
-            input.disabled = false;
-        });
-    });
-}
-
 const clearInputFileForm = (input, img) => {
     input.value = null;
     input.files = null;
@@ -32,9 +22,18 @@ const getInputFileForm = () => {
     return divNode;
 };
 
-const addInputFileForm = (parent) => {
+const addInputFileForm = (inputPrevious) => {
     const element = getInputFileForm();
-    parent.parentNode.appendChild(element);
+
+    const blocks = document.querySelectorAll(
+        "input.input-file_form[type=file][multiple]"
+    );
+
+    inputPrevious.parentNode.appendChild(element);
+    if (blocks.length >= 7) {
+        element.hidden = true;
+    }
+
     element.addEventListener("click", clickInput);
     const input = element.querySelector("input.input-file_form[type=file]");
     input.addEventListener("change", handleChangeFile);
@@ -44,40 +43,42 @@ const clickInput = (e) => {
     const checkInput = e.target.classList.contains("input-file_block");
     const parent = checkInput ? e.target : e.target.parentNode;
     const input = parent.querySelector("input[type='file']");
-    if (!input || input.files.length) return;
+
+    if (!input) return;
     input.click();
 };
 
 const handleChangeFile = (e) => {
     const parent = e.target.parentNode;
+    if (!e.target.files.length) return;
     const img = parent.querySelector("img");
     img.src = URL.createObjectURL(e.target.files[0]);
     img.hidden = false;
     setTimeout(() => {
         parent.classList.replace("input-file_block", "input-file_uploaded");
     }, 100);
+    e.target.disabled = true;
 
     const removeBtn = parent.querySelector("div.remove-btn_block>i");
     removeBtn.addEventListener("click", () => {
-        const inputElements = document.querySelectorAll(
-            "input.input-file_form[type=file][multiple]"
-        );
-        var i = 0;
-        inputElements.forEach((input) => {
-            if (input.files.length) i++;
-        });
-        if (i >= 7) {
-            addInputFileForm(parent);
+        if (!e.target.multiple) {
+            clearInputFileForm(e.target, img);
+            e.target.disabled = false;
+            return;
         }
+
+        const div = document.querySelector(
+            ".multiple-input_block>div.input-file_block"
+        );
+
+        if (div) {
+            div.hidden = false;
+        }
+
         parent.remove();
     });
 
     if (!e.target.multiple) return;
-
-    const inputElements = document.querySelectorAll(
-        "input.input-file_form[type=file][multiple]"
-    );
-    if (inputElements.length >= 7) return;
 
     addInputFileForm(parent);
 };
@@ -85,11 +86,6 @@ const handleChangeFile = (e) => {
 const divBlock = document.querySelectorAll("div.input-file_block");
 divBlock.forEach((element) => {
     element.addEventListener("click", clickInput);
-});
-
-const inputElements = document.querySelectorAll(
-    "input.input-file_form[type=file]"
-);
-inputElements.forEach((input) => {
+    const input = element.querySelector("input.input-file_form[type=file]");
     input.addEventListener("change", handleChangeFile);
 });
