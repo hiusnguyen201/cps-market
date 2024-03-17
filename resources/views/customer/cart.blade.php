@@ -199,7 +199,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>SUBTOTAL</td>
-                                                        <td>$</td>
+                                                        <td>sdf66251$</td>
                                                     </tr>
                                                     <tr>
                                                         <td>GRAND TOTAL</td>
