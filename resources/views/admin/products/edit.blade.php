@@ -7,7 +7,7 @@
 
 @extends('layouts.admin.index')
 @section('content')
-    <form id="product" action="" enctype="multipart/form-data" method="POST">
+    <form id="product" enctype="multipart/form-data" method="POST">
         <div class="card card-primary px-3 py-3">
             <span class="font-weight-bold title-create mb-2">Basic information</span>
             <div class="card-body">
@@ -18,10 +18,7 @@
                             <input id="product" type="text" name="name" class="form-control"
                                 placeholder="Enter product name..." value="{{ old('name') ?? $product->name }}">
                         </div>
-
-                        @error('name')
-                            <span class="required-text">{{ $message }}</span>
-                        @enderror
+                        <span class="error-message"></span>
                     </div>
                 </div>
                 <div class="row align-items-start input-block">
@@ -57,10 +54,7 @@
                                 </div>
                             @endif
                         </div>
-
-                        @error('product_images')
-                            <span class="required-text">{{ $message }}</span>
-                        @enderror
+                        <span class="error-message"></span>
                     </div>
                 </div>
 
@@ -76,7 +70,6 @@
                                 @break
                             @endif
                         @endforeach
-
                         <i class="far fa-file-image"></i>
                         <span class="input-file_text">Add File</span>
                         <input id="product" hidden class="input-file_form" type="file" name="promotion_image">
@@ -84,10 +77,7 @@
                             <i class="fas fa-trash"></i>
                         </div>
                     </div>
-
-                    @error('promotion_image')
-                        <span class="required-text">{{ $message }}</span>
-                    @enderror
+                    <span class="error-message"></span>
                 </div>
             </div>
 
@@ -107,10 +97,7 @@
                             @endif
                         </select>
                     </div>
-
-                    @error('category')
-                        <span class="required-text">{{ $message }}</span>
-                    @enderror
+                    <span class="error-message"></span>
                 </div>
             </div>
             <div class="row align-items-start input-block">
@@ -119,10 +106,7 @@
                     <div class="input-group">
                         <textarea id="product" style="resize: none" name="description" class="form-control" cols="30" rows="8">{{ old('description') ?? $product->description }}</textarea>
                     </div>
-
-                    @error('description')
-                        <span class="required-text">{{ $message }}</span>
-                    @enderror
+                    <span class="error-message"></span>
                 </div>
             </div>
         </div>
@@ -141,19 +125,16 @@
                     <div class="input-group">
                         <select id="product" name="brand" class="form-control">
                             <option value="">Please select</option>
-                            @if (count($category->brands))
-                                @foreach ($category->brands as $brand)
-                                    <option {{ old('brand') ?? $product->brand_id ? 'selected' : '' }}
+                            @if ($product->category && count($product->category->brands))
+                                @foreach ($product->category->brands as $brand)
+                                    <option {{ (old('brand') ?? $product->brand_id) == $brand->id ? 'selected' : '' }}
                                         value="{{ $brand->id }}">
                                         {{ $brand->name }}</option>
                                 @endforeach
                             @endif
                         </select>
                     </div>
-
-                    @error('brand')
-                        <span class="required-text">{{ $message }}</span>
-                    @enderror
+                    <span class="error-message"></span>
                 </div>
             </div>
         </div>
@@ -176,10 +157,7 @@
                         <input id="product" type="number" name="market_price" class="form-control"
                             value="{{ old('market_price') ?? $product->market_price }}">
                     </div>
-
-                    @error('market_price')
-                        <span class="required-text">{{ $message }}</span>
-                    @enderror
+                    <span class="error-message"></span>
                 </div>
             </div>
             <div class="row align-items-start input-block">
@@ -194,9 +172,7 @@
                             value="{{ old('price') ?? $product->price }}">
                     </div>
 
-                    @error('price')
-                        <span class="required-text">{{ $message }}</span>
-                    @enderror
+                    <span class="error-message"></span>
                 </div>
             </div>
             <div class="row align-items-start input-block">
@@ -205,12 +181,9 @@
                 <div class="col-7">
                     <div class="input-group">
                         <input id="product" type="number" name="quantity" class="form-control"
-                            value="{{ old('quantity') || $product->quantity || 0 }}">
+                            value="{{ old('quantity') ?? $product->quantity }}">
                     </div>
-
-                    @error('quantity')
-                        <span class="required-text">{{ $message }}</span>
-                    @enderror
+                    <span class="error-message"></span>
                 </div>
             </div>
         </div>
@@ -218,8 +191,8 @@
 
     <div class="d-grid mb-3">
         @csrf
+        @method('PATCH')
         <input type="hidden" name="id" value="{{ $product->id }}">
-        <input type="hidden" name="_method" value="PUT">
         <button type="submit" class="btn btn-primary w-100 py-3">Submit</button>
     </div>
 </form>

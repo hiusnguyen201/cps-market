@@ -7,6 +7,11 @@ const clearInputFileForm = (input, img) => {
         "input-file_uploaded",
         "input-file_block"
     );
+    input.parentNode.addEventListener("click", clickInput);
+    const newInput = input.parentNode.querySelector(
+        "input.input-file_form[type=file]"
+    );
+    newInput.addEventListener("change", handleChangeFile);
 };
 
 const getInputFileForm = () => {
@@ -22,14 +27,14 @@ const getInputFileForm = () => {
     return divNode;
 };
 
-const addInputFileForm = (inputPrevious) => {
+const addInputFileForm = (inputDivPrevious) => {
     const element = getInputFileForm();
 
     const blocks = document.querySelectorAll(
         "input.input-file_form[type=file][multiple]"
     );
 
-    inputPrevious.parentNode.appendChild(element);
+    inputDivPrevious.parentNode.appendChild(element);
     if (blocks.length >= 7) {
         element.hidden = true;
     }
@@ -88,4 +93,29 @@ divBlock.forEach((element) => {
     element.addEventListener("click", clickInput);
     const input = element.querySelector("input.input-file_form[type=file]");
     input.addEventListener("change", handleChangeFile);
+});
+
+const divUploadedBlock = document.querySelectorAll("div.input-file_uploaded");
+divUploadedBlock.forEach(async (element) => {
+    const input = element.querySelector("input[type=file]");
+    const img = element.querySelector("img");
+    const content = await fetch(img.src).then((res) => res.blob());
+
+    const file = new File([content], null, { type: content.type });
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+    input.files = dataTransfer.files;
+
+    element
+        .querySelector("div.remove-btn_block>i")
+        .addEventListener("click", () => {
+            if (!input.multiple) {
+                clearInputFileForm(input, img);
+                input.disabled = false;
+                return;
+            }
+
+            addInputFileForm(element);
+            element.remove();
+        });
 });

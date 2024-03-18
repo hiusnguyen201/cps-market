@@ -23,7 +23,6 @@ const activeCards = (cardArr) => {
 };
 
 const cardArr = [$("#specification"), $("#sales")];
-inactiveCards(cardArr);
 
 const selectFormCategory = $("select#product[name='category']");
 selectFormCategory.change(async (e) => {
@@ -53,12 +52,11 @@ selectFormCategory.change(async (e) => {
 });
 
 /**
- * Description: Create Product
+ * Description: Create or Update Product
  */
 const enableInputs = (formElement) => {
-    const fileInputs = formElement.find("input[type=file]");
-    fileInputs.each((index) => {
-        fileInputs[index].disabled = false;
+    $.each(formElement.find("input"), function (i, element) {
+        element.disabled = false;
     });
 };
 
@@ -86,38 +84,24 @@ const printAllMessage = (inputArr, errors) => {
     });
 };
 
-// const clearValueInputs = (arrElements) => {
-//     arrElements.each((index, element) => {
-//         console.log(element.nodeName);
-//         if (element.type == "file") {
-//             element.parentNode.querySelector("img").src = null;
-//             element.parentNode.replace(
-//                 "input-file_uploaded",
-//                 "input-file_block"
-//             );
-//             element.files = null;
-//         } else if (element.nodeName == "SELECT") {
-//             if(element.name = 'brand') {
-
-//             }
-//         } else {
-//             element.value = null;
-//         }
-//     });
-// };
-
 const formElement = $("form#product[enctype='multipart/form-data']");
 formElement.find("button[type='submit']").click((e) => {
     e.preventDefault();
     enableInputs(formElement);
-    var formData = new FormData(formElement[0]);
+    const inputMethod = formElement.find("input[name='_method']");
+    const inputId = formElement.find("input[name='id']");
+    const urlApi = {
+        POST: "/api/products",
+        PATCH: `/api/products/${inputId.val() ?? ""}`,
+    };
+
     $.ajax({
-        url: "/api/products",
+        url: urlApi[inputMethod.val()],
         type: "POST",
-        cache: false,
+        crossDomain: true,
+        data: new FormData(formElement[0]),
         processData: false,
         contentType: false,
-        data: formData,
         success: (data) => {
             const { message } = data;
             sessionStorage.setItem("success", message);

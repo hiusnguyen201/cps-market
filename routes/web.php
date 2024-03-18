@@ -35,7 +35,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/create', [UserController::class, 'create']);
         Route::post('/create', [UserController::class, 'handleCreate']);
         Route::get('/edit/{user}', [UserController::class, 'edit']);
-        Route::put('/edit/{user}', [UserController::class, 'handleUpdate']);
+        Route::patch('/edit/{user}', [UserController::class, 'handleUpdate']);
         Route::delete('/', [UserController::class, 'handleDelete']);
     });
 
@@ -46,7 +46,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/create', [BrandController::class, 'create']);
         Route::post('/create', [BrandController::class, 'handleCreate']);
         Route::get('/edit/{brand}', [BrandController::class, 'edit']);
-        Route::put('/edit/{brand}', [BrandController::class, 'handleUpdate']);
+        Route::patch('/edit/{brand}', [BrandController::class, 'handleUpdate']);
         Route::delete('/', [BrandController::class, 'handleDelete']);
     });
 
@@ -57,7 +57,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/create', [CategoryController::class, 'create']);
         Route::post('/create', [CategoryController::class, 'handleCreate']);
         Route::get('/edit/{category}', [CategoryController::class, 'edit']);
-        Route::put('/edit/{category}', [CategoryController::class, 'handleUpdate']);
+        Route::patch('/edit/{category}', [CategoryController::class, 'handleUpdate']);
         Route::delete('/', [CategoryController::class, 'handleDelete']);
     });
 
@@ -66,9 +66,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [ProductController::class, 'home']);
         Route::get('/details/{product}', [ProductController::class, 'details']);
         Route::get('/create', [ProductController::class, 'create']);
-        Route::post('/create', [ProductController::class, 'handleCreate']);
         Route::get('/edit/{product}', [ProductController::class, 'edit']);
-        Route::put('/edit/{product}', [ProductController::class, 'handleUpdate']);
         Route::delete('/', [ProductController::class, 'handleDelete']);
     });
 });

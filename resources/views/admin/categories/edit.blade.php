@@ -31,11 +31,11 @@
                 </div>
 
                 <div class="card-footer">
+                    @csrf
+                    @method('PATCH')
                     <input type="hidden" name="id" value="{{ $category->id }}">
-                    <input type="hidden" name="_method" value="PUT">
                     <button type="submit" class="btn btn-primary">update</button>
                 </div>
-                @csrf
             </form>
         </div>
     </div>

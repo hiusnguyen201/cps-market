@@ -39,8 +39,9 @@
             </div>
 
             <div class="card-footer">
+                @csrf
+                @method('PATCH')
                 <input type="hidden" name="id" value="{{ $brand->id }}">
-                <input type="hidden" name="_method" value="PUT">
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>
             @csrf

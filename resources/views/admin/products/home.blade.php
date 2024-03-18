@@ -20,7 +20,7 @@
 
         <form action="" class="d-flex align-items-center mb-2" method="GET">
             <div class="col-1 px-0 mr-2">
-                <select name="limit" id="" class="form-control">
+                <select name="limit" class="form-control">
                     @if (!is_null($limit_page))
                         @foreach ($limit_page as $limit)
                             <option {{ request()->limit == $limit ? 'selected' : '' }} value="{{ $limit }}">
@@ -34,7 +34,7 @@
             </div>
 
             <div class="col-2 px-0 mr-2">
-                <select name="category" id="" class="form-control">
+                <select name="category" class="form-control">
                     <option value="">All Category</option>
                     @if (count($categories))
                         @foreach ($categories as $category)
@@ -85,7 +85,7 @@
                                 <td class="align-middle">
                                     <a href="/admin/products/details/{{ $product->id }}" class="row align-items-center">
                                         @foreach ($product->images as $image)
-                                            @if ($image->pin == 1)
+                                            @if ($image->pin)
                                                 <img src="{{ asset('storage/' . $image->thumbnail) }}"
                                                     class="float-left table-img" alt="">
                                             @break

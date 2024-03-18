@@ -27,9 +27,10 @@ class ProductRequest extends FormRequest
      */
     public function rules(Request $request)
     {
+        error_log($request->name);
         return [
             'name' => 'required|string|min:4|max:150|unique:products,name'
-                . ($request->id ? ',' . $request->id : ''),
+                . ($request->_method == 'PATCH' ? ',' . $request->id : ''),
             'price' => "required|integer|min:1",
             'market_price' => "required|integer|min:1",
             'quantity' => "required|integer|min:0",

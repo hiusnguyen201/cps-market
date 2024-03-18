@@ -158,6 +158,7 @@
 
         <div class="d-grid mb-3">
             @csrf
+            @method('POST')
             <button type="submit" class="btn btn-primary w-100 py-3">Submit</button>
         </div>
     </form>

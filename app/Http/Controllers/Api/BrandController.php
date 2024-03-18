@@ -25,7 +25,10 @@ class BrandController extends Controller
                 ], 404);
             }
         } catch (\Exception $err) {
-            return next($err);
+            return response()->json([
+                'message' => 'Server Error',
+                'error' => $err
+            ], 500);
         }
     }
 }

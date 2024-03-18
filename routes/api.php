@@ -17,4 +17,4 @@ use App\Http\Controllers\Api\ProductController;
 
 Route::get("/categories/{category}/brands", [BrandController::class, 'getAllByCategory']);
 Route::post("/products", [ProductController::class, 'create']);
-Route::put("/products/{product}", [ProductController::class, 'update']);
+Route::patch("/products/{product}", [ProductController::class, 'update']);
