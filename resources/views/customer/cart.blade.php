@@ -9,7 +9,7 @@
 
 
     <!--====== Section 2 ======-->
-    <div class="u-s-p-b-60">
+    <div class="u-s-m-y-60">
 
         <!--====== Section Intro ======-->
         <div class="section__intro u-s-m-b-60">
@@ -42,12 +42,12 @@
 
                             <table class="table-p">
 
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="selectAll">
-                                    <label class="form-check-label" for="selectAll">Select all</label>
+                                <div class="form-check" style="padding-bottom: 20px;color: rgb(14, 36, 49);font-size: 16px;padding-left: 5px;padding-top: 5px; position: relative;">
+                                    <input type="checkbox" class="form-check-input round-checkbox" id="selectAll">
+                                    <label class="form-check-label" for="selectAll" style="position:absolute; top:3px; left: 25px;">Select all</label>
                                 </div>
 
-                                <tbody>
+                                <tbody">
 
                                     @php
                                     $totalPrice = 0;
@@ -58,7 +58,7 @@
                                     <tr>
                                         <td>
                                             <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" name="cart_id" value="{{ $cart->id }}">{{ $cart->id }}
+                                                <input type="checkbox" class="form-check-input round-checkbox" name="cart_id" value="{{ $cart->id }}">
                                             </div>
                                         </td>
 
@@ -67,7 +67,7 @@
                                                 <div class="table-p__img-wrap">
                                                     @foreach ($cart->product->images as $image)
                                                     @if ($image->pin == 1)
-                                                    <img class="u-img-fluid" src="{{ asset('storage/' . $image->thumbnail) }}" alt="">
+                                                    <img class="u-img-fluid" style="height: 100%; object-fit: contain;" src="{{ asset('storage/' . $image->thumbnail) }}" alt="">
                                                     @break
                                                     @endif
                                                     @endforeach
@@ -80,7 +80,7 @@
 
                                                     <span class="table-p__category">
 
-                                                        <a href="shop-side-version-2.html">Electronics</a></span>
+                                                        <a href="shop-side-version-2.html">{{ $cart->product->category->name }}</a></span>
                                                     <ul class="table-p__variant-list">
                                                         <li>
 
@@ -96,14 +96,27 @@
                                         </td>
 
                                         <td>
-                                            <span class="table-p__price" style="color: #d70018; font-size: 17px;">{{ number_format($cart->product->price, 0, ',', '.') }}&nbsp;₫</span>
+
+                                            <span class="table-p__price" style="color: #d70018;">{{ number_format($cart->product->price, 0, ',', '.') }}&nbsp;₫</span>
+                                            <span class="table-p__price customtd">{{ number_format($cart->product->market_price, 0, ',', '.') }}&nbsp;₫</span>
                                         </td>
 
-                                        <td>
-                                            <span class="table-p__price" style="color: #707070; font-size: 14px; text-decoration: line-through;">{{ number_format($cart->product->market_price, 0, ',', '.') }}&nbsp;₫</span>
+                                        <td class="customtd3">
+                                            <span class="table-p__price">{{ number_format($cart->product->market_price, 0, ',', '.') }}&nbsp;₫</span>
                                         </td>
 
-                                        <td>
+                                        <td style="padding-top: 0;">
+
+                                            <div class="table-p__del-wrap text-right">
+
+                                                <form action="/cart/{{ $cart->id }}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button style="border: 0; background: none; cursor: pointer;" class="far fa-trash-alt table-p__delete-link" type="submit"></button>
+                                                </form>
+
+                                            </div>
+
                                             <div class="table-p__input-counter-wrap">
 
                                                 <!--====== Input Counter ======-->
@@ -118,17 +131,8 @@
                                                 <!--====== End - Input Counter ======-->
                                             </div>
                                         </td>
-                                        <td>
-                                            <div class="table-p__del-wrap">
 
-                                                <form action="/cart/{{ $cart->id }}" method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button style="border: 0; background: none; cursor: pointer;" class="far fa-trash-alt table-p__delete-link" type="submit"></button>
-                                                </form>
-
-                                            </div>
-                                        </td>
+                                        
                                     </tr>
                                     <!--====== End - Row ======-->
 
@@ -138,7 +142,7 @@
 
                                     @endforeach
 
-                                </tbody>
+                                    </tbody>
                             </table>
                         </div>
 
@@ -147,7 +151,7 @@
                         <div class="route-box">
                             <div class="route-box__g1">
 
-                                <a class="route-box__link" href="shop-side-version-2.html"><i class="fas fa-long-arrow-alt-left"></i>
+                                <a class="route-box__link" href="/"><i class="fas fa-long-arrow-alt-left"></i>
 
                                     <span>CONTINUE SHOPPING</span></a>
                             </div>
