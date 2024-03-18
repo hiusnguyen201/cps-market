@@ -1,13 +1,3 @@
-const form = document.querySelector("form[enctype='multipart/form-data']");
-if (form) {
-    form.addEventListener("submit", (e) => {
-        const fileInputs = document.querySelectorAll("input[type=file]");
-        fileInputs.forEach((input) => {
-            input.disabled = false;
-        });
-    });
-}
-
 const clearInputFileForm = (input, img) => {
     input.value = null;
     input.files = null;
@@ -17,6 +7,11 @@ const clearInputFileForm = (input, img) => {
         "input-file_uploaded",
         "input-file_block"
     );
+    input.parentNode.addEventListener("click", clickInput);
+    const newInput = input.parentNode.querySelector(
+        "input.input-file_form[type=file]"
+    );
+    newInput.addEventListener("change", handleChangeFile);
 };
 
 const getInputFileForm = () => {
@@ -32,9 +27,18 @@ const getInputFileForm = () => {
     return divNode;
 };
 
-const addInputFileForm = (parent) => {
+const addInputFileForm = (inputDivPrevious) => {
     const element = getInputFileForm();
-    parent.parentNode.appendChild(element);
+
+    const blocks = document.querySelectorAll(
+        "input.input-file_form[type=file][multiple]"
+    );
+
+    inputDivPrevious.parentNode.appendChild(element);
+    if (blocks.length >= 7) {
+        element.hidden = true;
+    }
+
     element.addEventListener("click", clickInput);
     const input = element.querySelector("input.input-file_form[type=file]");
     input.addEventListener("change", handleChangeFile);
@@ -44,40 +48,42 @@ const clickInput = (e) => {
     const checkInput = e.target.classList.contains("input-file_block");
     const parent = checkInput ? e.target : e.target.parentNode;
     const input = parent.querySelector("input[type='file']");
-    if (!input || input.files.length) return;
+
+    if (!input) return;
     input.click();
 };
 
 const handleChangeFile = (e) => {
     const parent = e.target.parentNode;
+    if (!e.target.files.length) return;
     const img = parent.querySelector("img");
     img.src = URL.createObjectURL(e.target.files[0]);
     img.hidden = false;
     setTimeout(() => {
         parent.classList.replace("input-file_block", "input-file_uploaded");
     }, 100);
+    e.target.disabled = true;
 
     const removeBtn = parent.querySelector("div.remove-btn_block>i");
     removeBtn.addEventListener("click", () => {
-        const inputElements = document.querySelectorAll(
-            "input.input-file_form[type=file][multiple]"
-        );
-        var i = 0;
-        inputElements.forEach((input) => {
-            if (input.files.length) i++;
-        });
-        if (i >= 7) {
-            addInputFileForm(parent);
+        if (!e.target.multiple) {
+            clearInputFileForm(e.target, img);
+            e.target.disabled = false;
+            return;
         }
+
+        const div = document.querySelector(
+            ".multiple-input_block>div.input-file_block"
+        );
+
+        if (div) {
+            div.hidden = false;
+        }
+
         parent.remove();
     });
 
     if (!e.target.multiple) return;
-
-    const inputElements = document.querySelectorAll(
-        "input.input-file_form[type=file][multiple]"
-    );
-    if (inputElements.length >= 7) return;
 
     addInputFileForm(parent);
 };
@@ -85,11 +91,31 @@ const handleChangeFile = (e) => {
 const divBlock = document.querySelectorAll("div.input-file_block");
 divBlock.forEach((element) => {
     element.addEventListener("click", clickInput);
+    const input = element.querySelector("input.input-file_form[type=file]");
+    input.addEventListener("change", handleChangeFile);
 });
 
-const inputElements = document.querySelectorAll(
-    "input.input-file_form[type=file]"
-);
-inputElements.forEach((input) => {
-    input.addEventListener("change", handleChangeFile);
+const divUploadedBlock = document.querySelectorAll("div.input-file_uploaded");
+divUploadedBlock.forEach(async (element) => {
+    const input = element.querySelector("input[type=file]");
+    const img = element.querySelector("img");
+    const content = await fetch(img.src).then((res) => res.blob());
+
+    const file = new File([content], null, { type: content.type });
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+    input.files = dataTransfer.files;
+
+    element
+        .querySelector("div.remove-btn_block>i")
+        .addEventListener("click", () => {
+            if (!input.multiple) {
+                clearInputFileForm(input, img);
+                input.disabled = false;
+                return;
+            }
+
+            addInputFileForm(element);
+            element.remove();
+        });
 });

@@ -4,6 +4,9 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class ProductRequest extends FormRequest
 {
@@ -24,9 +27,10 @@ class ProductRequest extends FormRequest
      */
     public function rules(Request $request)
     {
+        error_log($request->name);
         return [
             'name' => 'required|string|min:4|max:150|unique:products,name'
-                . ($request->id ? ',' . $request->id : ''),
+                . ($request->_method == 'PATCH' ? ',' . $request->id : ''),
             'price' => "required|integer|min:1",
             'market_price' => "required|integer|min:1",
             'quantity' => "required|integer|min:0",
@@ -83,10 +87,10 @@ class ProductRequest extends FormRequest
             "promotion_image.max" => ":attribute exceeds :max KB",
             "product_images.array" => ":attribute is invalid",
             "product_images.max" => ":attribute is invalid",
-            "product_images.*.image" => ":attribute must be image",
-            "product_images.*.mimes" => ":attribute must be image",
-            "product_images.*.mimetypes" => ":attribute must be image",
-            "product_images.*.max" => ":attribute exceeds :max KB",
+            "product_images.*.image" => ":attribute must be image in position :position",
+            "product_images.*.mimes" => ":attribute must be image in position :position",
+            "product_images.*.mimetypes" => ":attribute must be image in position :position",
+            "product_images.*.max" => ":attribute exceeds :max KB in position :position",
         ];
     }
     public function attributes()
@@ -100,7 +104,20 @@ class ProductRequest extends FormRequest
             "brand" => "Brand",
             "description" => "Description",
             "promotion_image" => "Promotion image",
-            "product_images" => "Product images"
+            "product_images" => "Product images",
+            "product_images.*" => "Product images"
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors();
+
+        $response = response()->json([
+            'message' => 'Invalid data',
+            'error' => $errors->messages(),
+        ], 422);
+
+        throw new HttpResponseException($response);
     }
 }

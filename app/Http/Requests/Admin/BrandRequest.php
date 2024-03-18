@@ -25,7 +25,7 @@ class BrandRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'name' => 'required|string|max:100|unique:brands,name' . ($request->id ? ',' . $request->id : ''),
+            'name' => 'required|string|max:100|unique:brands,name' . ($request->_method == 'PATCH' ? ',' . $request->id : ''),
             'category' => 'required|array',
             'category.*' => 'integer|min:1|exists:categories,id',
         ];

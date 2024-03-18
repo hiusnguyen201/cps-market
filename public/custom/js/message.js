@@ -17,7 +17,7 @@ if (successDiv.length) {
 const errorDiv = $("input[name='message-error']");
 if (errorDiv.length) {
     Toastify({
-        text: errorDiv.html(),
+        text: errorDiv.val(),
         duration: 2000,
         newWindow: true,
         gravity: "top", // `top` or `bottom`

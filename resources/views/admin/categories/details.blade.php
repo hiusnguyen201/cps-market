@@ -38,7 +38,7 @@
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
                                                 <td><a class=""
-                                                        href="/admin/brands/{{ $brand->id }}">{{ $brand->name }}</a>
+                                                        href="/admin/brands/details/{{ $brand->id }}">{{ $brand->name }}</a>
                                                 </td>
                                             </tr>
                                         @endforeach

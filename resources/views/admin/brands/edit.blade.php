@@ -35,11 +35,13 @@
                     @enderror
                 </div>
 
-                <input type="hidden" name="id" value="{{ $brand->id }}">
 
             </div>
 
             <div class="card-footer">
+                @csrf
+                @method('PATCH')
+                <input type="hidden" name="id" value="{{ $brand->id }}">
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>
             @csrf

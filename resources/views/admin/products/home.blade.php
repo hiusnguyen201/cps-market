@@ -20,7 +20,7 @@
 
         <form action="" class="d-flex align-items-center mb-2" method="GET">
             <div class="col-1 px-0 mr-2">
-                <select name="limit" id="" class="form-control">
+                <select name="limit" class="form-control">
                     @if (!is_null($limit_page))
                         @foreach ($limit_page as $limit)
                             <option {{ request()->limit == $limit ? 'selected' : '' }} value="{{ $limit }}">
@@ -29,6 +29,20 @@
                         @endforeach
                     @else
                         <option selected value="10">10</option>
+                    @endif
+                </select>
+            </div>
+
+            <div class="col-2 px-0 mr-2">
+                <select name="category" class="form-control">
+                    <option value="">All Category</option>
+                    @if (count($categories))
+                        @foreach ($categories as $category)
+                            <option {{ request()->category == $category->id ? 'selected' : '' }}
+                                value="{{ $category->id }}">
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
                     @endif
                 </select>
             </div>
@@ -71,7 +85,7 @@
                                 <td class="align-middle">
                                     <a href="/admin/products/details/{{ $product->id }}" class="row align-items-center">
                                         @foreach ($product->images as $image)
-                                            @if ($image->pin == 1)
+                                            @if ($image->pin)
                                                 <img src="{{ asset('storage/' . $image->thumbnail) }}"
                                                     class="float-left table-img" alt="">
                                             @break
@@ -106,6 +120,31 @@
                                 </button>
                             </td>
                         </tr>
+                        <div class="modal" id="modal-delete-{{ $product->id }}" aria-modal="true" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Warning!</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you really want delete?</p>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">Close</button>
+                                        <form action="" method="POST">
+                                            <input type="hidden" name="id" value="{{ $product->id }}">
+                                            <button class="btn btn-primary" type="submit">Submit</button>
+                                            <input type="hidden" name="_method" value="delete">
+                                            @csrf
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                 @endif
             </tbody>
@@ -114,8 +153,8 @@
 
     <!-- Paginate -->
     <div class="d-flex ml-auto">
+        {{ $products->appends(Request::all())->links() }}
     </div>
-
 </div>
 
 <!-- Modal delete -->

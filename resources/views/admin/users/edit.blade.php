@@ -100,9 +100,10 @@
             </div>
         </div>
         <div class="col-12">
+            @csrf
+            @method('PATCH')
             <input type="hidden" name="id" value="{{ $user->id }}">
             <button type="submit" class="btn btn-success w-100 py-2">Submit</button>
-            @csrf
         </div>
     </form>
 @endsection
