@@ -12,9 +12,10 @@ class HomeController extends Controller
 {
     public function home()
     {
-        $user = Auth::user();
-
-        $carts = Cart::with('product')->where('user_id', $user->id)->get();
+        $carts = null;
+        if ($user = Auth::user()) {
+            $carts = Cart::with('product')->where('user_id', $user->id)->get();
+        }
 
         $products = Product::all();
 
@@ -23,5 +24,4 @@ class HomeController extends Controller
             'carts' => $carts
         ], compact('products'));
     }
-
 }

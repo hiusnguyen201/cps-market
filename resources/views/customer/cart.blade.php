@@ -37,15 +37,15 @@
                             <div class="alert alert-warning" role="alert">
                                 Your cart is empty.
                             </div>
+                            <a href="/">Shop now</a>
                             @else
+
                             <table class="table-p">
 
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="selectAll">
                                     <label class="form-check-label" for="selectAll">Select all</label>
                                 </div>
-
-
 
                                 <tbody>
 
@@ -54,20 +54,23 @@
                                     @endphp
 
                                     @foreach($carts as $cart)
-
                                     <!--====== Row ======-->
                                     <tr>
                                         <td>
                                             <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" name="id" value="{{ $cart->id }}">
+                                                <input type="checkbox" class="form-check-input" name="cart_id" value="{{ $cart->id }}">{{ $cart->id }}
                                             </div>
                                         </td>
 
                                         <td>
                                             <div class="table-p__box">
                                                 <div class="table-p__img-wrap">
-
-                                                    <img class="u-img-fluid" src="{{ asset('images/') }}" alt="">
+                                                    @foreach ($cart->product->images as $image)
+                                                    @if ($image->pin == 1)
+                                                    <img class="u-img-fluid" src="{{ asset('storage/' . $image->thumbnail) }}" alt="">
+                                                    @break
+                                                    @endif
+                                                    @endforeach
                                                 </div>
                                                 <div class="table-p__info">
 
@@ -93,11 +96,11 @@
                                         </td>
 
                                         <td>
-                                            <span class="table-p__price" style="color: #d70018; font-size: 17px;">{{ $cart->product->price }}$</span>
+                                            <span class="table-p__price" style="color: #d70018; font-size: 17px;">{{ number_format($cart->product->price, 0, ',', '.') }}&nbsp;₫</span>
                                         </td>
 
                                         <td>
-                                            <span class="table-p__price" style="color: #707070; font-size: 14px; text-decoration: line-through;">{{ $cart->product->market_price }}$</span>
+                                            <span class="table-p__price" style="color: #707070; font-size: 14px; text-decoration: line-through;">{{ number_format($cart->product->market_price, 0, ',', '.') }}&nbsp;₫</span>
                                         </td>
 
                                         <td>
@@ -138,7 +141,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        
+
                     </div>
                     <div class="col-lg-12">
                         <div class="route-box">
@@ -178,13 +181,8 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 u-s-m-b-30">
                         <form class="f-cart">
                             <div class="row">
-                                <div class="col-lg-4 col-md-6 u-s-m-b-30">
 
-                                </div>
-                                <div class="col-lg-4 col-md-6 u-s-m-b-30">
-
-                                </div>
-                                <div class="col-lg-4 col-md-6 u-s-m-b-30">
+                                <div class="col-lg-12 col-md-12 u-s-m-b-30">
                                     <div class="f-cart__pad-box">
                                         <div class="u-s-m-b-30">
                                             <table class="f-cart__table">
