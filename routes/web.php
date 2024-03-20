@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\AccountController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Web\HomeController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\Web\ProductController;
 */
 
 Route::get('/', [HomeController::class, 'home']);
+Route::get('/{slug}.html', [HomeController::class, 'details']);
 
 // Admin
 Route::prefix('admin')->group(function () {
@@ -101,4 +103,8 @@ Route::prefix('auth')->group(function () {
     // Route::middleware('check.auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
     // });
+});
+
+Route::prefix('member')->group(function () {
+    Route::get('/', [AccountController::class, 'index']);
 });

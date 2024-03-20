@@ -8,14 +8,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Product_Images;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
     public function create(ProductRequest $request)
     {
         try {
+            $category = Category::find($request->category);
             $product = Product::create([
                 'name' => $request->name,
                 'price' => $request->price,
@@ -24,6 +27,7 @@ class ProductController extends Controller
                 'description' => $request->description,
                 'brand_id' => $request->brand,
                 'category_id' => $request->category,
+                'slug' => Str::slug($category->name . " " . $request->name, '-'),
             ]);
 
             $encrypted_id = Crypt::encryptString($product->id);
@@ -63,6 +67,7 @@ class ProductController extends Controller
     public function update(Product $product, ProductRequest $request)
     {
         try {
+            $category = Category::find($request->category);
             $product->update([
                 'name' => $request->name,
                 'price' => $request->price,
@@ -71,6 +76,7 @@ class ProductController extends Controller
                 'description' => $request->description,
                 'brand_id' => $request->brand,
                 'category_id' => $request->category,
+                'slug' => Str::slug($category->name . " " . $request->name, '-'),
                 'updated_at' => now()
             ]);
 

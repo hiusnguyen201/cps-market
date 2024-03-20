@@ -72,7 +72,6 @@ class AuthController extends Controller
         }
 
         if ($user->status == config("constants.user_status.Inactive")) {
-            dd($user);
             User::where("id", $user->id)->update(['status' => config("constants.user_status.Active"), 'email_verified_at' => Carbon::now()]);
         }
 

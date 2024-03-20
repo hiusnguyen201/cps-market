@@ -19,6 +19,10 @@
     <!--====== App ======-->
     <link rel="stylesheet" href="{{ asset('ludus/css/app.css') }}">
 
+    {{-- swiper --}}
+
+    <link rel="stylesheet" href="{{ asset('swiper/package/swiper-bundle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('custom/css/swiper.css') }}">
 
 </head>
 
@@ -45,6 +49,24 @@
 
     <!--====== App ======-->
     <script src="{{ asset('ludus/js/app.js') }}"></script>
+
+    {{-- Swiper --}}
+
+    <script src="{{ asset('swiper/package/swiper-bundle.min.js') }}"></script>
+
+    <script defer>
+        const swiper = new Swiper(".swiper", {
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            slidesPerView: 4,
+            loop: false,
+            spaceBetween: 20,
+            grid: {
+                rows: 2
+            }
+        })
+    </script>
+
 </body>
 
 </html>
