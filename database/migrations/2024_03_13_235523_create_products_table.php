@@ -27,6 +27,7 @@ return new class extends Migration
             $table->foreign('brand_id')->references('id')->on('brands');
             $table->timestamps();
             $table->softDeletes();
+            $table->string('slug', 150)->unique();
         });
     }
 

@@ -21,7 +21,8 @@ class Product extends Model
         'sold',
         'description',
         'brand_id',
-        'category_id'
+        'category_id',
+        'slug'
     ];
 
     /**
@@ -37,7 +38,8 @@ class Product extends Model
         "sold" => "integer",
         "description" => "string",
         "brand_id" => "integer",
-        "category_id" => "integer"
+        "category_id" => "integer",
+        "slug" => "string"
     ];
 
     public function category(): BelongsTo

@@ -45,71 +45,65 @@
                                                             <ul>
                                                                 <li class="js-active">
 
-                                                                    <a href="shop-side-version-2.html"><i
-                                                                            class="fas fa-tv u-s-m-r-6"></i>
+                                                                    <a href="shop-side-version-2.html">
+                                                                        <i class="fas fa-mobile u-s-m-r-6"></i>
 
-                                                                        <span>Electronics</span></a>
+                                                                        <span>Phone</span></a>
 
                                                                     <span class="js-menu-toggle js-toggle-mark"></span>
                                                                 </li>
                                                                 <li>
 
-                                                                    <a href="shop-side-version-2.html"><i
-                                                                            class="fas fa-female u-s-m-r-6"></i>
-
-                                                                        <span>Women's Clothing</span></a>
-
-                                                                    <span class="js-menu-toggle"></span>
-                                                                </li>
-                                                                <li>
-
-                                                                    <a href="shop-side-version-2.html"><i
-                                                                            class="fas fa-male u-s-m-r-6"></i>
-
-                                                                        <span>Men's Clothing</span></a>
+                                                                    <a href="shop-side-version-2.html">
+                                                                            <i class="fas fa-laptop-code u-s-m-r-6"></i>
+                                                                        <span>Laptop</span></a>
 
                                                                     <span class="js-menu-toggle"></span>
                                                                 </li>
                                                                 <li>
 
-                                                                    <a href="index.html"><i
-                                                                            class="fas fa-utensils u-s-m-r-6"></i>
-
-                                                                        <span>Food & Supplies</span></a>
-
-                                                                    <span class="js-menu-toggle"></span>
-                                                                </li>
-                                                                <li>
-
-                                                                    <a href="index.html"><i
-                                                                            class="fas fa-couch u-s-m-r-6"></i>
-
-                                                                        <span>Furniture & Decor</span></a>
+                                                                    <a href="shop-side-version-2.html">
+                                                                            <i class="fas fa-headphones-alt u-s-m-r-6"></i>
+                                                                        <span>Earphone</span></a>
 
                                                                     <span class="js-menu-toggle"></span>
                                                                 </li>
                                                                 <li>
 
-                                                                    <a href="index.html"><i
-                                                                            class="fas fa-football-ball u-s-m-r-6"></i>
-
-                                                                        <span>Sports & Game</span></a>
+                                                                    <a href="index.html">
+                                                                            <i class="fas fa-stopwatch u-s-m-r-6"></i>
+                                                                        <span>Watch</span></a>
 
                                                                     <span class="js-menu-toggle"></span>
                                                                 </li>
                                                                 <li>
 
-                                                                    <a href="index.html"><i
-                                                                            class="fas fa-heartbeat u-s-m-r-6"></i>
+                                                                    <a href="index.html">
+                                                                            <i class="fas fa-sd-card u-s-m-r-6"></i>
+                                                                        <span>Accessory</span></a>
 
-                                                                        <span>Beauty & Health</span></a>
+                                                                    <span class="js-menu-toggle"></span>
+                                                                </li>
+                                                                <li>
+
+                                                                    <a href="index.html">
+                                                                            <i class="fas fa-hand-holding-usd u-s-m-r-6"></i>
+                                                                        <span>Seconhand</span></a>
+
+                                                                    <span class="js-menu-toggle"></span>
+                                                                </li>
+                                                                <li>
+
+                                                                    <a href="index.html">
+                                                                            <i class="fas fa-tablet-alt u-s-m-r-6"></i>
+                                                                        <span>Tablet</span></a>
 
                                                                     <span class="js-menu-toggle"></span>
                                                                 </li>
                                                             </ul>
                                                         </div>
 
-                                                        <!--====== Electronics ======-->
+                                                        <!--====== Phone ======-->
                                                         <div class="mega-menu-content js-active">
                                                             <!--====== Mega Menu Row ======-->
                                                             <div class="row">
@@ -145,10 +139,10 @@
                                                             </div>
                                                             <!--====== End - Mega Menu Row ======-->
                                                         </div>
-                                                        <!--====== End - Electronics ======-->
+                                                        <!--====== End - Phone ======-->
 
 
-                                                        <!--====== Women ======-->
+                                                        <!--====== Laptop ======-->
                                                         <div class="mega-menu-content">
 
                                                             <!--====== Mega Menu Row ======-->
@@ -243,10 +237,10 @@
                                                             <!--====== End - Mega Menu Row ======-->
                                                             <br>
                                                         </div>
-                                                        <!--====== End - Women ======-->
+                                                        <!--====== End - Laptop ======-->
 
 
-                                                        <!--====== Men ======-->
+                                                        <!--====== Earphone ======-->
                                                         <div class="mega-menu-content">
 
                                                             <!--====== Mega Menu Row ======-->
@@ -351,35 +345,35 @@
                                                             <!--====== End - Mega Menu Row ======-->
                                                             <br>
                                                         </div>
-                                                        <!--====== End - Men ======-->
+                                                        <!--====== End - Earphone ======-->
 
 
-                                                        <!--====== No Sub Categories ======-->
+                                                        <!--====== Watch ======-->
                                                         <div class="mega-menu-content">
                                                             <h5>No Categories</h5>
                                                         </div>
-                                                        <!--====== End - No Sub Categories ======-->
+                                                        <!--====== End - Watch ======-->
 
 
-                                                        <!--====== No Sub Categories ======-->
+                                                        <!--====== Accessory ======-->
                                                         <div class="mega-menu-content">
                                                             <h5>No Categories</h5>
                                                         </div>
-                                                        <!--====== End - No Sub Categories ======-->
+                                                        <!--====== End -  Accessory ======-->
 
 
-                                                        <!--====== No Sub Categories ======-->
+                                                        <!--====== Secondhand ======-->
                                                         <div class="mega-menu-content">
                                                             <h5>No Categories</h5>
                                                         </div>
-                                                        <!--====== End - No Sub Categories ======-->
+                                                        <!--====== End - Secondhand ======-->
 
 
-                                                        <!--====== No Sub Categories ======-->
+                                                        <!--====== Tablet ======-->
                                                         <div class="mega-menu-content">
                                                             <h5>No Categories</h5>
                                                         </div>
-                                                        <!--====== End - No Sub Categories ======-->
+                                                        <!--====== End - Tablet ======-->
                                                     </div>
                                                 </div>
                                                 <!--====== End - Mega Menu ======-->
@@ -728,7 +722,7 @@
                                         <ul style="width:120px">
                                             <li>
 
-                                                <a href="dashboard.html"><i class="fas fa-user-circle u-s-m-r-6"></i>
+                                                <a href="/member"><i class="fas fa-user-circle u-s-m-r-6"></i>
 
                                                     <span>Account</span></a>
                                             </li>
