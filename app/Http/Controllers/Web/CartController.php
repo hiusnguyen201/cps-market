@@ -17,7 +17,7 @@ class CartController extends Controller
 
         if ($user = Auth::user()) {
             $carts = Cart::where('user_id', $user->id)->get();
-            
+
             return view("customer/cart", [
                 'title' => "Cart | Cps Market ",
                 'carts' => $carts,
@@ -27,110 +27,100 @@ class CartController extends Controller
         }
     }
 
-    public function handleCreate($product_id)
+    public function handleCreate(Request $request)
     {
         if ($user = Auth::user()) {
-            $product = Product::findOrFail($product_id);
 
-            $userCart = Cart::where('user_id', $user->id)->where('product_id', $product_id)->first();
+            $product = Product::findOrFail($request->product_id);
 
-            if (!$userCart) {
+            $cart = Cart::where('user_id', $user->id)->where('product_id', $product->id)->first();
+
+            if (!$cart) {
                 Cart::create([
-                    'product_id' => $product_id,
+                    'product_id' => $product->id,
                     'user_id' => $user->id,
                     'quantity' => 1,
                     'price' => $product->price,
                 ]);
 
-                return redirect()->back()->with('success', 'ADD');
+                return response()->json(['message' => 'Product added to cart successfully']);
             } else {
                 $productQty = $product->quantity;
-                $userCartQty = $userCart->quantity;
+                $cartQty = $cart->quantity;
 
-                if ($userCartQty < $productQty) {
-                    $userCart->update([
-                        'quantity' => $userCart->quantity + 1,
-                        'price' => $userCart->price + $product->price,
+                if ($cartQty < $productQty) {
+                    $cart->update([
+                        'quantity' => $cart->quantity + 1,
+                        'price' => $cart->price + $product->price,
                     ]);
 
-                    return redirect()->back()->with('success', 'ADD');
+                    return response()->json(['message' => 'Product quantity updated in cart']);
                 } else {
 
-                    return redirect()->back()->with('error', 'Not enough QTY');
+                    return response()->json(['error' => 'Not enough quantity available']);
                 }
             }
         } else {
-            return redirect('auth/login');
+            return response()->json(['error' => 'If you are not logged in, click <a href="/auth/login">here</a> to login'], 401);
         }
     }
 
-    public function decreaseQuantity($product_id)
+    public function handleUpdate(Request $request)
     {
         if ($user = Auth::user()) {
-            $product = Product::findOrFail($product_id);
-            $userCart = Cart::where('user_id', $user->id)->where('product_id', $product_id)->first();
 
-            if ($userCart->quantity == 1) {
-                $this->handleDelete($userCart->id);
-            } else {
-                $userCart->update([
-                    'quantity' => $userCart->quantity - 1,
-                    'price' => $userCart->price - $product->price,
-                ]);
-            }
+            $cart = Cart::findOrFail($request->cart_id);
 
-            return redirect()->back();
-        } else {
-            return redirect('auth/login');
-        }
-    }
+            $product = Product::findOrFail($cart->product_id);
 
-    public function handleDelete($cart_id)
-    {
-        if ($user = Auth::user()) {
-            $userCart = Cart::findOrFail($cart_id);
+            $action = $request->action;
 
-            if ($userCart) {
+            if ($action === 'increase') {
+                if ($cart) {
+                    $product = Product::findOrFail($cart->product_id);
 
-                if ($user->id == $userCart->user_id) {
-                    $userCart->delete();
-                    return redirect()->back()->with('success', 'Product removed from cart successfully');
-                } else {
-                    return redirect()->back()->with('error', 'Product removed from cart error');
+                    $cart->update([
+                        'quantity' => $cart->quantity + 1,
+                        'price' => $cart->price + $product->price,
+                    ]);
                 }
             } else {
-                return redirect()->back()->with('error', 'Product removed from cart error');
+                if ($cart->quantity == 1) {
+                    $this->handleDelete($cart->id);
+                } else {
+                    $cart->update([
+                        'quantity' => $cart->quantity - 1,
+                        'price' => $cart->price - $product->price,
+                    ]);
+                }
             }
+
+            return response()->json(['message' => 'Cart updated successfully']);
         } else {
-            return redirect('auth/login');
+            return response()->json(['error' => 'Unable to update cart'], 400);
         }
     }
 
-    public function checkout()
+    public function handleDelete(Request $request)
     {
         if ($user = Auth::user()) {
-            // $carts = Cart::with('product')->where('user_id', $user->id)->get();
+            $cart = Cart::findOrFail($request->cart_id);
 
-            return view("customer/checkout", [
-                'title' => "Checkout | Cps Market ",
-                // 'carts' => $carts
-            ]);
+            if ($cart) {
+
+                if ($user->id == $cart->user_id) {
+                    $cart->delete();
+                    return response()->json(['message' => 'Product removed from cart successfully'], 400);
+                } else {
+                    return response()->json(['error' => 'Product removed from cart error'], 400);
+                }
+            } else {
+                return response()->json(['error' => 'Product removed from cart error'], 400);
+            }
+
         } else {
-            return redirect('auth/login');
+            return response()->json(['error' => 'Unable to update cart'], 400);
         }
     }
 
-    public function handleCheckout(Request $request)
-    {
-        if ($user = Auth::user()) {
-            // $carts = Cart::with('product')->where('user_id', $user->id)->get();
-
-            return view("customer/checkout", [
-                'title' => "Checkout | Cps Market ",
-                // 'carts' => $carts
-            ]);
-        } else {
-            return redirect('auth/login');
-        }
-    }
 }

@@ -13,21 +13,72 @@
                 <p class="card-title">Name: {{$product->name}}</p>
                 <p class="card-title">Price: {{$product->price}}</p>
                 <p class="card-title">Descrip: {{$product->description}}</p>
-                <p class="btn-holder"><a href="cart/product/{{ $product->id }}" class="btn btn-outline-danger">Add</a></p>
+
+                <button type="submit" class="btn btn-outline-danger add-to-cart-btn" data-product-id="{{$product->id}}">
+                    ADD</button>
+
+
             </div>
         </div>
     </div>
     @endforeach
 
-@if(session('success'))
-<div class="alert alert-success">
-    {{ session('success')}}
-</div>
-@endif
 
-@if(session('error'))
-<div class="alert alert-danger">
-    {{ session('error')}}
-</div>
-@endif
+    <div id="cart-message" style="display: none;"></div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+            addToCartButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var productId = this.getAttribute('data-product-id');
+                    addToCart(productId);
+                });
+            });
+
+            function addToCart(productId) {
+                fetch('/cart', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            product_id: productId
+                        })
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Xử lý kết quả trả về từ máy chủ nếu cần
+                        showMessage(data.message, 'success');
+                    })
+                    .catch(error => {
+                        showMessage(error.message, 'error');
+                        console.error('There has been a problem with your fetch operation:', error);
+                    });
+            }
+        });
+
+        function showMessage(message, type) {
+            // Chọn phần tử HTML để hiển thị thông báo
+            var messageElement = document.getElementById('cart-message');
+
+            // Thiết lập nội dung thông báo
+            messageElement.innerHTML = message;
+
+            // Thiết lập lớp CSS cho thông báo dựa trên loại
+            if (type === 'success') {
+                messageElement.classList.add('alert', 'alert-success');
+            } else if (type === 'error') {
+                messageElement.classList.add('alert', 'alert-danger');
+            }
+
+            // Hiển thị phần tử thông báo
+            messageElement.style.display = 'block';
+        }
+    </script>

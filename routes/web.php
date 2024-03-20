@@ -117,12 +117,9 @@ Route::prefix('auth')->group(function () {
 Route::prefix('cart')->group(function () {
     Route::get('/', [CartController::class, 'home']);
 
-    Route::get('/product/{id}', [CartController::class, 'handleCreate']);
+    Route::post('/', [CartController::class, 'handleCreate']);
 
-    Route::get('/{id}', [CartController::class, 'decreaseQuantity']);
+    Route::patch('/', [CartController::class, 'handleUpdate']);
 
-    Route::delete('/{id}', [CartController::class, 'handleDelete']);
-
+    Route::delete('/', [CartController::class, 'handleDelete']);
 });
-
-Route::get('/checkout', [CartController::class, 'checkout']);

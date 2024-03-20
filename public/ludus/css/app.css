@@ -8059,8 +8059,8 @@ input::-ms-clear {
 }
 
 .round-checkbox:checked {
-    background-color: rgb(215, 0, 24);
-    box-shadow: 0 0 2px 2px #d70018;
+    background-color: #ff4500;
+    box-shadow: 0 0 2px 2px #ff4500;
     border: 1px solid white;
 }
 
@@ -8149,5 +8149,14 @@ input::-ms-clear {
         text-decoration: line-through;
     }
 
+    .customtd3 span {
+        color: #707070 !important;
+        text-decoration: line-through;
+    }
 
+}
+
+.buynow a:hover div {
+    color: #ff4500;
+    transition: color 0.3s ease;
 }
