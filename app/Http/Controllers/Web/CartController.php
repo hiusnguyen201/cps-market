@@ -110,7 +110,7 @@ class CartController extends Controller
 
                 if ($user->id == $cart->user_id) {
                     $cart->delete();
-                    return response()->json(['message' => 'Product removed from cart successfully'], 400);
+                    return response()->json(['message' => 'Product removed from cart successfully']);
                 } else {
                     return response()->json(['error' => 'Product removed from cart error'], 400);
                 }
