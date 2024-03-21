@@ -227,14 +227,10 @@
 
                         </div>
                     @endforeach
-
                 </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
             </div>
-
-
-
-
-
 
         </div>
 
@@ -332,21 +328,13 @@
 
                         </div>
                     @endforeach
-
                 </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
             </div>
-
-
-
-
-
 
         </div>
 
-
-
-
-        <!--====== End - Section Content ======-->
     </div>
     <!--====== End - Section 3 ======-->
 
@@ -420,9 +408,7 @@
                                     </div>
 
                                     <span class="product-bs__category">
-
                                         {{ $section4->category->name }}</span>
-
                                     <span class="product-bs__name">
 
                                         <a
@@ -445,18 +431,13 @@
 
                         </div>
                     @endforeach
-
                 </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
             </div>
-
-
-
-
-
 
         </div>
 
-        <!--====== End - Section Content ======-->
     </div>
     <!--====== End - Section 4 ======-->
 
@@ -493,8 +474,10 @@
                                 <div class="product-bs">
                                     <div class="product-bs__container">
                                         @if ($section5->price - $section5->market_price > 0)
-                                            <span class="product-bs__discount-percent">SALE
-                                                {{ round((($section5->price - $section5->market_price) * 100) / $section5->price, 0) }}%</span>
+                                            <span class="product-bs__discount-label">
+                                                <span class="product-bs__discount-percent">SALE
+                                                    {{ round((($section5->price - $section5->market_price) * 100) / $section5->price, 0) }}%</span>
+                                            </span>
                                         @endif
 
 
@@ -528,9 +511,7 @@
                                     </div>
 
                                     <span class="product-bs__category">
-
                                         {{ $section5->category->name }}</span>
-
                                     <span class="product-bs__name">
 
                                         <a
@@ -553,18 +534,13 @@
 
                         </div>
                     @endforeach
-
                 </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
             </div>
-
-
-
-
-
 
         </div>
 
-        <!--====== End - Section Content ======-->
     </div>
     <!--====== End - Section 5 ======-->
 
@@ -581,8 +557,8 @@
                     <div class="col-lg-12">
                         <div class="section__text-wrap">
 
-                            <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING
-                                ACCESSORY</h1>
+                            <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING ACCESSORY
+                            </h1>
 
                             {{-- <span class="section__span u-c-silver">NEWLY ADDED PRODUCTS</span> --}}
                         </div>
@@ -603,8 +579,10 @@
                                 <div class="product-bs">
                                     <div class="product-bs__container">
                                         @if ($section6->price - $section6->market_price > 0)
-                                            <span class="product-bs__discount-percent">SALE
-                                                {{ round((($section6->price - $section6->market_price) * 100) / $section6->price, 0) }}%</span>
+                                            <span class="product-bs__discount-label">
+                                                <span class="product-bs__discount-percent">SALE
+                                                    {{ round((($section6->price - $section6->market_price) * 100) / $section6->price, 0) }}%</span>
+                                            </span>
                                         @endif
 
 
@@ -640,9 +618,7 @@
                                     </div>
 
                                     <span class="product-bs__category">
-
                                         {{ $section6->category->name }}</span>
-
                                     <span class="product-bs__name">
 
                                         <a
@@ -665,24 +641,19 @@
 
                         </div>
                     @endforeach
-
                 </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
             </div>
-
-
-
-
-
 
         </div>
 
-        <!--====== End - Section Content ======-->
     </div>
     <!--====== End - Section 6 ======-->
 
 
 
-    <!--====== Section 7 Seconhand ======-->
+    <!--====== Section 7 Secondhand ======-->
     <div class="">
 
         <!--====== Section Intro ======-->
@@ -693,7 +664,7 @@
                         <div class="section__text-wrap">
 
                             <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING
-                                SECOND-HAND</h1>
+                                SECONDHAND</h1>
 
                             {{-- <span class="section__span u-c-silver">NEWLY ADDED PRODUCTS</span> --}}
                         </div>
@@ -714,8 +685,10 @@
                                 <div class="product-bs">
                                     <div class="product-bs__container">
                                         @if ($section7->price - $section7->market_price > 0)
-                                            <span class="product-bs__discount-percent">SALE
-                                                {{ round((($section7->price - $section7->market_price) * 100) / $section7->price, 0) }}%</span>
+                                            <span class="product-bs__discount-label">
+                                                <span class="product-bs__discount-percent">SALE
+                                                    {{ round((($section7->price - $section7->market_price) * 100) / $section7->price, 0) }}%</span>
+                                            </span>
                                         @endif
 
 
@@ -751,9 +724,7 @@
                                     </div>
 
                                     <span class="product-bs__category">
-
                                         {{ $section7->category->name }}</span>
-
                                     <span class="product-bs__name">
 
                                         <a
@@ -776,18 +747,13 @@
 
                         </div>
                     @endforeach
-
                 </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
             </div>
-
-
-
-
-
 
         </div>
 
-        <!--====== End - Section Content ======-->
     </div>
     <!--====== End - Section 7 ======-->
 
@@ -825,16 +791,17 @@
                                 <div class="product-bs">
                                     <div class="product-bs__container">
                                         @if ($section8->price - $section8->market_price > 0)
-                                            <span class="product-bs__discount-percent">SALE
-                                                {{ round((($section8->price - $section8->market_price) * 100) / $section8->price, 0) }}%</span>
+                                            <span class="product-bs__discount-label">
+                                                <span class="product-bs__discount-percent">SALE
+                                                    {{ round((($section8->price - $section8->market_price) * 100) / $section8->price, 0) }}%</span>
+                                            </span>
                                         @endif
 
 
                                         <div class="product-bs__wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block"
-                                            href="/{{ $section8->slug }}.html"
-                                            >
+                                                href="/{{ $section8->slug }}.html">
                                                 @foreach ($section8->images as $image)
                                                     @if ($image->pin == 1)
                                                         <img src="{{ asset('storage/' . $image->thumbnail) }}"
@@ -863,14 +830,11 @@
                                     </div>
 
                                     <span class="product-bs__category">
-
                                         {{ $section8->category->name }}</span>
-
                                     <span class="product-bs__name">
 
                                         <a
-                                        href="/{{ $section8->slug }}.html"
-                                        >{{ $section8->name }}</a></span>
+                                            href="/{{ $section8->slug }}.html">{{ $section8->name }}</a></span>
                                     <div class="product-bs__rating gl-rating-style"><i
                                             class="fas fa-star"></i><i
                                             class="fas fa-star"></i><i
@@ -891,18 +855,13 @@
 
                         </div>
                     @endforeach
-
                 </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
             </div>
-
-
-
-
-
 
         </div>
 
-        <!--====== End - Section Content ======-->
     </div>
     <!--====== End - Section 8 ======-->
 
@@ -922,307 +881,127 @@
         <div class="section__content">
             <div class="container">
                 <div class="row">
+
                     <div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
                         <div class="column-product">
 
                             <span class="column-product__title u-c-secondary u-s-m-b-25">DAILY
                                 PRODUCTS</span>
                             <ul class="column-product__list">
-                                <li class="column-product__item">
-                                    <div class="product-l">
-                                        <div class="product-l__img-wrap">
+                                @foreach ($sections9D as $section9D)
+                                    <li class="column-product__item">
+                                        <div class="product-l">
+                                            <div class="product-l__img-wrap">
 
-                                            <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
+                                                <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
+                                                    href="/{{ $section9D->slug }}">
 
-                                                <img class="aspect__img"
-                                                    src="images/product/men/product9.jpg"
-                                                    alt=""></a>
+                                                    @foreach ($section9D->images as $image)
+                                                    @if ($image->pin == 1)
+                                                        <img src="{{ asset('storage/' . $image->thumbnail) }}"
+                                                            class="aspect__img" alt="">
+                                                    @break
+                                                    @endif
+                                                    @endforeach
+                                                </a>
+                                            </div>
+                                            <div class="product-l__info-wrap">
+                                                <span class="product-l__category">{{ $section9D->category->name }}</span>
+
+                                                <span class="product-l__name">
+
+                                                    <a href="/{{ $section9D->slug }}">{{ $section9D->name }}</a></span>
+
+                                                <span class="product-l__price">{{ number_format($section9D->market_price, 0, ',', '.') }}&nbsp;₫</span>
+                                            </div>
                                         </div>
-                                        <div class="product-l__info-wrap">
+                                    </li>
+                                @endforeach
 
-                                            <span class="product-l__category">
-
-                                                <a href="shop-side-version-2.html">Men
-                                                    Clothing</a></span>
-
-                                            <span class="product-l__name">
-
-                                                <a href="product-detail.html">New Fashion A
-                                                    Nice
-                                                    Elegant</a></span>
-
-                                            <span class="product-l__price">$125.00</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="column-product__item">
-                                    <div class="product-l">
-                                        <div class="product-l__img-wrap">
-
-                                            <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
-
-                                                <img class="aspect__img"
-                                                    src="images/product/men/product10.jpg"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="product-l__info-wrap">
-
-                                            <span class="product-l__category">
-
-                                                <a href="shop-side-version-2.html">Men
-                                                    Clothing</a></span>
-
-                                            <span class="product-l__name">
-
-                                                <a href="product-detail.html">New Fashion B
-                                                    Nice
-                                                    Elegant</a></span>
-
-                                            <span class="product-l__price">$125.00</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="column-product__item">
-                                    <div class="product-l">
-                                        <div class="product-l__img-wrap">
-
-                                            <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
-
-                                                <img class="aspect__img"
-                                                    src="images/product/women/product9.jpg"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="product-l__info-wrap">
-
-                                            <span class="product-l__category">
-
-                                                <a href="shop-side-version-2.html">Women
-                                                    Clothing</a></span>
-
-                                            <span class="product-l__name">
-
-                                                <a href="product-detail.html">New Dress A Nice
-                                                    Elegant</a></span>
-
-                                            <span class="product-l__price">$125.00</span>
-                                        </div>
-                                    </div>
-                                </li>
                             </ul>
                         </div>
                     </div>
+
                     <div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
                         <div class="column-product">
 
                             <span class="column-product__title u-c-secondary u-s-m-b-25">WEEKLY
                                 PRODUCTS</span>
                             <ul class="column-product__list">
-                                <li class="column-product__item">
-                                    <div class="product-l">
-                                        <div class="product-l__img-wrap">
+                                @foreach ($sections9W as $section9W)
+                                    <li class="column-product__item">
+                                        <div class="product-l">
+                                            <div class="product-l__img-wrap">
 
-                                            <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
+                                                <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
+                                                    href="/{{ $section9W->slug }}">
 
-                                                <img class="aspect__img"
-                                                    src="images/product/women/product10.jpg"
-                                                    alt=""></a>
+                                                    @foreach ($section9W->images as $image)
+                                                    @if ($image->pin == 1)
+                                                        <img src="{{ asset('storage/' . $image->thumbnail) }}"
+                                                            class="aspect__img" alt="">
+                                                    @break
+                                                    @endif
+                                                    @endforeach
+                                                </a>
+                                            </div>
+                                            <div class="product-l__info-wrap">
+                                                <span class="product-l__category">{{ $section9W->category->name }}</span>
+
+                                                <span class="product-l__name">
+
+                                                    <a href="/{{ $section9W->slug }}">{{ $section9W->name }}</a></span>
+
+                                                <span class="product-l__price">{{ number_format($section9W->market_price, 0, ',', '.') }}&nbsp;₫</span>
+                                            </div>
                                         </div>
-                                        <div class="product-l__info-wrap">
+                                    </li>
+                                @endforeach
 
-                                            <span class="product-l__category">
-
-                                                <a href="shop-side-version-2.html">Women
-                                                    Clothing</a></span>
-
-                                            <span class="product-l__name">
-
-                                                <a href="product-detail.html">New Dress B Nice
-                                                    Elegant</a></span>
-
-                                            <span class="product-l__price">$125.00
-
-                                                <span
-                                                    class="product-l__discount">$160</span></span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="column-product__item">
-                                    <div class="product-l">
-                                        <div class="product-l__img-wrap">
-
-                                            <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
-
-                                                <img class="aspect__img"
-                                                    src="images/product/women/product11.jpg"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="product-l__info-wrap">
-
-                                            <span class="product-l__category">
-
-                                                <a href="shop-side-version-2.html">Women
-                                                    Clothing</a></span>
-
-                                            <span class="product-l__name">
-
-                                                <a href="product-detail.html">New Dress C Nice
-                                                    Elegant</a></span>
-
-                                            <span class="product-l__price">$125.00
-
-                                                <span
-                                                    class="product-l__discount">$160</span></span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="column-product__item">
-                                    <div class="product-l">
-                                        <div class="product-l__img-wrap">
-
-                                            <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
-
-                                                <img class="aspect__img"
-                                                    src="images/product/women/product12.jpg"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="product-l__info-wrap">
-
-                                            <span class="product-l__category">
-
-                                                <a href="shop-side-version-2.html">Women
-                                                    Clothing</a></span>
-
-                                            <span class="product-l__name">
-
-                                                <a href="product-detail.html">New Dress D Nice
-                                                    Elegant</a></span>
-
-                                            <span class="product-l__price">$125.00
-
-                                                <span
-                                                    class="product-l__discount">$160</span></span>
-                                        </div>
-                                    </div>
-                                </li>
                             </ul>
                         </div>
                     </div>
+
                     <div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
                         <div class="column-product">
 
-                            <span
-                                class="column-product__title u-c-secondary u-s-m-b-25">MONTHLY
+                            <span class="column-product__title u-c-secondary u-s-m-b-25">MONTHLY
                                 PRODUCTS</span>
                             <ul class="column-product__list">
-                                <li class="column-product__item">
-                                    <div class="product-l">
-                                        <div class="product-l__img-wrap">
+                                @foreach ($sections9M as $section9M)
+                                    <li class="column-product__item">
+                                        <div class="product-l">
+                                            <div class="product-l__img-wrap">
 
-                                            <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
+                                                <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
+                                                    href="/{{ $section9M->slug }}">
 
-                                                <img class="aspect__img"
-                                                    src="images/product/women/product13.jpg"
-                                                    alt=""></a>
+                                                    @foreach ($section9M->images as $image)
+                                                    @if ($image->pin == 1)
+                                                        <img src="{{ asset('storage/' . $image->thumbnail) }}"
+                                                            class="aspect__img" alt="">
+                                                    @break
+                                                    @endif
+                                                    @endforeach
+                                                </a>
+                                            </div>
+                                            <div class="product-l__info-wrap">
+                                                <span class="product-l__category">{{ $section9M->category->name }}</span>
+
+                                                <span class="product-l__name">
+
+                                                    <a href="/{{ $section9M->slug }}">{{ $section9M->name }}</a></span>
+
+                                                <span class="product-l__price">{{ number_format($section9M->market_price, 0, ',', '.') }}&nbsp;₫</span>
+                                            </div>
                                         </div>
-                                        <div class="product-l__info-wrap">
-                                            <div class="product-l__rating gl-rating-style"><i
-                                                    class="fas fa-star"></i><i
-                                                    class="fas fa-star"></i><i
-                                                    class="fas fa-star"></i><i
-                                                    class="far fa-star"></i><i
-                                                    class="far fa-star"></i></div>
+                                    </li>
+                                @endforeach
 
-                                            <span class="product-l__category">
-
-                                                <a href="shop-side-version-2.html">Women
-                                                    Clothing</a></span>
-
-                                            <span class="product-l__name">
-
-                                                <a href="product-detail.html">New Dress E Nice
-                                                    Elegant</a></span>
-
-                                            <span class="product-l__price">$125.00</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="column-product__item">
-                                    <div class="product-l">
-                                        <div class="product-l__img-wrap">
-
-                                            <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
-
-                                                <img class="aspect__img"
-                                                    src="images/product/women/product1.jpg"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="product-l__info-wrap">
-                                            <div class="product-l__rating gl-rating-style"><i
-                                                    class="fas fa-star"></i><i
-                                                    class="fas fa-star"></i><i
-                                                    class="fas fa-star"></i><i
-                                                    class="far fa-star"></i><i
-                                                    class="far fa-star"></i></div>
-
-                                            <span class="product-l__category">
-
-                                                <a href="shop-side-version-2.html">Women
-                                                    Clothing</a></span>
-
-                                            <span class="product-l__name">
-
-                                                <a href="product-detail.html">Women intimate
-                                                    Bra</a></span>
-
-                                            <span class="product-l__price">$125.00</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="column-product__item">
-                                    <div class="product-l">
-                                        <div class="product-l__img-wrap">
-
-                                            <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="product-detail.html">
-
-                                                <img class="aspect__img"
-                                                    src="images/product/women/product2.jpg"
-                                                    alt=""></a>
-                                        </div>
-                                        <div class="product-l__info-wrap">
-                                            <div class="product-l__rating gl-rating-style"><i
-                                                    class="fas fa-star"></i><i
-                                                    class="fas fa-star"></i><i
-                                                    class="fas fa-star"></i><i
-                                                    class="far fa-star"></i><i
-                                                    class="far fa-star"></i></div>
-
-                                            <span class="product-l__category">
-
-                                                <a href="shop-side-version-2.html">Women
-                                                    Clothing</a></span>
-
-                                            <span class="product-l__name">
-
-                                                <a href="product-detail.html">Women Wedding
-                                                    Event
-                                                    Dress</a></span>
-
-                                            <span class="product-l__price">$125.00</span>
-                                        </div>
-                                    </div>
-                                </li>
                             </ul>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

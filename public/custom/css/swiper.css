@@ -1,9 +1,12 @@
 .swiper {
     height: 800px;
     width: auto;
+    margin-top: 5px;
   }
 
 .swiper2 {
   height: 400px;
-  width: 283px;
+  width: auto;
+  margin-top: 5px;
 }
+

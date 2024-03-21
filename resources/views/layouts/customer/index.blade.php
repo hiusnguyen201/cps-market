@@ -60,12 +60,23 @@
             prevButton: '.swiper-button-prev',
             slidesPerView: 4,
             loop: false,
-            spaceBetween: 20,
+            spaceBetween: 10,
             grid: {
                 rows: 2
             }
         })
+
+        const swiper2 = new Swiper(".swiper2", {
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            slidesPerView: 4,
+            loop: false,
+            spaceBetween: 10,
+
+        })
+
     </script>
+
 
 </body>
 

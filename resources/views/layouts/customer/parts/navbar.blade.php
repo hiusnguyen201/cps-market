@@ -89,7 +89,7 @@
                                                                     <a href="index.html">
                                                                         <i
                                                                             class="fas fa-hand-holding-usd u-s-m-r-6"></i>
-                                                                        <span>Seconhand</span></a>
+                                                                        <span>Second-hand</span></a>
 
                                                                     <span class="js-menu-toggle"></span>
                                                                 </li>
@@ -108,27 +108,73 @@
                                                         <div class="mega-menu-content js-active">
                                                             <!--====== Mega Menu Row ======-->
                                                             <div class="row">
-                                                                <div class="col-lg-6">
+                                                                <div class="col-lg-4">
                                                                     <ul>
                                                                         <li class="mega-list-title">
 
-                                                                            <a href="shop-side-version-2.html">NECESSARY
-                                                                                ACCESSORIES</a>
+                                                                            <a href="shop-side-version-2.html">PHONE BRANDS</a>
                                                                         </li>
                                                                         <li>
 
-                                                                            <a href="shop-side-version-2.html">Flash
-                                                                                Cards</a>
+                                                                            <a href="shop-side-version-2.html">Iphone</a>
                                                                         </li>
                                                                         <li>
 
-                                                                            <a href="shop-side-version-2.html">Memory
-                                                                                Cards</a>
+                                                                            <a href="shop-side-version-2.html">Samsung</a>
                                                                         </li>
                                                                         <li>
 
-                                                                            <a href="shop-side-version-2.html">Flash
-                                                                                Pins</a>
+                                                                            <a href="shop-side-version-2.html">Xiaomi</a>
+                                                                        </li>
+                                                                        <li>
+
+                                                                            <a href="shop-side-version-2.html">Compact
+                                                                                Discs</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                    <ul>
+                                                                        <li class="mega-list-title">
+
+                                                                            <a href="shop-side-version-2.html">PHONE PRICE</a>
+                                                                        </li>
+                                                                        <li>
+
+                                                                            <a href="shop-side-version-2.html">Iphone</a>
+                                                                        </li>
+                                                                        <li>
+
+                                                                            <a href="shop-side-version-2.html">Samsung</a>
+                                                                        </li>
+                                                                        <li>
+
+                                                                            <a href="shop-side-version-2.html">Xiaomi</a>
+                                                                        </li>
+                                                                        <li>
+
+                                                                            <a href="shop-side-version-2.html">Compact
+                                                                                Discs</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                    <ul>
+                                                                        <li class="mega-list-title">
+
+                                                                            <a href="shop-side-version-2.html">PHONE HOT</a>
+                                                                        </li>
+                                                                        <li>
+
+                                                                            <a href="shop-side-version-2.html">Iphone</a>
+                                                                        </li>
+                                                                        <li>
+
+                                                                            <a href="shop-side-version-2.html">Samsung</a>
+                                                                        </li>
+                                                                        <li>
+
+                                                                            <a href="shop-side-version-2.html">Xiaomi</a>
                                                                         </li>
                                                                         <li>
 
@@ -145,35 +191,6 @@
 
                                                         <!--====== Laptop ======-->
                                                         <div class="mega-menu-content">
-
-                                                            <!--====== Mega Menu Row ======-->
-                                                            <div class="row">
-                                                                <div class="col-lg-6 mega-image">
-                                                                    <div class="mega-banner">
-
-                                                                        <a class="u-d-block"
-                                                                            href="shop-side-version-2.html">
-
-                                                                            <img class="u-img-fluid u-d-block"
-                                                                                src="images/banners/banner-mega-1.jpg"
-                                                                                alt=""></a>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6 mega-image">
-                                                                    <div class="mega-banner">
-
-                                                                        <a class="u-d-block"
-                                                                            href="shop-side-version-2.html">
-
-                                                                            <img class="u-img-fluid u-d-block"
-                                                                                src="images/banners/banner-mega-2.jpg"
-                                                                                alt=""></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!--====== End - Mega Menu Row ======-->
-                                                            <br>
-
                                                             <!--====== Mega Menu Row ======-->
                                                             <div class="row">
                                                                 <div class="col-lg-6">
