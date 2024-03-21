@@ -150,7 +150,6 @@
 
                             <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING PHONE</h1>
 
-                            {{-- <span class="section__span u-c-silver">NEWLY ADDED PRODUCTS</span> --}}
                         </div>
                     </div>
                 </div>
@@ -179,59 +178,57 @@
                                         <div class="product-bs__wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block"
-                                                href="/{{ $section2->slug }}.html">
-                                                @foreach ($section2->images as $image)
-                                                    @if ($image->pin == 1)
+                                                    href="/{{ $section2->slug }}.html">
+                                                    @foreach ($section2->images as $image)
+                                                        @if ($image->pin == 1)
                                                         <img src="{{ asset('storage/' . $image->thumbnail) }}"
                                                             class="aspect__img" alt="">
-                                                    @break
-                                                @endif
-                                            @endforeach
-                                        </a>
-                                        <div class="product-bs__action-wrap">
-                                            <ul class="product-bs__action-list">
-                                                <li>
+                                                        @break
+                                                    @endif
+                                                @endforeach
+                                            </a>
+                                            <div class="product-bs__action-wrap">
+                                                <ul class="product-bs__action-list">
+                                                    <li>
 
-                                                    <a data-modal="modal" data-modal-id="#quick-look"><i
+                                                        <a data-modal="modal" data-modal-id="#quick-look"><i
                                                             class="fas fa-search-plus"></i></a>
-                                                </li>
-                                                <li>
+                                                    </li>
+                                                    <li>
 
-                                                    <a data-modal="modal" data-modal-id="#add-to-cart"><i
-                                                            class="fas fa-plus-circle"></i></a>
-                                                </li>
+                                                        <a data-modal="modal" data-modal-id="#add-to-cart"><i
+                                                                class="fas fa-plus-circle"></i></a>
+                                                    </li>
 
-                                            </ul>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <span class="product-bs__category">
-                                        {{ $section2->category->name }}</span>
-                                    <span class="product-bs__name">
-
-                                        <a href="/{{ $section2->slug }}.html">{{ $section2->name }}</a></span>
-                                    <div class="product-bs__rating gl-rating-style"><i class="fas fa-star"></i><i
-                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                            class="fas fa-star"></i><i class="far fa-star"></i>
-
-                                        <span class="product-bs__review">(23)</span>
-                                    </div>
-
-                                    <span
-                                        class="product-bs__price">{{ number_format($section2->market_price, 0, ',', '.') }}&nbsp;₫
+                                        <span class="product-bs__category">{{ $section2->category->name }}</span>
+                                        <span class="product-bs__name">
+                                            <a href="/{{ $section2->slug }}.html">{{ $section2->name }}</a></span>
+                                        <div class="product-bs__rating gl-rating-style">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <span class="product-bs__review">(23)</span>
+                                        </div>
 
                                         <span
-                                            class="product-bs__discount">{{ number_format($section2->price, 0, ',', '.') }}&nbsp;₫</span></span>
+                                            class="product-bs__price">{{ number_format($section2->market_price, 0, ',', '.') }}&nbsp;₫
+                                        <span class="product-bs__discount">{{ number_format($section2->price, 0, ',', '.') }}&nbsp;₫</span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
                 </div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
             </div>
-
         </div>
 
         <!--====== End - Section Content ======-->
@@ -249,9 +246,8 @@
                     <div class="col-lg-12">
                         <div class="section__text-wrap">
 
-                            <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING LAPTOP</h1>
+                            <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING Laptop</h1>
 
-                            {{-- <span class="section__span u-c-silver">NEWLY ADDED PRODUCTS</span> --}}
                         </div>
                     </div>
                 </div>
@@ -280,61 +276,60 @@
                                         <div class="product-bs__wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block"
-                                                href="/{{ $section3->slug }}.html">
-                                                @foreach ($section3->images as $image)
-                                                    @if ($image->pin == 1)
+                                                    href="/{{ $section3->slug }}.html">
+                                                    @foreach ($section3->images as $image)
+                                                        @if ($image->pin == 1)
                                                         <img src="{{ asset('storage/' . $image->thumbnail) }}"
                                                             class="aspect__img" alt="">
-                                                    @break
-                                                @endif
-                                            @endforeach
-                                        </a>
-                                        <div class="product-bs__action-wrap">
-                                            <ul class="product-bs__action-list">
-                                                <li>
+                                                        @break
+                                                    @endif
+                                                @endforeach
+                                            </a>
+                                            <div class="product-bs__action-wrap">
+                                                <ul class="product-bs__action-list">
+                                                    <li>
 
-                                                    <a data-modal="modal" data-modal-id="#quick-look"><i
+                                                        <a data-modal="modal" data-modal-id="#quick-look"><i
                                                             class="fas fa-search-plus"></i></a>
-                                                </li>
-                                                <li>
+                                                    </li>
+                                                    <li>
 
-                                                    <a data-modal="modal" data-modal-id="#add-to-cart"><i
-                                                            class="fas fa-plus-circle"></i></a>
-                                                </li>
+                                                        <a data-modal="modal" data-modal-id="#add-to-cart"><i
+                                                                class="fas fa-plus-circle"></i></a>
+                                                    </li>
 
-                                            </ul>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <span class="product-bs__category">
-                                        {{ $section3->category->name }}</span>
-                                    <span class="product-bs__name">
-
-                                        <a href="/{{ $section3->slug }}.html">{{ $section3->name }}</a></span>
-                                    <div class="product-bs__rating gl-rating-style"><i class="fas fa-star"></i><i
-                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                            class="fas fa-star"></i><i class="far fa-star"></i>
-
-                                        <span class="product-bs__review">(23)</span>
-                                    </div>
-
-                                    <span
-                                        class="product-bs__price">{{ number_format($section3->market_price, 0, ',', '.') }}&nbsp;₫
+                                        <span class="product-bs__category">{{ $section3->category->name }}</span>
+                                        <span class="product-bs__name">
+                                            <a href="/{{ $section3->slug }}.html">{{ $section3->name }}</a></span>
+                                        <div class="product-bs__rating gl-rating-style">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <span class="product-bs__review">(23)</span>
+                                        </div>
 
                                         <span
-                                            class="product-bs__discount">{{ number_format($section3->price, 0, ',', '.') }}&nbsp;₫</span></span>
+                                            class="product-bs__price">{{ number_format($section3->market_price, 0, ',', '.') }}&nbsp;₫
+                                        <span class="product-bs__discount">{{ number_format($section3->price, 0, ',', '.') }}&nbsp;₫</span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
                 </div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
             </div>
-
         </div>
 
+        <!--====== End - Section Content ======-->
     </div>
     <!--====== End - Section 3 ======-->
 
@@ -352,7 +347,6 @@
 
                             <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING EARPHONE</h1>
 
-                            {{-- <span class="section__span u-c-silver">NEWLY ADDED PRODUCTS</span> --}}
                         </div>
                     </div>
                 </div>
@@ -381,63 +375,60 @@
                                         <div class="product-bs__wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block"
-                                                href="/{{ $section4->slug }}.html">
-                                                @foreach ($section4->images as $image)
-                                                    @if ($image->pin == 1)
+                                                    href="/{{ $section4->slug }}.html">
+                                                    @foreach ($section4->images as $image)
+                                                        @if ($image->pin == 1)
                                                         <img src="{{ asset('storage/' . $image->thumbnail) }}"
                                                             class="aspect__img" alt="">
-                                                    @break
-                                                @endif
-                                            @endforeach
-                                        </a>
-                                        <div class="product-bs__action-wrap">
-                                            <ul class="product-bs__action-list">
-                                                <li>
+                                                        @break
+                                                    @endif
+                                                @endforeach
+                                            </a>
+                                            <div class="product-bs__action-wrap">
+                                                <ul class="product-bs__action-list">
+                                                    <li>
 
-                                                    <a data-modal="modal" data-modal-id="#quick-look"><i
+                                                        <a data-modal="modal" data-modal-id="#quick-look"><i
                                                             class="fas fa-search-plus"></i></a>
-                                                </li>
-                                                <li>
+                                                    </li>
+                                                    <li>
 
-                                                    <a data-modal="modal" data-modal-id="#add-to-cart"><i
-                                                            class="fas fa-plus-circle"></i></a>
-                                                </li>
+                                                        <a data-modal="modal" data-modal-id="#add-to-cart"><i
+                                                                class="fas fa-plus-circle"></i></a>
+                                                    </li>
 
-                                            </ul>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <span class="product-bs__category">
-                                        {{ $section4->category->name }}</span>
-                                    <span class="product-bs__name">
-
-                                        <a
-                                            href="/{{ $section4->slug }}.html">{{ $section4->name }}</a></span>
-                                    <div class="product-bs__rating gl-rating-style"><i
-                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                            class="far fa-star"></i>
-
-                                        <span class="product-bs__review">(23)</span>
-                                    </div>
-
-                                    <span
-                                        class="product-bs__price">{{ number_format($section4->market_price, 0, ',', '.') }}&nbsp;₫
+                                        <span class="product-bs__category">{{ $section4->category->name }}</span>
+                                        <span class="product-bs__name">
+                                            <a href="/{{ $section4->slug }}.html">{{ $section4->name }}</a></span>
+                                        <div class="product-bs__rating gl-rating-style">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <span class="product-bs__review">(23)</span>
+                                        </div>
 
                                         <span
-                                            class="product-bs__discount">{{ number_format($section4->price, 0, ',', '.') }}&nbsp;₫</span></span>
+                                            class="product-bs__price">{{ number_format($section4->market_price, 0, ',', '.') }}&nbsp;₫
+                                        <span class="product-bs__discount">{{ number_format($section4->price, 0, ',', '.') }}&nbsp;₫</span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
                 </div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
             </div>
-
         </div>
 
+        <!--====== End - Section Content ======-->
     </div>
     <!--====== End - Section 4 ======-->
 
@@ -455,7 +446,6 @@
 
                             <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING WATCH</h1>
 
-                            {{-- <span class="section__span u-c-silver">NEWLY ADDED PRODUCTS</span> --}}
                         </div>
                     </div>
                 </div>
@@ -484,63 +474,60 @@
                                         <div class="product-bs__wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block"
-                                                href="/{{ $section5->slug }}.html">
-                                                @foreach ($section5->images as $image)
-                                                    @if ($image->pin == 1)
+                                                    href="/{{ $section5->slug }}.html">
+                                                    @foreach ($section5->images as $image)
+                                                        @if ($image->pin == 1)
                                                         <img src="{{ asset('storage/' . $image->thumbnail) }}"
                                                             class="aspect__img" alt="">
-                                                    @break
-                                                @endif
-                                            @endforeach
-                                        </a>
-                                        <div class="product-bs__action-wrap">
-                                            <ul class="product-bs__action-list">
-                                                <li>
+                                                        @break
+                                                    @endif
+                                                @endforeach
+                                            </a>
+                                            <div class="product-bs__action-wrap">
+                                                <ul class="product-bs__action-list">
+                                                    <li>
 
-                                                    <a data-modal="modal" data-modal-id="#quick-look"><i
+                                                        <a data-modal="modal" data-modal-id="#quick-look"><i
                                                             class="fas fa-search-plus"></i></a>
-                                                </li>
-                                                <li>
+                                                    </li>
+                                                    <li>
 
-                                                    <a data-modal="modal" data-modal-id="#add-to-cart"><i
-                                                            class="fas fa-plus-circle"></i></a>
-                                                </li>
+                                                        <a data-modal="modal" data-modal-id="#add-to-cart"><i
+                                                                class="fas fa-plus-circle"></i></a>
+                                                    </li>
 
-                                            </ul>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <span class="product-bs__category">
-                                        {{ $section5->category->name }}</span>
-                                    <span class="product-bs__name">
-
-                                        <a
-                                            href="/{{ $section5->slug }}.html">{{ $section5->name }}</a></span>
-                                    <div class="product-bs__rating gl-rating-style"><i
-                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                            class="far fa-star"></i>
-
-                                        <span class="product-bs__review">(23)</span>
-                                    </div>
-
-                                    <span
-                                        class="product-bs__price">{{ number_format($section5->market_price, 0, ',', '.') }}&nbsp;₫
+                                        <span class="product-bs__category">{{ $section5->category->name }}</span>
+                                        <span class="product-bs__name">
+                                            <a href="/{{ $section5->slug }}.html">{{ $section5->name }}</a></span>
+                                        <div class="product-bs__rating gl-rating-style">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <span class="product-bs__review">(23)</span>
+                                        </div>
 
                                         <span
-                                            class="product-bs__discount">{{ number_format($section5->price, 0, ',', '.') }}&nbsp;₫</span></span>
+                                            class="product-bs__price">{{ number_format($section5->market_price, 0, ',', '.') }}&nbsp;₫
+                                        <span class="product-bs__discount">{{ number_format($section5->price, 0, ',', '.') }}&nbsp;₫</span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
                 </div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
             </div>
-
         </div>
 
+        <!--====== End - Section Content ======-->
     </div>
     <!--====== End - Section 5 ======-->
 
@@ -557,10 +544,8 @@
                     <div class="col-lg-12">
                         <div class="section__text-wrap">
 
-                            <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING ACCESSORY
-                            </h1>
+                            <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING ACCESORY</h1>
 
-                            {{-- <span class="section__span u-c-silver">NEWLY ADDED PRODUCTS</span> --}}
                         </div>
                     </div>
                 </div>
@@ -589,65 +574,60 @@
                                         <div class="product-bs__wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block"
-                                                href="/{{ $section6->slug }}.html">
-                                                @foreach ($section6->images as $image)
-                                                    @if ($image->pin == 1)
+                                                    href="/{{ $section6->slug }}.html">
+                                                    @foreach ($section6->images as $image)
+                                                        @if ($image->pin == 1)
                                                         <img src="{{ asset('storage/' . $image->thumbnail) }}"
                                                             class="aspect__img" alt="">
-                                                    @break
-                                                @endif
-                                            @endforeach
-                                        </a>
-                                        <div class="product-bs__action-wrap">
-                                            <ul class="product-bs__action-list">
-                                                <li>
+                                                        @break
+                                                    @endif
+                                                @endforeach
+                                            </a>
+                                            <div class="product-bs__action-wrap">
+                                                <ul class="product-bs__action-list">
+                                                    <li>
 
-                                                    <a data-modal="modal"
-                                                        data-modal-id="#quick-look"><i
+                                                        <a data-modal="modal" data-modal-id="#quick-look"><i
                                                             class="fas fa-search-plus"></i></a>
-                                                </li>
-                                                <li>
+                                                    </li>
+                                                    <li>
 
-                                                    <a data-modal="modal"
-                                                        data-modal-id="#add-to-cart"><i
-                                                            class="fas fa-plus-circle"></i></a>
-                                                </li>
+                                                        <a data-modal="modal" data-modal-id="#add-to-cart"><i
+                                                                class="fas fa-plus-circle"></i></a>
+                                                    </li>
 
-                                            </ul>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <span class="product-bs__category">
-                                        {{ $section6->category->name }}</span>
-                                    <span class="product-bs__name">
-
-                                        <a
-                                            href="/{{ $section6->slug }}.html">{{ $section6->name }}</a></span>
-                                    <div class="product-bs__rating gl-rating-style"><i
-                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                            class="far fa-star"></i>
-
-                                        <span class="product-bs__review">(23)</span>
-                                    </div>
-
-                                    <span
-                                        class="product-bs__price">{{ number_format($section6->market_price, 0, ',', '.') }}&nbsp;₫
+                                        <span class="product-bs__category">{{ $section6->category->name }}</span>
+                                        <span class="product-bs__name">
+                                            <a href="/{{ $section6->slug }}.html">{{ $section6->name }}</a></span>
+                                        <div class="product-bs__rating gl-rating-style">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <span class="product-bs__review">(23)</span>
+                                        </div>
 
                                         <span
-                                            class="product-bs__discount">{{ number_format($section6->price, 0, ',', '.') }}&nbsp;₫</span></span>
+                                            class="product-bs__price">{{ number_format($section6->market_price, 0, ',', '.') }}&nbsp;₫
+                                        <span class="product-bs__discount">{{ number_format($section6->price, 0, ',', '.') }}&nbsp;₫</span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
                 </div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
             </div>
-
         </div>
 
+        <!--====== End - Section Content ======-->
     </div>
     <!--====== End - Section 6 ======-->
 
@@ -663,10 +643,8 @@
                     <div class="col-lg-12">
                         <div class="section__text-wrap">
 
-                            <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING
-                                SECONDHAND</h1>
+                            <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING SECOND-HAND</h1>
 
-                            {{-- <span class="section__span u-c-silver">NEWLY ADDED PRODUCTS</span> --}}
                         </div>
                     </div>
                 </div>
@@ -695,65 +673,60 @@
                                         <div class="product-bs__wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block"
-                                                href="/{{ $section7->slug }}.html">
-                                                @foreach ($section7->images as $image)
-                                                    @if ($image->pin == 1)
+                                                    href="/{{ $section7->slug }}.html">
+                                                    @foreach ($section7->images as $image)
+                                                        @if ($image->pin == 1)
                                                         <img src="{{ asset('storage/' . $image->thumbnail) }}"
                                                             class="aspect__img" alt="">
-                                                    @break
-                                                @endif
-                                            @endforeach
-                                        </a>
-                                        <div class="product-bs__action-wrap">
-                                            <ul class="product-bs__action-list">
-                                                <li>
+                                                        @break
+                                                    @endif
+                                                @endforeach
+                                            </a>
+                                            <div class="product-bs__action-wrap">
+                                                <ul class="product-bs__action-list">
+                                                    <li>
 
-                                                    <a data-modal="modal"
-                                                        data-modal-id="#quick-look"><i
+                                                        <a data-modal="modal" data-modal-id="#quick-look"><i
                                                             class="fas fa-search-plus"></i></a>
-                                                </li>
-                                                <li>
+                                                    </li>
+                                                    <li>
 
-                                                    <a data-modal="modal"
-                                                        data-modal-id="#add-to-cart"><i
-                                                            class="fas fa-plus-circle"></i></a>
-                                                </li>
+                                                        <a data-modal="modal" data-modal-id="#add-to-cart"><i
+                                                                class="fas fa-plus-circle"></i></a>
+                                                    </li>
 
-                                            </ul>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <span class="product-bs__category">
-                                        {{ $section7->category->name }}</span>
-                                    <span class="product-bs__name">
-
-                                        <a
-                                            href="/{{ $section7->slug }}.html">{{ $section7->name }}</a></span>
-                                    <div class="product-bs__rating gl-rating-style"><i
-                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                            class="far fa-star"></i>
-
-                                        <span class="product-bs__review">(23)</span>
-                                    </div>
-
-                                    <span
-                                        class="product-bs__price">{{ number_format($section7->market_price, 0, ',', '.') }}&nbsp;₫
+                                        <span class="product-bs__category">{{ $section7->category->name }}</span>
+                                        <span class="product-bs__name">
+                                            <a href="/{{ $section7->slug }}.html">{{ $section7->name }}</a></span>
+                                        <div class="product-bs__rating gl-rating-style">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <span class="product-bs__review">(23)</span>
+                                        </div>
 
                                         <span
-                                            class="product-bs__discount">{{ number_format($section7->price, 0, ',', '.') }}&nbsp;₫</span></span>
+                                            class="product-bs__price">{{ number_format($section7->market_price, 0, ',', '.') }}&nbsp;₫
+                                        <span class="product-bs__discount">{{ number_format($section7->price, 0, ',', '.') }}&nbsp;₫</span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
                 </div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
             </div>
-
         </div>
 
+        <!--====== End - Section Content ======-->
     </div>
     <!--====== End - Section 7 ======-->
 
@@ -769,10 +742,8 @@
                     <div class="col-lg-12">
                         <div class="section__text-wrap">
 
-                            <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING
-                                TABLET</h1>
+                            <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING TABLET</h1>
 
-                            {{-- <span class="section__span u-c-silver">NEWLY ADDED PRODUCTS</span> --}}
                         </div>
                     </div>
                 </div>
@@ -801,67 +772,60 @@
                                         <div class="product-bs__wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block"
-                                                href="/{{ $section8->slug }}.html">
-                                                @foreach ($section8->images as $image)
-                                                    @if ($image->pin == 1)
+                                                    href="/{{ $section8->slug }}.html">
+                                                    @foreach ($section8->images as $image)
+                                                        @if ($image->pin == 1)
                                                         <img src="{{ asset('storage/' . $image->thumbnail) }}"
                                                             class="aspect__img" alt="">
-                                                    @break
-                                                @endif
-                                            @endforeach
-                                        </a>
-                                        <div class="product-bs__action-wrap">
-                                            <ul class="product-bs__action-list">
-                                                <li>
+                                                        @break
+                                                    @endif
+                                                @endforeach
+                                            </a>
+                                            <div class="product-bs__action-wrap">
+                                                <ul class="product-bs__action-list">
+                                                    <li>
 
-                                                    <a data-modal="modal"
-                                                        data-modal-id="#quick-look"><i
+                                                        <a data-modal="modal" data-modal-id="#quick-look"><i
                                                             class="fas fa-search-plus"></i></a>
-                                                </li>
-                                                <li>
+                                                    </li>
+                                                    <li>
 
-                                                    <a data-modal="modal"
-                                                        data-modal-id="#add-to-cart"><i
-                                                            class="fas fa-plus-circle"></i></a>
-                                                </li>
+                                                        <a data-modal="modal" data-modal-id="#add-to-cart"><i
+                                                                class="fas fa-plus-circle"></i></a>
+                                                    </li>
 
-                                            </ul>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <span class="product-bs__category">
-                                        {{ $section8->category->name }}</span>
-                                    <span class="product-bs__name">
-
-                                        <a
-                                            href="/{{ $section8->slug }}.html">{{ $section8->name }}</a></span>
-                                    <div class="product-bs__rating gl-rating-style"><i
-                                            class="fas fa-star"></i><i
-                                            class="fas fa-star"></i><i
-                                            class="fas fa-star"></i><i
-                                            class="fas fa-star"></i><i
-                                            class="far fa-star"></i>
-
-                                        <span class="product-bs__review">(23)</span>
-                                    </div>
-
-                                    <span
-                                        class="product-bs__price">{{ number_format($section8->market_price, 0, ',', '.') }}&nbsp;₫
+                                        <span class="product-bs__category">{{ $section8->category->name }}</span>
+                                        <span class="product-bs__name">
+                                            <a href="/{{ $section8->slug }}.html">{{ $section8->name }}</a></span>
+                                        <div class="product-bs__rating gl-rating-style">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <span class="product-bs__review">(23)</span>
+                                        </div>
 
                                         <span
-                                            class="product-bs__discount">{{ number_format($section8->price, 0, ',', '.') }}&nbsp;₫</span></span>
+                                            class="product-bs__price">{{ number_format($section8->market_price, 0, ',', '.') }}&nbsp;₫
+                                        <span class="product-bs__discount">{{ number_format($section8->price, 0, ',', '.') }}&nbsp;₫</span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
                 </div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
             </div>
-
         </div>
 
+        <!--====== End - Section Content ======-->
     </div>
     <!--====== End - Section 8 ======-->
 

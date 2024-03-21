@@ -64,6 +64,7 @@
             grid: {
                 rows: 2
             }
+
         })
 
         const swiper2 = new Swiper(".swiper2", {
@@ -74,7 +75,6 @@
             spaceBetween: 10,
 
         })
-
     </script>
 
 
