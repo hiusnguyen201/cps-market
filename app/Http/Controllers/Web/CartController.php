@@ -29,98 +29,87 @@ class CartController extends Controller
 
     public function handleCreate(Request $request)
     {
-        if ($user = Auth::user()) {
+        $user = Auth::user();
 
-            $product = Product::findOrFail($request->product_id);
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+        ]);
 
-            $cart = Cart::where('user_id', $user->id)->where('product_id', $product->id)->first();
+        $product = Product::findOrFail($request->product_id);
 
-            if (!$cart) {
-                Cart::create([
-                    'product_id' => $product->id,
-                    'user_id' => $user->id,
-                    'quantity' => 1,
-                    'price' => $product->price,
+        $cart = Cart::where('user_id', $user->id)->where('product_id', $product->id)->first();
+
+        if (!$cart && $product) {
+            Cart::create([
+                'product_id' => $product->id,
+                'user_id' => $user->id,
+                'quantity' => 1,
+                'price' => $product->price,
+            ]);
+
+            return redirect()->back()->with('success', 'ADD');
+        } else {
+
+            if ($cart->quantity < $product->quantity) {
+                $cart->update([
+                    'quantity' => $cart->quantity + 1,
+                    'price' => $cart->price + $product->price,
                 ]);
 
-                return response()->json(['message' => 'Product added to cart successfully']);
+                return redirect()->back()->with('success', 'ADD qty');
             } else {
-                $productQty = $product->quantity;
-                $cartQty = $cart->quantity;
-
-                if ($cartQty < $productQty) {
-                    $cart->update([
-                        'quantity' => $cart->quantity + 1,
-                        'price' => $cart->price + $product->price,
-                    ]);
-
-                    return response()->json(['message' => 'Product quantity updated in cart']);
-                } else {
-
-                    return response()->json(['error' => 'Not enough quantity available']);
-                }
+                return redirect()->back()->with('error', 'Not enough quantity available');
             }
-        } else {
-            return response()->json(['error' => 'If you are not logged in, click <a href="/auth/login">here</a> to login'], 401);
         }
     }
 
     public function handleUpdate(Request $request)
     {
-        if ($user = Auth::user()) {
+        $user = Auth::user();
 
-            $cart = Cart::findOrFail($request->cart_id);
+        $cart = Cart::findOrFail($request->cart_id);
+        $product = Product::findOrFail($cart->product_id);
 
-            $product = Product::findOrFail($cart->product_id);
-
-            $action = $request->action;
-
-            if ($action === 'increase') {
-                if ($cart) {
-                    $product = Product::findOrFail($cart->product_id);
-
-                    $cart->update([
-                        'quantity' => $cart->quantity + 1,
-                        'price' => $cart->price + $product->price,
-                    ]);
-                }
-            } else {
-                if ($cart->quantity == 1) {
-                    $this->handleDelete($cart->id);
+        if ($cart && $product) {
+            if ($request->quantity > $cart->quantity) { //tang sl
+                if ($cart->quantity >= $product->quantity) { //kt so luong kho hang
+                    return redirect()->back()->with('error', 'Not enough QTY');
                 } else {
                     $cart->update([
-                        'quantity' => $cart->quantity - 1,
-                        'price' => $cart->price - $product->price,
+                        'quantity' => $request->quantity,
+                        'price' => $request->quantity * $product->price,
                     ]);
+                    return redirect()->back()->with('success', 'Updated');
+                }
+            } else { // giam sl
+                if ($cart->quantity == 1) {
+                    $this->handleDelete($request->cart_id);
+                    return redirect()->back()->with('success', 'Updated');
+                } else {
+                    $cart->update([
+                        'quantity' => $request->quantity,
+                        'price' => $request->quantity * $product->price,
+                    ]);
+                    return redirect()->back()->with('success', 'Updated');
                 }
             }
-
-            return response()->json(['message' => 'Cart updated successfully']);
-        } else {
-            return response()->json(['error' => 'Unable to update cart'], 400);
         }
     }
 
     public function handleDelete(Request $request)
     {
-        if ($user = Auth::user()) {
-            $cart = Cart::findOrFail($request->cart_id);
+        $user = Auth::user();
+        $cart = Cart::findOrFail($request->cart_id);
 
-            if ($cart) {
-
-                if ($user->id == $cart->user_id) {
-                    $cart->delete();
-                    return response()->json(['message' => 'Product removed from cart successfully']);
-                } else {
-                    return response()->json(['error' => 'Product removed from cart error'], 400);
-                }
+        if ($cart) {
+            if ($user->id == $cart->user_id) {
+                $cart->delete();
+                return redirect()->back()->with('success', 'Updated');
             } else {
-                return response()->json(['error' => 'Product removed from cart error'], 400);
+                return redirect()->back()->with('error', 'Not correct user');
             }
-
         } else {
-            return response()->json(['error' => 'Unable to update cart'], 400);
+            return redirect()->back()->with('error', 'Can not find cart');
         }
     }
-
 }

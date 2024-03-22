@@ -1,6 +1,36 @@
 @extends('layouts.customer.index')
 
 @section('content')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    function updateQuantity(qty) {
+        $('#cart_id').val($(qty).data('cart-id'));
+        $('#quantity').val($(qty).val());
+        $('#updateCartQty').submit();
+    }
+
+    function deleteCart(cart_id) {
+        $('#cart_id_del').val(cart_id);
+        $('#deleteCart').submit();
+    }
+</script>
+
+<section>
+    <form id="updateCartQty" action="/cart" method="post">
+        @csrf
+        @method('PATCH')
+        <input type="hidden" id="cart_id" name="cart_id">
+        <input type="hidden" id="quantity" name="quantity">
+    </form>
+
+    <form id="deleteCart" action="/cart" method="post">
+        @csrf
+        @method('DELETE')
+        <input type="hidden" id="cart_id_del" name="cart_id">
+    </form>
+</section>
+
 <div class="app-content">
 
     <!--====== Section 1 ======-->
@@ -71,7 +101,7 @@
                                     <tr class="cart-item" data-cart-id="{{ $cart->id }}">
                                         <td>
                                             <div class="form-check">
-                                                <input type="checkbox" class="form-check-input round-checkbox product-checkbox" name="cart_id" value="{{ $cart->id }}" data-product-price="{{ $cart->product->price }}">
+                                                <input type="checkbox" class="form-check-input round-checkbox product-checkbox" name="cart_id" value="{{ $cart->id }}" data-product-price="{{ $cart->product->price }}" data-product-qty="{{ $cart->quantity }}">
                                             </div>
                                         </td>
 
@@ -123,17 +153,17 @@
 
                                             <div class="table-p__del-wrap text-right">
 
-                                                <span class="far fa-trash-alt table-p__delete-link delete-cart-btn" style="border: 0; background: none; cursor: pointer;" data-cart-id="{{ $cart->id }}"></span>
+                                                <span class="far fa-trash-alt table-p__delete-link delete-cart-btn" style="border: 0; background: none; cursor: pointer;" onclick="deleteCart('{{ $cart->id }}')"></span>
                                             </div>
 
 
                                             <div class="input-counter">
 
-                                                <span class="input-counter__minus fas fa-minus decrease-qty-btn" data-cart-id="{{ $cart->id }}"></span>
+                                                <span class="input-counter__minus fas fa-minus"></span>
 
-                                                <input class="input-counter__text input-counter--text-primary-style" type="text" value="{{ $cart->quantity }}" data-min="1" data-max="1000">
+                                                <input class="input-counter__text input-counter--text-primary-style" type="text" name="quantity" value="{{ $cart->quantity }}" data-min="1" data-max="1000" data-cart-id="{{ $cart->id }}" onchange="updateQuantity(this)">
 
-                                                <span class="input-counter__plus fas fa-plus increase-qty-btn" data-cart-id="{{ $cart->id }}"></span>
+                                                <span class="input-counter__plus fas fa-plus"></span>
                                             </div>
                                         </td>
 
@@ -232,30 +262,16 @@
     </div>
     @endsection
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            var decreaseQtyBtn = document.querySelectorAll('.decrease-qty-btn');
-            var increaseQtyBtn = document.querySelectorAll('.increase-qty-btn');
             var deleteCartBtn = document.querySelectorAll('.delete-cart-btn');
             var checkboxes = document.querySelectorAll('.product-checkbox');
             var totalPriceDisplay = document.getElementById('totalPriceDisplay');
             var selectAllCheckbox = document.getElementById('selectAll');
 
-            decreaseQtyBtn.forEach(function(span) {
-                span.addEventListener('click', function() {
-                    var cartId = this.getAttribute('data-cart-id');
-                    decreaseQuantity(cartId);
-                });
-            });
-
-            increaseQtyBtn.forEach(function(span) {
-                span.addEventListener('click', function() {
-                    var cartId = this.getAttribute('data-cart-id');
-                    increaseQuantity(cartId);
-                });
-            });
 
             deleteCartBtn.forEach(function(span) {
                 span.addEventListener('click', function() {
@@ -275,66 +291,12 @@
                 checkboxes.forEach(function(checkbox) {
                     if (checkbox.checked) {
                         var productPrice = parseFloat(checkbox.dataset.productPrice);
-                        total = total + productPrice;
+                        var productQty = parseFloat(checkbox.dataset.productQty);
+                        total = total + (productPrice * productQty);
                     }
                 });
                 var formattedTotal = total.toLocaleString('vi-VN');
                 totalPriceDisplay.textContent = formattedTotal + ' ₫';
-            }
-
-            function decreaseQuantity(cartId) {
-                fetch('/cart', {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            cart_id: cartId
-                        })
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        // Xử lý kết quả trả về từ máy chủ nếu cần
-                        console.log(data);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        console.error('There has been a problem with your fetch operation:', error);
-                    });
-            }
-
-            function increaseQuantity(cartId) {
-                fetch('/cart', {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            cart_id: cartId,
-                            action: 'increase'
-                        })
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        // Xử lý kết quả trả về từ máy chủ nếu cần
-                        console.log(data);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        console.error('There has been a problem with your fetch operation:', error);
-                    });
             }
 
             function deleteCart(cartId) {
