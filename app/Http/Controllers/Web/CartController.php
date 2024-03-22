@@ -53,7 +53,7 @@ class CartController extends Controller
             if ($cart->quantity < $product->quantity) {
                 $cart->update([
                     'quantity' => $cart->quantity + 1,
-                    'price' => $cart->price + $product->price,
+                    'price' => ($cart->quantity + 1) * $product->price,
                 ]);
 
                 return redirect()->back()->with('success', 'ADD qty');
@@ -104,12 +104,19 @@ class CartController extends Controller
         if ($cart) {
             if ($user->id == $cart->user_id) {
                 $cart->delete();
-                return redirect()->back()->with('success', 'Updated');
+                return redirect()->back()->with('success', 'Deleted');
             } else {
                 return redirect()->back()->with('error', 'Not correct user');
             }
         } else {
             return redirect()->back()->with('error', 'Can not find cart');
         }
+    }
+
+    public function clearCart()
+    {
+        $user = Auth::user();
+        $cart = Cart::where('user_id', $user->id)->delete();
+        return redirect()->back()->with('success', 'Deleted');
     }
 }

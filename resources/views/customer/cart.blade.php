@@ -3,19 +3,9 @@
 @section('content')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script>
-    function updateQuantity(qty) {
-        $('#cart_id').val($(qty).data('cart-id'));
-        $('#quantity').val($(qty).val());
-        $('#updateCartQty').submit();
-    }
 
-    function deleteCart(cart_id) {
-        $('#cart_id_del').val(cart_id);
-        $('#deleteCart').submit();
-    }
-</script>
 
+<script src="{{ asset('custom/js/cart.js') }}"></script>
 <section>
     <form id="updateCartQty" action="/cart" method="post">
         @csrf
@@ -28,6 +18,11 @@
         @csrf
         @method('DELETE')
         <input type="hidden" id="cart_id_del" name="cart_id">
+    </form>
+
+    <form id="clearCart" action="/cart/clear" method="post">
+        @csrf
+        @method('DELETE')
     </form>
 </section>
 
@@ -79,8 +74,6 @@
                                         <div>BUY NOW</div>
                                     </a>
                                 </div>
-
-
 
                             </div>
 
@@ -153,7 +146,7 @@
 
                                             <div class="table-p__del-wrap text-right">
 
-                                                <span class="far fa-trash-alt table-p__delete-link delete-cart-btn" style="border: 0; background: none; cursor: pointer;" onclick="deleteCart('{{ $cart->id }}')"></span>
+                                                <span class="far fa-trash-alt table-p__delete-link" style="border: 0; background: none; cursor: pointer;" onclick="deleteCart('{{ $cart->id }}')"></span>
                                             </div>
 
 
@@ -188,11 +181,11 @@
                             </div>
                             <div class="route-box__g2">
 
-                                <a class="route-box__link" href="cart.html"><i class="fas fa-trash"></i>
+                                <a class="route-box__link" href="javascript:void(0)" onclick="clearCart()"><i class="fas fa-trash"></i>
 
                                     <span>CLEAR CART</span></a>
 
-                                <a class="route-box__link" href="cart.html"><i class="fas fa-sync"></i>
+                                <a class="route-box__link" href="/cart"><i class="fas fa-sync"></i>
 
                                     <span>UPDATE CART</span></a>
                             </div>
@@ -260,87 +253,5 @@
         @endif
         <!--====== End - Section 3 ======-->
     </div>
-    @endsection
-
-
-
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var deleteCartBtn = document.querySelectorAll('.delete-cart-btn');
-            var checkboxes = document.querySelectorAll('.product-checkbox');
-            var totalPriceDisplay = document.getElementById('totalPriceDisplay');
-            var selectAllCheckbox = document.getElementById('selectAll');
-
-
-            deleteCartBtn.forEach(function(span) {
-                span.addEventListener('click', function() {
-                    var cartId = this.getAttribute('data-cart-id');
-                    deleteCart(cartId);
-                });
-            });
-
-            checkboxes.forEach(function(checkbox) {
-                checkbox.addEventListener('change', function() {
-                    calculateTotalPrice();
-                });
-            });
-
-            function calculateTotalPrice() {
-                var total = 0;
-                checkboxes.forEach(function(checkbox) {
-                    if (checkbox.checked) {
-                        var productPrice = parseFloat(checkbox.dataset.productPrice);
-                        var productQty = parseFloat(checkbox.dataset.productQty);
-                        total = total + (productPrice * productQty);
-                    }
-                });
-                var formattedTotal = total.toLocaleString('vi-VN');
-                totalPriceDisplay.textContent = formattedTotal + ' ₫';
-            }
-
-            function deleteCart(cartId) {
-                fetch('/cart', {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            cart_id: cartId
-                        })
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        // Xử lý kết quả trả về từ máy chủ nếu cần
-                        console.log(data);
-                        let cartItem = document.querySelector(`[data-cart-id="${cartId}"]`);
-                        if (cartItem) {
-                            cartItem.style.display = 'none';
-                        }
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        console.error('There has been a problem with your fetch operation:', error);
-                    });
-            }
-
-            $("#selectAll").click(function() {
-                $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
-                calculateTotalPrice();
-            });
-
-            $("input[type=checkbox]").click(function() {
-                if (!$(this).prop("checked")) {
-                    $("#selectAll").prop("checked", false);
-                    calculateTotalPrice();
-                }
-            });
-
-        });
-    </script>
+</div>
+@endsection
