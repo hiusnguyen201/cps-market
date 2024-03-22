@@ -43,88 +43,110 @@
                                                     <div class="mega-menu-wrap">
                                                         <div class="mega-menu-list">
                                                             <ul>
-                                                                <li class="js-active">
+                                                                @foreach ($categories as $category)
+                                                                    @php
+                                                                        $class = ''; 
+                                                                        $i = 0; 
+                                                                        do {
+                                                                            switch ($category->name) {
+                                                                                case 'Phone':
+                                                                                    $class = 'fas fa-mobile u-s-m-r-6';
+                                                                                    break;
+                                                                                case 'Laptop':
+                                                                                    $class =
+                                                                                        'fas fa-laptop-code u-s-m-r-6';
+                                                                                    break;
+                                                                                case 'Earphone':
+                                                                                    $class =
+                                                                                        'fas fa-headphones-alt u-s-m-r-6';
+                                                                                    break;
+                                                                                case 'Watch':
+                                                                                    $class =
+                                                                                        'fas fa-stopwatch u-s-m-r-6';
+                                                                                    break;
+                                                                                case 'Accessory':
+                                                                                    $class =
+                                                                                        'fas fa-sd-card u-s-m-r-6';
+                                                                                    break;
+                                                                                case 'Second-hand':
+                                                                                    $class =
+                                                                                        'fas fa-hand-holding-usd u-s-m-r-6';
+                                                                                    break;
+                                                                                case 'Tablet':
+                                                                                    $class =
+                                                                                        'fas fa-tablet-alt u-s-m-r-6';
+                                                                                    break;
 
-                                                                    <a href="shop-side-version-2.html">
-                                                                        <i class="fas fa-mobile u-s-m-r-6"></i>
+                                                                                default:
+                                                                                    $class = '';
+                                                                            }
+                                                                            $i++;
+                                                                        } while (
+                                                                            $class == '' &&
+                                                                            $i < count($categories)
+                                                                        );
 
-                                                                        <span>Phone</span></a>
+                                                                    @endphp
 
-                                                                    <span class="js-menu-toggle js-toggle-mark"></span>
-                                                                </li>
-                                                                <li>
+                                                                    <li class="js-active">
+                                                                        <a href="shop-side-version-2.html">
+                                                                            <i class="{{ $class }}"></i>
+                                                                            <span>{{ $category->name }}</span>
+                                                                        </a>
+                                                                        <span
+                                                                            class="js-menu-toggle js-toggle-mark"></span>
+                                                                    </li>
+                                                                @endforeach
 
-                                                                    <a href="shop-side-version-2.html">
-                                                                        <i class="fas fa-laptop-code u-s-m-r-6"></i>
-                                                                        <span>Laptop</span></a>
 
-                                                                    <span class="js-menu-toggle"></span>
-                                                                </li>
-                                                                <li>
 
-                                                                    <a href="shop-side-version-2.html">
-                                                                        <i class="fas fa-headphones-alt u-s-m-r-6"></i>
-                                                                        <span>Earphone</span></a>
-
-                                                                    <span class="js-menu-toggle"></span>
-                                                                </li>
-                                                                <li>
-
-                                                                    <a href="index.html">
-                                                                        <i class="fas fa-stopwatch u-s-m-r-6"></i>
-                                                                        <span>Watch</span></a>
-
-                                                                    <span class="js-menu-toggle"></span>
-                                                                </li>
-                                                                <li>
-
-                                                                    <a href="index.html">
-                                                                        <i class="fas fa-sd-card u-s-m-r-6"></i>
-                                                                        <span>Accessory</span></a>
-
-                                                                    <span class="js-menu-toggle"></span>
-                                                                </li>
-                                                                <li>
-
-                                                                    <a href="index.html">
-                                                                        <i
-                                                                            class="fas fa-hand-holding-usd u-s-m-r-6"></i>
-                                                                        <span>Second-hand</span></a>
-
-                                                                    <span class="js-menu-toggle"></span>
-                                                                </li>
-                                                                <li>
-
-                                                                    <a href="index.html">
-                                                                        <i class="fas fa-tablet-alt u-s-m-r-6"></i>
-                                                                        <span>Tablet</span></a>
-
-                                                                    <span class="js-menu-toggle"></span>
-                                                                </li>
                                                             </ul>
                                                         </div>
 
                                                         <!--====== Phone ======-->
+                                                        @foreach ($categories as $category)
                                                         <div class="mega-menu-content js-active">
                                                             <!--====== Mega Menu Row ======-->
                                                             <div class="row">
                                                                 <div class="col-lg-4">
                                                                     <ul>
+                                                                        
                                                                         <li class="mega-list-title">
 
-                                                                            <a href="shop-side-version-2.html">PHONE BRANDS</a>
+                                                                            <a href="shop-side-version-2.html">{{ strtoupper($category->name) }}
+                                                                                BRANDS</a>
+                                                                        </li>
+                                                                        @foreach ($category->brands as $brand)
+                                                                        <li>
+                                                                            <a href="shop-side-version-2.html">{{ $brand->name }}</a>
+                                                                        </li>
+                                                                        @endforeach
+
+                                                                        
+                                                                        
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                    <ul>
+                                                                        <li class="mega-list-title">
+
+                                                                            <a href="shop-side-version-2.html">PHONE
+                                                                                PRICE</a>
                                                                         </li>
                                                                         <li>
 
-                                                                            <a href="shop-side-version-2.html">Iphone</a>
+                                                                            <a
+                                                                                href="shop-side-version-2.html">Iphone</a>
                                                                         </li>
                                                                         <li>
 
-                                                                            <a href="shop-side-version-2.html">Samsung</a>
+                                                                            <a
+                                                                                href="shop-side-version-2.html">Samsung</a>
                                                                         </li>
                                                                         <li>
 
-                                                                            <a href="shop-side-version-2.html">Xiaomi</a>
+                                                                            <a
+                                                                                href="shop-side-version-2.html">Xiaomi</a>
                                                                         </li>
                                                                         <li>
 
@@ -137,44 +159,23 @@
                                                                     <ul>
                                                                         <li class="mega-list-title">
 
-                                                                            <a href="shop-side-version-2.html">PHONE PRICE</a>
+                                                                            <a href="shop-side-version-2.html">PHONE
+                                                                                HOT</a>
                                                                         </li>
                                                                         <li>
 
-                                                                            <a href="shop-side-version-2.html">Iphone</a>
+                                                                            <a
+                                                                                href="shop-side-version-2.html">Iphone</a>
                                                                         </li>
                                                                         <li>
 
-                                                                            <a href="shop-side-version-2.html">Samsung</a>
+                                                                            <a
+                                                                                href="shop-side-version-2.html">Samsung</a>
                                                                         </li>
                                                                         <li>
 
-                                                                            <a href="shop-side-version-2.html">Xiaomi</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a href="shop-side-version-2.html">Compact
-                                                                                Discs</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div class="col-lg-4">
-                                                                    <ul>
-                                                                        <li class="mega-list-title">
-
-                                                                            <a href="shop-side-version-2.html">PHONE HOT</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a href="shop-side-version-2.html">Iphone</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a href="shop-side-version-2.html">Samsung</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a href="shop-side-version-2.html">Xiaomi</a>
+                                                                            <a
+                                                                                href="shop-side-version-2.html">Xiaomi</a>
                                                                         </li>
                                                                         <li>
 
@@ -186,212 +187,9 @@
                                                             </div>
                                                             <!--====== End - Mega Menu Row ======-->
                                                         </div>
+                                                        @endforeach
                                                         <!--====== End - Phone ======-->
 
-
-                                                        <!--====== Laptop ======-->
-                                                        <div class="mega-menu-content">
-                                                            <!--====== Mega Menu Row ======-->
-                                                            <div class="row">
-                                                                <div class="col-lg-6">
-                                                                    <ul>
-                                                                        <li class="mega-list-title">
-
-                                                                            <a href="shop-side-version-2.html">HOT
-                                                                                CATEGORIES</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a
-                                                                                href="shop-side-version-2.html">Dresses</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a href="shop-side-version-2.html">Blouses
-                                                                                & Shirts</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a
-                                                                                href="shop-side-version-2.html">T-shirts</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a
-                                                                                href="shop-side-version-2.html">Rompers</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <ul>
-                                                                        <li class="mega-list-title">
-
-                                                                            <a href="shop-side-version-2.html">WEDDING
-                                                                                & EVENTS</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a href="shop-side-version-2.html">Wedding
-                                                                                Dresses</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a href="shop-side-version-2.html">Evening
-                                                                                Dresses</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a href="shop-side-version-2.html">Prom
-                                                                                Dresses</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a href="shop-side-version-2.html">Flower
-                                                                                Dresses</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                            <!--====== End - Mega Menu Row ======-->
-                                                            <br>
-                                                        </div>
-                                                        <!--====== End - Laptop ======-->
-
-
-                                                        <!--====== Earphone ======-->
-                                                        <div class="mega-menu-content">
-
-                                                            <!--====== Mega Menu Row ======-->
-                                                            <div class="row">
-                                                                <div class="col-lg-4 mega-image">
-                                                                    <div class="mega-banner">
-
-                                                                        <a class="u-d-block"
-                                                                            href="shop-side-version-2.html">
-
-                                                                            <img class="u-img-fluid u-d-block"
-                                                                                src="images/banners/banner-mega-5.jpg"
-                                                                                alt=""></a>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-4 mega-image">
-                                                                    <div class="mega-banner">
-
-                                                                        <a class="u-d-block"
-                                                                            href="shop-side-version-2.html">
-
-                                                                            <img class="u-img-fluid u-d-block"
-                                                                                src="images/banners/banner-mega-6.jpg"
-                                                                                alt=""></a>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-4 mega-image">
-                                                                    <div class="mega-banner">
-
-                                                                        <a class="u-d-block"
-                                                                            href="shop-side-version-2.html">
-
-                                                                            <img class="u-img-fluid u-d-block"
-                                                                                src="images/banners/banner-mega-7.jpg"
-                                                                                alt=""></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!--====== End - Mega Menu Row ======-->
-                                                            <br>
-
-                                                            <!--====== Mega Menu Row ======-->
-                                                            <div class="row">
-                                                                <div class="col-lg-6">
-                                                                    <ul>
-                                                                        <li class="mega-list-title">
-
-                                                                            <a href="shop-side-version-2.html">HOT
-                                                                                SALE</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a
-                                                                                href="shop-side-version-2.html">T-Shirts</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a href="shop-side-version-2.html">Tank
-                                                                                Tops</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a href="shop-side-version-2.html">Polo</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a
-                                                                                href="shop-side-version-2.html">Shirts</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <ul>
-                                                                        <li class="mega-list-title">
-
-                                                                            <a
-                                                                                href="shop-side-version-2.html">UNDERWEAR</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a
-                                                                                href="shop-side-version-2.html">Boxers</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a
-                                                                                href="shop-side-version-2.html">Briefs</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a
-                                                                                href="shop-side-version-2.html">Robes</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a
-                                                                                href="shop-side-version-2.html">Socks</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                            <!--====== End - Mega Menu Row ======-->
-                                                            <br>
-                                                        </div>
-                                                        <!--====== End - Earphone ======-->
-
-
-                                                        <!--====== Watch ======-->
-                                                        <div class="mega-menu-content">
-                                                            <h5>No Categories</h5>
-                                                        </div>
-                                                        <!--====== End - Watch ======-->
-
-
-                                                        <!--====== Accessory ======-->
-                                                        <div class="mega-menu-content">
-                                                            <h5>No Categories</h5>
-                                                        </div>
-                                                        <!--====== End -  Accessory ======-->
-
-
-                                                        <!--====== Secondhand ======-->
-                                                        <div class="mega-menu-content">
-                                                            <h5>No Categories</h5>
-                                                        </div>
-                                                        <!--====== End - Secondhand ======-->
-
-
-                                                        <!--====== Tablet ======-->
-                                                        <div class="mega-menu-content">
-                                                            <h5>No Categories</h5>
-                                                        </div>
-                                                        <!--====== End - Tablet ======-->
                                                     </div>
                                                 </div>
                                                 <!--====== End - Mega Menu ======-->

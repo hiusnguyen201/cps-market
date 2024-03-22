@@ -40,29 +40,32 @@
                         <div class="pd u-s-m-b-30">
                             <div class="slider-fouc pd-wrap">
                                 <div id="pd-o-initiate">
+
                                     @if (count($product->images))
                                         @foreach ($product->images as $image)
-                                            @if ($image->pin)
-                                                <div class="">
-                                                    <img src="{{ asset('storage/' . $image->thumbnail) }}"
-                                                        class="u-img-fluid" alt="{{ $product->name }}">
-                                                </div>
-                                            @endif
+                                            <div class="pd-o-img-wrap"
+                                                data-src="{{ asset('storage/' . $image->thumbnail) }}">
+                                                <img class="u-img-fluid" src="{{ asset('storage/' . $image->thumbnail) }}"
+                                                    data-zoom-image="{{ asset('storage/' . $image->thumbnail) }}"
+                                                    alt="{{ $product->name }}">
+                                            </div>
                                         @endforeach
                                     @endif
+
+
                                 </div>
 
-
+                                <span class="pd-text">Click for larger zoom</span>
                             </div>
                             <div class="u-s-m-t-15">
                                 <div class="slider-fouc">
                                     <div id="pd-o-thumbnail">
-
                                         @if (count($product->images))
                                             @foreach ($product->images as $image)
                                                 <div>
-                                                    <img src="{{ asset('storage/' . $image->thumbnail) }}"
-                                                        class="u-img-fluid" alt="{{ $product->name }}">
+                                                    <img class="u-img-fluid"
+                                                        src="{{ asset('storage/' . $image->thumbnail) }}"
+                                                        alt="{{ $product->name }}">
                                                 </div>
                                             @endforeach
                                         @endif
@@ -112,7 +115,8 @@
 
                                     <span class="pd-detail__stock">{{ $product->sold }} is sold</span>
 
-                                    <span class="pd-detail__left">{{ $product->quantity > 0 ? 'Only' . ' ' . $product->quantity. ' ' .'left' : 'Out of stock' }}</span>
+                                    <span
+                                        class="pd-detail__left">{{ $product->quantity > 0 ? 'Only' . ' ' . $product->quantity . ' ' . 'left' : 'Out of stock' }}</span>
                                 </div>
                             </div>
                             <div class="u-s-m-b-15">

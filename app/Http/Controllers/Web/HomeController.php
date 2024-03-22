@@ -68,23 +68,25 @@ class HomeController extends Controller
             ->limit(10)
             ->get();
 
-        $sections9D = Product::whereDate('created_at', today())
+        $sections9D = Product::whereDate('updated_at', today())
         ->orderBy('sold', 'desc')
         ->limit(3)
         ->get();
 
-        $sections9W = Product::whereYear('created_at', now()->year)
-        ->whereBetween('created_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
+        $sections9W = Product::whereYear('updated_at', now()->year)
+        ->whereBetween('updated_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
         ->orderBy('sold', 'desc')
         ->limit(3)
         ->get();
 
-        $sections9M = Product::whereYear('created_at', now()->year)
-        ->whereMonth('created_at', now()->month)
+        $sections9M = Product::whereYear('updated_at', now()->year)
+        ->whereMonth('updated_at', now()->month)
         ->orderBy('sold', 'desc')
         ->limit(3)
         ->get();
   
+        $categories = Category::all();
+
 
         return view("customer/home", [
             'sections2' => $sections2,
@@ -97,6 +99,7 @@ class HomeController extends Controller
             'sections9D' => $sections9D,
             'sections9W' => $sections9W,
             'sections9M' => $sections9M,
+            'categories' => $categories,
             'title' => "Cps Market"
         ]);
     }
@@ -105,10 +108,11 @@ class HomeController extends Controller
     {
 
         $product = Product::where(['slug' => $slug])->first();
-
+        $categories = Category::all();
 
         return view('customer.products.details', [
             'product' => $product,
+            'categories' => $categories,
             'title' => 'Details Product',
         ]);
     }
