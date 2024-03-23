@@ -65,58 +65,71 @@ class CartController extends Controller
 
     public function handleUpdate(Request $request)
     {
-        $user = Auth::user();
+        try {
+            $cartData = json_decode($request->cart_data, true);
 
-        $cart = Cart::findOrFail($request->cart_id);
-        $product = Product::findOrFail($cart->product_id);
+            if (!empty($cartData)) {
+                foreach ($cartData as $item) {
+                    $cart = Cart::findOrFail($item['cart_id']);
+                    $product = Product::findOrFail($cart->product_id);
 
-        if ($cart && $product) {
-            if ($request->quantity > $cart->quantity) { //tang sl
-                if ($cart->quantity >= $product->quantity) { //kt so luong kho hang
-                    return redirect()->back()->with('error', 'Not enough QTY');
-                } else {
-                    $cart->update([
-                        'quantity' => $request->quantity,
-                        'price' => $request->quantity * $product->price,
-                    ]);
-                    return redirect()->back()->with('success', 'Updated');
+                    if ($cart && $product) {
+                        if ($item['quantity'] > $cart->quantity) { //tang sl
+                            if ($cart->quantity >= $product->quantity) { //kt so luong kho hang
+                                return redirect()->back()->with('error', 'Not enough QTY');
+                            } else {
+                                $cart->update([
+                                    'quantity' => $item['quantity'],
+                                    'price' => $item['quantity'] * $product->price,
+                                ]);
+                            }
+                        } else { // giam sl
+                            if ($item['quantity'] == 0) {
+                                $this->handleDelete($item['cart_id']);
+                            } else {
+                                $cart->update([
+                                    'quantity' => $item['quantity'],
+                                    'price' => $item['quantity'] * $product->price,
+                                ]);
+                            }
+                        }
+                    }
                 }
-            } else { // giam sl
-                if ($cart->quantity == 1) {
-                    $this->handleDelete($request->cart_id);
-                    return redirect()->back()->with('success', 'Updated');
-                } else {
-                    $cart->update([
-                        'quantity' => $request->quantity,
-                        'price' => $request->quantity * $product->price,
-                    ]);
-                    return redirect()->back()->with('success', 'Updated');
-                }
+
+                return redirect()->back()->with('success', 'Updated');
             }
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+            return redirect()->back()->with('error', 'Update cart was not successful!');
         }
     }
 
     public function handleDelete(Request $request)
     {
-        $user = Auth::user();
-        $cart = Cart::findOrFail($request->cart_id);
+        try {
+            $user = Auth::user();
+            $cartIds = $request->id;
 
-        if ($cart) {
-            if ($user->id == $cart->user_id) {
-                $cart->delete();
-                return redirect()->back()->with('success', 'Deleted');
-            } else {
-                return redirect()->back()->with('error', 'Not correct user');
+            if (!is_array($cartIds)) {
+                $cartIds = [$cartIds];
             }
-        } else {
-            return redirect()->back()->with('error', 'Can not find cart');
-        }
-    }
 
-    public function clearCart()
-    {
-        $user = Auth::user();
-        $cart = Cart::where('user_id', $user->id)->delete();
-        return redirect()->back()->with('success', 'Deleted');
+            foreach ($cartIds as $index => $cartIds) {
+                $cart = Cart::find($cartIds);
+
+                if (is_null($cart)) {
+                    session()->flash('error', 'Delete cart was not successful! in position ' . $index);
+                    return redirect()->back();
+                } elseif ($user->id == $cart->user_id) {
+                    $cart->delete();
+                    session()->flash('success', 'Delete cart was successful!');
+                }
+            }
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+            session()->flash('error', 'Delete cart was not successful!');
+        }
+
+        return redirect()->back();
     }
 }

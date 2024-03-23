@@ -3,26 +3,11 @@
 @section('content')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-
-
-<script src="{{ asset('custom/js/cart.js') }}"></script>
 <section>
-    <form id="updateCartQty" action="/cart" method="post">
-        @csrf
-        @method('PATCH')
-        <input type="hidden" id="cart_id" name="cart_id">
-        <input type="hidden" id="quantity" name="quantity">
-    </form>
-
     <form id="deleteCart" action="/cart" method="post">
         @csrf
         @method('DELETE')
-        <input type="hidden" id="cart_id_del" name="cart_id">
-    </form>
-
-    <form id="clearCart" action="/cart/clear" method="post">
-        @csrf
-        @method('DELETE')
+        <input type="hidden" id="cart_id_del" name="id">
     </form>
 </section>
 
@@ -91,10 +76,10 @@
 
                                 <tbody>
                                     <!--====== Row ======-->
-                                    <tr class="cart-item" data-cart-id="{{ $cart->id }}">
+                                    <tr data-cart-id="{{ $cart->id }}">
                                         <td>
                                             <div class="form-check">
-                                                <input type="checkbox" class="form-check-input round-checkbox product-checkbox" name="cart_id" value="{{ $cart->id }}" data-product-price="{{ $cart->product->price }}" data-product-qty="{{ $cart->quantity }}">
+                                                <input type="checkbox" class="form-check-input round-checkbox product-checkbox" name="id" value="{{ $cart->id }}" data-product-price="{{ $cart->product->price }}" data-product-qty="{{ $cart->quantity }}">
                                             </div>
                                         </td>
 
@@ -154,7 +139,7 @@
 
                                                 <span class="input-counter__minus fas fa-minus"></span>
 
-                                                <input class="input-counter__text input-counter--text-primary-style" type="text" name="quantity" value="{{ $cart->quantity }}" data-min="1" data-max="1000" data-cart-id="{{ $cart->id }}" onchange="updateQuantity(this)">
+                                                <input class="input-counter__text input-counter--text-primary-style" type="text" name="quantity" value="{{ $cart->quantity }}" data-min="1" data-max="{{ $cart->product->quantity }}" data-cart-id="{{ $cart->id }}">
 
                                                 <span class="input-counter__plus fas fa-plus"></span>
                                             </div>
@@ -181,13 +166,21 @@
                             </div>
                             <div class="route-box__g2">
 
-                                <a class="route-box__link" href="javascript:void(0)" onclick="clearCart()"><i class="fas fa-trash"></i>
+                                <a class="route-box__link" data-toggle="modal" data-target="#modal-deleteAll"><i class="fas fa-trash"></i>
 
                                     <span>CLEAR CART</span></a>
 
-                                <a class="route-box__link" href="/cart"><i class="fas fa-sync"></i>
+                                <a class="route-box__link">
 
-                                    <span>UPDATE CART</span></a>
+                                    <form class="form-update-all" action="" method="POST">
+                                        <input type="hidden" name="_method" value="patch">
+                                        <button type="submit" class="btn-update"><i class="fas fa-sync"></i>UPDATE</button>
+                                        @csrf
+                                    </form>
+                                </a>
+
+
+
                             </div>
                         </div>
                     </div>
@@ -254,4 +247,32 @@
         <!--====== End - Section 3 ======-->
     </div>
 </div>
+
+<!-- Modal delete -->
+<div class="modal " id="modal-deleteAll" aria-modal="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Warning!</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you really want delete?</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <form class="form-delete-all" action="" method="POST">
+                    <button class="btn btn-primary btn-deleteAll" type="submit">Submit</button>
+                    <input type="hidden" name="_method" value="delete">
+                    @csrf
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ asset('custom/js/cart.js') }}"></script>
+
 @endsection

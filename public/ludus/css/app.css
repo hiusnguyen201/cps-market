@@ -8160,3 +8160,12 @@ input::-ms-clear {
     color: #ff4500;
     transition: color 0.3s ease;
 }
+
+.btn-update {
+    border: 0; font-weight: 600; cursor: pointer;
+}
+
+.btn-update:hover {
+    color: #ff4500;
+    transition: color 0.3s ease;
+}

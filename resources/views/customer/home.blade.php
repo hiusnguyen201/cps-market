@@ -24,10 +24,14 @@
             <div class="card-body">
                 <p class="card-title">Name: {{$product->name}}</p>
                 <p class="card-title">Price: {{$product->price}}</p>
-                <p class="card-title">Descrip: {{$product->description}}</p>
+                <p class="card-title">qty: {{$product->quantity}}</p>
+                <form action="/cart" method="post">
+                    @csrf
+                    <input type="hidden" name='product_id' value="{{$product->id}}">
+                    <button type="submit" class="btn btn-outline-danger add-to-cart-btn">
+                        ADD</button>
+                </form>
 
-                <button onclick="addCart('{{ $product->id }}')" class="btn btn-outline-danger add-to-cart-btn">
-                    ADD</button>
             </div>
         </div>
     </div>
