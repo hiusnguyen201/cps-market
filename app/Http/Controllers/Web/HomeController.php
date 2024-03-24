@@ -12,16 +12,15 @@ class HomeController extends Controller
 {
     public function home()
     {
-        $carts = null;
         if ($user = Auth::user()) {
             $carts = Cart::with('product')->where('user_id', $user->id)->get();
+            $cartCount = count($carts);
         }
 
         $products = Product::all();
 
         return view("customer/home", [
             'title' => "Cps Market",
-            'carts' => $carts
         ], compact('products'));
     }
 }

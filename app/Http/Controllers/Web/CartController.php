@@ -14,7 +14,6 @@ class CartController extends Controller
 {
     public function home()
     {
-
         if ($user = Auth::user()) {
             $carts = Cart::where('user_id', $user->id)->get();
 

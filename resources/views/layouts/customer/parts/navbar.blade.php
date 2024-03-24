@@ -667,7 +667,11 @@
 
                             <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-shopping-bag toggle-button-shop" type="button"></button>
 
-                            <span class="total-item-round">{{ count((array) session('cart')) }}</span>
+                            @if (!is_null($carts) && !$carts->isEmpty())
+                            <span class="total-item-round">{{ $cartCount }}</span>
+                            @else
+                            <span class="total-item-round">0</span>
+                            @endif
 
                             <!--====== Menu ======-->
                             <div class="ah-lg-mode">
@@ -711,12 +715,12 @@
                                         </ul>
                                         <!--====== End - Dropdown ======-->
                                     </li>
+
+                                    @if (!is_null($carts) && !$carts->isEmpty())
                                     <li class="has-dropdown">
 
                                         <a class="mini-cart-shop-link"><i class="fas fa-shopping-bag"></i>
-                                            @php
-                                            $cartCount = count($carts);
-                                            @endphp
+
                                             <span class="total-item-round">{{ $cartCount }}</span></a>
 
                                         <!--====== Dropdown ======-->
@@ -762,6 +766,7 @@
                                                 </div>
                                                 <!--====== End - Card for mini cart ======-->
                                                 @endforeach
+
                                             </div>
                                             <!--====== End - Mini Product Container ======-->
 
@@ -785,6 +790,35 @@
                                         </div>
                                         <!--====== End - Dropdown ======-->
                                     </li>
+                                    @else
+                                    <li class="has-dropdown">
+
+                                        <a class="mini-cart-shop-link"><i class="fas fa-shopping-bag"></i>
+
+                                            <span class="total-item-round">0</span></a>
+
+                                        <!--====== Dropdown ======-->
+
+                                        <span class="js-menu-toggle"></span>
+                                        <div class="mini-cart">
+
+                                            <!--====== Mini Product Container ======-->
+                                            <div class="mini-product-container gl-scroll u-s-m-b-15">
+
+                                                <div class="alert alert-warning text-center" style="margin-bottom: 50px;" role="alert">
+                                                    Login to add cart <span style='font-size:20px;'>&#128577;</span>
+                                                </div>
+
+
+                                            </div>
+                                            <!--====== End - Mini Product Container ======-->
+
+
+                                        </div>
+                                        <!--====== End - Dropdown ======-->
+                                    </li>
+                                    @endif
+
                                 </ul>
                                 <!--====== End - List ======-->
                             </div>
