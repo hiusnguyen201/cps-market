@@ -18,8 +18,7 @@
                         <!--====== Dropdown Main plugin ======-->
                         <div class="menu-init" id="navigation2">
 
-                            <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-cog"
-                                type="button"></button>
+                            <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-cog" type="button"></button>
 
                             <!--====== Menu ======-->
                             <div class="ah-lg-mode">
@@ -45,8 +44,7 @@
                                                             <ul>
                                                                 <li class="js-active">
 
-                                                                    <a href="shop-side-version-2.html"><i
-                                                                            class="fas fa-tv u-s-m-r-6"></i>
+                                                                    <a href="shop-side-version-2.html"><i class="fas fa-tv u-s-m-r-6"></i>
 
                                                                         <span>Electronics</span></a>
 
@@ -54,8 +52,7 @@
                                                                 </li>
                                                                 <li>
 
-                                                                    <a href="shop-side-version-2.html"><i
-                                                                            class="fas fa-female u-s-m-r-6"></i>
+                                                                    <a href="shop-side-version-2.html"><i class="fas fa-female u-s-m-r-6"></i>
 
                                                                         <span>Women's Clothing</span></a>
 
@@ -63,8 +60,7 @@
                                                                 </li>
                                                                 <li>
 
-                                                                    <a href="shop-side-version-2.html"><i
-                                                                            class="fas fa-male u-s-m-r-6"></i>
+                                                                    <a href="shop-side-version-2.html"><i class="fas fa-male u-s-m-r-6"></i>
 
                                                                         <span>Men's Clothing</span></a>
 
@@ -72,8 +68,7 @@
                                                                 </li>
                                                                 <li>
 
-                                                                    <a href="index.html"><i
-                                                                            class="fas fa-utensils u-s-m-r-6"></i>
+                                                                    <a href="index.html"><i class="fas fa-utensils u-s-m-r-6"></i>
 
                                                                         <span>Food & Supplies</span></a>
 
@@ -81,8 +76,7 @@
                                                                 </li>
                                                                 <li>
 
-                                                                    <a href="index.html"><i
-                                                                            class="fas fa-couch u-s-m-r-6"></i>
+                                                                    <a href="index.html"><i class="fas fa-couch u-s-m-r-6"></i>
 
                                                                         <span>Furniture & Decor</span></a>
 
@@ -90,8 +84,7 @@
                                                                 </li>
                                                                 <li>
 
-                                                                    <a href="index.html"><i
-                                                                            class="fas fa-football-ball u-s-m-r-6"></i>
+                                                                    <a href="index.html"><i class="fas fa-football-ball u-s-m-r-6"></i>
 
                                                                         <span>Sports & Game</span></a>
 
@@ -99,8 +92,7 @@
                                                                 </li>
                                                                 <li>
 
-                                                                    <a href="index.html"><i
-                                                                            class="fas fa-heartbeat u-s-m-r-6"></i>
+                                                                    <a href="index.html"><i class="fas fa-heartbeat u-s-m-r-6"></i>
 
                                                                         <span>Beauty & Health</span></a>
 
@@ -156,23 +148,17 @@
                                                                 <div class="col-lg-6 mega-image">
                                                                     <div class="mega-banner">
 
-                                                                        <a class="u-d-block"
-                                                                            href="shop-side-version-2.html">
+                                                                        <a class="u-d-block" href="shop-side-version-2.html">
 
-                                                                            <img class="u-img-fluid u-d-block"
-                                                                                src="images/banners/banner-mega-1.jpg"
-                                                                                alt=""></a>
+                                                                            <img class="u-img-fluid u-d-block" src="images/banners/banner-mega-1.jpg" alt=""></a>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-6 mega-image">
                                                                     <div class="mega-banner">
 
-                                                                        <a class="u-d-block"
-                                                                            href="shop-side-version-2.html">
+                                                                        <a class="u-d-block" href="shop-side-version-2.html">
 
-                                                                            <img class="u-img-fluid u-d-block"
-                                                                                src="images/banners/banner-mega-2.jpg"
-                                                                                alt=""></a>
+                                                                            <img class="u-img-fluid u-d-block" src="images/banners/banner-mega-2.jpg" alt=""></a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -190,8 +176,7 @@
                                                                         </li>
                                                                         <li>
 
-                                                                            <a
-                                                                                href="shop-side-version-2.html">Dresses</a>
+                                                                            <a href="shop-side-version-2.html">Dresses</a>
                                                                         </li>
                                                                         <li>
 
@@ -200,13 +185,11 @@
                                                                         </li>
                                                                         <li>
 
-                                                                            <a
-                                                                                href="shop-side-version-2.html">T-shirts</a>
+                                                                            <a href="shop-side-version-2.html">T-shirts</a>
                                                                         </li>
                                                                         <li>
 
-                                                                            <a
-                                                                                href="shop-side-version-2.html">Rompers</a>
+                                                                            <a href="shop-side-version-2.html">Rompers</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -254,34 +237,25 @@
                                                                 <div class="col-lg-4 mega-image">
                                                                     <div class="mega-banner">
 
-                                                                        <a class="u-d-block"
-                                                                            href="shop-side-version-2.html">
+                                                                        <a class="u-d-block" href="shop-side-version-2.html">
 
-                                                                            <img class="u-img-fluid u-d-block"
-                                                                                src="images/banners/banner-mega-5.jpg"
-                                                                                alt=""></a>
+                                                                            <img class="u-img-fluid u-d-block" src="images/banners/banner-mega-5.jpg" alt=""></a>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-4 mega-image">
                                                                     <div class="mega-banner">
 
-                                                                        <a class="u-d-block"
-                                                                            href="shop-side-version-2.html">
+                                                                        <a class="u-d-block" href="shop-side-version-2.html">
 
-                                                                            <img class="u-img-fluid u-d-block"
-                                                                                src="images/banners/banner-mega-6.jpg"
-                                                                                alt=""></a>
+                                                                            <img class="u-img-fluid u-d-block" src="images/banners/banner-mega-6.jpg" alt=""></a>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-4 mega-image">
                                                                     <div class="mega-banner">
 
-                                                                        <a class="u-d-block"
-                                                                            href="shop-side-version-2.html">
+                                                                        <a class="u-d-block" href="shop-side-version-2.html">
 
-                                                                            <img class="u-img-fluid u-d-block"
-                                                                                src="images/banners/banner-mega-7.jpg"
-                                                                                alt=""></a>
+                                                                            <img class="u-img-fluid u-d-block" src="images/banners/banner-mega-7.jpg" alt=""></a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -299,8 +273,7 @@
                                                                         </li>
                                                                         <li>
 
-                                                                            <a
-                                                                                href="shop-side-version-2.html">T-Shirts</a>
+                                                                            <a href="shop-side-version-2.html">T-Shirts</a>
                                                                         </li>
                                                                         <li>
 
@@ -313,8 +286,7 @@
                                                                         </li>
                                                                         <li>
 
-                                                                            <a
-                                                                                href="shop-side-version-2.html">Shirts</a>
+                                                                            <a href="shop-side-version-2.html">Shirts</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -322,28 +294,23 @@
                                                                     <ul>
                                                                         <li class="mega-list-title">
 
-                                                                            <a
-                                                                                href="shop-side-version-2.html">UNDERWEAR</a>
+                                                                            <a href="shop-side-version-2.html">UNDERWEAR</a>
                                                                         </li>
                                                                         <li>
 
-                                                                            <a
-                                                                                href="shop-side-version-2.html">Boxers</a>
+                                                                            <a href="shop-side-version-2.html">Boxers</a>
                                                                         </li>
                                                                         <li>
 
-                                                                            <a
-                                                                                href="shop-side-version-2.html">Briefs</a>
+                                                                            <a href="shop-side-version-2.html">Briefs</a>
                                                                         </li>
                                                                         <li>
 
-                                                                            <a
-                                                                                href="shop-side-version-2.html">Robes</a>
+                                                                            <a href="shop-side-version-2.html">Robes</a>
                                                                         </li>
                                                                         <li>
 
-                                                                            <a
-                                                                                href="shop-side-version-2.html">Socks</a>
+                                                                            <a href="shop-side-version-2.html">Socks</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -443,8 +410,7 @@
                                             </li>
                                             <li class="has-dropdown has-dropdown--ul-left-100">
 
-                                                <a href="dashboard.html">Dashboard<i
-                                                        class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
+                                                <a href="dashboard.html">Dashboard<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
 
                                                 <!--====== Dropdown ======-->
 
@@ -452,8 +418,7 @@
                                                 <ul style="width:200px">
                                                     <li class="has-dropdown has-dropdown--ul-left-100">
 
-                                                        <a href="dashboard.html">Manage My Account<i
-                                                                class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
+                                                        <a href="dashboard.html">Manage My Account<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
 
                                                         <!--====== Dropdown ======-->
 
@@ -480,8 +445,7 @@
                                                     </li>
                                                     <li class="has-dropdown has-dropdown--ul-left-100">
 
-                                                        <a href="dash-address-book.html">Address Book<i
-                                                                class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
+                                                        <a href="dash-address-book.html">Address Book<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
 
                                                         <!--====== Dropdown ======-->
 
@@ -547,8 +511,7 @@
                                             </li>
                                             <li class="has-dropdown has-dropdown--ul-left-100">
 
-                                                <a>Product Details<i
-                                                        class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
+                                                <a>Product Details<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
 
                                                 <!--====== Dropdown ======-->
 
@@ -573,8 +536,7 @@
                                             </li>
                                             <li class="has-dropdown has-dropdown--ul-left-100">
 
-                                                <a>Shop Grid Layout<i
-                                                        class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
+                                                <a>Shop Grid Layout<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
 
                                                 <!--====== Dropdown ======-->
 
@@ -601,8 +563,7 @@
                                             </li>
                                             <li class="has-dropdown has-dropdown--ul-left-100">
 
-                                                <a>Shop List Layout<i
-                                                        class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
+                                                <a>Shop List Layout<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
 
                                                 <!--====== Dropdown ======-->
 
@@ -704,9 +665,7 @@
                         <!--====== Dropdown Main plugin ======-->
                         <div class="menu-init" id="navigation3">
 
-                            <button
-                                class="btn btn--icon toggle-button toggle-button--secondary fas fa-shopping-bag toggle-button-shop"
-                                type="button"></button>
+                            <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-shopping-bag toggle-button-shop" type="button"></button>
 
                             <span class="total-item-round">{{ count((array) session('cart')) }}</span>
 
@@ -717,8 +676,7 @@
 
                                 <!--====== List ======-->
                                 <ul class="ah-list ah-list--design1 ah-list--link-color-secondary">
-                                    <li class="has-dropdown" data-tooltip="tooltip" data-placement="left"
-                                        title="Account">
+                                    <li class="has-dropdown" data-tooltip="tooltip" data-placement="left" title="Account">
 
                                         <a><i class="far fa-user-circle"></i></a>
 
@@ -756,8 +714,10 @@
                                     <li class="has-dropdown">
 
                                         <a class="mini-cart-shop-link"><i class="fas fa-shopping-bag"></i>
-
-                                            <span class="total-item-round">{{ count((array) session('cart')) }}</span></a>
+                                            @php
+                                            $cartCount = count($carts);
+                                            @endphp
+                                            <span class="total-item-round">{{ $cartCount }}</span></a>
 
                                         <!--====== Dropdown ======-->
 
@@ -767,42 +727,43 @@
                                             <!--====== Mini Product Container ======-->
                                             <div class="mini-product-container gl-scroll u-s-m-b-15">
 
+                                                @foreach($carts as $cart)
                                                 <!--====== Card for mini cart ======-->
                                                 <div class="card-mini-product">
                                                     <div class="mini-product">
                                                         <div class="mini-product__image-wrapper">
-
+                                                            @foreach ($cart->product->images as $image)
+                                                            @if ($image->pin == 1)
                                                             <a class="mini-product__link" href="product-detail.html">
-
-                                                                <img class="u-img-fluid"
-                                                                    src="images/product/electronic/product3.jpg"
-                                                                    alt=""></a>
+                                                                <img class="u-img-fluid" style="height: 100%; object-fit: contain;" src="{{ asset('storage/' . $image->thumbnail) }}" alt=""></a>
+                                                            </a>
+                                                            @break
+                                                            @endif
+                                                            @endforeach
                                                         </div>
+
                                                         <div class="mini-product__info-wrapper">
 
                                                             <span class="mini-product__category">
 
-                                                                <a
-                                                                    href="shop-side-version-2.html">Electronics</a></span>
+                                                                <a href="shop-side-version-2.html">{{ $cart->product->category->name }}</a></span>
 
                                                             <span class="mini-product__name">
 
-                                                                <a href="product-detail.html">Yellow Wireless
-                                                                    Headphone</a></span>
+                                                                <a href="product-detail.html">{{$cart->product->name}}</a></span>
 
-                                                            <span class="mini-product__quantity">1 x</span>
+                                                            <span class="mini-product__quantity">{{$cart->quantity}} x</span>
 
-                                                            <span class="mini-product__price">$8</span>
+                                                            <span class="mini-product__price">{{ number_format($cart->product->price, 0, ',', '.') }}&nbsp;₫</span>
                                                         </div>
                                                     </div>
 
-                                                    <a class="mini-product__delete-link far fa-trash-alt"></a>
+                                                    <a class="mini-product__delete-link far fa-trash-alt" onclick="deleteCart('{{ $cart->id }}')"></a>
                                                 </div>
                                                 <!--====== End - Card for mini cart ======-->
-
+                                                @endforeach
                                             </div>
                                             <!--====== End - Mini Product Container ======-->
-
 
                                             <!--====== Mini Product Statistics ======-->
                                             <div class="mini-product-stat">
@@ -817,8 +778,7 @@
                                                     <a class="mini-link btn--e-brand-b-2" href="checkout.html">PROCEED
                                                         TO CHECKOUT</a>
 
-                                                    <a class="mini-link btn--e-transparent-secondary-b-2"
-                                                        href="/cart">VIEW CART</a>
+                                                    <a class="mini-link btn--e-transparent-secondary-b-2" href="/cart">VIEW CART</a>
                                                 </div>
                                             </div>
                                             <!--====== End - Mini Product Statistics ======-->

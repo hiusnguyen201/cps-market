@@ -2,18 +2,11 @@
 
 @section('content')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
-
-
-<script src="{{ asset('custom/js/cart.js') }}"></script>
 <section>
-    <form id="addCart" action="/cart" method="post">
+    <form id="deleteCart" action="/cart" method="post">
         @csrf
-        @method('post')
-        <input type="hidden" id="product_id_add" name="product_id">
+        @method('DELETE')
+        <input type="hidden" id="cart_id_del" name="id">
     </form>
 </section>
 
@@ -31,7 +24,6 @@
                     <button type="submit" class="btn btn-outline-danger add-to-cart-btn">
                         ADD</button>
                 </form>
-
             </div>
         </div>
     </div>
@@ -40,15 +32,16 @@
 
 
 @if(session('success'))
-<div class="alert alert-success">
+<div class="alert alert-success" style="color: red;">
     {{ session('success')}}
 </div>
 @endif
 
 @if(session('error'))
-<div class="alert alert-danger">
+<div class="alert alert-danger" style="color: red;">
     {{ session('error')}}
 </div>
 @endif
 
+<script src="{{ asset('custom/js/cart.js') }}"></script>
 @endsection

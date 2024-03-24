@@ -8162,7 +8162,9 @@ input::-ms-clear {
 }
 
 .btn-update {
-    border: 0; font-weight: 600; cursor: pointer;
+    border: 0;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .btn-update:hover {

@@ -66,7 +66,7 @@
 
                             <div class="form-check" style="padding-bottom: 20px;color: rgb(14, 36, 49);font-size: 16px;padding-left: 5px;padding-top: 5px; position: relative;">
                                 <input type="checkbox" class="form-check-input round-checkbox" id="selectAll">
-                                <label class="form-check-label" for="selectAll" style="position:absolute; top:3px; left: 25px;">Select all</label>
+                                <label class="form-check-label" for="selectAll" style="position:absolute; top:3px; left: 25px; cursor: pointer;">Select all</label>
                             </div>
 
                             @foreach($carts as $cart)
