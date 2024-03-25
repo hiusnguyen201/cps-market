@@ -806,7 +806,7 @@
                                             <div class="mini-product-container gl-scroll u-s-m-b-15">
 
                                                 <div class="alert alert-warning text-center" style="margin-bottom: 50px;" role="alert">
-                                                    Login to add cart <span style='font-size:20px;'>&#128577;</span>
+                                                    Shopping cart is empty<span style='font-size:20px;'>&#128577;</span>
                                                 </div>
 
 
