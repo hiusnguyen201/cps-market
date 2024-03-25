@@ -18,7 +18,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section__text-wrap">
-                            <h1 class="section__heading u-c-secondary">SHOPPING CART <span class="fas fa-shopping-bag toggle-button-shop"></span></h1>
+                            <h1 class="section__heading u-c-secondary">SHOPPING CART&nbsp;<span class="fas fa-shopping-bag toggle-button-shop"></span></h1>
                         </div>
                     </div>
                 </div>
@@ -162,21 +162,15 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>SHIPPING</td>
-                                                        <td>0&nbsp;₫</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>TAX</td>
-                                                        <td>0&nbsp;₫</td>
+                                                        <td id="shippingDisplay">0&nbsp;₫</td>
                                                     </tr>
                                                     <tr>
                                                         <td>SUBTOTAL</td>
-                                                        <td>0&nbsp;₫</td>
+                                                        <td id="subPriceDisplay">0&nbsp;₫</td>
                                                     </tr>
                                                     <tr>
                                                         <td>GRAND TOTAL</td>
-                                                        <td>
-                                                            <div id="totalPriceDisplay">0&nbsp;₫</div>
-                                                        </td>
+                                                        <td id="totalPriceDisplay">0&nbsp;₫</td>
                                                     </tr>
                                                 </tbody>
                                             </table>

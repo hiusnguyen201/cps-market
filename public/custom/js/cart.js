@@ -5,6 +5,8 @@ function deleteCart(cart_id) {
 
 document.addEventListener("DOMContentLoaded", function () {
     var checkboxes = document.querySelectorAll('.product-checkbox');
+    var subPriceDisplay = document.getElementById('subPriceDisplay');
+    var taxDisplay = document.getElementById('taxDisplay');
     var totalPriceDisplay = document.getElementById('totalPriceDisplay');
     checkboxes.forEach(function (checkbox) {
         checkbox.addEventListener('change', function () {
@@ -13,15 +15,22 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function calculateTotalPrice() {
+        var shipping = 0;
+        var sub = 0;
         var total = 0;
+
         checkboxes.forEach(function (checkbox) {
             if (checkbox.checked) {
                 var productPrice = parseFloat(checkbox.dataset.productPrice);
                 var productQty = parseFloat(checkbox.dataset.productQty);
-                total = total + (productPrice * productQty);
+                sub = sub + (productPrice * productQty);
+                total = sub + shipping;
             }
         });
+        var formattedSub = sub.toLocaleString('vi-VN');
         var formattedTotal = total.toLocaleString('vi-VN');
+
+        subPriceDisplay.textContent = formattedSub + ' ₫';
         totalPriceDisplay.textContent = formattedTotal + ' ₫';
     }
 

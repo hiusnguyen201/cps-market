@@ -730,8 +730,13 @@
 
                                             <!--====== Mini Product Container ======-->
                                             <div class="mini-product-container gl-scroll u-s-m-b-15">
-
+                                                @php
+                                                $subtotal = 0
+                                                @endphp
                                                 @foreach($carts as $cart)
+                                                @php
+                                                $subtotal = $subtotal + ($cart->quantity * $cart->product->price);
+                                                @endphp
                                                 <!--====== Card for mini cart ======-->
                                                 <div class="card-mini-product">
                                                     <div class="mini-product">
@@ -776,7 +781,7 @@
 
                                                     <span class="subtotal-text">SUBTOTAL</span>
 
-                                                    <span class="subtotal-value">$16</span>
+                                                    <span class="subtotal-value">{{ number_format($subtotal, 0, ',', '.') }}&nbsp;₫</span>
                                                 </div>
                                                 <div class="mini-action">
 
