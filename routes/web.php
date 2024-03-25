@@ -9,6 +9,7 @@ use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\BrandController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\ProductController;
+use App\Http\Controllers\Web\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,4 +102,15 @@ Route::prefix('auth')->group(function () {
     // Route::middleware('check.auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
     // });
+});
+
+Route::prefix('cart')->group(function () {
+    Route::get('/', [CartController::class, 'home']);
+
+    Route::post('/', [CartController::class, 'handleCreate']);
+
+    Route::patch('/', [CartController::class, 'handleUpdate']);
+
+    Route::delete('/', [CartController::class, 'handleDelete']);
+    Route::delete('/clear', [CartController::class, 'clearCart']);
 });

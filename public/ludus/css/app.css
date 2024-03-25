@@ -8045,3 +8045,129 @@ input::-ms-clear {
 .catalog-btn-dropdown:hover {
     color: #ff4500;
 }
+
+.round-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid #999;
+    cursor: pointer;
+    position: relative;
+}
+
+.round-checkbox:checked {
+    background-color: #ff4500;
+    box-shadow: 0 0 2px 2px #ff4500;
+    border: 1px solid white;
+}
+
+.round-checkbox:checked::after {
+    content: '\2713';
+    font-size: 14px;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    
+}
+
+
+@media (max-width: 767px) {
+
+    .table-p td {
+        padding: 5px;
+        min-width: 0;
+
+    }
+
+    .table-p__img-wrap {
+        width: 80px;
+        height: 80px
+    }
+
+    .table-p__img-wrap img {
+        min-width: 80px;
+    }
+
+    .table-p__price {
+        font-size: 14px;
+    }
+
+    .input-counter {
+        max-width: 75px;
+        min-width: 75px;
+    }
+
+    .input-counter__text {
+        height: 30px;
+    }
+
+    .input-counter__minus, .input-counter__plus {
+        width: 30px;
+        line-height: 32px;
+    }
+
+    .customtd {
+        display: block;
+        color: #707070; 
+        text-decoration: line-through;
+    }
+
+    .customtd2 {
+        display: none;
+    }
+
+    .customtd3 {
+        display: none;
+    }
+
+    .table-p__name {
+        white-space: nowrap;
+        width: 71px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .table-p__info {
+        margin-left: 9px;
+    }
+}
+
+@media (min-width: 768px) {
+    .customtd {
+        display: none;
+    }
+
+    .customtd2 {
+        display: block;
+        color: #707070; 
+        text-decoration: line-through;
+    }
+
+    .customtd3 span {
+        color: #707070 !important;
+        text-decoration: line-through;
+    }
+
+}
+
+.buynow a:hover div {
+    color: #ff4500;
+    transition: color 0.3s ease;
+}
+
+.btn-update {
+    border: 0;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-update:hover {
+    color: #ff4500;
+    transition: color 0.3s ease;
+}
