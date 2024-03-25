@@ -14,12 +14,12 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- select 2 -->
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet"
         href="{{ asset('adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
-    <!-- Select2 -->
-    <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- JQVMap -->
@@ -32,6 +32,10 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/summernote/summernote-bs4.min.css') }}">
+    <!-- Toast js -->
+    <link rel="stylesheet" href="{{ asset('toastjs/toastify.css') }}">
+    <!-- Custom -->
+    <link rel="stylesheet" href="{{ asset('custom/css/style.css') }}">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -70,18 +74,18 @@
 
     <!-- jQuery -->
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
-
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('adminlte/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
-    <script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- ChartJS -->
     <script src="{{ asset('adminlte/plugins/chart.js/Chart.min.js') }}"></script>
+    <!-- Select 2 -->
+    <script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
     <!-- Sparkline -->
     <script src="{{ asset('adminlte/plugins/sparklines/sparkline.js') }}"></script>
     <!-- JQVMap -->
@@ -98,13 +102,12 @@
     <script src="{{ asset('adminlte/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <!-- overlayScrollbars -->
     <script src="{{ asset('adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+    <!-- Toast js -->
+    <script src="{{ asset('toastjs/toastify.js') }}"></script>
+
     <!-- AdminLTE App -->
-    <script src="{{ asset('adminlte/dist/js/adminlte.js') }}"></script>
+    <script defer src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
 
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{{ asset('adminlte/dist/js/pages/dashboard.js') }}"></script>
-
-    <!-- select All check box in home -->
     <script defer>
         $("#selectAll").on("click", function() {
             if ($(this).is(":checked")) {
@@ -122,8 +125,11 @@
             }
         });
 
-        $("select[name='category[]']").select2();
+        $("select#brand[name='category[]']").select2();
     </script>
+    <script defer src="{{ asset('custom/js/message.js') }}"></script>
+    <script defer src="{{ asset('custom/js/selectMultiFile.js') }}"></script>
+    <script defer src="{{ asset('custom/js/products.js') }}"></script>
 </body>
 
 </html>

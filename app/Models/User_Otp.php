@@ -32,4 +32,9 @@ class User_Otp extends Model
         'user_id' => "integer",
         "expire" => "datetime"
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

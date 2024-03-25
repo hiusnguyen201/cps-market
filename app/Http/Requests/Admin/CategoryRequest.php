@@ -26,8 +26,7 @@ class CategoryRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'name' => 'required|string|max:100|unique:categories,name' . ($request->id ? ',' . $request->id : ''),
-
+            'name' => 'required|string|max:100|unique:categories,name' . ($request->_method == 'PATCH' ? ',' . $request->id : ''),
         ];
     }
 
@@ -38,14 +37,12 @@ class CategoryRequest extends FormRequest
             'name.string' => ':attribute Invalid ',
             'name.max' => ':attribute have invalid length characters',
             'name.unique' => ':attribute is existed'
-
         ];
     }
     public function attributes()
     {
         return [
             'name' => "Name",
-
         ];
     }
 }

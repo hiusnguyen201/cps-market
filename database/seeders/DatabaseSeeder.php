@@ -26,14 +26,11 @@ class DatabaseSeeder extends Seeder
         Role::create([
             "name" => "admin",
         ]);
-        Role::create([
-            "name" => "staff",
-        ]);
 
-        for($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             User::create([
                 'name' => "User " . $i,
-                'email' => "user".$i."@gmail.com",
+                'email' => "user" . $i . "@gmail.com",
                 "password" => Hash::make("1234"),
                 "phone" => "0912345678",
                 "gender" => 0,
@@ -50,10 +47,10 @@ class DatabaseSeeder extends Seeder
             "role_id" => 2
         ]);
 
-        for($i = 30; $i < 45; $i++) {
+        for ($i = 30; $i < 45; $i++) {
             User::create([
                 'name' => "User " . $i,
-                'email' => "user".$i."@gmail.com",
+                'email' => "user" . $i . "@gmail.com",
                 "password" => Hash::make("1234"),
                 "phone" => "0912345678",
                 "gender" => 1,
@@ -61,24 +58,13 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        for($i = 45; $i < 60; $i++) {
-            User::create([
-                'name' => "User " . $i,
-                'email' => "user".$i."@gmail.com",
-                "password" => Hash::make("1234"),
-                "phone" => "0912345678",
-                "gender" => 1,
-                "role_id" => 3
-            ]);
-        }
-
-        for ($i=0; $i < 5; $i++) { 
+        for ($i = 0; $i < 5; $i++) {
             Category::create([
                 'name' => "Smartphone" . $i
             ]);
         }
 
-        for ($i=0; $i < 5; $i++) { 
+        for ($i = 0; $i < 5; $i++) {
             Brand::create([
                 'name' => "Brand" . $i,
             ]);

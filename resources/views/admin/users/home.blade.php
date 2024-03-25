@@ -1,3 +1,10 @@
+@if (session('success'))
+    <input hidden type="text" name="message-success" value="{{ session('success') }}">
+@endif
+@if (session('error'))
+    <input hidden type="text" name="message-error" value="{{ session('error') }}">
+@endif
+
 @extends('layouts.admin.index')
 @section('content')
     <div class="card py-2 px-3">
@@ -10,19 +17,6 @@
                     All</button>
             </div>
         </div>
-
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if (session('error'))
-            <div class="alert alert-warning">
-                {{ session('error') }}
-            </div>
-        @endif
-
         <form action="" class="d-flex align-items-center mb-2" method="GET">
             <div class="col-1 px-0 mr-2">
                 <select name="limit" id="" class="form-control">
@@ -53,7 +47,7 @@
                     @if (!is_null($user_status))
                         @foreach ($user_status as $index => $status)
                             <option {{ request()->status == $index ? 'selected' : '' }} value="{{ $index }}">
-                                {{ $status }}</option>
+                                {{ $index }}</option>
                         @endforeach
                     @endif
                 </select>
@@ -70,46 +64,41 @@
         </form>
 
         <div class="table-responsive">
-            <table class="table table-bordered table-hover">
+            <table class="home-table table table-hover">
                 <thead>
                     <tr>
-                        <th>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="selectAll">
-                                <label class="form-check-label" for="selectAll">&nbsp;</label>
-                            </div>
+                        <th width="1%">
+                            <input type="checkbox" class="form-check-input" id="selectAll">
                         </th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Status</th>
                         <th>Role</th>
-                        <th class="text-right">Operation</th>
+                        <th width="1%">Operation</th>
                     </tr>
-
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="id"
-                                        value="{{ $user->id }}">
-                                </div>
+                            <td class="align-middle">
+                                <input type="checkbox" class="form-check-input" name="id" value="{{ $user->id }}">
                             </td>
-                            <td><a href="/admin/users/details/{{ $user->id }}">{{ $user->name }}</a></td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->phone }}</td>
-                            <td>
+                            <td class="align-middle"><a
+                                    href="/admin/users/details/{{ $user->id }}">{{ $user->name }}</a></td>
+                            <td class="align-middle">{{ $user->email }}</td>
+                            <td class="align-middle">{{ $user->phone }}</td>
+                            <td class="align-middle">
                                 {{ array_search($user->status, $user_status) }}
-                            <td>
+                            </td>
+                            <td class="align-middle">
                                 {{ $user->role->name }}
                             </td>
-                            <td class="text-right">
-                                <a class="btn btn-primary" href="/admin/users/edit/{{ $user->id }}" role="button">
+                            <td class="text-center align-middle">
+                                <a class="btn btn-warning" href="/admin/users/edit/{{ $user->id }}">
                                     <i class="fas fa-pen"></i>
                                 </a>
-                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
                                     data-target="#modal-delete-{{ $user->id }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>

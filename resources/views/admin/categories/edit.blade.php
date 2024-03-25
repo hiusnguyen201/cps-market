@@ -1,3 +1,10 @@
+@if (session('success'))
+    <input hidden type="text" name="message-success" value="{{ session('success') }}">
+@endif
+@if (session('error'))
+    <input hidden type="text" name="message-error" value="{{ session('error') }}">
+@endif
+
 @extends('layouts.admin.index')
 @section('content')
     <div class="card">
@@ -8,22 +15,9 @@
                     <h1>Edit category</h1>
                 </h3>
             </div>
-            <!-- /.card-header -->
-            <!-- form start -->
+
             <form action="" method="POST">
                 <div class="card-body">
-                    @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-
-                    @if (session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
-                    @endif
-
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" name="name" class="form-control" id="name" placeholder="Enter name..."
@@ -33,14 +27,15 @@
                         @enderror
                     </div>
 
-                    <input type="hidden" name="id" value="{{ $category->id }}">
+
                 </div>
-                <!-- /.card-body -->
 
                 <div class="card-footer">
+                    @csrf
+                    @method('PATCH')
+                    <input type="hidden" name="id" value="{{ $category->id }}">
                     <button type="submit" class="btn btn-primary">update</button>
                 </div>
-                @csrf
             </form>
         </div>
     </div>
