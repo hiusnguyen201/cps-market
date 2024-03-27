@@ -364,7 +364,7 @@
                 var val = parseInt($this.val());// Current value
                 // Restrictions check
                 if (!val) {
-                   val = 1;
+                   val = 0;
                 }
                 // The min() method returns the number with the lowest value
                 val = Math.min(val,max);

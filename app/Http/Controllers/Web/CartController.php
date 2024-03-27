@@ -84,7 +84,7 @@ class CartController extends Controller
                             }
                         } else { // giam sl
                             if ($item['quantity'] == 0) {
-                                $this->handleDelete($item['cart_id']);
+                                $cart->delete();
                             } else {
                                 $cart->update([
                                     'quantity' => $item['quantity'],

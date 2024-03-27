@@ -39,6 +39,7 @@
                             <table class="table-p">
                                 <tbody>
                                     @foreach($carts as $cart)
+                                    @if ($cart->product->quantity > 0)
                                     <!--====== Row ======-->
                                     <tr data-cart-id="{{ $cart->id }}">
                                         <td>
@@ -67,16 +68,7 @@
                                                     <span class="table-p__category">
 
                                                         <a href="shop-side-version-2.html">{{ $cart->product->category->name }}</a></span>
-                                                    <ul class="table-p__variant-list">
-                                                        <li>
 
-                                                            <span>Size: 22</span>
-                                                        </li>
-                                                        <li>
-
-                                                            <span>Color: Red</span>
-                                                        </li>
-                                                    </ul>
                                                 </div>
                                             </div>
                                         </td>
@@ -98,20 +90,92 @@
                                                 <span class="far fa-trash-alt table-p__delete-link" style="border: 0; background: none; cursor: pointer;" onclick="deleteCart('{{ $cart->id }}')"></span>
                                             </div>
 
-
                                             <div class="input-counter">
 
                                                 <span class="input-counter__minus fas fa-minus"></span>
+                                                @php
+                                                $cartQty = 0;
+                                                if ($cart->quantity > $cart->product->quantity) {
+                                                $cartQty = $cart->product->quantity;
+                                                }
+                                                else {
+                                                $cartQty = $cart->quantity;
+                                                }
+                                                @endphp
+                                                <input class="input-counter__text input-counter--text-primary-style" type="text" name="quantity" value="{{ $cartQty }}" data-min="0" data-max="{{ $cart->product->quantity }}" data-cart-id="{{ $cart->id }}">
 
-                                                <input class="input-counter__text input-counter--text-primary-style" type="text" name="quantity" value="{{ $cart->quantity }}" data-min="1" data-max="{{ $cart->product->quantity }}" data-cart-id="{{ $cart->id }}">
+                                                <p id="message" class="text-center" style="color: red; font-size: 10px;"></p>
 
                                                 <span class="input-counter__plus fas fa-plus"></span>
-                                            </div>
-                                        </td>
 
+                                            </div>
+
+                                        </td>
 
                                     </tr>
                                     <!--====== End - Row ======-->
+                                    @endif
+                                    @endforeach
+                                    
+                                    @foreach($carts as $cart)
+                                    @if ($cart->product->quantity == 0)
+                                    <!--====== Row ======-->
+                                    <tr data-cart-id="{{ $cart->id }}">
+                                        <td></td>
+
+                                        <td>
+                                            <div class="table-p__box">
+                                                <div class="table-p__img-wrap">
+                                                    @foreach ($cart->product->images as $image)
+                                                    @if ($image->pin == 1)
+                                                    <img class="u-img-fluid" style="height: 100%; object-fit: contain;" src="{{ asset('storage/' . $image->thumbnail) }}" alt="">
+                                                    @break
+                                                    @endif
+                                                    @endforeach
+                                                </div>
+
+                                                <div class="table-p__info">
+
+                                                    <span class="table-p__name">
+
+                                                        <a href="product-detail.html" style="text-decoration: line-through;">{{ $cart->product->name }}</a></span>
+
+                                                    <span class="table-p__category">
+
+                                                        <a href="shop-side-version-2.html" style="text-decoration: line-through;">{{ $cart->product->category->name }}</a></span>
+
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+
+                                            <span class="table-p__price" style="color: #ff4500; text-decoration: line-through;">{{ number_format($cart->product->price, 0, ',', '.') }}&nbsp;₫</span>
+                                            <span class="table-p__price customtd">{{ number_format($cart->product->market_price, 0, ',', '.') }}&nbsp;₫</span>
+                                        </td>
+
+                                        <td class="customtd3">
+                                            <span class="table-p__price">{{ number_format($cart->product->market_price, 0, ',', '.') }}&nbsp;₫</span>
+                                        </td>
+
+                                        <td style="padding-top: 0;">
+
+                                            <div class="table-p__del-wrap text-right">
+
+                                                <span class="far fa-trash-alt table-p__delete-link" style="border: 0; background: none; cursor: pointer;" onclick="deleteCart('{{ $cart->id }}')"></span>
+                                            </div>
+
+                                            <div class="input-counter">
+
+                                                <p id="message" class="text-center" style="color: red; font-size: 15px; font-weight: 600;">Out of stock</p>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+                                    <!--====== End - Row ======-->
+                                    @endif
                                     @endforeach
                                 </tbody>
                             </table>
@@ -125,11 +189,17 @@
 
                                     <span>CONTINUE SHOPPING</span></a>
                             </div>
+
                             <div class="route-box__g2">
 
-                                <a class="route-box__link" data-toggle="modal" data-target="#modal-deleteAll"><i class="fas fa-trash"></i>
+                                <a class="route-box__link">
 
-                                    <span>CLEAR CART</span></a>
+                                    <form class="form-delete-all" action="" method="POST">
+                                        <input type="hidden" name="_method" value="delete">
+                                        <button type="submit" class="btn-update"><i class="fas fa-trash"></i>CLEAR CART</button>
+                                        @csrf
+                                    </form>
+                                </a>
 
                                 <a class="route-box__link">
 
@@ -214,31 +284,6 @@
 </div>
 
 @endif
-
-<!-- Modal delete -->
-<div class="modal " id="modal-deleteAll" aria-modal="true" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Warning!</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Are you really want delete?</p>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <form class="form-delete-all" action="" method="POST">
-                    <button class="btn btn-primary btn-deleteAll" type="submit">Submit</button>
-                    <input type="hidden" name="_method" value="delete">
-                    @csrf
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script src="{{ asset('custom/js/cart.js') }}"></script>
 

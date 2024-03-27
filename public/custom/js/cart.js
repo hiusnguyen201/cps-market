@@ -1,37 +1,32 @@
-function deleteCart(cart_id) {
-    $('#cart_id_del').val(cart_id);
-    $('#deleteCart').submit();
-}
+$(document).ready(function () {
+    var checkboxes = $('.product-checkbox');
+    var subPriceDisplay = $('#subPriceDisplay');
+    var totalPriceDisplay = $('#totalPriceDisplay');
+    var inputCounters = $('.input-counter__text');
 
-document.addEventListener("DOMContentLoaded", function () {
-    var checkboxes = document.querySelectorAll('.product-checkbox');
-    var subPriceDisplay = document.getElementById('subPriceDisplay');
-    var taxDisplay = document.getElementById('taxDisplay');
-    var totalPriceDisplay = document.getElementById('totalPriceDisplay');
-    checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener('change', function () {
-            calculateTotalPrice();
-        });
-    });
+    checkboxes.change(calculateTotalPrice);
+    inputCounters.change('input', calculateTotalPrice);
 
     function calculateTotalPrice() {
         var shipping = 0;
         var sub = 0;
         var total = 0;
 
-        checkboxes.forEach(function (checkbox) {
-            if (checkbox.checked) {
-                var productPrice = parseFloat(checkbox.dataset.productPrice);
-                var productQty = parseFloat(checkbox.dataset.productQty);
-                sub = sub + (productPrice * productQty);
-                total = sub + shipping;
+        checkboxes.each(function () {
+            if ($(this).is(':checked')) {
+                var productPrice = parseFloat($(this).data('product-price'));
+                var productQty = parseFloat($(this).closest('tr').find('.input-counter__text').val());
+                sub += productPrice * productQty;
             }
         });
+
+        total = sub + shipping;
+
         var formattedSub = sub.toLocaleString('vi-VN');
         var formattedTotal = total.toLocaleString('vi-VN');
 
-        subPriceDisplay.textContent = formattedSub + ' ₫';
-        totalPriceDisplay.textContent = formattedTotal + ' ₫';
+        subPriceDisplay.text(formattedSub + ' ₫');
+        totalPriceDisplay.text(formattedTotal + ' ₫');
     }
 
     $("#selectAll").on("click", function () {
@@ -42,29 +37,67 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         calculateTotalPrice();
     });
-});
 
-
-
-$("form.form-delete-all").submit((event) => {
-    const formCheckboxChecked = $("input.form-check-input:checked:not(#selectAll)");
-    for (var i = 0; i < formCheckboxChecked.length; i++) {
-        $("form.form-delete-all").append(
-            `<input type="hidden" name="id[${i}]" value="${formCheckboxChecked[i].value}">`)
-    }
-});
-
-$("form.form-update-all").submit((event) => {
-    event.preventDefault(); // Ngăn chặn việc submit mặc định của biểu mẫu
-    const formData = []; // Khởi tạo mảng JSON để lưu các cặp cart_id và quantity
-    $("input.input-counter__text").each(function() {
-        const cartId = $(this).data("cart-id");
-        const quantity = $(this).val();
-        formData.push({ cart_id: cartId, quantity: quantity });
+    $("form.form-delete-all").submit((event) => {
+        const formCheckboxChecked = $("input.form-check-input:checked:not(#selectAll)");
+        for (var i = 0; i < formCheckboxChecked.length; i++) {
+            $("form.form-delete-all").append(
+                `<input type="hidden" name="id[${i}]" value="${formCheckboxChecked[i].value}">`)
+        }
     });
-    // Thêm một input ẩn duy nhất chứa dữ liệu JSON vào biểu mẫu
-    $("form.form-update-all").append(`<input type="hidden" name="cart_data" value='${JSON.stringify(formData)}'>`);
-    // Submit biểu mẫu
-    $("form.form-update-all").unbind('submit').submit();
+
+    $("form.form-update-all").submit((event) => {
+        event.preventDefault(); // Ngăn chặn việc submit mặc định của biểu mẫu
+        const formData = []; // Khởi tạo mảng JSON để lưu các cặp cart_id và quantity
+        $("input.input-counter__text").each(function () {
+            const cartId = $(this).data("cart-id");
+            const quantity = $(this).val();
+            formData.push({ cart_id: cartId, quantity: quantity });
+        });
+        // Thêm một input ẩn duy nhất chứa dữ liệu JSON vào biểu mẫu
+        $("form.form-update-all").append(`<input type="hidden" name="cart_data" value='${JSON.stringify(formData)}'>`);
+        // Submit biểu mẫu
+        $("form.form-update-all").unbind('submit').submit();
+    });
+
+    // Lấy phần tử input
+    var input = $('.input-counter__text');
+
+    // Thêm sự kiện 'change' cho phần tử input
+    input.change(function () {
+        // Lấy giá trị data-max
+        var max = $(this).attr('data-max');
+
+        // So sánh giá trị của input với data-max
+        if ($(this).val() == max) {
+            // Hiển thị thông báo và thay đổi style của phần tử hiện tại
+            $(this).css({
+                'border': '2px solid red',
+            }).siblings('#message').text('Maximum quantity in stock');
+        } else {
+            // Xóa thông báo và style của phần tử hiện tại
+            $(this).css({
+                'border': '2px solid transparent',
+            }).siblings('#message').text('');
+        }
+    });
+
+    function deleteCart(cart_id) {
+        $('#cart_id_del').val(cart_id);
+        $('#deleteCart').submit();
+    }
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
