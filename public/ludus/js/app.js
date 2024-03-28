@@ -362,6 +362,7 @@
                 var min = $this.data('min');
                 var max = $this.data('max');
                 var val = parseInt($this.val());// Current value
+                var qtymax = parseInt($this.val());
                 // Restrictions check
                 if (!val) {
                    val = 0;
@@ -370,6 +371,20 @@
                 val = Math.min(val,max);
                 // The max() method returns the number with the highest value
                 val = Math.max(val,min);
+
+                if (qtymax > val)
+                {
+                    var input = $('.input-counter__text');
+                    $(this).css({
+                        'border': '2px solid red',
+                    }).siblings('#message').text('Maximum quantity in stock');
+                }
+                else {
+                    $(this).css({
+                        'border': '2px solid transparent',
+                    }).siblings('#message').text('');
+                }
+
                 // Sets the Value
                 $this.val(val);
             });

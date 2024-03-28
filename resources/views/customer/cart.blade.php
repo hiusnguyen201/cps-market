@@ -83,40 +83,42 @@
                                             <span class="table-p__price">{{ number_format($cart->product->market_price, 0, ',', '.') }}&nbsp;₫</span>
                                         </td>
 
-                                        <td style="padding-top: 0;">
+                                        <td>
 
+                                        <div class="input-counter">
+
+                                            <span class="input-counter__minus fas fa-minus"></span>
+                                            @php
+                                            $cartQty = 0;
+                                            if ($cart->quantity > $cart->product->quantity) {
+                                            $cartQty = $cart->product->quantity;
+                                            }
+                                            else {
+                                            $cartQty = $cart->quantity;
+                                            }
+                                            @endphp
+                                            <input class="input-counter__text input-counter--text-primary-style" type="text" name="quantity" value="{{ $cartQty }}" data-min="0" data-max="{{ $cart->product->quantity }}" data-cart-id="{{ $cart->id }}">
+
+                                            <p id="message" class="text-center" style="color: red; font-size: 10px;"></p>
+
+                                            <span class="input-counter__plus fas fa-plus"></span>
+
+                                        </div>
+
+                                        </td>
+
+                                        <td>
                                             <div class="table-p__del-wrap text-right">
 
                                                 <span class="far fa-trash-alt table-p__delete-link" style="border: 0; background: none; cursor: pointer;" onclick="deleteCart('{{ $cart->id }}')"></span>
                                             </div>
-
-                                            <div class="input-counter">
-
-                                                <span class="input-counter__minus fas fa-minus"></span>
-                                                @php
-                                                $cartQty = 0;
-                                                if ($cart->quantity > $cart->product->quantity) {
-                                                $cartQty = $cart->product->quantity;
-                                                }
-                                                else {
-                                                $cartQty = $cart->quantity;
-                                                }
-                                                @endphp
-                                                <input class="input-counter__text input-counter--text-primary-style" type="text" name="quantity" value="{{ $cartQty }}" data-min="0" data-max="{{ $cart->product->quantity }}" data-cart-id="{{ $cart->id }}">
-
-                                                <p id="message" class="text-center" style="color: red; font-size: 10px;"></p>
-
-                                                <span class="input-counter__plus fas fa-plus"></span>
-
-                                            </div>
-
                                         </td>
 
                                     </tr>
                                     <!--====== End - Row ======-->
                                     @endif
                                     @endforeach
-                                    
+
                                     @foreach($carts as $cart)
                                     @if ($cart->product->quantity == 0)
                                     <!--====== Row ======-->
@@ -158,12 +160,7 @@
                                             <span class="table-p__price">{{ number_format($cart->product->market_price, 0, ',', '.') }}&nbsp;₫</span>
                                         </td>
 
-                                        <td style="padding-top: 0;">
-
-                                            <div class="table-p__del-wrap text-right">
-
-                                                <span class="far fa-trash-alt table-p__delete-link" style="border: 0; background: none; cursor: pointer;" onclick="deleteCart('{{ $cart->id }}')"></span>
-                                            </div>
+                                        <td>
 
                                             <div class="input-counter">
 
@@ -171,6 +168,13 @@
 
                                             </div>
 
+                                        </td>
+
+                                        <td>
+                                            <div class="table-p__del-wrap text-right">
+
+                                                <span class="far fa-trash-alt table-p__delete-link" style="border: 0; background: none; cursor: pointer;" onclick="deleteCart('{{ $cart->id }}')"></span>
+                                            </div>
                                         </td>
 
                                     </tr>
@@ -196,7 +200,7 @@
 
                                     <form class="form-delete-all" action="" method="POST">
                                         <input type="hidden" name="_method" value="delete">
-                                        <button type="submit" class="btn-update"><i class="fas fa-trash"></i>CLEAR CART</button>
+                                        <button type="submit" class="btn-update"><i class="fas fa-trash"></i>CLEAR SELECTED</button>
                                         @csrf
                                     </form>
                                 </a>

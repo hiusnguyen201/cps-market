@@ -60,28 +60,6 @@ $(document).ready(function () {
         $("form.form-update-all").unbind('submit').submit();
     });
 
-    // Lấy phần tử input
-    var input = $('.input-counter__text');
-
-    // Thêm sự kiện 'change' cho phần tử input
-    input.change(function () {
-        // Lấy giá trị data-max
-        var max = $(this).attr('data-max');
-
-        // So sánh giá trị của input với data-max
-        if ($(this).val() == max) {
-            // Hiển thị thông báo và thay đổi style của phần tử hiện tại
-            $(this).css({
-                'border': '2px solid red',
-            }).siblings('#message').text('Maximum quantity in stock');
-        } else {
-            // Xóa thông báo và style của phần tử hiện tại
-            $(this).css({
-                'border': '2px solid transparent',
-            }).siblings('#message').text('');
-        }
-    });
-
     function deleteCart(cart_id) {
         $('#cart_id_del').val(cart_id);
         $('#deleteCart').submit();
