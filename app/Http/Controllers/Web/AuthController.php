@@ -23,6 +23,8 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ForgetPasswordRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 
+use App\Jobs\SendOtp;
+
 class AuthController extends Controller
 {
     public function localLogin()
@@ -72,7 +74,6 @@ class AuthController extends Controller
         }
 
         if ($user->status == config("constants.user_status.Inactive")) {
-            dd($user);
             User::where("id", $user->id)->update(['status' => config("constants.user_status.Active"), 'email_verified_at' => Carbon::now()]);
         }
 
@@ -302,24 +303,18 @@ class AuthController extends Controller
 
     public function sendOtpToEmail($user)
     {
-        $user_otp_exists = User_Otp::where('user_id', $user->id)->first();
-        if (!is_null($user_otp_exists)) {
-            if (Carbon::now()->lt($user_otp_exists->expire)) {
-                return true;
-            }
-            $user_otp_exists->delete();
-        }
+        User_Otp::where('user_id', $user->id)->delete();
 
-        $user_otp_new = User_Otp::create([
-            'otp' => mt_rand(100000, 999999),
+        $otp = mt_rand(100000, 999999);
+        User_Otp::create([
+            'otp' => $otp,
             'expire' => Carbon::now()->addMinutes(env('OTP_EXPIRE_MINUTES', 1)),
             'user_id' => $user->id
         ]);
 
-        Mail::raw("Your OTP is: $user_otp_new->otp", function ($message) use ($user) {
-            $message->to($user->email)->subject('OTP Verification');
-        });
+        $details = ["email" => $user->email, "otp" => $otp];
+        SendOtp::dispatch($details);
 
-        return true;
+        return;
     }
 }
