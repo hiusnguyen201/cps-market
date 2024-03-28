@@ -60,12 +60,12 @@ $(document).ready(function () {
         $("form.form-update-all").unbind('submit').submit();
     });
 
-    function deleteCart(cart_id) {
-        $('#cart_id_del').val(cart_id);
-        $('#deleteCart').submit();
-    }
-
 });
+
+function deleteCart(cart_id) {
+    $('#cart_id_del').val(cart_id);
+    $('#deleteCart').submit();
+}
 
 
 
