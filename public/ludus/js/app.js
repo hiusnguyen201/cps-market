@@ -374,7 +374,7 @@
 
                 if (qtymax > val)
                 {
-                    var input = $('.input-counter__text');
+                    $('.input-counter__text');
                     $(this).css({
                         'border': '2px solid red',
                     }).siblings('#message').text('Maximum quantity in stock');

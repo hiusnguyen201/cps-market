@@ -28,14 +28,12 @@ class ViewServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             $cartCount = 0;
-            $carts = null;
 
             if ($user = Auth::user()) {
-                $carts = Cart::with('product')->where('user_id', $user->id)->get();
-                $cartCount = count($carts);
+
+                $cartCount = count(Cart::with('product')->where('user_id', $user->id)->get());
             }
 
-            $view->with('carts', $carts);
             $view->with('cartCount', $cartCount);
         });
     }

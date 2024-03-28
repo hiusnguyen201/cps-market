@@ -667,7 +667,7 @@
 
                             <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-shopping-bag toggle-button-shop" type="button"></button>
 
-                            @if (!is_null($carts) && !$carts->isEmpty())
+                            @if ($cartCount > 0 )
                             <span class="total-item-round">{{ $cartCount }}</span>
                             @else
                             <span class="total-item-round">0</span>
@@ -716,113 +716,16 @@
                                         <!--====== End - Dropdown ======-->
                                     </li>
 
-                                    @if (!is_null($carts) && !$carts->isEmpty())
+
                                     <li class="has-dropdown">
 
-                                        <a class="mini-cart-shop-link"><i class="fas fa-shopping-bag"></i>
-
+                                        <a href="/cart" class="mini-cart-shop-link"><i class="fas fa-shopping-bag"></i>
+                                            @if ($cartCount > 0)
                                             <span class="total-item-round">{{ $cartCount }}</span></a>
-
-                                        <!--====== Dropdown ======-->
-
-                                        <span class="js-menu-toggle"></span>
-                                        <div class="mini-cart">
-
-                                            <!--====== Mini Product Container ======-->
-                                            <div class="mini-product-container gl-scroll u-s-m-b-15">
-                                                @php
-                                                $subtotal = 0
-                                                @endphp
-                                                @foreach($carts as $cart)
-                                                @php
-                                                $subtotal = $subtotal + ($cart->quantity * $cart->product->price);
-                                                @endphp
-                                                <!--====== Card for mini cart ======-->
-                                                <div class="card-mini-product">
-                                                    <div class="mini-product">
-                                                        <div class="mini-product__image-wrapper">
-                                                            @foreach ($cart->product->images as $image)
-                                                            @if ($image->pin == 1)
-                                                            <a class="mini-product__link" href="product-detail.html">
-                                                                <img class="u-img-fluid" style="height: 100%; object-fit: contain;" src="{{ asset('storage/' . $image->thumbnail) }}" alt=""></a>
-                                                            </a>
-                                                            @break
-                                                            @endif
-                                                            @endforeach
-                                                        </div>
-
-                                                        <div class="mini-product__info-wrapper">
-
-                                                            <span class="mini-product__category">
-
-                                                                <a href="shop-side-version-2.html">{{ $cart->product->category->name }}</a></span>
-
-                                                            <span class="mini-product__name">
-
-                                                                <a href="product-detail.html">{{$cart->product->name}}</a></span>
-
-                                                            <span class="mini-product__quantity">{{$cart->quantity}} x</span>
-
-                                                            <span class="mini-product__price">{{ number_format($cart->product->price, 0, ',', '.') }}&nbsp;₫</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <a class="mini-product__delete-link far fa-trash-alt" onclick="deleteCart('{{ $cart->id }}')"></a>
-                                                </div>
-                                                <!--====== End - Card for mini cart ======-->
-                                                @endforeach
-
-                                            </div>
-                                            <!--====== End - Mini Product Container ======-->
-
-                                            <!--====== Mini Product Statistics ======-->
-                                            <div class="mini-product-stat">
-                                                <div class="mini-total">
-
-                                                    <span class="subtotal-text">SUBTOTAL</span>
-
-                                                    <span class="subtotal-value">{{ number_format($subtotal, 0, ',', '.') }}&nbsp;₫</span>
-                                                </div>
-                                                <div class="mini-action">
-
-                                                    <a class="mini-link btn--e-brand-b-2" href="checkout.html">PROCEED
-                                                        TO CHECKOUT</a>
-
-                                                    <a class="mini-link btn--e-transparent-secondary-b-2" href="/cart">VIEW CART</a>
-                                                </div>
-                                            </div>
-                                            <!--====== End - Mini Product Statistics ======-->
-                                        </div>
-                                        <!--====== End - Dropdown ======-->
-                                    </li>
-                                    @else
-                                    <li class="has-dropdown">
-
-                                        <a class="mini-cart-shop-link"><i class="fas fa-shopping-bag"></i>
-
+                                            @else
                                             <span class="total-item-round">0</span></a>
-
-                                        <!--====== Dropdown ======-->
-
-                                        <span class="js-menu-toggle"></span>
-                                        <div class="mini-cart">
-
-                                            <!--====== Mini Product Container ======-->
-                                            <div class="mini-product-container gl-scroll u-s-m-b-15">
-
-                                                <div class="alert alert-warning text-center" style="margin-bottom: 50px;" role="alert">
-                                                    Shopping cart is empty<span style='font-size:20px;'>&#128577;</span>
-                                                </div>
-
-
-                                            </div>
-                                            <!--====== End - Mini Product Container ======-->
-
-
-                                        </div>
-                                        <!--====== End - Dropdown ======-->
+                                            @endif
                                     </li>
-                                    @endif
 
                                 </ul>
                                 <!--====== End - List ======-->
