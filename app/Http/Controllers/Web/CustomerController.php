@@ -9,6 +9,7 @@ use App\Models\Role;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Admin\UserRequest;
+use App\Jobs\SendPassword;
 
 class CustomerController extends Controller
 {
@@ -66,7 +67,7 @@ class CustomerController extends Controller
         try {
             $role = Role::where('name', 'customer')->first();
             $password = Str::random(16);
-            User::create([
+            $user = User::create([
                 'name' => $request['name'],
                 'email' => $request['email'],
                 'phone' => $request['phone'],
@@ -76,10 +77,13 @@ class CustomerController extends Controller
                 'password' => Hash::make($password)
             ]);
 
-            session()->flash('success', 'Create user was successful!');
+            $details = ["email" => $user->email, "password" => $password];
+            SendPassword::dispatch($details);
+
+            session()->flash('success', 'Create customer was successful!');
         } catch (\Exception $e) {
             error_log($e->getMessage());
-            session()->flash('error', 'Create user was not successful!');
+            session()->flash('error', 'Create customer was not successful!');
         }
 
         return redirect()->back();
@@ -105,10 +109,10 @@ class CustomerController extends Controller
             $request->request->add(['updated_at' => now()]);
             $user->fill($request->input());
             $user->save();
-            session()->flash('success', 'update user was successful!');
+            session()->flash('success', 'Edit customer was successful!');
         } catch (\Exception $e) {
             error_log($e->getMessage());
-            session()->flash('error', 'Edit user was not successful!');
+            session()->flash('error', 'Edit customer was not successful!');
         }
 
         return redirect()->back();
@@ -127,16 +131,16 @@ class CustomerController extends Controller
                 $user = User::find($userId);
 
                 if (is_null($user)) {
-                    session()->flash('error', 'Delete user was not successful! in position ' . $index);
+                    session()->flash('error', 'Delete customer was not successful! in position ' . $index);
                     return redirect()->back();
                 }
 
                 $user->delete();
-                session()->flash('success', 'Delete user was successful!');
+                session()->flash('success', 'Delete customer was successful!');
             }
         } catch (\Exception $e) {
             error_log($e->getMessage());
-            session()->flash('error', 'Delete user was not successful!');
+            session()->flash('error', 'Delete customer was not successful!');
         }
 
         return redirect()->back();

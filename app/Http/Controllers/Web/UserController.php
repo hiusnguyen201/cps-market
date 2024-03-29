@@ -9,6 +9,7 @@ use App\Models\Role;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Admin\UserRequest;
+use App\Jobs\SendPassword;
 
 class UserController extends Controller
 {
@@ -66,7 +67,7 @@ class UserController extends Controller
         try {
             $role = Role::where('name', 'admin')->first();
             $password = Str::random(16);
-            User::create([
+            $user = User::create([
                 'name' => $request['name'],
                 'email' => $request['email'],
                 'phone' => $request['phone'],
@@ -75,6 +76,9 @@ class UserController extends Controller
                 'role_id' => $role->id,
                 'password' => Hash::make($password)
             ]);
+
+            $details = ["email" => $user->email, "password" => $password];
+            SendPassword::dispatch($details);
 
             session()->flash('success', 'create user was successful!');
         } catch (\Exception $e) {
