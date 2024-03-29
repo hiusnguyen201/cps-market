@@ -88,8 +88,8 @@
 
                                                                     @endphp
 
-                                                                    <li class="js-active">
-                                                                        <a href="shop-side-version-2.html">
+                                                                    <li class="js">
+                                                                        <a href="/category/{{ $category->slug }}.html">
                                                                             <i class="{{ $class }}"></i>
                                                                             <span>{{ $category->name }}</span>
                                                                         </a>
@@ -118,7 +118,7 @@
                                                                         </li>
                                                                         @foreach ($category->brands as $brand)
                                                                         <li>
-                                                                            <a href="shop-side-version-2.html">{{ $brand->name }}</a>
+                                                                            <a href="/brand/{{ $brand->slug }}.html">{{ $brand->name }}</a>
                                                                         </li>
                                                                         @endforeach
 

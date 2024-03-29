@@ -56,46 +56,78 @@
 
     <script defer>
         const swiper = new Swiper(".swiper", {
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            slidesPerView: 4,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
             loop: false,
-            spaceBetween: 10,
+
             grid: {
                 rows: 2
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                    spaceBetween: 0,
+                    centeredSlides: true,
+
+                },
+                600: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+                800: {
+                    centeredSlides: true,
+                    slidesPerView: 2,
+                    spaceBetween: 10,
+                },
+                1025: {
+                    slidesPerView: 3,
+                    spaceBetween: 10,
+                },
+                1281: {
+                    slidesPerView: 4,
+                    spaceBetween: 10,
+                },
             }
 
         })
 
         const swiper2 = new Swiper(".swiper2", {
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
+            
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
             slidesPerView: 4,
             loop: false,
             spaceBetween: 10,
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                    spaceBetween: 0,
+                    centeredSlides: true,
 
+                },
+                600: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+                800: {
+                    centeredSlides: true,
+                    slidesPerView: 2,
+                    spaceBetween: 10,
+                },
+                1025: {
+                    slidesPerView: 3,
+                    spaceBetween: 10,
+                },
+                1281: {
+                    slidesPerView: 4,
+                    spaceBetween: 10,
+                },
+            }
         })
-
-        var galleryTop = new Swiper('.gallery-top', {
-      spaceBetween: 10,
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-	 		loop: true,
-			loopedSlides: 4
-    });
-    var galleryThumbs = new Swiper('.gallery-thumbs', {
-      spaceBetween: 10,
-      centeredSlides: true,
-      slidesPerView: 'auto',
-      touchRatio: 0.2,
-      slideToClickedSlide: true,
-			loop: true,
-			loopedSlides: 4
-    });
-    galleryTop.controller.control = galleryThumbs;
-    galleryThumbs.controller.control = galleryTop;
     </script>
 
 

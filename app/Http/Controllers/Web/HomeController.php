@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -86,7 +87,7 @@ class HomeController extends Controller
         ->get();
   
         $categories = Category::all();
-
+        
 
         return view("customer/home", [
             'sections2' => $sections2,
@@ -114,6 +115,36 @@ class HomeController extends Controller
             'product' => $product,
             'categories' => $categories,
             'title' => 'Details Product',
+        ]);
+    }
+
+    public function brands($slug)
+    {   
+        $brand = Brand::where('slug', $slug)->firstOrFail();
+        $categories = $brand->categories->load('brands');
+        return view('customer.products.brands', [
+            'title' => 'Brands Product',
+            compact('brand', 'categories'),
+        ]);
+    }
+
+    public function categories($slug, Request $request)
+    {
+        $categories = Category::all();
+        $category = Category::where('slug', $slug)->firstOrFail();
+        $products = Product::where('category_id', $category->id)
+        ->orderBy('sold', 'desc')
+        ->get();
+
+        $kw = $request->keyword;
+        $products = Product::where(function ($query) use ($kw) {
+            $query->orWhere('name', 'like', '%' . $kw . '%');
+        });
+        $products = $products->paginate($request->limit ?? 9);
+        return view('customer.products.categories', [
+            'title' => 'Categories Product',
+            'products' => $products,
+            'categories' => $categories,
         ]);
     }
 

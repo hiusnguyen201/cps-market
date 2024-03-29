@@ -191,7 +191,7 @@
                                                 <ul class="product-bs__action-list">
                                                     <li>
 
-                                                        <a data-modal="modal" data-modal-id="#quick-look"><i
+                                                        <a data-modal="modal" data-modal-id="#quick-look" href="/{{ $section2->slug }}.html"><i
                                                             class="fas fa-search-plus"></i></a>
                                                     </li>
                                                     <li>
@@ -289,7 +289,7 @@
                                                 <ul class="product-bs__action-list">
                                                     <li>
 
-                                                        <a data-modal="modal" data-modal-id="#quick-look"><i
+                                                        <a data-modal="modal" data-modal-id="#quick-look" href="/{{ $section3->slug }}.html"><i
                                                             class="fas fa-search-plus"></i></a>
                                                     </li>
                                                     <li>
@@ -388,7 +388,7 @@
                                                 <ul class="product-bs__action-list">
                                                     <li>
 
-                                                        <a data-modal="modal" data-modal-id="#quick-look"><i
+                                                        <a data-modal="modal" data-modal-id="#quick-look" href="/{{ $section4->slug }}.html"><i
                                                             class="fas fa-search-plus"></i></a>
                                                     </li>
                                                     <li>
@@ -487,7 +487,7 @@
                                                 <ul class="product-bs__action-list">
                                                     <li>
 
-                                                        <a data-modal="modal" data-modal-id="#quick-look"><i
+                                                        <a data-modal="modal" data-modal-id="#quick-look" href="/{{ $section5->slug }}.html"><i
                                                             class="fas fa-search-plus"></i></a>
                                                     </li>
                                                     <li>
@@ -521,8 +521,10 @@
                             </div>
                         @endforeach
                     </div>
+                    
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
+                
                 </div>
             </div>
         </div>
@@ -587,7 +589,7 @@
                                                 <ul class="product-bs__action-list">
                                                     <li>
 
-                                                        <a data-modal="modal" data-modal-id="#quick-look"><i
+                                                        <a data-modal="modal" data-modal-id="#quick-look" href="/{{ $section6->slug }}.html"><i
                                                             class="fas fa-search-plus"></i></a>
                                                     </li>
                                                     <li>
@@ -686,7 +688,7 @@
                                                 <ul class="product-bs__action-list">
                                                     <li>
 
-                                                        <a data-modal="modal" data-modal-id="#quick-look"><i
+                                                        <a data-modal="modal" data-modal-id="#quick-look" href="/{{ $section7->slug }}.html"><i
                                                             class="fas fa-search-plus"></i></a>
                                                     </li>
                                                     <li>
@@ -785,7 +787,7 @@
                                                 <ul class="product-bs__action-list">
                                                     <li>
 
-                                                        <a data-modal="modal" data-modal-id="#quick-look"><i
+                                                        <a data-modal="modal" data-modal-id="#quick-look" href="/{{ $section8->slug }}.html"><i
                                                             class="fas fa-search-plus"></i></a>
                                                     </li>
                                                     <li>

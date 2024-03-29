@@ -1854,7 +1854,7 @@ input::-ms-clear {
 }
 .product-bs__discount {
     font-weight: 600;
-    margin-left: 30px;
+    margin-left: 10px;
     color: #707070;
     font-size: 14px;
     text-decoration: line-through;
@@ -6484,7 +6484,7 @@ input::-ms-clear {
 .is-grid-active .product-m__category > a {
     color: #a0a0a0;
     transition: color 0.5s;
-    font-size: 12px;
+    font-size: 14px;
 }
 .is-grid-active .product-m__category > a:hover {
     color: #ff4500;

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\admin\CategoryRequest;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -51,7 +52,8 @@ class CategoryController extends Controller
     {
         try {
             Category::create([
-                'name' => $request['name']
+                'name' => $request['name'],
+                'slug' => Str::slug($request['name'], '-'),
             ]);
 
             session()->flash('success', 'create category was successful!');
@@ -76,6 +78,7 @@ class CategoryController extends Controller
     {
         try {
             $request->request->add(['updated_at' => now()]);
+            $request->request->add(['slug' => Str::slug($request->name, '-')]);
             $category->fill($request->input());
             $category->save();
             session()->flash('success', 'update category was successful!');
