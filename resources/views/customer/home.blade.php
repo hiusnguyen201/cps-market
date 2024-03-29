@@ -94,12 +94,11 @@
                         <div class="promotion-o">
                             <div class="aspect aspect--bg-grey aspect--square">
 
-                                <img class="aspect__img" src="images/promo/promo-img-4.jpg" alt="">
+                                <img class="aspect__img" src="./ImageSection/Mobile.jpg" alt="">
                             </div>
                             <div class="promotion-o__content">
 
-                                <a class="promotion-o__link btn--e-white-brand" href="shop-side-version-2.html">Women's
-                                    Clothing</a>
+                                <a class="promotion-o__link btn--e-white-brand" href="/phone.html">Mobile</a>
                             </div>
                         </div>
                     </div>
@@ -107,12 +106,11 @@
                         <div class="promotion-o">
                             <div class="aspect aspect--bg-grey aspect--square">
 
-                                <img class="aspect__img" src="images/promo/promo-img-5.jpg" alt="">
+                                <img class="aspect__img" src="./ImageSection/Laptop.jpg" alt="">
                             </div>
                             <div class="promotion-o__content">
 
-                                <a class="promotion-o__link btn--e-white-brand" href="shop-side-version-2.html">Fashion
-                                    Accessories</a>
+                                <a class="promotion-o__link btn--e-white-brand" href="/laptop.html">Laptop</a>
                             </div>
                         </div>
                     </div>
@@ -120,12 +118,11 @@
                         <div class="promotion-o">
                             <div class="aspect aspect--bg-grey aspect--square">
 
-                                <img class="aspect__img" src="images/promo/promo-img-6.jpg" alt="">
+                                <img class="aspect__img" src="./ImageSection/Watch.jpg" alt="">
                             </div>
                             <div class="promotion-o__content">
 
-                                <a class="promotion-o__link btn--e-white-brand" href="shop-side-version-2.html">Men's
-                                    Clothing</a>
+                                <a class="promotion-o__link btn--e-white-brand" href="/watch.html">Watch</a>
                             </div>
                         </div>
                     </div>
@@ -324,32 +321,123 @@
 
 
 <!--====== Section 4 Earphone ======-->
-<section class="">
-<div class="section__intro u-s-m-b-46">
+<section>
+    <div class="section__intro u-s-m-b-46">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section__text-wrap">
+
+                        <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING EARPHONE</h1>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section__content">
+        <div class="container">
+            <div class="swiper2">
+                <div class="swiper-wrapper">
+                    @foreach ($sections4 as $section4)
+                        <div class="swiper-slide">
+                            <div class="product-bs">
+                                <div class="product-bs__container">
+                                    @if ($section4->price - $section4->market_price > 0)
+                                        <span class="product-bs__discount-label">
+                                            <span class="product-bs__discount-percent">SALE
+                                                {{ round((($section4->price - $section4->market_price) * 100) / $section4->price, 0) }}%</span>
+                                        </span>
+                                    @endif
+
+
+                                    <div class="product-bs__wrap">
+
+                                        <div class="aspect aspect--bg-grey aspect--square u-d-block">
+                                            @foreach ($section4->images as $image)
+                                                @if ($image->pin == 1)
+                                                    <img src="{{ asset('storage/' . $image->thumbnail) }}"
+                                                        class="aspect__img" alt="">
+                                                @break
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    <div class="product-bs__action-wrap">
+                                        <ul class="product-bs__action-list">
+                                            <li>
+                                                <a data-modal="modal" data-modal-id="#quick-look"
+                                                    href="/{{ $section4->category->slug }}/{{ $section4->brand->slug }}/{{ $section4->slug }}.html"><i
+                                                        class="fas fa-search-plus"></i></a>
+                                            </li>
+                                            <li>
+                                                <a data-modal="modal" data-modal-id="#add-to-cart"><i
+                                                        class="fas fa-plus-circle"></i></a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <span class="product-bs__category">{{ $section4->category->name }}</span>
+                                <span class="product-bs__name">
+                                    <a
+                                        href="/{{ $section4->category->slug }}/{{ $section4->brand->slug }}/{{ $section4->slug }}.html">{{ $section4->name }}</a></span>
+                                <div class="product-bs__rating gl-rating-style">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span class="product-bs__review">(23)</span>
+                                </div>
+
+                                <span
+                                    class="product-bs__price">{{ number_format($section4->market_price, 0, ',', '.') }}&nbsp;₫
+                                    <span
+                                        class="product-bs__discount">{{ number_format($section4->price, 0, ',', '.') }}&nbsp;₫</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>
+    </div>
+</section>
+<!--====== End - Section 4 ======-->
+
+
+
+<!--====== Section 5 Watch ======-->
+<section>
+    <div class="section__intro u-s-m-b-46">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="section__text-wrap">
 
-                    <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING EARPHONE</h1>
+                    <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING WATCH</h1>
 
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="section__content">
+    </div>
+    <div class="section__content">
     <div class="container">
         <div class="swiper2">
             <div class="swiper-wrapper">
-                @foreach ($sections4 as $section4)
+                @foreach ($sections5 as $section5)
                     <div class="swiper-slide">
                         <div class="product-bs">
                             <div class="product-bs__container">
-                                @if ($section4->price - $section4->market_price > 0)
+                                @if ($section5->price - $section5->market_price > 0)
                                     <span class="product-bs__discount-label">
                                         <span class="product-bs__discount-percent">SALE
-                                            {{ round((($section4->price - $section4->market_price) * 100) / $section4->price, 0) }}%</span>
+                                            {{ round((($section5->price - $section5->market_price) * 100) / $section5->price, 0) }}%</span>
                                     </span>
                                 @endif
 
@@ -357,7 +445,7 @@
                                 <div class="product-bs__wrap">
 
                                     <div class="aspect aspect--bg-grey aspect--square u-d-block">
-                                        @foreach ($section4->images as $image)
+                                        @foreach ($section5->images as $image)
                                             @if ($image->pin == 1)
                                                 <img src="{{ asset('storage/' . $image->thumbnail) }}"
                                                     class="aspect__img" alt="">
@@ -368,11 +456,13 @@
                                 <div class="product-bs__action-wrap">
                                     <ul class="product-bs__action-list">
                                         <li>
+
                                             <a data-modal="modal" data-modal-id="#quick-look"
-                                                href="/{{ $section4->category->slug }}/{{ $section4->brand->slug }}/{{ $section4->slug }}.html"><i
+                                                href="/{{ $section5->category->slug }}/{{ $section5->brand->slug }}/{{ $section5->slug }}.html"><i
                                                     class="fas fa-search-plus"></i></a>
                                         </li>
                                         <li>
+
                                             <a data-modal="modal" data-modal-id="#add-to-cart"><i
                                                     class="fas fa-plus-circle"></i></a>
                                         </li>
@@ -381,10 +471,10 @@
                                 </div>
                             </div>
 
-                            <span class="product-bs__category">{{ $section4->category->name }}</span>
+                            <span class="product-bs__category">{{ $section5->category->name }}</span>
                             <span class="product-bs__name">
                                 <a
-                                    href="/{{ $section4->category->slug }}/{{ $section4->brand->slug }}/{{ $section4->slug }}.html">{{ $section4->name }}</a></span>
+                                    href="/{{ $section5->category->slug }}/{{ $section5->brand->slug }}/{{ $section5->slug }}.html">{{ $section5->name }}</a></span>
                             <div class="product-bs__rating gl-rating-style">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -395,52 +485,55 @@
                             </div>
 
                             <span
-                                class="product-bs__price">{{ number_format($section4->market_price, 0, ',', '.') }}&nbsp;₫
+                                class="product-bs__price">{{ number_format($section5->market_price, 0, ',', '.') }}&nbsp;₫
                                 <span
-                                    class="product-bs__discount">{{ number_format($section4->price, 0, ',', '.') }}&nbsp;₫</span>
+                                    class="product-bs__discount">{{ number_format($section5->price, 0, ',', '.') }}&nbsp;₫</span>
                             </span>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
+
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
+
     </div>
-</div>
-</div>
+    </div>
+    </div>
 </section>
-<!--====== End - Section 4 ======-->
+<!--====== End - Section 5 ======-->
 
 
 
-<!--====== Section 5 Watch ======-->
-<section class="">
-<div class="section__intro u-s-m-b-46">
-<div class="container">
+
+<!--====== Section 6 Accessory ======-->
+<section>
+    <div class="section__intro u-s-m-b-46">
+    <div class="container">
     <div class="row">
         <div class="col-lg-12">
             <div class="section__text-wrap">
 
-                <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING WATCH</h1>
+                <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING ACCESORY</h1>
 
             </div>
         </div>
     </div>
-</div>
-</div>
-<div class="section__content">
-<div class="container">
+    </div>
+    </div>
+    <div class="section__content">
+    <div class="container">
     <div class="swiper2">
         <div class="swiper-wrapper">
-            @foreach ($sections5 as $section5)
+            @foreach ($sections6 as $section6)
                 <div class="swiper-slide">
                     <div class="product-bs">
                         <div class="product-bs__container">
-                            @if ($section5->price - $section5->market_price > 0)
+                            @if ($section6->price - $section6->market_price > 0)
                                 <span class="product-bs__discount-label">
                                     <span class="product-bs__discount-percent">SALE
-                                        {{ round((($section5->price - $section5->market_price) * 100) / $section5->price, 0) }}%</span>
+                                        {{ round((($section6->price - $section6->market_price) * 100) / $section6->price, 0) }}%</span>
                                 </span>
                             @endif
 
@@ -448,7 +541,7 @@
                             <div class="product-bs__wrap">
 
                                 <div class="aspect aspect--bg-grey aspect--square u-d-block">
-                                    @foreach ($section5->images as $image)
+                                    @foreach ($section6->images as $image)
                                         @if ($image->pin == 1)
                                             <img src="{{ asset('storage/' . $image->thumbnail) }}"
                                                 class="aspect__img" alt="">
@@ -461,7 +554,7 @@
                                     <li>
 
                                         <a data-modal="modal" data-modal-id="#quick-look"
-                                            href="/{{ $section5->category->slug }}/{{ $section5->brand->slug }}/{{ $section5->slug }}.html"><i
+                                            href="/{{ $section6->category->slug }}/{{ $section6->brand->slug }}/{{ $section6->slug }}.html"><i
                                                 class="fas fa-search-plus"></i></a>
                                     </li>
                                     <li>
@@ -474,10 +567,10 @@
                             </div>
                         </div>
 
-                        <span class="product-bs__category">{{ $section5->category->name }}</span>
+                        <span class="product-bs__category">{{ $section6->category->name }}</span>
                         <span class="product-bs__name">
                             <a
-                                href="/{{ $section5->category->slug }}/{{ $section5->brand->slug }}/{{ $section5->slug }}.html">{{ $section5->name }}</a></span>
+                                href="/{{ $section6->category->slug }}/{{ $section6->brand->slug }}/{{ $section6->slug }}.html">{{ $section6->name }}</a></span>
                         <div class="product-bs__rating gl-rating-style">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -488,55 +581,52 @@
                         </div>
 
                         <span
-                            class="product-bs__price">{{ number_format($section5->market_price, 0, ',', '.') }}&nbsp;₫
+                            class="product-bs__price">{{ number_format($section6->market_price, 0, ',', '.') }}&nbsp;₫
                             <span
-                                class="product-bs__discount">{{ number_format($section5->price, 0, ',', '.') }}&nbsp;₫</span>
+                                class="product-bs__discount">{{ number_format($section6->price, 0, ',', '.') }}&nbsp;₫</span>
                         </span>
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
-
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
-
-</div>
-</div>
-</div>
+    </div>
+    </div>
+    </div>
 </section>
-<!--====== End - Section 5 ======-->
+<!--====== End - Section 6 ======-->
 
 
 
-
-<!--====== Section 6 Accessory ======-->
-<section class="">
-<div class="section__intro u-s-m-b-46">
-<div class="container">
-<div class="row">
+<!--====== Section 7 Secondhand ======-->
+<section>
+    <div class="section__intro u-s-m-b-46">
+    <div class="container">
+    <div class="row">
     <div class="col-lg-12">
         <div class="section__text-wrap">
 
-            <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING ACCESORY</h1>
+            <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING SECOND-HAND</h1>
 
         </div>
     </div>
-</div>
-</div>
-</div>
-<div class="section__content">
-<div class="container">
-<div class="swiper2">
+    </div>
+    </div>
+    </div>
+    <div class="section__content">
+    <div class="container">
+    <div class="swiper2">
     <div class="swiper-wrapper">
-        @foreach ($sections6 as $section6)
+        @foreach ($sections7 as $section7)
             <div class="swiper-slide">
                 <div class="product-bs">
                     <div class="product-bs__container">
-                        @if ($section6->price - $section6->market_price > 0)
+                        @if ($section7->price - $section7->market_price > 0)
                             <span class="product-bs__discount-label">
                                 <span class="product-bs__discount-percent">SALE
-                                    {{ round((($section6->price - $section6->market_price) * 100) / $section6->price, 0) }}%</span>
+                                    {{ round((($section7->price - $section7->market_price) * 100) / $section7->price, 0) }}%</span>
                             </span>
                         @endif
 
@@ -544,7 +634,7 @@
                         <div class="product-bs__wrap">
 
                             <div class="aspect aspect--bg-grey aspect--square u-d-block">
-                                @foreach ($section6->images as $image)
+                                @foreach ($section7->images as $image)
                                     @if ($image->pin == 1)
                                         <img src="{{ asset('storage/' . $image->thumbnail) }}"
                                             class="aspect__img" alt="">
@@ -557,7 +647,7 @@
                                 <li>
 
                                     <a data-modal="modal" data-modal-id="#quick-look"
-                                        href="/{{ $section6->category->slug }}/{{ $section6->brand->slug }}/{{ $section6->slug }}.html"><i
+                                        href="/{{ $section7->category->slug }}/{{ $section7->brand->slug }}/{{ $section7->slug }}.html"><i
                                             class="fas fa-search-plus"></i></a>
                                 </li>
                                 <li>
@@ -570,10 +660,10 @@
                         </div>
                     </div>
 
-                    <span class="product-bs__category">{{ $section6->category->name }}</span>
+                    <span class="product-bs__category">{{ $section7->category->name }}</span>
                     <span class="product-bs__name">
                         <a
-                            href="/{{ $section6->category->slug }}/{{ $section6->brand->slug }}/{{ $section6->slug }}.html">{{ $section6->name }}</a></span>
+                            href="/{{ $section7->category->slug }}/{{ $section7->brand->slug }}/{{ $section7->slug }}.html">{{ $section7->name }}</a></span>
                     <div class="product-bs__rating gl-rating-style">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -584,52 +674,52 @@
                     </div>
 
                     <span
-                        class="product-bs__price">{{ number_format($section6->market_price, 0, ',', '.') }}&nbsp;₫
+                        class="product-bs__price">{{ number_format($section7->market_price, 0, ',', '.') }}&nbsp;₫
                         <span
-                            class="product-bs__discount">{{ number_format($section6->price, 0, ',', '.') }}&nbsp;₫</span>
+                            class="product-bs__discount">{{ number_format($section7->price, 0, ',', '.') }}&nbsp;₫</span>
                     </span>
                 </div>
             </div>
         </div>
     @endforeach
-</div>
-<div class="swiper-button-prev"></div>
-<div class="swiper-button-next"></div>
-</div>
-</div>
-</div>
+    </div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+    </div>
+    </div>
+    </div>
 </section>
-<!--====== End - Section 6 ======-->
+<!--====== End - Section 7 ======-->
 
 
 
-<!--====== Section 7 Secondhand ======-->
-<section class="">
-<div class="section__intro u-s-m-b-46">
-<div class="container">
-<div class="row">
-<div class="col-lg-12">
+<!--====== Section 8 Tablet ======-->
+<section>
+    <div class="section__intro u-s-m-b-46">
+    <div class="container">
+    <div class="row">
+    <div class="col-lg-12">
     <div class="section__text-wrap">
 
-        <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING SECOND-HAND</h1>
+        <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING TABLET</h1>
 
     </div>
-</div>
-</div>
-</div>
-</div>
-<div class="section__content">
-<div class="container">
-<div class="swiper2">
-<div class="swiper-wrapper">
-    @foreach ($sections7 as $section7)
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="section__content">
+    <div class="container">
+    <div class="swiper2">
+    <div class="swiper-wrapper">
+    @foreach ($sections8 as $section8)
         <div class="swiper-slide">
             <div class="product-bs">
                 <div class="product-bs__container">
-                    @if ($section7->price - $section7->market_price > 0)
+                    @if ($section8->price - $section8->market_price > 0)
                         <span class="product-bs__discount-label">
                             <span class="product-bs__discount-percent">SALE
-                                {{ round((($section7->price - $section7->market_price) * 100) / $section7->price, 0) }}%</span>
+                                {{ round((($section8->price - $section8->market_price) * 100) / $section8->price, 0) }}%</span>
                         </span>
                     @endif
 
@@ -637,7 +727,7 @@
                     <div class="product-bs__wrap">
 
                         <div class="aspect aspect--bg-grey aspect--square u-d-block">
-                            @foreach ($section7->images as $image)
+                            @foreach ($section8->images as $image)
                                 @if ($image->pin == 1)
                                     <img src="{{ asset('storage/' . $image->thumbnail) }}"
                                         class="aspect__img" alt="">
@@ -650,7 +740,7 @@
                             <li>
 
                                 <a data-modal="modal" data-modal-id="#quick-look"
-                                    href="/{{ $section7->category->slug }}/{{ $section7->brand->slug }}/{{ $section7->slug }}.html"><i
+                                    href="/{{ $section8->category->slug }}/{{ $section8->brand->slug }}/{{ $section8->slug }}.html"><i
                                         class="fas fa-search-plus"></i></a>
                             </li>
                             <li>
@@ -663,10 +753,10 @@
                     </div>
                 </div>
 
-                <span class="product-bs__category">{{ $section7->category->name }}</span>
+                <span class="product-bs__category">{{ $section8->category->name }}</span>
                 <span class="product-bs__name">
                     <a
-                        href="/{{ $section7->category->slug }}/{{ $section7->brand->slug }}/{{ $section7->slug }}.html">{{ $section7->name }}</a></span>
+                        href="/{{ $section8->category->slug }}/{{ $section8->brand->slug }}/{{ $section8->slug }}.html">{{ $section8->name }}</a></span>
                 <div class="product-bs__rating gl-rating-style">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -677,113 +767,20 @@
                 </div>
 
                 <span
-                    class="product-bs__price">{{ number_format($section7->market_price, 0, ',', '.') }}&nbsp;₫
+                    class="product-bs__price">{{ number_format($section8->market_price, 0, ',', '.') }}&nbsp;₫
                     <span
-                        class="product-bs__discount">{{ number_format($section7->price, 0, ',', '.') }}&nbsp;₫</span>
+                        class="product-bs__discount">{{ number_format($section8->price, 0, ',', '.') }}&nbsp;₫</span>
                 </span>
             </div>
         </div>
     </div>
-@endforeach
-</div>
-<div class="swiper-button-prev"></div>
-<div class="swiper-button-next"></div>
-</div>
-</div>
-</div>
-</section>
-<!--====== End - Section 7 ======-->
-
-
-
-<!--====== Section 8 Tablet ======-->
-<section class="">
-<div class="section__intro u-s-m-b-46">
-<div class="container">
-<div class="row">
-<div class="col-lg-12">
-<div class="section__text-wrap">
-
-    <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING TABLET</h1>
-
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="section__content">
-<div class="container">
-<div class="swiper2">
-<div class="swiper-wrapper">
-@foreach ($sections8 as $section8)
-    <div class="swiper-slide">
-        <div class="product-bs">
-            <div class="product-bs__container">
-                @if ($section8->price - $section8->market_price > 0)
-                    <span class="product-bs__discount-label">
-                        <span class="product-bs__discount-percent">SALE
-                            {{ round((($section8->price - $section8->market_price) * 100) / $section8->price, 0) }}%</span>
-                    </span>
-                @endif
-
-
-                <div class="product-bs__wrap">
-
-                    <div class="aspect aspect--bg-grey aspect--square u-d-block">
-                        @foreach ($section8->images as $image)
-                            @if ($image->pin == 1)
-                                <img src="{{ asset('storage/' . $image->thumbnail) }}"
-                                    class="aspect__img" alt="">
-                            @break
-                        @endif
-                    @endforeach
-                </div>
-                <div class="product-bs__action-wrap">
-                    <ul class="product-bs__action-list">
-                        <li>
-
-                            <a data-modal="modal" data-modal-id="#quick-look"
-                                href="/{{ $section8->category->slug }}/{{ $section8->brand->slug }}/{{ $section8->slug }}.html"><i
-                                    class="fas fa-search-plus"></i></a>
-                        </li>
-                        <li>
-
-                            <a data-modal="modal" data-modal-id="#add-to-cart"><i
-                                    class="fas fa-plus-circle"></i></a>
-                        </li>
-
-                    </ul>
-                </div>
-            </div>
-
-            <span class="product-bs__category">{{ $section8->category->name }}</span>
-            <span class="product-bs__name">
-                <a
-                    href="/{{ $section8->category->slug }}/{{ $section8->brand->slug }}/{{ $section8->slug }}.html">{{ $section8->name }}</a></span>
-            <div class="product-bs__rating gl-rating-style">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="far fa-star"></i>
-                <span class="product-bs__review">(23)</span>
-            </div>
-
-            <span
-                class="product-bs__price">{{ number_format($section8->market_price, 0, ',', '.') }}&nbsp;₫
-                <span
-                    class="product-bs__discount">{{ number_format($section8->price, 0, ',', '.') }}&nbsp;₫</span>
-            </span>
-        </div>
+    @endforeach
     </div>
-</div>
-@endforeach
-</div>
-<div class="swiper-button-prev"></div>
-<div class="swiper-button-next"></div>
-</div>
-</div>
-</div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+    </div>
+    </div>
+    </div>
 </section>
 <!--====== End - Section 8 ======-->
 
@@ -794,25 +791,67 @@
 <!--====== Section 9 ======-->
 <div class="u-s-p-b-60">
 
-<!--====== Section Content ======-->
-<div class="section__content">
-<div class="container">
-<div class="row">
+    <!--====== Section Content ======-->
+    <div class="section__content">
+    <div class="container">
+    <div class="row">
 
-<div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
-<div class="column-product">
+    <div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
+    <div class="column-product">
 
-<span class="column-product__title u-c-secondary u-s-m-b-25">DAILY
+    <span class="column-product__title u-c-secondary u-s-m-b-25">DAILY
+        PRODUCTS</span>
+    <ul class="column-product__list">
+        @foreach ($sections9D as $section9D)
+            <li class="column-product__item">
+                <div class="product-l">
+                    <div class="product-l__img-wrap">
+                        <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
+                            href="/{{ $section9D->category->slug }}/{{ $section9D->brand->slug }}/{{ $section9D->slug }}.html">
+
+                            @foreach ($section9D->images as $image)
+                                @if ($image->pin == 1)
+                                    <img src="{{ asset('storage/' . $image->thumbnail) }}"
+                                        class="aspect__img" alt="">
+                                @break
+                            @endif
+                        @endforeach
+                    </a>
+                </div>
+                <div class="product-l__info-wrap">
+                    <span class="product-l__category">{{ $section9D->category->name }}</span>
+
+                    <span class="product-l__name">
+
+                        <a
+                            href="/{{ $section9D->category->slug }}/{{ $section9D->brand->slug }}/{{ $section9D->slug }}.html">{{ $section9D->name }}</a></span>
+
+                    <span
+                        class="product-l__price">{{ number_format($section9D->market_price, 0, ',', '.') }}&nbsp;₫</span>
+                </div>
+            </div>
+        </li>
+    @endforeach
+
+    </ul>
+    </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
+    <div class="column-product">
+
+    <span class="column-product__title u-c-secondary u-s-m-b-25">WEEKLY
     PRODUCTS</span>
-<ul class="column-product__list">
-    @foreach ($sections9D as $section9D)
+    <ul class="column-product__list">
+    @foreach ($sections9W as $section9W)
         <li class="column-product__item">
             <div class="product-l">
                 <div class="product-l__img-wrap">
-                    <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                        href="/{{ $section9D->category->slug }}/{{ $section9D->brand->slug }}/{{ $section9D->slug }}.html">
 
-                        @foreach ($section9D->images as $image)
+                    <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
+                        href="/{{ $section9W->category->slug }}/{{ $section9W->brand->slug }}/{{ $section9W->slug }}.html">
+
+                        @foreach ($section9W->images as $image)
                             @if ($image->pin == 1)
                                 <img src="{{ asset('storage/' . $image->thumbnail) }}"
                                     class="aspect__img" alt="">
@@ -822,39 +861,39 @@
                 </a>
             </div>
             <div class="product-l__info-wrap">
-                <span class="product-l__category">{{ $section9D->category->name }}</span>
+                <span class="product-l__category">{{ $section9W->category->name }}</span>
 
                 <span class="product-l__name">
 
                     <a
-                        href="/{{ $section9D->category->slug }}/{{ $section9D->brand->slug }}/{{ $section9D->slug }}.html">{{ $section9D->name }}</a></span>
+                        href="/{{ $section9W->category->slug }}/{{ $section9W->brand->slug }}/{{ $section9W->slug }}.html">{{ $section9W->name }}</a></span>
 
                 <span
-                    class="product-l__price">{{ number_format($section9D->market_price, 0, ',', '.') }}&nbsp;₫</span>
+                    class="product-l__price">{{ number_format($section9W->market_price, 0, ',', '.') }}&nbsp;₫</span>
             </div>
         </div>
     </li>
-@endforeach
+    @endforeach
 
-</ul>
-</div>
-</div>
+    </ul>
+    </div>
+    </div>
 
-<div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
-<div class="column-product">
+    <div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
+    <div class="column-product">
 
-<span class="column-product__title u-c-secondary u-s-m-b-25">WEEKLY
-PRODUCTS</span>
-<ul class="column-product__list">
-@foreach ($sections9W as $section9W)
+    <span class="column-product__title u-c-secondary u-s-m-b-25">MONTHLY
+    PRODUCTS</span>
+    <ul class="column-product__list">
+    @foreach ($sections9M as $section9M)
     <li class="column-product__item">
         <div class="product-l">
             <div class="product-l__img-wrap">
 
                 <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                    href="/{{ $section9W->category->slug }}/{{ $section9W->brand->slug }}/{{ $section9W->slug }}.html">
+                    href="/{{ $section9M->category->slug }}/{{ $section9M->brand->slug }}/{{ $section9M->slug }}.html">
 
-                    @foreach ($section9W->images as $image)
+                    @foreach ($section9M->images as $image)
                         @if ($image->pin == 1)
                             <img src="{{ asset('storage/' . $image->thumbnail) }}"
                                 class="aspect__img" alt="">
@@ -864,70 +903,28 @@ PRODUCTS</span>
             </a>
         </div>
         <div class="product-l__info-wrap">
-            <span class="product-l__category">{{ $section9W->category->name }}</span>
+            <span class="product-l__category">{{ $section9M->category->name }}</span>
 
             <span class="product-l__name">
 
                 <a
-                    href="/{{ $section9W->category->slug }}/{{ $section9W->brand->slug }}/{{ $section9W->slug }}.html">{{ $section9W->name }}</a></span>
+                    href="/{{ $section9M->category->slug }}/{{ $section9M->brand->slug }}/{{ $section9M->slug }}.html">{{ $section9M->name }}</a></span>
 
             <span
-                class="product-l__price">{{ number_format($section9W->market_price, 0, ',', '.') }}&nbsp;₫</span>
+                class="product-l__price">{{ number_format($section9M->market_price, 0, ',', '.') }}&nbsp;₫</span>
         </div>
     </div>
-</li>
-@endforeach
+    </li>
+    @endforeach
 
-</ul>
-</div>
-</div>
-
-<div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
-<div class="column-product">
-
-<span class="column-product__title u-c-secondary u-s-m-b-25">MONTHLY
-PRODUCTS</span>
-<ul class="column-product__list">
-@foreach ($sections9M as $section9M)
-<li class="column-product__item">
-    <div class="product-l">
-        <div class="product-l__img-wrap">
-
-            <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                href="/{{ $section9M->category->slug }}/{{ $section9M->brand->slug }}/{{ $section9M->slug }}.html">
-
-                @foreach ($section9M->images as $image)
-                    @if ($image->pin == 1)
-                        <img src="{{ asset('storage/' . $image->thumbnail) }}"
-                            class="aspect__img" alt="">
-                    @break
-                @endif
-            @endforeach
-        </a>
+    </ul>
     </div>
-    <div class="product-l__info-wrap">
-        <span class="product-l__category">{{ $section9M->category->name }}</span>
-
-        <span class="product-l__name">
-
-            <a
-                href="/{{ $section9M->category->slug }}/{{ $section9M->brand->slug }}/{{ $section9M->slug }}.html">{{ $section9M->name }}</a></span>
-
-        <span
-            class="product-l__price">{{ number_format($section9M->market_price, 0, ',', '.') }}&nbsp;₫</span>
     </div>
-</div>
-</li>
-@endforeach
 
-</ul>
-</div>
-</div>
-
-</div>
-</div>
-</div>
-<!--====== End - Section Content ======-->
+    </div>
+    </div>
+    </div>
+    <!--====== End - Section Content ======-->
 </div>
 <!--====== End - Section 9 ======-->
 @endsection

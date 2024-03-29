@@ -1825,6 +1825,9 @@ input::-ms-clear {
 .product-bs__name {
     display: block;
     height: 50px;
+    width: 100%;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
 }
 .product-bs__name > a {
     color: #333333;
@@ -6494,6 +6497,12 @@ input::-ms-clear {
     font-size: 14px;
     font-weight: 600;
     transition: color 0.5s;
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+
 }
 .is-grid-active .product-m__name > a:hover {
     color: #ff4500;
@@ -6554,6 +6563,10 @@ input::-ms-clear {
 
 .is-grid-active .product-m:hover {
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
+}
+.is-grid-active .product-m:hover a {
+    text-overflow: unset;
+    white-space: wrap;
 }
 .is-grid-active .product-m:hover .product-m__add-cart {
     opacity: 1;
@@ -6713,7 +6726,7 @@ input::-ms-clear {
     visibility: visible;
 }
 
-.shop-p__pagination {
+.shop-p__pagination, .pagination {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -6725,30 +6738,37 @@ input::-ms-clear {
     align-items: center;
 }
 
-.shop-p__pagination > li {
+.shop-p__pagination > li, .pagination > li.page-item {
     margin-right: 14px;
 }
-.shop-p__pagination > li:last-child {
+.shop-p__pagination > li:last-child, .pagination >li.page-item:last-child {
     margin-right: 0;
 }
-.shop-p__pagination > li > a {
+.shop-p__pagination > li > a, .pagination >li.page-item > span, .pagination >li.page-item > a {
     width: 42px;
     text-align: center;
     height: 42px;
     line-height: 42px;
-    font-size: 12px;
+    font-size: 16px;
     display: block;
     font-weight: 600;
     border-radius: 50%;
     background-color: transparent;
     color: #333333;
 }
-.shop-p__pagination > li.is-active > a {
+.shop-p__pagination > li.is-active > a, .pagination > li.page-item.active > span, .pagination > li.page-item.active > a {
     background-color: #f7f7f7;
 }
-.shop-p__pagination > li:not(.is-active) > a:hover {
+.shop-p__pagination > li:not(.is-active) > a:hover , .pagination > li:not(.page-item.active) > a:hover{
     color: #ff4500;
-    text-decoration: underline;
+    width: 42px;
+    text-align: center;
+    align-items: middle;
+    height: 42px;
+    border-radius: 50%;
+    font-weight: 600;
+    line-height: 42px;
+    background-color: #f7f7f7;
 }
 
 .shop-a__wrap {
@@ -7572,13 +7592,13 @@ input::-ms-clear {
     background-image: url(../images/slider/slide-6.jpg);
 }
 .hero-slide--7 {
-    background-image: url(../images/slider/slide-7.jpg);
+    background-image: url(/ImageSection/Mobile.jpg);
 }
 .hero-slide--8 {
-    background-image: url(../images/slider/slide-8.jpg);
+    background-image: url(/ImageSection/Laptop.jpg);
 }
 .hero-slide--9 {
-    background-image: url(../images/slider/slide-9.jpg);
+    background-image: url(/ImageSection/Watch.jpg);
 }
 
 .owl-carousel .owl-dots {

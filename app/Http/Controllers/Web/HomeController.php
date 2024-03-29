@@ -69,17 +69,20 @@ class HomeController extends Controller
             ->limit(10)
             ->get();
 
+        //best sold in day
         $sections9D = Product::whereDate('updated_at', today())
             ->orderBy('sold', 'desc')
             ->limit(3)
             ->get();
 
+        //best sold in week
         $sections9W = Product::whereYear('updated_at', now()->year)
             ->whereBetween('updated_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
             ->orderBy('sold', 'desc')
             ->limit(3)
             ->get();
 
+        //best sold in month
         $sections9M = Product::whereYear('updated_at', now()->year)
             ->whereMonth('updated_at', now()->month)
             ->orderBy('sold', 'desc')
@@ -117,17 +120,6 @@ class HomeController extends Controller
         ]);
     }
 
-    public function brands($categorySlug, $brandSlug)
-    {
-        $categories = Category::all();
-        $brand = Brand::where('slug', $brandSlug)->firstOrFail();
-        $categories = $brand->categories->load('brands');
-        return view('customer.products.brands', [
-            'title' => 'Brands Product',
-            'categories' => $categories,
-            "brand" => $brand,
-        ]);
-    }
 
     public function categories($categorySlug, Request $request)
     {
@@ -143,7 +135,7 @@ class HomeController extends Controller
             ->orderBy('sold', 'desc');
         
         $products = $products->paginate($request->limit ?? 9);
-        return view('customer.products.brands', [
+        return view('customer.products.categories', [
             'title' => 'Categories Product',
             'products' => $products,
             'categories' => $categories,

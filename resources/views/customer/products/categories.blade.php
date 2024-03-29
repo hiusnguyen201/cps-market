@@ -1166,15 +1166,15 @@
                                                 <div class="product-m__thumb">
 
                                                     <a class="aspect aspect--bg-grey aspect--square u-d-block"
-                                                        href="/{{ $product->slug }}.html">
+                                                        href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">
                                                         @foreach ($product->images as $image)
                                                             @if ($image->pin == 1)
                                                                 <img src="{{ asset('storage/' . $image->thumbnail) }}"
                                                                     class="aspect__img" alt="">
                                                             @break
-                                                            @endif
-                                                        @endforeach
-                                                    </a>
+                                                        @endif
+                                                    @endforeach
+                                                </a>
                                                 <div class="product-m__add-cart">
 
                                                     <a class="btn--e-brand" data-modal="modal"
@@ -1182,10 +1182,12 @@
                                                 </div>
                                             </div>
                                             <div class="product-m__content">
-                                                <div class="product-m__category"><a href="/brand/{{ $product->brand->slug }}">{{ $product->brand->slug }}</a></div>
+                                                <div class="product-m__category"><a
+                                                        href="">{{ $product->brand->slug }}</a>
+                                                </div>
                                                 <div class="product-m__name">
 
-                                                    <a href="/{{ $product->slug }}.html">{{ $product->name }}</a>
+                                                    <a href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a>
                                                 </div>
                                                 <div class="product-m__rating gl-rating-style"><i
                                                         class="fas fa-star"></i><i class="fas fa-star"></i><i
@@ -1194,24 +1196,19 @@
 
                                                     <span class="product-m__review">(23)</span>
                                                 </div>
-                                                <div class="product-m__price"> <span class="product-bs__price">{{ number_format($product->market_price, 0, ',', '.') }}&nbsp;₫
-                                                    @if ($product->price - $product->market_price > 0)
-                                                    <span
-                                                        class="pd-detail__discount">({{ round((($product->price - $product->market_price) * 100) / $product->price, 0) }}%
-                                                        OFF)
-                                                    </span>
-                                                @endif
-                                                <span class="product-bs__discount">{{ number_format($product->price, 0, ',', '.') }}&nbsp;₫</span>
-                                                </span></div>
+                                                <div class="product-m__price"> <span
+                                                        class="product-bs__price">{{ number_format($product->market_price, 0, ',', '.') }}&nbsp;₫
+                                                        <span
+                                                            class="product-bs__discount">{{ number_format($product->price, 0, ',', '.') }}&nbsp;₫</span>
+                                                    </span></div>
                                                 <div class="product-m__hover">
                                                     <div class="product-m__preview-description">
 
-                                                        <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span></div>
-                                                    <div class="product-m__wishlist">
+                                                        <span>{{ $product->description }}</span>
+                                                    </div>
 
-                                                        <a class="far fa-heart" href="#" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"></a></div>
                                                 </div>
-  
+
                                             </div>
                                         </div>
                                     </div>
@@ -1222,7 +1219,7 @@
                         </div>
 
                         <!-- Paginate -->
-                        <div class="u-s-p-y-60 shop-p__pagination">
+                        <div class="u-s-p-y-60">
                             {{ $products->appends(Request::all())->links() }}
                         </div>
 
@@ -1234,5 +1231,4 @@
     <!--====== End - Section 1 ======-->
 </div>
 <!--====== End - App Content ======-->
-
 @endsection
