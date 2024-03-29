@@ -61,23 +61,23 @@ class BrandController extends Controller
     }
 
     public function handleCreate(BrandRequest $request)
-{
-    try {
-        $brand = Brand::create([
-            'name' => $request['name'],
-            'slug' => Str::slug($request['name'], '-'),
-        ]);
-        
-        $brand->categories()->attach($request['category']);
+    {
+        try {
+            $brand = Brand::create([
+                'name' => $request['name'],
+                'slug' => Str::slug($request['name'], '-'),
+            ]);
 
-        session()->flash('success', 'Create brand was successful!');
-    } catch (\Exception $e) {
-        error_log($e->getMessage());
-        session()->flash('error', 'Create brand was not successful!');
+            $brand->categories()->attach($request['category']);
+
+            session()->flash('success', 'Create brand was successful!');
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+            session()->flash('error', 'Create brand was not successful!');
+        }
+
+        return redirect()->back();
     }
-
-    return redirect()->back();
-}
 
 
 

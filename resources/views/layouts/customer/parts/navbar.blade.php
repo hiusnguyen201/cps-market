@@ -89,7 +89,7 @@
                                                                     @endphp
 
                                                                     <li class="js">
-                                                                        <a href="/category/{{ $category->slug }}.html">
+                                                                        <a href="/{{ $category->slug }}.html">
                                                                             <i class="{{ $class }}"></i>
                                                                             <span>{{ $category->name }}</span>
                                                                         </a>
@@ -118,7 +118,7 @@
                                                                         </li>
                                                                         @foreach ($category->brands as $brand)
                                                                         <li>
-                                                                            <a href="/brand/{{ $brand->slug }}.html">{{ $brand->name }}</a>
+                                                                            <a href="/{{ $category->slug }}/{{ $brand->slug }}.html">{{ $brand->name }}</a>
                                                                         </li>
                                                                         @endforeach
 

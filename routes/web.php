@@ -23,9 +23,9 @@ use App\Http\Controllers\Web\ProductController;
 */
 
 Route::get('/', [HomeController::class, 'home']);
-Route::get('/{slug}.html', [HomeController::class, 'details']);
-Route::get('/category/{slug}.html', [HomeController::class, 'categories'])->name('categories.show');
-Route::get('/brand/{slug}.html',[HomeController::class, 'brands'])->name('brands.show');
+Route::get('/{categorySlug}.html', [HomeController::class, 'categories'])->name('categories.show');
+Route::get('/{categorySlug}/{brandSlug}.html', [HomeController::class, 'brands'])->name('brands.show');
+Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
 
 
 // Admin
