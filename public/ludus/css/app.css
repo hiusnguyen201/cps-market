@@ -6724,6 +6724,7 @@ input::-ms-clear {
     -ms-flex-align: center;
     align-items: center;
 }
+
 .shop-p__pagination > li {
     margin-right: 14px;
 }
@@ -8068,16 +8069,18 @@ input::-ms-clear {
 
 .product-bs__discount-label {
     position: absolute;
-    top: 10px;
-    left: 1px;
     background-color: #ff0000;
     color: #ffffff;
     padding: 2px 5px;
     border-radius: 0px 5px 5px 0px;
     font-size: 12px;
-    z-index: 10;
+    z-index: 5;
 }
 
 .product-bs__discount-percent {
     font-weight: bold;
+}
+
+.d-flex {
+    margin-right: 100%;
 }

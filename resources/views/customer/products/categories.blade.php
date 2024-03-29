@@ -1175,12 +1175,6 @@
                                                             @endif
                                                         @endforeach
                                                     </a>
-                                                <div class="product-m__quick-look">
-
-                                                    <a class="fas fa-search" data-modal="modal"
-                                                        data-modal-id="#quick-look" data-tooltip="tooltip"
-                                                        data-placement="top" title="Quick Look"></a>
-                                                </div>
                                                 <div class="product-m__add-cart">
 
                                                     <a class="btn--e-brand" data-modal="modal"
@@ -1209,6 +1203,14 @@
                                                 @endif
                                                 <span class="product-bs__discount">{{ number_format($product->price, 0, ',', '.') }}&nbsp;₫</span>
                                                 </span></div>
+                                                <div class="product-m__hover">
+                                                    <div class="product-m__preview-description">
+
+                                                        <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span></div>
+                                                    <div class="product-m__wishlist">
+
+                                                        <a class="far fa-heart" href="#" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"></a></div>
+                                                </div>
   
                                             </div>
                                         </div>
@@ -1220,7 +1222,7 @@
                         </div>
 
                         <!-- Paginate -->
-                        <div class="d-flex ml-auto">
+                        <div class="u-s-p-y-60 shop-p__pagination">
                             {{ $products->appends(Request::all())->links() }}
                         </div>
 
@@ -1233,303 +1235,4 @@
 </div>
 <!--====== End - App Content ======-->
 
-<!--====== Quick Look Modal ======-->
-<div class="modal fade" id="quick-look">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content modal--shadow">
-
-            <button class="btn dismiss-button fas fa-times" type="button" data-dismiss="modal"></button>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-5">
-
-                        <!--====== Product Breadcrumb ======-->
-                        <div class="pd-breadcrumb u-s-m-b-30">
-                            <ul class="pd-breadcrumb__list">
-                                <li class="has-separator">
-
-                                    <a href="/">Home</a>
-                                </li>
-                                <li class="has-separator">
-
-                                    <a href="/{{ $product->category_id }}">{{ $product->category->name }}</a>
-                                </li>
-                                <li class="has-separator">
-
-                                    <a href="/{{ $product->brand_id }}">{{ $product->brand->name }}</a>
-                                </li>
-                                <li class="is-marked">
-
-                                    <a href="/{{ $product->slug }}.html">{{ $product->name }}</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--====== End - Product Breadcrumb ======-->
-
-
-                        <!--====== Product Detail ======-->
-                        <div class="pd u-s-m-b-30">
-                            <div class="slider-fouc pd-wrap">
-                                <div id="pd-o-initiate">
-
-                                    @if (count($product->images))
-                                        @foreach ($product->images as $image)
-                                            <div class="pd-o-img-wrap"
-                                                data-src="{{ asset('storage/' . $image->thumbnail) }}">
-                                                <img class="u-img-fluid" src="{{ asset('storage/' . $image->thumbnail) }}"
-                                                    data-zoom-image="{{ asset('storage/' . $image->thumbnail) }}"
-                                                    alt="{{ $product->name }}">
-                                            </div>
-                                        @endforeach
-                                    @endif
-
-
-                                </div>
-
-                                <span class="pd-text">Click for larger zoom</span>
-                            </div>
-                            <div class="u-s-m-t-15">
-                                <div class="slider-fouc">
-                                    <div id="pd-o-thumbnail">
-                                        @if (count($product->images))
-                                            @foreach ($product->images as $image)
-                                                <div>
-                                                    <img class="u-img-fluid"
-                                                        src="{{ asset('storage/' . $image->thumbnail) }}"
-                                                        alt="{{ $product->name }}">
-                                                </div>
-                                            @endforeach
-                                        @endif
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--====== End - Product Detail ======-->
-                    </div>
-                    <div class="col-lg-7">
-
-                        <!--====== Product Right Side Details ======-->
-                        <div class="pd-detail">
-                            <div>
-
-                                <span class="pd-detail__name">{{ $product->name }}</span>
-                            </div>
-                            <div>
-                                <div class="pd-detail__inline">
-
-                                    <span
-                                        class="pd-detail__price">{{ number_format($product->market_price, 0, ',', '.') }}&nbsp;₫</span>
-                                    @if ($product->price - $product->market_price > 0)
-                                        <span
-                                            class="pd-detail__discount">({{ round((($product->price - $product->market_price) * 100) / $product->price, 0) }}%
-                                            OFF)
-                                        </span>
-                                    @endif
-                                    <del
-                                        class="pd-detail__del">{{ number_format($product->price, 0, ',', '.') }}&nbsp;₫</del>
-                                </div>
-                            </div>
-                            <div class="u-s-m-b-15">
-                                <div class="pd-detail__rating gl-rating-style"><i class="fas fa-star"></i><i
-                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                        class="fas fa-star-half-alt"></i>
-
-                                    <span class="pd-detail__review u-s-m-l-4">
-
-                                        <a data-click-scroll="#view-review">23 Reviews</a></span>
-                                </div>
-                            </div>
-                            <div class="u-s-m-b-15">
-                                <div class="pd-detail__inline">
-
-                                    <span class="pd-detail__stock">{{ $product->sold }} is sold</span>
-
-                                    <span
-                                        class="pd-detail__left">{{ $product->quantity > 0 ? 'Only' . ' ' . $product->quantity . ' ' . 'left' : 'Out of stock' }}</span>
-                                </div>
-                            </div>
-                            <div class="u-s-m-b-15">
-
-                                <span class="pd-detail__preview-desc">{{ $product->description }}</span>
-                            </div>
-                            <div class="u-s-m-b-15">
-                                <div class="pd-detail__inline">
-
-                                    <span class="pd-detail__click-wrap"><i class="far fa-heart u-s-m-r-6"></i>
-
-                                        <a href="signin.html">Add to Wishlist</a>
-
-                                        <span class="pd-detail__click-count">(222)</span></span>
-                                </div>
-                            </div>
-                            <div class="u-s-m-b-15">
-                                <div class="pd-detail__inline">
-
-                                    <span class="pd-detail__click-wrap"><i class="far fa-envelope u-s-m-r-6"></i>
-
-                                        <a href="signin.html">Email me When the price drops</a>
-
-                                        <span class="pd-detail__click-count">(20)</span></span>
-                                </div>
-                            </div>
-                            <div class="u-s-m-b-15">
-                                <ul class="pd-social-list">
-                                    <li>
-
-                                        <a class="s-fb--color-hover" href="#"><i class="fab fa-facebook-f"></i></a>
-                                    </li>
-                                    <li>
-
-                                        <a class="s-tw--color-hover" href="#"><i class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li>
-
-                                        <a class="s-insta--color-hover" href="#"><i class="fab fa-instagram"></i></a>
-                                    </li>
-                                    <li>
-
-                                        <a class="s-wa--color-hover" href="#"><i class="fab fa-whatsapp"></i></a>
-                                    </li>
-                                    <li>
-
-                                        <a class="s-gplus--color-hover" href="#"><i
-                                                class="fab fa-google-plus-g"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="u-s-m-b-15">
-                                <form class="pd-detail__form">
-                                    <div class="u-s-m-b-15">
-
-                                        <span class="pd-detail__label u-s-m-b-8">Color:</span>
-                                        <div class="pd-detail__color">
-                                            <div class="color__radio">
-
-                                                <input type="radio" id="jet" name="color" checked>
-
-                                                <label class="color__radio-label" for="jet"
-                                                    style="background-color: #333333"></label>
-                                            </div>
-                                            <div class="color__radio">
-
-                                                <input type="radio" id="folly" name="color">
-
-                                                <label class="color__radio-label" for="folly"
-                                                    style="background-color: #FF0055"></label>
-                                            </div>
-                                            <div class="color__radio">
-
-                                                <input type="radio" id="yellow" name="color">
-
-                                                <label class="color__radio-label" for="yellow"
-                                                    style="background-color: #FFFF00"></label>
-                                            </div>
-                                            <div class="color__radio">
-
-                                                <input type="radio" id="granite-gray" name="color">
-
-                                                <label class="color__radio-label" for="granite-gray"
-                                                    style="background-color: #605F5E"></label>
-                                            </div>
-                                            <div class="color__radio">
-
-                                                <input type="radio" id="space-cadet" name="color">
-
-                                                <label class="color__radio-label" for="space-cadet"
-                                                    style="background-color: #1D3461"></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="u-s-m-b-15">
-
-                                        <span class="pd-detail__label u-s-m-b-8">Size:</span>
-                                        <div class="pd-detail__size">
-                                            <div class="size__radio">
-
-                                                <input type="radio" id="xs" name="size" checked>
-
-                                                <label class="size__radio-label" for="xs">XS</label>
-                                            </div>
-                                            <div class="size__radio">
-
-                                                <input type="radio" id="small" name="size">
-
-                                                <label class="size__radio-label" for="xxl">Small</label>
-                                            </div>
-                                            <div class="size__radio">
-
-                                                <input type="radio" id="medium" name="size">
-
-                                                <label class="size__radio-label" for="medium">Medium</label>
-                                            </div>
-                                            <div class="size__radio">
-
-                                                <input type="radio" id="large" name="size">
-
-                                                <label class="size__radio-label" for="xxl">Large</label>
-                                            </div>
-                                            <div class="size__radio">
-
-                                                <input type="radio" id="xl" name="size">
-
-                                                <label class="size__radio-label" for="xl">XL</label>
-                                            </div>
-                                            <div class="size__radio">
-
-                                                <input type="radio" id="xxl" name="size">
-
-                                                <label class="size__radio-label" for="xxl">XXL</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="pd-detail-inline-2">
-                                        <div class="u-s-m-b-15">
-
-                                            <!--====== Input Counter ======-->
-                                            <div class="input-counter">
-
-                                                <span class="input-counter__minus fas fa-minus"></span>
-
-                                                <input class="input-counter__text input-counter--text-primary-style"
-                                                    type="text" value="1" data-min="1" data-max="1000">
-
-                                                <span class="input-counter__plus fas fa-plus"></span>
-                                            </div>
-                                            <!--====== End - Input Counter ======-->
-                                        </div>
-                                        <div class="u-s-m-b-15">
-
-                                            <button class="btn btn--e-brand-b-2" type="submit">Add to Cart</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="u-s-m-b-15">
-
-                                <span class="pd-detail__label u-s-m-b-8">Product Policy:</span>
-                                <ul class="pd-detail__policy-list">
-                                    <li><i class="fas fa-check-circle u-s-m-r-8"></i>
-
-                                        <span>Buyer Protection.</span>
-                                    </li>
-                                    <li><i class="fas fa-check-circle u-s-m-r-8"></i>
-
-                                        <span>Full Refund if you don't receive your order.</span>
-                                    </li>
-                                    <li><i class="fas fa-check-circle u-s-m-r-8"></i>
-
-                                        <span>Returns accepted if product not as described.</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!--====== End - Product Right Side Details ======-->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--====== End - Quick Look Modal ======-->
 @endsection

@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="{{ asset('ludus/css/app.css') }}">
 
     {{-- swiper --}}
-
     <link rel="stylesheet" href="{{ asset('swiper/package/swiper-bundle.min.css') }}">
     <link rel="stylesheet" href="{{ asset('custom/css/swiper.css') }}">
 

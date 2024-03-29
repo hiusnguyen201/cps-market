@@ -118,21 +118,11 @@ class HomeController extends Controller
         ]);
     }
 
-    public function brands($slug)
+    public function brands($slug, Request $request)
     {   
-        $brand = Brand::where('slug', $slug)->firstOrFail();
-        $categories = $brand->categories->load('brands');
-        return view('customer.products.brands', [
-            'title' => 'Brands Product',
-            compact('brand', 'categories'),
-        ]);
-    }
-
-    public function categories($slug, Request $request)
-    {
         $categories = Category::all();
-        $category = Category::where('slug', $slug)->firstOrFail();
-        $products = Product::where('category_id', $category->id)
+        $brands = Brand::where('slug', $slug)->firstOrFail();
+        $products = Product::where('brand_id', $brands->id)
         ->orderBy('sold', 'desc')
         ->get();
 
@@ -141,6 +131,30 @@ class HomeController extends Controller
             $query->orWhere('name', 'like', '%' . $kw . '%');
         });
         $products = $products->paginate($request->limit ?? 9);
+        return view('customer.products.brands', [
+            'title' => 'Categories Product',
+            'products' => $products,
+            'brands' => $brands,
+        ]);
+    }
+
+    public function categories($slug, Request $request)
+    {
+        
+        $categories = Category::all();
+        $category = Category::where('slug', $slug)->first();
+        
+        $products = Product::where('category_id', $category->id)
+        ->orderBy('sold', 'desc')
+        ->get();
+        dd($products);
+        $kw = $slug;
+        $products = Product::where(function ($query) use ($kw) {
+            $query->orWhere('name', 'like', '%' . $kw . '%');
+        });
+        
+        $products = $products->paginate($request->limit ?? 15);
+        
         return view('customer.products.categories', [
             'title' => 'Categories Product',
             'products' => $products,

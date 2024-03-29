@@ -165,14 +165,16 @@
                     <div class="swiper-wrapper">
                         @foreach ($sections2 as $section2)
                             <div class="swiper-slide">
+                                
                                 <div class="product-bs">
+                                    @if ($section2->price - $section2->market_price > 0)
+                                    <span class="product-bs__discount-label">
+                                        <span class="product-bs__discount-percent">SALE
+                                            {{ round((($section2->price - $section2->market_price) * 100) / $section2->price, 0) }}%</span>
+                                    </span>
+                                @endif
                                     <div class="product-bs__container">
-                                        @if ($section2->price - $section2->market_price > 0)
-                                            <span class="product-bs__discount-label">
-                                                <span class="product-bs__discount-percent">SALE
-                                                    {{ round((($section2->price - $section2->market_price) * 100) / $section2->price, 0) }}%</span>
-                                            </span>
-                                        @endif
+                               
 
 
                                         <div class="product-bs__wrap">
