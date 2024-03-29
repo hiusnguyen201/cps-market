@@ -4,6 +4,42 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <section>
+    <div class="container">
+        <div class="row">
+            @foreach($products as $product)
+            <div class="col-md-3 col-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">Name: {{$product->name}}</p>
+                        <p class="card-title">Price: {{$product->price}}</p>
+                        <p class="card-title">qty: {{$product->quantity}}</p>
+                        <form action="/cart" method="post">
+                            @csrf
+                            <input type="hidden" name='product_id' value="{{$product->id}}">
+                            <button type="submit" class="btn btn-outline-danger add-to-cart-btn">
+                                ADD</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+
+        @if(session('success'))
+        <div class="alert alert-success" style="color: red;">
+            {{ session('success')}}
+        </div>
+        @endif
+
+        @if(session('error'))
+        <div class="alert alert-danger" style="color: red;">
+            {{ session('error')}}
+        </div>
+        @endif
+    </div>
+</section>
+
+<section>
     <form id="deleteCart" action="/cart" method="post">
         @csrf
         @method('DELETE')
@@ -85,25 +121,25 @@
 
                                         <td>
 
-                                        <div class="input-counter">
+                                            <div class="input-counter">
 
-                                            <span class="input-counter__minus fas fa-minus"></span>
-                                            @php
-                                            $cartQty = 0;
-                                            if ($cart->quantity > $cart->product->quantity) {
-                                            $cartQty = $cart->product->quantity;
-                                            }
-                                            else {
-                                            $cartQty = $cart->quantity;
-                                            }
-                                            @endphp
-                                            <input class="input-counter__text input-counter--text-primary-style" type="text" name="quantity" value="{{ $cartQty }}" data-min="0" data-max="{{ $cart->product->quantity }}" data-cart-id="{{ $cart->id }}">
+                                                <span class="input-counter__minus fas fa-minus"></span>
+                                                @php
+                                                $cartQty = 0;
+                                                if ($cart->quantity > $cart->product->quantity) {
+                                                $cartQty = $cart->product->quantity;
+                                                }
+                                                else {
+                                                $cartQty = $cart->quantity;
+                                                }
+                                                @endphp
+                                                <input class="input-counter__text input-counter--text-primary-style" type="text" name="quantity" value="{{ $cartQty }}" data-min="0" data-max="{{ $cart->product->quantity }}" data-cart-id="{{ $cart->id }}">
 
-                                            <p id="message" class="text-center" style="color: red; font-size: 10px;"></p>
+                                                <p id="message" class="text-center" style="color: red; font-size: 10px;"></p>
 
-                                            <span class="input-counter__plus fas fa-plus"></span>
+                                                <span class="input-counter__plus fas fa-plus"></span>
 
-                                        </div>
+                                            </div>
 
                                         </td>
 

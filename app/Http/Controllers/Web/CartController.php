@@ -16,10 +16,12 @@ class CartController extends Controller
     {
         if ($user = Auth::user()) {
             $carts = Cart::where('user_id', $user->id)->get();
+            $products = Product::all();
 
             return view("customer/cart", [
                 'title' => "Cart | Cps Market ",
                 'carts' => $carts,
+                'products' => $products,
             ]);
         } else {
             return redirect('auth/login');

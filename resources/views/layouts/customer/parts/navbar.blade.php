@@ -667,11 +667,7 @@
 
                             <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-shopping-bag toggle-button-shop" type="button"></button>
 
-                            @if ($cartCount > 0 )
                             <span class="total-item-round">{{ $cartCount }}</span>
-                            @else
-                            <span class="total-item-round">0</span>
-                            @endif
 
                             <!--====== Menu ======-->
                             <div class="ah-lg-mode">
@@ -720,11 +716,7 @@
                                     <li class="has-dropdown">
 
                                         <a href="/cart" class="mini-cart-shop-link"><i class="fas fa-shopping-bag"></i>
-                                            @if ($cartCount > 0)
                                             <span class="total-item-round">{{ $cartCount }}</span></a>
-                                            @else
-                                            <span class="total-item-round">0</span></a>
-                                            @endif
                                     </li>
 
                                 </ul>
