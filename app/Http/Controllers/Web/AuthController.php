@@ -9,6 +9,7 @@ use App\Models\PasswordResets;
 use App\Models\User_Otp;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Category;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -29,8 +30,10 @@ class AuthController extends Controller
 {
     public function localLogin()
     {
+        $categories = Category::all();
         return view('auth.login', [
-            'title' => 'Login | Cps Market'
+            'title' => 'Login | Cps Market',
+            'categories' => $categories
         ]);
     }
 

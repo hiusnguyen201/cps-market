@@ -10,6 +10,7 @@ use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\BrandController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\ProductController;
+use App\Http\Controllers\Web\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +75,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{product}', [ProductController::class, 'edit']);
         Route::delete('/', [ProductController::class, 'handleDelete']);
     });
+    // });
 });
 
 // Auth
@@ -108,6 +110,15 @@ Route::prefix('auth')->group(function () {
     // });
 });
 
-Route::prefix('member')->group(function () {
-    Route::get('/', [AccountController::class, 'index']);
+Route::prefix('cart')->group(function () {
+    Route::middleware(['check.auth'])->group(function () {
+        Route::get('/', [CartController::class, 'home']);
+
+        Route::post('/', [CartController::class, 'handleCreate']);
+
+        Route::patch('/', [CartController::class, 'handleUpdate']);
+
+        Route::delete('/', [CartController::class, 'handleDelete']);
+        Route::delete('/clear', [CartController::class, 'clearCart']);
+    });
 });
