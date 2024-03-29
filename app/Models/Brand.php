@@ -19,6 +19,7 @@ class Brand extends Model
      */
     protected $fillable = [
         "name",
+        "slug",
     ];
 
     /**
@@ -28,10 +29,12 @@ class Brand extends Model
      */
     protected $casts = [
         'name' => "string",
+        'slug' => "string",
+        
     ];
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'categories_brands', 'brand_id', 'category_id')->withTimestamps();;
+        return $this->belongsToMany(Category::class, 'categories_brands', 'brand_id', 'category_id')->withTimestamps();
     }
 }
