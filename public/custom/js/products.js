@@ -109,6 +109,7 @@ formElement.find("button[type='submit']").click((e) => {
         },
         error: (err) => {
             const { error, message } = err?.responseJSON;
+            console.log(error);
             if (err.status == 422) {
                 Toastify({
                     text: message,
