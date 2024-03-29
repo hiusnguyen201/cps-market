@@ -475,18 +475,7 @@
               fade: true,
               asNavFor: $productDetailElementThumbnail
           });
-          // Init elevate zoom plugin to the first image
-          $('#pd-o-initiate .slick-current img').elevateZoom(ELEVATE_ZOOM_OBJ);
 
-          // Fires before slide change
-          $productDetailElement.on('beforeChange', function(event, slick, currentSlide, nextSlide){
-              // Get the next slide image
-              var $img = $(slick.$slides[nextSlide]).find('img');
-              // Remove old zoom elements
-              $('.zoomWindowContainer,.zoomContainer').remove();
-              // Reinit elevate zoom plugin to the next slide image
-              $($img).elevateZoom(ELEVATE_ZOOM_OBJ);
-          });
 
           // Init Lightgallery plugin
           $productDetailElement.lightGallery({

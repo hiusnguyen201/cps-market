@@ -97,12 +97,6 @@
                         <div class="input-group">
                             <select id="product" name="brand" class="form-control">
                                 <option value="">Please select</option>
-                                @if (count($category->brands))
-                                    @foreach ($category->brands as $brand)
-                                        <option value="{{ $brand->id }}">
-                                            {{ $brand->name }}</option>
-                                    @endforeach
-                                @endif
                             </select>
                         </div>
                         <span class="error-message"></span>

@@ -44,18 +44,17 @@
                                             <span style="color: red"> {{ $message }}</span>
                                         @enderror
                                     </div>
-
+                                    
                                     <div class="gl-inline">
                                         <div class="u-s-m-b-30">
 
-                                            <button class="btn btn--e-transparent-brand-b-2" type="submit">LOGIN</button>
-                                        </div>
-                                        <div class="u-s-m-b-30">
-
-                                            <a class=""  style="color: #FF4500" href="/auth/otp/resend">Resend OTP</a>
+                                            <a class="text-right"  style="color: #FF4500" href="/auth/otp/resend">Resend OTP</a>
                                         </div>
                                     </div>
+                                    <div class="u-s-m-b-30">
 
+                                        <button class="btn btn--e-transparent-brand-b-2" style="width: 100%" type="submit">LOGIN</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
