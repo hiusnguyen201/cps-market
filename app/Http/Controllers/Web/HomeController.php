@@ -70,24 +70,24 @@ class HomeController extends Controller
             ->get();
 
         $sections9D = Product::whereDate('updated_at', today())
-        ->orderBy('sold', 'desc')
-        ->limit(3)
-        ->get();
+            ->orderBy('sold', 'desc')
+            ->limit(3)
+            ->get();
 
         $sections9W = Product::whereYear('updated_at', now()->year)
-        ->whereBetween('updated_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
-        ->orderBy('sold', 'desc')
-        ->limit(3)
-        ->get();
+            ->whereBetween('updated_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
+            ->orderBy('sold', 'desc')
+            ->limit(3)
+            ->get();
 
         $sections9M = Product::whereYear('updated_at', now()->year)
-        ->whereMonth('updated_at', now()->month)
-        ->orderBy('sold', 'desc')
-        ->limit(3)
-        ->get();
-  
+            ->whereMonth('updated_at', now()->month)
+            ->orderBy('sold', 'desc')
+            ->limit(3)
+            ->get();
+
         $categories = Category::all();
-        
+
 
         return view("customer/home", [
             'sections2' => $sections2,
@@ -105,10 +105,9 @@ class HomeController extends Controller
         ]);
     }
 
-    public function details($slug)
+    public function details($categorySlug, $brandSlug, $productSlug)
     {
-
-        $product = Product::where(['slug' => $slug])->first();
+        $product = Product::where(['slug' => $productSlug])->first();
         $categories = Category::all();
 
         return view('customer.products.details', [
@@ -118,9 +117,9 @@ class HomeController extends Controller
         ]);
     }
 
-    public function brands($slug)
-    {   
-        $brand = Brand::where('slug', $slug)->firstOrFail();
+    public function brands($categorySlug, $brandSlug)
+    {
+        $brand = Brand::where('slug', $brandSlug)->firstOrFail();
         $categories = $brand->categories->load('brands');
         return view('customer.products.brands', [
             'title' => 'Brands Product',
@@ -128,13 +127,13 @@ class HomeController extends Controller
         ]);
     }
 
-    public function categories($slug, Request $request)
+    public function categories($categorySlug, Request $request)
     {
         $categories = Category::all();
-        $category = Category::where('slug', $slug)->firstOrFail();
+        $category = Category::where('slug', $categorySlug)->firstOrFail();
         $products = Product::where('category_id', $category->id)
-        ->orderBy('sold', 'desc')
-        ->get();
+            ->orderBy('sold', 'desc')
+            ->get();
 
         $kw = $request->keyword;
         $products = Product::where(function ($query) use ($kw) {
@@ -147,5 +146,4 @@ class HomeController extends Controller
             'categories' => $categories,
         ]);
     }
-
 }
