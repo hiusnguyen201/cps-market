@@ -11,6 +11,7 @@ use App\Http\Controllers\Web\BrandController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\CartController;
+use App\Http\Controllers\Web\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,7 +76,17 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{product}', [ProductController::class, 'edit']);
         Route::delete('/', [ProductController::class, 'handleDelete']);
     });
-    // });
+
+    // Customers
+    Route::prefix('customers')->group(function () {
+        Route::get('/', [CustomerController::class, 'home']);
+        Route::get('/details/{user}', [CustomerController::class, 'details']);
+        Route::get('/create', [CustomerController::class, 'create']);
+        Route::post('/create', [CustomerController::class, 'handleCreate']);
+        Route::get('/edit/{user}', [CustomerController::class, 'edit']);
+        Route::patch('/edit/{user}', [CustomerController::class, 'handleUpdate']);
+        Route::delete('/', [CustomerController::class, 'handleDelete']);
+    });
 });
 
 // Auth
@@ -119,6 +130,5 @@ Route::prefix('cart')->group(function () {
         Route::patch('/', [CartController::class, 'handleUpdate']);
 
         Route::delete('/', [CartController::class, 'handleDelete']);
-        Route::delete('/clear', [CartController::class, 'clearCart']);
     });
 });
