@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use App\Models\Brand;
 use App\Models\Category;
+use Illuminate\Support\Str;
 
 use App\Http\Requests\Admin\BrandRequest;
 
@@ -65,6 +65,7 @@ class BrandController extends Controller
         try {
             $brand = Brand::create([
                 'name' => $request['name'],
+                'slug' => Str::slug($request['name'], '-'),
             ]);
 
             $brand->categories()->attach($request['category']);
@@ -77,6 +78,7 @@ class BrandController extends Controller
 
         return redirect()->back();
     }
+
 
 
     public function edit(Brand $brand)
@@ -101,6 +103,7 @@ class BrandController extends Controller
     {
         try {
             $request->request->add(['updated_at' => now()]);
+            $request->request->add(['slug' => Str::slug($request->name, '-')]);
             $brand->fill($request->all());
             $brand->save();
             $brand->categories()->detach();

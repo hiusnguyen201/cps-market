@@ -19,6 +19,7 @@ class Brand extends Model
      */
     protected $fillable = [
         "name",
+        "slug",
     ];
 
     /**
@@ -28,6 +29,8 @@ class Brand extends Model
      */
     protected $casts = [
         'name' => "string",
+        'slug' => "string",
+        
     ];
 
     public function categories()

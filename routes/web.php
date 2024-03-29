@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\AccountController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Web\HomeController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\BrandController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\ProductController;
+use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\CustomerController;
 
 /*
@@ -23,6 +25,10 @@ use App\Http\Controllers\Web\CustomerController;
 */
 
 Route::get('/', [HomeController::class, 'home']);
+Route::get('/{categorySlug}.html', [HomeController::class, 'categories'])->name('categories.show');
+Route::get('/{categorySlug}/{brandSlug}.html', [HomeController::class, 'brands'])->name('brands.show');
+Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
+
 
 // Admin
 Route::prefix('admin')->group(function () {
@@ -113,4 +119,17 @@ Route::prefix('auth')->group(function () {
     // Route::middleware('check.auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
     // });
+});
+
+Route::prefix('cart')->group(function () {
+    Route::middleware(['check.auth'])->group(function () {
+        Route::get('/', [CartController::class, 'home']);
+
+        Route::post('/', [CartController::class, 'handleCreate']);
+
+        Route::patch('/', [CartController::class, 'handleUpdate']);
+
+        Route::delete('/', [CartController::class, 'handleDelete']);
+        Route::delete('/clear', [CartController::class, 'clearCart']);
+    });
 });
