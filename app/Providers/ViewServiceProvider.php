@@ -31,7 +31,11 @@ class ViewServiceProvider extends ServiceProvider
 
             if ($user = Auth::user()) {
 
-                $cartCount = count(Cart::with('product')->where('user_id', $user->id)->get());
+                $cartCount = Cart::where('user_id', $user->id)
+                    ->whereHas('product', function ($query) {
+                        $query->where('quantity', '>', 0);
+                    })
+                    ->sum('quantity');
             }
 
             $view->with('cartCount', $cartCount);

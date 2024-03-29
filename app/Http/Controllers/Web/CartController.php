@@ -38,29 +38,28 @@ class CartController extends Controller
 
         $cart = Cart::where('user_id', $user->id)->where('product_id', $product->id)->first();
 
-        if (!$cart && $product) {
+        if($product->quantity <= 0) {
+            return redirect()->back()->with('error', 'Not enough quantity available');
+        }
+
+        if (!$cart && $product && $product->quantity > 0) {
             Cart::create([
                 'product_id' => $product->id,
                 'user_id' => $user->id,
                 'quantity' => 1,
                 'price' => $product->price,
             ]);
-
             return redirect()->back()->with('success', 'ADD');
-        } else {
-
-            if ($cart->quantity < $product->quantity) {
+        } elseif ($cart->quantity < $product->quantity) {
                 $cart->update([
                     'quantity' => $cart->quantity + 1,
                     'price' => ($cart->quantity + 1) * $product->price,
                 ]);
-
                 return redirect()->back()->with('success', 'ADD qty');
             } else {
                 return redirect()->back()->with('error', 'Not enough quantity available');
             }
         }
-    }
 
     public function handleUpdate(Request $request)
     {
