@@ -282,7 +282,6 @@
                                         </table>
                                     </div>
                                     <div>
-
                                         <button class="btn btn--e-brand-b-2" type="submit"> PROCEED TO
                                             CHECKOUT</button>
                                     </div>

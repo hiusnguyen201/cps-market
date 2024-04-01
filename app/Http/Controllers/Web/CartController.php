@@ -21,7 +21,7 @@ class CartController extends Controller
         $products = Product::all();
 
         return view("customer/cart", [
-            'title' => "Cart | Cps Market ",
+            'title' => "Cart",
             'carts' => $carts,
             'products' => $products,
             "categories" => $categories
@@ -131,5 +131,14 @@ class CartController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function checkoutPage(Request $request)
+    {
+        $categories = Category::all();
+        return view("customer.checkout", [
+            "title" => "Cart",
+            "categories" => $categories
+        ]);
     }
 }

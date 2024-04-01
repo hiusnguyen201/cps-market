@@ -129,5 +129,7 @@ Route::prefix('cart')->group(function () {
         Route::patch('/', [CartController::class, 'handleUpdate']);
 
         Route::delete('/', [CartController::class, 'handleDelete']);
+
+        Route::get('/payment-info', [CartController::class, 'checkoutPage']);
     });
 });
