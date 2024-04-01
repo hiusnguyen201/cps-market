@@ -26,7 +26,6 @@ use App\Http\Controllers\Web\CustomerController;
 
 Route::get('/', [HomeController::class, 'home']);
 Route::get('/{categorySlug}.html', [HomeController::class, 'categories'])->name('categories.show');
-Route::get('/{categorySlug}/{brandSlug}.html', [HomeController::class, 'brands'])->name('brands.show');
 Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
 
 

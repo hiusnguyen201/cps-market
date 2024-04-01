@@ -8,24 +8,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\Product;
 
 class CartController extends Controller
 {
     public function home()
     {
-        if ($user = Auth::user()) {
-            $carts = Cart::where('user_id', $user->id)->get();
-            $products = Product::all();
+        $categories = Category::all();
+        $user = Auth::user();
+        $carts = Cart::where('user_id', $user->id)->get();
+        $products = Product::all();
 
-            return view("customer/cart", [
-                'title' => "Cart | Cps Market ",
-                'carts' => $carts,
-                'products' => $products,
-            ]);
-        } else {
-            return redirect('auth/login');
-        }
+        return view("customer/cart", [
+            'title' => "Cart | Cps Market ",
+            'carts' => $carts,
+            'products' => $products,
+            "categories" => $categories
+        ]);
     }
 
     public function handleCreate(Request $request)
@@ -40,7 +40,7 @@ class CartController extends Controller
 
         $cart = Cart::where('user_id', $user->id)->where('product_id', $product->id)->first();
 
-        if($product->quantity <= 0) {
+        if ($product->quantity <= 0) {
             return redirect()->back()->with('error', 'Not enough quantity available');
         }
 
@@ -51,17 +51,17 @@ class CartController extends Controller
                 'quantity' => 1,
                 'price' => $product->price,
             ]);
-            return redirect()->back()->with('success', 'ADD');
-        } elseif ($cart->quantity < $product->quantity) {
-                $cart->update([
-                    'quantity' => $cart->quantity + 1,
-                    'price' => ($cart->quantity + 1) * $product->price,
-                ]);
-                return redirect()->back()->with('success', 'ADD qty');
-            } else {
-                return redirect()->back()->with('error', 'Not enough quantity available');
-            }
+            return redirect("/cart");
+        } else if ($cart->quantity < $product->quantity) {
+            $cart->update([
+                'quantity' => $cart->quantity + 1,
+                'price' => ($cart->quantity + 1) * $product->price,
+            ]);
+            return redirect("/cart");
+        } else {
+            return redirect()->back()->with('error', 'Not enough quantity available');
         }
+    }
 
     public function handleUpdate(Request $request)
     {

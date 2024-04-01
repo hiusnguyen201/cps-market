@@ -1238,7 +1238,7 @@ input::-ms-clear {
     position: absolute;
     width: 100%;
     height: 100%;
-    object-fit: contain; 
+    object-fit: contain;
 }
 
 /* Product Component */
@@ -1696,7 +1696,7 @@ input::-ms-clear {
     display: -ms-flexbox;
 
     -ms-flex-pack: justify;
-    
+
     margin-bottom: 6px;
 }
 .product-r__name,
@@ -1705,7 +1705,6 @@ input::-ms-clear {
 }
 .product-r__name {
     display: block;
-    
 }
 .product-r__name > a {
     color: #333333;
@@ -1749,8 +1748,6 @@ input::-ms-clear {
 .product-bs {
     margin: 5px;
     border-radius: 15px;
-    width: 262.5px;
-    height: 375px;
     background-color: #ffffff;
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.06);
     transition: -webkit-transform 0.7s ease-in-out;
@@ -1759,7 +1756,7 @@ input::-ms-clear {
 }
 .product-bs__container {
     padding: 20px;
-    margin: 10px;
+    min-height: 250px;
 }
 .product-bs__wrap {
     position: relative;
@@ -1813,28 +1810,23 @@ input::-ms-clear {
 }
 .product-bs__category {
     display: block;
-}
-.product-bs__category > a {
     color: #a0a0a0;
     transition: color 0.5s;
     font-size: 12px;
 }
-.product-bs__category > a:hover {
-    color: #ff4500;
-}
+
 .product-bs__name {
     display: block;
-    height: 50px;
-}
-.product-bs__name > a {
+    height: 35px;
+    width: 100%;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
     color: #333333;
     font-size: 14px;
     font-weight: 600;
     transition: color 0.5s;
 }
-.product-bs__name > a:hover {
-    color: #ff4500;
-}
+
 .product-bs__rating {
     margin-bottom: 4px;
 }
@@ -5543,7 +5535,6 @@ input::-ms-clear {
 }
 
 .pd-wrap {
-    
 }
 
 .pd-text {
@@ -6494,6 +6485,11 @@ input::-ms-clear {
     font-size: 14px;
     font-weight: 600;
     transition: color 0.5s;
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
 }
 .is-grid-active .product-m__name > a:hover {
     color: #ff4500;
@@ -6554,6 +6550,10 @@ input::-ms-clear {
 
 .is-grid-active .product-m:hover {
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
+}
+.is-grid-active .product-m:hover a {
+    text-overflow: unset;
+    white-space: wrap;
 }
 .is-grid-active .product-m:hover .product-m__add-cart {
     opacity: 1;
@@ -6713,7 +6713,8 @@ input::-ms-clear {
     visibility: visible;
 }
 
-.shop-p__pagination {
+.shop-p__pagination,
+.pagination {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -6724,30 +6725,45 @@ input::-ms-clear {
     -ms-flex-align: center;
     align-items: center;
 }
-.shop-p__pagination > li {
+
+.shop-p__pagination > li,
+.pagination > li.page-item {
     margin-right: 14px;
 }
-.shop-p__pagination > li:last-child {
+.shop-p__pagination > li:last-child,
+.pagination > li.page-item:last-child {
     margin-right: 0;
 }
-.shop-p__pagination > li > a {
+.shop-p__pagination > li > a,
+.pagination > li.page-item > span,
+.pagination > li.page-item > a {
     width: 42px;
     text-align: center;
     height: 42px;
     line-height: 42px;
-    font-size: 12px;
+    font-size: 16px;
     display: block;
     font-weight: 600;
     border-radius: 50%;
     background-color: transparent;
     color: #333333;
 }
-.shop-p__pagination > li.is-active > a {
+.shop-p__pagination > li.is-active > a,
+.pagination > li.page-item.active > span,
+.pagination > li.page-item.active > a {
     background-color: #f7f7f7;
 }
-.shop-p__pagination > li:not(.is-active) > a:hover {
+.shop-p__pagination > li:not(.is-active) > a:hover,
+.pagination > li:not(.page-item.active) > a:hover {
     color: #ff4500;
-    text-decoration: underline;
+    width: 42px;
+    text-align: center;
+    align-items: middle;
+    height: 42px;
+    border-radius: 50%;
+    font-weight: 600;
+    line-height: 42px;
+    background-color: #f7f7f7;
 }
 
 .shop-a__wrap {
@@ -7571,13 +7587,13 @@ input::-ms-clear {
     background-image: url(../images/slider/slide-6.jpg);
 }
 .hero-slide--7 {
-    background-image: url(../images/slider/slide-7.jpg);
+    background-image: url(/ImageSection/Mobile.jpg);
 }
 .hero-slide--8 {
-    background-image: url(../images/slider/slide-8.jpg);
+    background-image: url(/ImageSection/Laptop.jpg);
 }
 .hero-slide--9 {
-    background-image: url(../images/slider/slide-9.jpg);
+    background-image: url(/ImageSection/Watch.jpg);
 }
 
 .owl-carousel .owl-dots {
@@ -8068,16 +8084,18 @@ input::-ms-clear {
 
 .product-bs__discount-label {
     position: absolute;
-    top: 10px;
-    left: 1px;
     background-color: #ff0000;
     color: #ffffff;
     padding: 2px 5px;
     border-radius: 0px 5px 5px 0px;
     font-size: 12px;
-    z-index: 10;
+    z-index: 5;
 }
 
 .product-bs__discount-percent {
     font-weight: bold;
+}
+
+.d-flex {
+    margin-right: 100%;
 }

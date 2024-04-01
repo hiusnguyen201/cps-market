@@ -46,7 +46,7 @@
                                                                 @foreach ($categories as $index => $category)
                                                                     <li
                                                                         class="js {{ $index == 0 ? 'js-active' : '' }} ">
-                                                                        <a href="/category/{{ $category->slug }}.html">
+                                                                        <a href="/{{ $category->slug }}.html">
                                                                             <span>{{ $category->name }}</span>
                                                                         </a>
                                                                         <span
@@ -76,7 +76,7 @@
                                                                             @foreach ($category->brands as $brand)
                                                                                 <li>
                                                                                     <a
-                                                                                        href="/brand/{{ $brand->slug }}.html">{{ $brand->name }}</a>
+                                                                                        href="/{{ $category->name }}/{{ $brand->slug }}.html">{{ $brand->name }}</a>
                                                                                 </li>
                                                                             @endforeach
 

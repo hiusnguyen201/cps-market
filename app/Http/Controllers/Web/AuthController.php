@@ -61,8 +61,10 @@ class AuthController extends Controller
 
     public function otp()
     {
+        $categories = Category::all();
         return view('auth.otp', [
-            'title' => 'Otp | Cps Market'
+            'title' => 'Otp',
+            'categories' => $categories
         ]);
     }
 
@@ -117,8 +119,8 @@ class AuthController extends Controller
         if (!$social_user_info) {
             return redirect("/auth/login");
         }
-
-        return view("auth.socialUpdateInfo", ['name' => $social_user_info[0]['name'], 'email' => $social_user_info[0]['email']]);
+        $categories = Category::all();
+        return view("auth.socialUpdateInfo", ['name' => $social_user_info[0]['name'], 'email' => $social_user_info[0]['email'], 'categories' => $categories]);
     }
 
     public function handleUpdateInfoSocial(InfoSocialRequest $request)
@@ -199,8 +201,10 @@ class AuthController extends Controller
 
     public function register()
     {
+        $categories = Category::all();
         return view('auth.register', [
-            'title' => 'Register | Cps Market'
+            'title' => 'Register',
+            "categories" => $categories,
         ]);
     }
 
@@ -226,8 +230,10 @@ class AuthController extends Controller
 
     public function forgetPassword()
     {
+        $categories = Category::all();
         return view('auth.forgetPassword', [
-            'title' => 'Forget Password | Cps Market'
+            'title' => 'Forget Password',
+            'categories' => $categories,
         ]);
     }
 
@@ -281,8 +287,10 @@ class AuthController extends Controller
                 ->with("error", "Link has expired. Please try again!");
         }
 
+        $categories = Category::all();
         return view('auth.changePassword', [
-            'title' => 'Change Password | Cps Market',
+            'title' => 'Change Password',
+            'categories' => $categories,
             'token' => $token
         ]);
     }
