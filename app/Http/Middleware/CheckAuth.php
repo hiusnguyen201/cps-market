@@ -24,6 +24,6 @@ class CheckAuth
             }
         }
 
-        return redirect()->back();
+        return redirect("/auth/login");
     }
 }

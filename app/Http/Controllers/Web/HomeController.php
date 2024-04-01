@@ -13,61 +13,20 @@ class HomeController extends Controller
 {
     public function home()
     {
+        $sections = [];
+        $categories = Category::all();
 
-        //category phone
-        $sections2 = Product::whereHas('category', function ($query) {
-            $query->where('name', 'phone');
-        })
-            ->orderBy('sold', 'desc')
-            ->limit(20)
-            ->get();
+        for ($i = 0; $i < count($categories); $i++) {
+            $categoryName = $categories[$i]->name;
+            $products = Product::whereHas('category', function ($query) use ($categoryName) {
+                $query->where('name', $categoryName);
+            })
+                ->orderBy('sold', 'desc')
+                ->limit(10)
+                ->get();
 
-        //category laptop
-        $sections3 = Product::whereHas('category', function ($query) {
-            $query->where('name', 'laptop');
-        })
-            ->orderBy('created_at', 'desc')
-            ->limit(20)
-            ->get();
-
-        //category earphones
-        $sections4 = Product::whereHas('category', function ($query) {
-            $query->where('name', 'earphone');
-        })
-            ->orderBy('created_at', 'desc')
-            ->limit(10)
-            ->get();
-        //category watchs
-        $sections5 = Product::whereHas('category', function ($query) {
-            $query->where('name', 'watch');
-        })
-            ->orderBy('created_at', 'desc')
-            ->limit(10)
-            ->get();
-
-        //category accessories
-        $sections6 = Product::whereHas('category', function ($query) {
-            $query->where('name', 'accessory');
-        })
-            ->orderBy('created_at', 'desc')
-            ->limit(10)
-            ->get();
-
-        //category second-hand
-        $sections7 = Product::whereHas('category', function ($query) {
-            $query->where('name', 'second-hand');
-        })
-            ->orderBy('created_at', 'desc')
-            ->limit(10)
-            ->get();
-
-        //category tablets
-        $sections8 = Product::whereHas('category', function ($query) {
-            $query->where('name', 'tablet');
-        })
-            ->orderBy('created_at', 'desc')
-            ->limit(10)
-            ->get();
+            array_push($sections, $products);
+        }
 
         //best sold in day
         $sections9D = Product::whereDate('updated_at', today())
@@ -89,17 +48,8 @@ class HomeController extends Controller
             ->limit(3)
             ->get();
 
-        $categories = Category::all();
-
-
         return view("customer/home", [
-            'sections2' => $sections2,
-            'sections3' => $sections3,
-            'sections4' => $sections4,
-            'sections5' => $sections5,
-            'sections6' => $sections6,
-            'sections7' => $sections7,
-            'sections8' => $sections8,
+            'sections' => $sections,
             'sections9D' => $sections9D,
             'sections9W' => $sections9W,
             'sections9M' => $sections9M,
@@ -133,7 +83,7 @@ class HomeController extends Controller
 
         $products = Product::where('category_id', $category->id)
             ->orderBy('sold', 'desc');
-        
+
         $products = $products->paginate($request->limit ?? 9);
         return view('customer.products.categories', [
             'title' => 'Categories Product',
@@ -141,5 +91,4 @@ class HomeController extends Controller
             'categories' => $categories,
         ]);
     }
-
 }

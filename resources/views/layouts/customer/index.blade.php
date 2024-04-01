@@ -60,70 +60,27 @@
                 prevEl: '.swiper-button-prev',
             },
             loop: false,
-
-            grid: {
-                rows: 2
-            },
             breakpoints: {
                 0: {
                     slidesPerView: 1,
-                    spaceBetween: 0,
-                    centeredSlides: true,
+                    spaceBetween: 5,
 
                 },
                 600: {
-                    slidesPerView: 2,
-                    spaceBetween: 30,
-                },
-                800: {
-                    centeredSlides: true,
-                    slidesPerView: 2,
-                    spaceBetween: 10,
-                },
-                1025: {
                     slidesPerView: 3,
                     spaceBetween: 10,
                 },
-                1281: {
-                    slidesPerView: 4,
-                    spaceBetween: 10,
-                },
-            }
-
-        })
-
-        const swiper2 = new Swiper(".swiper2", {
-            
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            slidesPerView: 4,
-            loop: false,
-            spaceBetween: 10,
-            breakpoints: {
-                0: {
-                    slidesPerView: 1,
-                    spaceBetween: 0,
-                    centeredSlides: true,
-
-                },
-                600: {
-                    slidesPerView: 2,
-                    spaceBetween: 30,
-                },
                 800: {
-                    centeredSlides: true,
-                    slidesPerView: 2,
-                    spaceBetween: 10,
+                    slidesPerView: 3,
+                    spaceBetween: 15,
                 },
                 1025: {
-                    slidesPerView: 3,
-                    spaceBetween: 10,
+                    slidesPerView: 5,
+                    spaceBetween: 15,
                 },
                 1281: {
-                    slidesPerView: 4,
-                    spaceBetween: 10,
+                    slidesPerView: 5,
+                    spaceBetween: 15,
                 },
             }
         })

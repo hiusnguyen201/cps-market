@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use \App\Models\User;
 use \App\Models\Role;
 use \App\Models\Category;
+use App\Models\Product;
 
 class DatabaseSeeder extends Seeder
 {
@@ -60,14 +61,32 @@ class DatabaseSeeder extends Seeder
 
         for ($i = 0; $i < 5; $i++) {
             Category::create([
-                'name' => "Smartphone" . $i
+                'name' => "Smartphone" . $i,
+                'slug' => "Smartphone" . $i
             ]);
         }
 
         for ($i = 0; $i < 5; $i++) {
             Brand::create([
                 'name' => "Brand" . $i,
+                'slug' => "Brand" . $i
             ]);
+        }
+
+        for ($i = 0; $i < 5; $i++) {
+            for ($j = 0; $j < 30; $j++) {
+                Product::create([
+                    'name' => "Product " . $i + 1 . $j + 1,
+                    'slug' => "Product-" . $i + 1 . $j + 1,
+                    'price' => $i + 1000,
+                    "market_price" => $i + 1000,
+                    "quantity" => $i + 10,
+                    "sold" => $i + 10,
+                    "description" => "descrip " . $i,
+                    "brand_id" => $i + 1,
+                    "category_id" => $i + 1
+                ]);
+            }
         }
     }
 }

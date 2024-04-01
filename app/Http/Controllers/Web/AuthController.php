@@ -9,6 +9,7 @@ use App\Models\PasswordResets;
 use App\Models\User_Otp;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Category;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -23,12 +24,16 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ForgetPasswordRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 
+use App\Jobs\SendOtp;
+
 class AuthController extends Controller
 {
     public function localLogin()
     {
+        $categories = Category::all();
         return view('auth.login', [
-            'title' => 'Login | Cps Market'
+            'title' => 'Login | Cps Market',
+            'categories' => $categories
         ]);
     }
 
@@ -56,8 +61,10 @@ class AuthController extends Controller
 
     public function otp()
     {
+        $categories = Category::all();
         return view('auth.otp', [
-            'title' => 'Otp | Cps Market'
+            'title' => 'Otp',
+            'categories' => $categories
         ]);
     }
 
@@ -112,8 +119,8 @@ class AuthController extends Controller
         if (!$social_user_info) {
             return redirect("/auth/login");
         }
-
-        return view("auth.socialUpdateInfo", ['name' => $social_user_info[0]['name'], 'email' => $social_user_info[0]['email']]);
+        $categories = Category::all();
+        return view("auth.socialUpdateInfo", ['name' => $social_user_info[0]['name'], 'email' => $social_user_info[0]['email'], 'categories' => $categories]);
     }
 
     public function handleUpdateInfoSocial(InfoSocialRequest $request)
@@ -194,8 +201,10 @@ class AuthController extends Controller
 
     public function register()
     {
+        $categories = Category::all();
         return view('auth.register', [
-            'title' => 'Register | Cps Market'
+            'title' => 'Register',
+            "categories" => $categories,
         ]);
     }
 
@@ -221,8 +230,10 @@ class AuthController extends Controller
 
     public function forgetPassword()
     {
+        $categories = Category::all();
         return view('auth.forgetPassword', [
-            'title' => 'Forget Password | Cps Market'
+            'title' => 'Forget Password',
+            'categories' => $categories,
         ]);
     }
 
@@ -276,8 +287,10 @@ class AuthController extends Controller
                 ->with("error", "Link has expired. Please try again!");
         }
 
+        $categories = Category::all();
         return view('auth.changePassword', [
-            'title' => 'Change Password | Cps Market',
+            'title' => 'Change Password',
+            'categories' => $categories,
             'token' => $token
         ]);
     }
@@ -301,24 +314,18 @@ class AuthController extends Controller
 
     public function sendOtpToEmail($user)
     {
-        $user_otp_exists = User_Otp::where('user_id', $user->id)->first();
-        if (!is_null($user_otp_exists)) {
-            if (Carbon::now()->lt($user_otp_exists->expire)) {
-                return true;
-            }
-            $user_otp_exists->delete();
-        }
+        User_Otp::where('user_id', $user->id)->delete();
 
-        $user_otp_new = User_Otp::create([
-            'otp' => mt_rand(100000, 999999),
+        $otp = mt_rand(100000, 999999);
+        User_Otp::create([
+            'otp' => $otp,
             'expire' => Carbon::now()->addMinutes(env('OTP_EXPIRE_MINUTES', 1)),
             'user_id' => $user->id
         ]);
 
-        Mail::raw("Your OTP is: $user_otp_new->otp", function ($message) use ($user) {
-            $message->to($user->email)->subject('OTP Verification');
-        });
+        $details = ["email" => $user->email, "otp" => $otp];
+        SendOtp::dispatch($details);
 
-        return true;
+        return;
     }
 }

@@ -10,7 +10,7 @@
     <div class="card py-2 px-3">
         <div class="d-flex mb-2">
             <div class="col-2 px-0 mr-2">
-                <a href="/admin/users/create" class="btn btn-success w-100 py-2">Create</a>
+                <a href="/admin/customers/create" class="btn btn-success w-100 py-2">Create</a>
             </div>
             <div class="col-2 px-0 mr-2">
                 <button class="btn btn-danger w-100 py-2" data-toggle="modal" data-target="#modal-deleteAll">Delete
@@ -73,14 +73,14 @@
                                 <input type="checkbox" class="form-check-input" name="id" value="{{ $user->id }}">
                             </td>
                             <td class="align-middle"><a
-                                    href="/admin/users/details/{{ $user->id }}">{{ $user->name }}</a></td>
+                                    href="/admin/customers/details/{{ $user->id }}">{{ $user->name }}</a></td>
                             <td class="align-middle">{{ $user->email }}</td>
                             <td class="align-middle">{{ $user->phone }}</td>
                             <td class="align-middle">
                                 {{ array_search($user->status, $user_status) }}
                             </td>
                             <td class="text-center align-middle">
-                                <a class="btn btn-warning" href="/admin/users/edit/{{ $user->id }}">
+                                <a class="btn btn-warning" href="/admin/customers/edit/{{ $user->id }}">
                                     <i class="fas fa-pen"></i>
                                 </a>
                                 <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
