@@ -86,8 +86,8 @@
                                     <a href="/admin/products/details/{{ $product->id }}" class="row align-items-center">
                                         @foreach ($product->images as $image)
                                             @if ($image->pin)
-                                                <img src="{{ asset('storage/' . $image->thumbnail) }}"
-                                                    class="float-left table-img" alt="">
+                                                <img src="{{ asset($image->thumbnail) }}" class="float-left table-img"
+                                                    alt="">
                                             @break
                                         @endif
                                     @endforeach
