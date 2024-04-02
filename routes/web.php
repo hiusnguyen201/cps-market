@@ -13,7 +13,6 @@ use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\CustomerController;
 use App\Http\Controllers\Web\SpecificationController;
-use App\Models\Specification;
 
 /*
 |--------------------------------------------------------------------------
