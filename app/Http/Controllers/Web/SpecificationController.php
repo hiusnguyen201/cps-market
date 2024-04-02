@@ -11,7 +11,7 @@ use App\Models\Specification;
 
 class SpecificationController extends Controller
 {
-    public function create(Category $category)
+    public function add(Category $category)
     {
         return view('admin.specifications.create', [
             'breadcumbs' => [
@@ -23,7 +23,7 @@ class SpecificationController extends Controller
         ]);
     }
 
-    public function handleCreate(SpecificationRequest $request)
+    public function handleAdd(SpecificationRequest $request)
     {
         try {
             $specification = Specification::create([

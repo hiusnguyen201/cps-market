@@ -58,9 +58,9 @@
                         </div>
 
                         <div class="form-group row align-items-center">
-                            <label class="col-sm-4 col-form-label">Market Price:</label>
+                            <label class="col-sm-4 col-form-label">Sale Price:</label>
                             <div class="col-sm-8">
-                                {{ $product->market_price }}
+                                {{ $product->sale_price }}
                             </div>
                         </div>
 

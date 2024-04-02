@@ -8,7 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Models\Product;
-use App\Models\Category;
+use App\Models\Product_Attribute;
+use App\Models\Attribute;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Product_Images;
 use Illuminate\Support\Str;
@@ -18,11 +19,10 @@ class ProductController extends Controller
     public function create(ProductRequest $request)
     {
         try {
-
             $product = Product::create([
                 'name' => $request->name,
                 'price' => $request->price,
-                'market_price' => $request->market_price,
+                'sale_price' => $request->sale_price,
                 'quantity' => $request->quantity,
                 'description' => $request->description,
                 'brand_id' => $request->brand,
@@ -51,11 +51,28 @@ class ProductController extends Controller
                 }
             }
 
+            foreach($request->attribute_ids as $index => $id) {
+                $attribute = Attribute::find($id);
+                if(!$attribute) {
+                    return response()->json([
+                        'message' => "Attribute not found"], 404);
+                }
+
+                if($request->attribute_values[$index]) {
+                    Product_Attribute::create([
+                        'product_id' => $product->id,
+                        'attribute_id' => $attribute->id,
+                        'value' => $request->attribute_values[$index]
+                    ]);
+                }
+            }
+
             return response()->json([
                 'message' => 'Create product successfully',
                 'data' => $product,
             ], 200);
         } catch (\Exception $err) {
+            error_log($err);
             return response()->json([
                 'message' => 'Server Error',
                 'error' => $err
@@ -70,7 +87,7 @@ class ProductController extends Controller
             $product->update([
                 'name' => $request->name,
                 'price' => $request->price,
-                'market_price' => $request->market_price,
+                'sale_price' => $request->sale_price,
                 'quantity' => $request->quantity,
                 'description' => $request->description,
                 'brand_id' => $request->brand,

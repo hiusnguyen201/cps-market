@@ -30,19 +30,51 @@ selectFormCategory.change(async (e) => {
     const selectFormBrand = $("select#product[name='brand']");
 
     $.ajax({
-        url: `/api/categories/${selectedOption[0].value}/brands`,
+        url: `/api/categories/${selectedOption[0].value}/attributes`,
         type: "GET",
         success: (data) => {
-            const { brands } = data;
+            const { brands, specifications } = data;
             const firstOption = selectFormBrand.find("option")[0];
             selectFormBrand.empty();
             selectFormBrand.append(firstOption);
+
+            let brandsHtml = `<option value=''>Please select</option>`;
             brands.forEach((brand) => {
-                selectFormBrand.append(
-                    `<option value='${brand.id}'>${brand.name}</option>`
-                );
+                brandsHtml += `<option value='${brand.id}'>${brand.name}</option>`;
             });
             activeCards(cardArr);
+
+            let attributesHtml = `<div class='col-6 d-flex mb-3'>
+                        <div class="col-3"><span class="mt-2">Brand</span><span class="required-text ml-1">*</span></div>
+                        <div class="col-7">
+                            <div class="input-group">
+                                <select id="product" name="brand" class="form-control">
+                                    ${brandsHtml}
+                                </select>
+                            </div>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>`;
+
+            specifications.forEach((spec) => {
+                spec.attributes.forEach((attribute) => {
+                    attributesHtml += `
+                    <div class='col-6 d-flex mb-3'>
+                        <div class="col-3">${attribute.key}</div>
+                        <div class="col-7">
+                            <div class="input-group">
+                                <input class='form-control' name='attribute_values[]' placeholder='Please enter...'>
+                                <input hidden name='attribute_ids[]' value='${attribute.id}'>
+                            </div>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+                    `;
+                });
+            });
+
+            $("#specification").find("div.input-block").html(``);
+            $("#specification").find("div.input-block").append(attributesHtml);
         },
         error: (err) => {
             inactiveCards(cardArr);
@@ -109,7 +141,6 @@ formElement.find("button[type='submit']").click((e) => {
         },
         error: (err) => {
             const { error, message } = err?.responseJSON;
-            console.log(error);
             if (err.status == 422) {
                 Toastify({
                     text: message,

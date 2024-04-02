@@ -875,10 +875,10 @@
                                     @foreach ($products as $product)
                                         <div class="col-lg-4 col-md-6 col-sm-6">
                                             <div class="product-m">
-                                                @if ($product->price - $product->market_price > 0)
+                                                @if ($product->price - $product->sale_price > 0)
                                                     <span class="product-bs__discount-label">
                                                         <span class="product-bs__discount-percent">SALE
-                                                            {{ round((($product->price - $product->market_price) * 100) / $product->price, 0) }}%</span>
+                                                            {{ round((($product->price - $product->sale_price) * 100) / $product->price, 0) }}%</span>
                                                     </span>
                                                 @endif
                                                 <div class="product-m__thumb">
@@ -916,7 +916,7 @@
                                                     <span class="product-m__review">(23)</span>
                                                 </div>
                                                 <div class="product-m__price"> <span
-                                                        class="product-bs__price">{{ number_format($product->market_price, 0, ',', '.') }}&nbsp;₫
+                                                        class="product-bs__price">{{ number_format($product->sale_price, 0, ',', '.') }}&nbsp;₫
                                                         <span
                                                             class="product-bs__discount">{{ number_format($product->price, 0, ',', '.') }}&nbsp;₫</span>
                                                     </span></div>

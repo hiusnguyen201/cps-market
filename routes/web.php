@@ -67,9 +67,10 @@ Route::prefix('admin')->group(function () {
         Route::patch('/edit/{category}', [CategoryController::class, 'handleUpdate']);
         Route::delete('/', [CategoryController::class, 'handleDelete']);
 
+        // Specifications
         Route::prefix('{category}/specifications')->group(function () {
-            Route::get('/create', [SpecificationController::class, 'create']);
-            Route::post('/create', [SpecificationController::class, 'handleCreate']);
+            Route::get('/add', [SpecificationController::class, 'add']);
+            Route::post('/add', [SpecificationController::class, 'handleAdd']);
             Route::get('/edit/{specification}', [SpecificationController::class, 'edit']);
             Route::patch('/edit/{specification}', [SpecificationController::class, 'handleUpdate']);
             Route::delete('/', [SpecificationController::class, 'handleDelete']);

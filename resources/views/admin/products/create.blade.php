@@ -90,17 +90,8 @@
             <span class="font-weight-bold title-create mb-2">Specification</span>
             <span class="inactive-text">Available only after you select a product category</span>
             <div id="specification" class="card-body hide">
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Brand</span><span class="required-text ml-1">*</span>
-                    </div>
-                    <div class="col-7">
-                        <div class="input-group">
-                            <select id="product" name="brand" class="form-control">
-                                <option value="">Please select</option>
-                            </select>
-                        </div>
-                        <span class="error-message"></span>
-                    </div>
+                <div class="row align-items-start input-block mb-3">
+
                 </div>
             </div>
         </div>
@@ -110,20 +101,6 @@
             <span class="inactive-text">Available only after you select a product category</span>
             <div id="sales" class="card-body hide">
                 <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Market Price</span><span class="required-text ml-1">*</span>
-                    </div>
-                    <div class="col-7">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">₫</div>
-                            </div>
-                            <input id="product" type="number" name="market_price" class="form-control">
-                        </div>
-                        <span class="error-message"></span>
-                    </div>
-                </div>
-
-                <div class="row align-items-start input-block">
                     <div class="col-3"><span class="mt-2">Price</span><span class="required-text ml-1">*</span>
                     </div>
                     <div class="col-7">
@@ -132,6 +109,20 @@
                                 <div class="input-group-text">₫</div>
                             </div>
                             <input id="product" type="number" name="price" class="form-control">
+                        </div>
+                        <span class="error-message"></span>
+                    </div>
+                </div>
+
+                <div class="row align-items-start input-block">
+                    <div class="col-3"><span class="mt-2">Sale Price</span>
+                    </div>
+                    <div class="col-7">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">₫</div>
+                            </div>
+                            <input id="product" type="number" name="sale_price" class="form-control">
                         </div>
                         <span class="error-message"></span>
                     </div>

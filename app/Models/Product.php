@@ -17,7 +17,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'price',
-        'market_price',
+        'sale_price',
         'quantity',
         'sold',
         'description',
@@ -34,7 +34,7 @@ class Product extends Model
     protected $casts = [
         'name' => "string",
         'price' => "integer",
-        "market_price" => "integer",
+        "sale_price" => "integer",
         "quantity" => "integer",
         "sold" => "integer",
         "description" => "string",
@@ -54,5 +54,10 @@ class Product extends Model
     public function images(): HasMany
     {
         return $this->hasMany(Product_Images::class);
+    }
+
+    public function attributes(): HasMany
+    {
+        return $this->hasMany(Attribute::class);
     }
 }

@@ -83,10 +83,10 @@
                                 <div class="pd-detail__inline">
 
                                     <span
-                                        class="pd-detail__price">{{ number_format($product->market_price, 0, ',', '.') }}&nbsp;₫</span>
-                                    @if ($product->price - $product->market_price > 0)
+                                        class="pd-detail__price">{{ number_format($product->sale_price, 0, ',', '.') }}&nbsp;₫</span>
+                                    @if ($product->price - $product->sale_price > 0)
                                         <span
-                                            class="pd-detail__discount">({{ round((($product->price - $product->market_price) * 100) / $product->price, 0) }}%
+                                            class="pd-detail__discount">({{ round((($product->price - $product->sale_price) * 100) / $product->price, 0) }}%
                                             OFF)
                                         </span>
                                     @endif

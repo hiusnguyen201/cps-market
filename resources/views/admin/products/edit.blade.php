@@ -165,20 +165,6 @@
             @endif
             <div id="sales" class="card-body {{ old('category') ?? $product->category_id ? '' : 'hide' }}">
                 <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Market Price</span><span class="required-text ml-1">*</span>
-                    </div>
-                    <div class="col-7">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">₫</div>
-                            </div>
-                            <input id="product" type="number" name="market_price" class="form-control"
-                                value="{{ old('market_price') ?? $product->market_price }}">
-                        </div>
-                        <span class="error-message"></span>
-                    </div>
-                </div>
-                <div class="row align-items-start input-block">
                     <div class="col-3"><span class="mt-2">Price</span><span class="required-text ml-1">*</span>
                     </div>
                     <div class="col-7">
@@ -188,6 +174,19 @@
                             </div>
                             <input id="product" type="number" name="price" class="form-control"
                                 value="{{ old('price') ?? $product->price }}">
+                        </div>
+                        <span class="error-message"></span>
+                    </div>
+                </div>
+                <div class="row align-items-start input-block">
+                    <div class="col-3"><span class="mt-2">Sale price</span></div>
+                    <div class="col-7">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">₫</div>
+                            </div>
+                            <input id="product" type="number" name="sale_price" class="form-control"
+                                value="{{ old('sale_price') ?? $product->sale_price }}">
                         </div>
 
                         <span class="error-message"></span>
