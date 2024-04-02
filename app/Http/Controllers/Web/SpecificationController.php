@@ -15,8 +15,8 @@ class SpecificationController extends Controller
     {
         return view('admin.specifications.create', [
             'breadcumbs' => [
-                'titles' => ['Categories', 'Create'],
-                'title_links' => ["/admin/categories"]
+                'titles' => ['Categories', 'Details', "Specifications"],
+                'title_links' => ["/admin/categories", "/admin/categories/details/".$category->id]
             ],
             'title' => 'Create Specification',
             'category' => $category,
@@ -54,7 +54,7 @@ class SpecificationController extends Controller
         return view('admin.specifications.edit', [
             'category' => $category,
             'specification' => $specification,
-            'breadcumbs' => ['titles' => ['Categories', 'Edit'], 'title_links' => ["/admin/categories"]],
+            'breadcumbs' => ['titles' => ['Categories', 'Details', "Specifications"], 'title_links' => ["/admin/categories", "/admin/categories/details/".$category->id]],
             'title' => 'Edit Specification'
         ]);
     }
