@@ -31,4 +31,9 @@ class Category extends Model
     {
         return $this->belongsToMany(Brand::class, 'categories_brands', 'category_id', 'brand_id');
     }
+
+    public function specifications()
+    {
+        return $this->hasMany(Specification::class);
+    }
 }
