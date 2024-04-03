@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Attribute as ModelsAttribute;
-use Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,6 +33,6 @@ class Specification extends Model
 
     public function attributes()
     {
-        return $this->hasMany(ModelsAttribute::class);
+        return $this->hasMany(Attribute::class);
     }
 }

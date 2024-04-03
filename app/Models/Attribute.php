@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Attribute extends Model
 {
@@ -26,8 +27,13 @@ class Attribute extends Model
         'key' => "string",
     ];
 
-    public function specification()
+    public function specification():BelongsTo
     {
         return $this->belongsTo(Specification::class);
+    }
+
+    public function products_attributes()
+    {
+        return $this->hasMany(Product_Attribute::class);
     }
 }

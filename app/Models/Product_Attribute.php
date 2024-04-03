@@ -27,4 +27,14 @@ class Product_Attribute extends Model
         'product_id' => "integer",
         "value" => "string",
     ];
+
+     public function attribute()
+    {
+        return $this->belongsTo(Attribute::class);
+    }
+
+     public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

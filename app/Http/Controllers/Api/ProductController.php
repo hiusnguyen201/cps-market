@@ -53,11 +53,6 @@ class ProductController extends Controller
 
             foreach($request->attribute_ids as $index => $id) {
                 $attribute = Attribute::find($id);
-                if(!$attribute) {
-                    return response()->json([
-                        'message' => "Attribute not found"], 404);
-                }
-
                 if($request->attribute_values[$index]) {
                     Product_Attribute::create([
                         'product_id' => $product->id,
@@ -107,6 +102,8 @@ class ProductController extends Controller
 
             // Delete product image 
             Product_Images::where("product_id", $product->id)->delete();
+            // Delete value attributes
+            Product_Attribute::where("product_id", $product->id)->delete();
 
             // Create product images
             $encrypted_id = Crypt::encryptString($product->id);
@@ -126,6 +123,17 @@ class ProductController extends Controller
                     Product_Images::create([
                         'thumbnail' => $product_image_path,
                         'product_id' => $product->id,
+                    ]);
+                }
+            }
+
+            foreach($request->attribute_ids as $index => $id) {
+                $attribute = Attribute::find($id);
+                if($request->attribute_values[$index]) {
+                    Product_Attribute::create([
+                        'product_id' => $product->id,
+                        'attribute_id' => $attribute->id,
+                        'value' => $request->attribute_values[$index]
                     ]);
                 }
             }
