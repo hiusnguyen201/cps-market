@@ -100,7 +100,7 @@
 
                                                     <td class="customtd3">
                                                         <span
-                                                            class="table-p__price">{{ number_format($cart->product->market_price, 0, ',', '.') }}&nbsp;₫</span>
+                                                            class="table-p__price">{{ number_format($cart->product->sale_price, 0, ',', '.') }}&nbsp;₫</span>
                                                     </td>
 
                                                     <td>
@@ -187,12 +187,12 @@
                                                     <span class="table-p__price"
                                                         style="color: #ff4500; text-decoration: line-through;">{{ number_format($cart->product->price, 0, ',', '.') }}&nbsp;₫</span>
                                                     <span
-                                                        class="table-p__price customtd">{{ number_format($cart->product->market_price, 0, ',', '.') }}&nbsp;₫</span>
+                                                        class="table-p__price customtd">{{ number_format($cart->product->sale_price, 0, ',', '.') }}&nbsp;₫</span>
                                                 </td>
 
                                                 <td class="customtd3">
                                                     <span
-                                                        class="table-p__price">{{ number_format($cart->product->market_price, 0, ',', '.') }}&nbsp;₫</span>
+                                                        class="table-p__price">{{ number_format($cart->product->sale_price, 0, ',', '.') }}&nbsp;₫</span>
                                                 </td>
 
                                                 <td>

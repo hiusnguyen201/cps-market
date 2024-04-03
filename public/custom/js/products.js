@@ -30,19 +30,46 @@ selectFormCategory.change(async (e) => {
     const selectFormBrand = $("select#product[name='brand']");
 
     $.ajax({
-        url: `/api/categories/${selectedOption[0].value}/brands`,
+        url: `/api/categories/${selectedOption[0].value}/attributes`,
         type: "GET",
         success: (data) => {
-            const { brands } = data;
+            const { brands, specifications } = data;
             const firstOption = selectFormBrand.find("option")[0];
             selectFormBrand.empty();
             selectFormBrand.append(firstOption);
+
+            let brandsHtml = `<option value=''>Please select</option>`;
             brands.forEach((brand) => {
-                selectFormBrand.append(
-                    `<option value='${brand.id}'>${brand.name}</option>`
-                );
+                brandsHtml += `<option value='${brand.id}'>${brand.name}</option>`;
             });
             activeCards(cardArr);
+
+            let attributesHtml = `<div class='col-6 d-flex mb-3'>
+                        <div class="col-4"><span>Brand</span><span class="required-text ml-1">*</span></div>
+                        <div class="col-8 input-product_form">
+                            <div class="input-group">
+                                <select id="product" name="brand" class="form-control">
+                                    ${brandsHtml}
+                                </select>
+                            </div>
+                        </div>
+                    </div>`;
+
+            specifications.forEach((spec) => {
+                spec.attributes.forEach((attribute, index) => {
+                    attributesHtml += `<div class='col-6 d-flex mb-3'>
+                        <div class="col-4"><span>${attribute.key}</span></div>
+                        <div class="col-8 input-product_form">
+                            <input id='product' hidden name='attribute_ids[]' value='${attribute.id}'>
+                            <input id='product' class='form-control' name='attribute_values[]' placeholder='Please enter...'>
+                        </div>
+                    </div>
+                    `;
+                });
+            });
+
+            $("#specification").find("div.input-block").html("");
+            $("#specification").find("div.input-block").append(attributesHtml);
         },
         error: (err) => {
             inactiveCards(cardArr);
@@ -61,25 +88,39 @@ const enableInputs = (formElement) => {
 };
 
 const printAllMessage = (inputArr, errors) => {
-    for (const [key, value] of Object.entries(errors)) {
-        if (key.includes(".")) {
-            const newKey = key.split(".")[0] + "[]";
-            errors[newKey] = value;
-        }
-    }
+    let i = 0,
+        oldName = [];
+    inputArr.each(async (index, input) => {
+        if (input.name.includes("[]")) {
+            oldName.push(input.name);
 
-    inputArr.each((index, input) => {
+            const index =
+                oldName.filter((item) => input.name == item).length - 1;
+
+            input.name = input.name.split("[]")[0] + `.${index}`;
+            i++;
+        }
+
         let parent = input;
-        while (!parent.classList.contains("col-7")) {
+        while (!parent.classList.contains("input-product_form")) {
             parent = parent.parentNode;
         }
 
         const existSpan = parent.querySelector(".error-message");
+        if (existSpan) existSpan.remove();
+
         if (input.name in errors) {
             const message = errors[input.name];
-            existSpan.innerHTML = message[0];
-        } else {
-            existSpan.innerHTML = "";
+
+            const span = document.createElement("span");
+            span.classList.add("error-message");
+            span.innerHTML = message[0];
+
+            parent.appendChild(span);
+        }
+
+        if (input.name.includes(".")) {
+            input.name = input.name.split(".")[0] + "[]";
         }
     });
 };
@@ -108,8 +149,8 @@ formElement.find("button[type='submit']").click((e) => {
             window.location.reload();
         },
         error: (err) => {
-            const { error, message } = err?.responseJSON;
-            console.log(error);
+            const { errors, message } = err?.responseJSON;
+            console.log(errors);
             if (err.status == 422) {
                 Toastify({
                     text: message,
@@ -125,7 +166,7 @@ formElement.find("button[type='submit']").click((e) => {
 
                 printAllMessage(
                     $("input#product, select#product, textarea#product"),
-                    error
+                    errors
                 );
             }
         },

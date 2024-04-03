@@ -12,6 +12,7 @@ use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\CustomerController;
+use App\Http\Controllers\Web\SpecificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,15 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{category}', [CategoryController::class, 'edit']);
         Route::patch('/edit/{category}', [CategoryController::class, 'handleUpdate']);
         Route::delete('/', [CategoryController::class, 'handleDelete']);
+
+        // Specifications
+        Route::prefix('{category}/specifications')->group(function () {
+            Route::get('/add', [SpecificationController::class, 'add']);
+            Route::post('/add', [SpecificationController::class, 'handleAdd']);
+            Route::get('/edit/{specification}', [SpecificationController::class, 'edit']);
+            Route::patch('/edit/{specification}', [SpecificationController::class, 'handleUpdate']);
+            Route::delete('/', [SpecificationController::class, 'handleDelete']);
+        });
     });
 
     // Products

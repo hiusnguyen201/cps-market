@@ -146,10 +146,10 @@
                         <div class="swiper-wrapper">
                             @foreach ($section as $product)
                                 <div class="swiper-slide">
-                                    @if ($product->price - $product->market_price > 0)
+                                    @if ($product->price - $product->sale_price > 0)
                                         <span class="product-bs__discount-label">
                                             <span class="product-bs__discount-percent">SALE
-                                                {{ round((($product->price - $product->market_price) * 100) / $product->price, 0) }}%</span>
+                                                {{ round((($product->price - $product->sale_price) * 100) / $product->price, 0) }}%</span>
                                         </span>
                                     @endif
                                     <div class="product-bs">
@@ -181,7 +181,7 @@
                                             </div>
 
                                             <span
-                                                class="product-bs__price">{{ number_format($product->market_price, 0, ',', '.') }}&nbsp;₫
+                                                class="product-bs__price">{{ number_format($product->sale_price, 0, ',', '.') }}&nbsp;₫
                                                 <span
                                                     class="product-bs__discount">{{ number_format($product->price, 0, ',', '.') }}&nbsp;₫</span>
                                             </span>
@@ -230,7 +230,7 @@
                                             <a
                                                 href="/{{ $section9D->category->slug }}/{{ $section9D->brand->slug }}/{{ $section9D->slug }}.html">{{ $section9D->name }}</a></span>
                                         <span
-                                            class="product-l__price">{{ number_format($section9D->market_price, 0, ',', '.') }}&nbsp;₫</span>
+                                            class="product-l__price">{{ number_format($section9D->sale_price, 0, ',', '.') }}&nbsp;₫</span>
                                     </div>
                                 </div>
                             </li>
@@ -269,7 +269,7 @@
                                             href="/{{ $section9W->category->slug }}/{{ $section9W->brand->slug }}/{{ $section9W->slug }}.html">{{ $section9W->name }}</a></span>
 
                                     <span
-                                        class="product-l__price">{{ number_format($section9W->market_price, 0, ',', '.') }}&nbsp;₫</span>
+                                        class="product-l__price">{{ number_format($section9W->sale_price, 0, ',', '.') }}&nbsp;₫</span>
                                 </div>
                             </div>
                         </li>
@@ -306,7 +306,7 @@
                                     <a
                                         href="/{{ $section9M->category->slug }}/{{ $section9M->brand->slug }}/{{ $section9M->slug }}.html">{{ $section9M->name }}</a></span>
                                 <span
-                                    class="product-l__price">{{ number_format($section9M->market_price, 0, ',', '.') }}&nbsp;₫</span>
+                                    class="product-l__price">{{ number_format($section9M->sale_price, 0, ',', '.') }}&nbsp;₫</span>
                             </div>
                         </div>
                     </li>

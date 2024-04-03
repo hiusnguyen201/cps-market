@@ -130,6 +130,7 @@
     <script defer src="{{ asset('custom/js/message.js') }}"></script>
     <script defer src="{{ asset('custom/js/selectMultiFile.js') }}"></script>
     <script defer src="{{ asset('custom/js/products.js') }}"></script>
+    <script defer src="{{ asset('custom/js/specifications.js') }}"></script>
 </body>
 
 </html>
