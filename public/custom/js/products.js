@@ -45,35 +45,30 @@ selectFormCategory.change(async (e) => {
             activeCards(cardArr);
 
             let attributesHtml = `<div class='col-6 d-flex mb-3'>
-                        <div class="col-3"><span class="mt-2">Brand</span><span class="required-text ml-1">*</span></div>
-                        <div class="col-7">
+                        <div class="col-4"><span>Brand</span><span class="required-text ml-1">*</span></div>
+                        <div class="col-8 input-product_form">
                             <div class="input-group">
                                 <select id="product" name="brand" class="form-control">
                                     ${brandsHtml}
                                 </select>
                             </div>
-                            <span class="error-message"></span>
                         </div>
                     </div>`;
 
             specifications.forEach((spec) => {
-                spec.attributes.forEach((attribute) => {
-                    attributesHtml += `
-                    <div class='col-6 d-flex mb-3'>
-                        <div class="col-3">${attribute.key}</div>
-                        <div class="col-7">
-                            <div class="input-group">
-                                <input class='form-control' name='attribute_values[]' placeholder='Please enter...'>
-                                <input hidden name='attribute_ids[]' value='${attribute.id}'>
-                            </div>
-                            <span class="error-message"></span>
+                spec.attributes.forEach((attribute, index) => {
+                    attributesHtml += `<div class='col-6 d-flex mb-3'>
+                        <div class="col-4"><span>${attribute.key}</span></div>
+                        <div class="col-8 input-product_form">
+                            <input id='product' hidden name='attribute_ids[]' value='${attribute.id}'>
+                            <input id='product' class='form-control' name='attribute_values[]' placeholder='Please enter...'>
                         </div>
                     </div>
                     `;
                 });
             });
 
-            $("#specification").find("div.input-block").html(``);
+            $("#specification").find("div.input-block").html("");
             $("#specification").find("div.input-block").append(attributesHtml);
         },
         error: (err) => {
@@ -93,25 +88,39 @@ const enableInputs = (formElement) => {
 };
 
 const printAllMessage = (inputArr, errors) => {
-    for (const [key, value] of Object.entries(errors)) {
-        if (key.includes(".")) {
-            const newKey = key.split(".")[0] + "[]";
-            errors[newKey] = value;
-        }
-    }
+    let i = 0,
+        oldName = [];
+    inputArr.each(async (index, input) => {
+        if (input.name.includes("[]")) {
+            oldName.push(input.name);
 
-    inputArr.each((index, input) => {
+            const index =
+                oldName.filter((item) => input.name == item).length - 1;
+
+            input.name = input.name.split("[]")[0] + `.${index}`;
+            i++;
+        }
+
         let parent = input;
-        while (!parent.classList.contains("col-7")) {
+        while (!parent.classList.contains("input-product_form")) {
             parent = parent.parentNode;
         }
 
         const existSpan = parent.querySelector(".error-message");
+        if (existSpan) existSpan.remove();
+
         if (input.name in errors) {
             const message = errors[input.name];
-            existSpan.innerHTML = message[0];
-        } else {
-            existSpan.innerHTML = "";
+
+            const span = document.createElement("span");
+            span.classList.add("error-message");
+            span.innerHTML = message[0];
+
+            parent.appendChild(span);
+        }
+
+        if (input.name.includes(".")) {
+            input.name = input.name.split(".")[0] + "[]";
         }
     });
 };
@@ -140,7 +149,7 @@ formElement.find("button[type='submit']").click((e) => {
             window.location.reload();
         },
         error: (err) => {
-            const { error, message } = err?.responseJSON;
+            const { errors, message } = err?.responseJSON;
             if (err.status == 422) {
                 Toastify({
                     text: message,
@@ -156,7 +165,7 @@ formElement.find("button[type='submit']").click((e) => {
 
                 printAllMessage(
                     $("input#product, select#product, textarea#product"),
-                    error
+                    errors
                 );
             }
         },

@@ -13,17 +13,16 @@
             <div class="card-body">
                 <div class="row align-items-start input-block">
                     <div class="col-3"><span class="mt-2">Name</span><span class="required-text ml-1">*</span></div>
-                    <div class="col-7">
+                    <div class="col-7 input-product_form">
                         <div class="input-group">
                             <input id="product" type="text" name="name" class="form-control"
                                 placeholder="Enter product name..." value="">
                         </div>
-                        <span class="error-message"></span>
                     </div>
                 </div>
                 <div class="row align-items-start input-block">
                     <div class="col-3"><span class="mt-2">Product images</span></div>
-                    <div class="col-7">
+                    <div class="col-7 input-product_form">
                         <div class="multiple-input_block">
                             <div class="input-file_block">
                                 <img hidden class="input-file_image" src="" alt="">
@@ -36,14 +35,13 @@
                                 </div>
                             </div>
                         </div>
-                        <span class="error-message"></span>
                     </div>
                 </div>
 
                 <div class="row align-items-start input-block">
                     <div class="col-3"><span class="mt-2"><span>Promotion Image</span><span
                                 class="required-text ml-1">*</span></span></div>
-                    <div class="col-7">
+                    <div class="col-7 input-product_form">
                         <div class="input-file_block">
                             <img hidden class="input-file_image" src="" alt="">
                             <i class="far fa-file-image"></i>
@@ -53,14 +51,13 @@
                                 <i class="fas fa-trash"></i>
                             </div>
                         </div>
-                        <span class="error-message"></span>
                     </div>
                 </div>
 
                 <div class="row align-items-start input-block">
                     <div class="col-3"><span class="mt-2">Category</span><span class="required-text ml-1">*</span>
                     </div>
-                    <div class="col-7">
+                    <div class="col-7 input-product_form">
                         <div class="input-group">
                             <select id="product" name="category" class="form-control create_product">
                                 <option value="">Please set category</option>
@@ -71,16 +68,14 @@
                                 @endif
                             </select>
                         </div>
-                        <span class="error-message"></span>
                     </div>
                 </div>
                 <div class="row align-items-start input-block">
                     <div class="col-3"><span class="mt-2">Description</span></div>
-                    <div class="col-7">
+                    <div class="col-7 input-product_form">
                         <div class="input-group">
                             <textarea id="product" style="resize: none" name="description" class="form-control" cols="30" rows="8"></textarea>
                         </div>
-                        <span class="error-message"></span>
                     </div>
                 </div>
             </div>
@@ -90,7 +85,7 @@
             <span class="font-weight-bold title-create mb-2">Specification</span>
             <span class="inactive-text">Available only after you select a product category</span>
             <div id="specification" class="card-body hide">
-                <div class="row align-items-start input-block mb-3">
+                <div class="row align-items-start input-block">
 
                 </div>
             </div>
@@ -103,39 +98,36 @@
                 <div class="row align-items-start input-block">
                     <div class="col-3"><span class="mt-2">Price</span><span class="required-text ml-1">*</span>
                     </div>
-                    <div class="col-7">
+                    <div class="col-7 input-product_form">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">₫</div>
                             </div>
                             <input id="product" type="number" name="price" class="form-control">
                         </div>
-                        <span class="error-message"></span>
                     </div>
                 </div>
 
                 <div class="row align-items-start input-block">
                     <div class="col-3"><span class="mt-2">Sale Price</span>
                     </div>
-                    <div class="col-7">
+                    <div class="col-7 input-product_form">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">₫</div>
                             </div>
                             <input id="product" type="number" name="sale_price" class="form-control">
                         </div>
-                        <span class="error-message"></span>
                     </div>
                 </div>
 
                 <div class="row align-items-start input-block">
                     <div class="col-3"><span class="mt-2">Quantity</span><span class="required-text ml-1">*</span>
                     </div>
-                    <div class="col-7">
+                    <div class="col-7 input-product_form">
                         <div class="input-group">
                             <input id="product" type="number" name="quantity" class="form-control" value="0">
                         </div>
-                        <span class="error-message"></span>
                     </div>
                 </div>
             </div>

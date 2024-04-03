@@ -50,6 +50,10 @@ class ProductRequest extends FormRequest
                 'mimetypes:image/jpeg,image/png',
                 'max:10000',
             ],
+            "attribute_ids" => "required|array",
+            "attribute_ids.*" => "required|integer|min:1",
+            "attribute_values" => "array",
+            "attribute_values.*" => "nullable|string|max:300",
         ];
     }
 
@@ -90,6 +94,15 @@ class ProductRequest extends FormRequest
             "product_images.*.mimes" => ":attribute must be image in position :position",
             "product_images.*.mimetypes" => ":attribute must be image in position :position",
             "product_images.*.max" => ":attribute exceeds :max KB in position :position",
+            "attribute_ids.required" => ":attribute is required",
+            "attribute_ids.array" => ":attribute is invalid",
+            "attribute_ids.*.required" => ":attribute is required in position :position",
+            "attribute_ids.*.integer" => ":attribute is not found in position :position",
+            "attribute_ids.*.min" => ":attribute is not found in position :position",
+            "attribute_ids.*.exists" => ":attribute is not found in position :position",
+            "attribute_values.array" => ":attribute is invalid",
+            "attribute_values.*.string" => ":attribute is invalid",
+            "attribute_values.*.max" => ":attribute has invalid length, max is :max",
         ];
     }
     public function attributes()
@@ -104,7 +117,11 @@ class ProductRequest extends FormRequest
             "description" => "Description",
             "promotion_image" => "Promotion image",
             "product_images" => "Product images",
-            "product_images.*" => "Product images"
+            "product_images.*" => "Product images",
+            "attribute_ids" => "Attribute",
+            "attribute_ids.*" => "Attribute",
+            "attribute_values" => "Attribute value",
+            "attribute_values.*" => "Attribute value",
         ];
     }
 
@@ -114,7 +131,7 @@ class ProductRequest extends FormRequest
 
         $response = response()->json([
             'message' => 'Invalid data',
-            'error' => $errors->messages(),
+            'errors' => $errors->messages(),
         ], 422);
 
         throw new HttpResponseException($response);
