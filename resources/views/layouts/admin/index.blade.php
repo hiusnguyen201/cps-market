@@ -39,6 +39,12 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+    @if (session('success'))
+        <input hidden type="text" name="message-success" value="{{ session('success') }}">
+    @endif
+    @if (session('error'))
+        <input hidden type="text" name="message-error" value="{{ session('error') }}">
+    @endif
     <div class="wrapper">
         <!-- Navbar -->
         @include('layouts.admin.parts.navbar')
@@ -130,6 +136,7 @@
     <script defer src="{{ asset('custom/js/message.js') }}"></script>
     <script defer src="{{ asset('custom/js/selectMultiFile.js') }}"></script>
     <script defer src="{{ asset('custom/js/products.js') }}"></script>
+    <script defer src="{{ asset('custom/js/specifications.js') }}"></script>
 </body>
 
 </html>

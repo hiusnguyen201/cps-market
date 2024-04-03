@@ -3,36 +3,20 @@
             <!--====== Nav  ======-->
             <nav class="secondary-nav-wrapper">
                 <div class="container">
-
                     <!--====== Secondary Nav ======-->
                     <div class="secondary-nav">
-
-                        <!--====== Main Logo ======-->
-
-                        <a href="/">
-                            <img src="images/logo/logo-1.png" alt="">
-                            <span>THIS IS LOGO</span>
-                        </a>
-                        <!--====== End - Main Logo ======-->
-
-                        <!--====== Dropdown Main plugin ======-->
                         <div class="menu-init" id="navigation2">
-
-                            <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-cog"
-                                type="button"></button>
-
                             <!--====== Menu ======-->
                             <div class="ah-lg-mode">
-
                                 <span class="ah-close">✕ Close</span>
-
-                                <!--====== List ======-->
                                 <ul class="ah-list ah-list--design2 ah-list--link-color-secondary">
                                     <li>
-                                        <a href="/">HOME</a>
+                                        <a href="/">
+                                            <img src="" alt="">
+                                            <span>LOGO</span>
+                                        </a>
                                     </li>
                                     <li>
-                                        <!--====== List ======-->
                                         <ul class="ah-list">
                                             <li class="has-dropdown">
                                                 <!--====== Mega Menu ======-->
@@ -46,20 +30,16 @@
                                                                 @foreach ($categories as $index => $category)
                                                                     <li
                                                                         class="js {{ $index == 0 ? 'js-active' : '' }} ">
-                                                                        <a href="/category/{{ $category->slug }}.html">
+                                                                        <a href="/{{ $category->slug }}.html">
                                                                             <span>{{ $category->name }}</span>
                                                                         </a>
                                                                         <span
                                                                             class="js-menu-toggle js-toggle-mark"></span>
                                                                     </li>
                                                                 @endforeach
-
-
-
                                                             </ul>
                                                         </div>
 
-                                                        <!--====== Phone ======-->
                                                         @foreach ($categories as $index => $category)
                                                             <div
                                                                 class="mega-menu-content {{ $index == 0 ? 'js-active' : '' }} ">
@@ -76,7 +56,7 @@
                                                                             @foreach ($category->brands as $brand)
                                                                                 <li>
                                                                                     <a
-                                                                                        href="/brand/{{ $brand->slug }}.html">{{ $brand->name }}</a>
+                                                                                        href="/{{ $category->name }}/{{ $brand->slug }}.html">{{ $brand->name }}</a>
                                                                                 </li>
                                                                             @endforeach
 
@@ -146,328 +126,26 @@
                                                                 <!--====== End - Mega Menu Row ======-->
                                                             </div>
                                                         @endforeach
-                                                        <!--====== End - Phone ======-->
 
                                                     </div>
                                                 </div>
                                                 <!--====== End - Mega Menu ======-->
                                             </li>
                                         </ul>
-                                        <!--====== End - List ======-->
-                                    </li>
-                                    <li class="has-dropdown">
-
-                                        <a>PAGES<i class="fas fa-angle-down u-s-m-l-6"></i></a>
-
-                                        <!--====== Dropdown ======-->
-
-                                        <span class="js-menu-toggle"></span>
-                                        <ul style="width:170px">
-                                            <li class="has-dropdown has-dropdown--ul-left-100">
-
-                                                <a>Home<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
-
-                                                <!--====== Dropdown ======-->
-
-                                                <span class="js-menu-toggle"></span>
-                                                <ul style="width:118px">
-                                                    <li>
-
-                                                        <a href="index.html">Home 1</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="index-2.html">Home 2</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="index-3.html">Home 3</a>
-                                                    </li>
-                                                </ul>
-                                                <!--====== End - Dropdown ======-->
-                                            </li>
-                                            <li class="has-dropdown has-dropdown--ul-left-100">
-
-                                                <a>Account<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
-
-                                                <!--====== Dropdown ======-->
-
-                                                <span class="js-menu-toggle"></span>
-                                                <ul style="width:200px">
-                                                    <li>
-
-                                                        <a href="signin.html">Signin / Already Registered</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="signup.html">Signup / Register</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="lost-password.html">Lost Password</a>
-                                                    </li>
-                                                </ul>
-                                                <!--====== End - Dropdown ======-->
-                                            </li>
-                                            <li class="has-dropdown has-dropdown--ul-left-100">
-
-                                                <a href="dashboard.html">Dashboard<i
-                                                        class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
-
-                                                <!--====== Dropdown ======-->
-
-                                                <span class="js-menu-toggle"></span>
-                                                <ul style="width:200px">
-                                                    <li class="has-dropdown has-dropdown--ul-left-100">
-
-                                                        <a href="dashboard.html">Manage My Account<i
-                                                                class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
-
-                                                        <!--====== Dropdown ======-->
-
-                                                        <span class="js-menu-toggle"></span>
-                                                        <ul style="width:180px">
-                                                            <li>
-
-                                                                <a href="dash-edit-profile.html">Edit Profile</a>
-                                                            </li>
-                                                            <li>
-
-                                                                <a href="dash-address-book.html">Edit Address Book</a>
-                                                            </li>
-                                                            <li>
-
-                                                                <a href="dash-manage-order.html">Manage Order</a>
-                                                            </li>
-                                                        </ul>
-                                                        <!--====== End - Dropdown ======-->
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="dash-my-profile.html">My Profile</a>
-                                                    </li>
-                                                    <li class="has-dropdown has-dropdown--ul-left-100">
-
-                                                        <a href="dash-address-book.html">Address Book<i
-                                                                class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
-
-                                                        <!--====== Dropdown ======-->
-
-                                                        <span class="js-menu-toggle"></span>
-                                                        <ul style="width:180px">
-                                                            <li>
-
-                                                                <a href="dash-address-make-default.html">Address Make
-                                                                    Default</a>
-                                                            </li>
-                                                            <li>
-
-                                                                <a href="dash-address-add.html">Add New Address</a>
-                                                            </li>
-                                                            <li>
-
-                                                                <a href="dash-address-edit.html">Edit Address Book</a>
-                                                            </li>
-                                                        </ul>
-                                                        <!--====== End - Dropdown ======-->
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="dash-track-order.html">Track Order</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="dash-my-order.html">My Orders</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="dash-payment-option.html">My Payment Options</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="dash-cancellation.html">My Returns & Cancellations</a>
-                                                    </li>
-                                                </ul>
-                                                <!--====== End - Dropdown ======-->
-                                            </li>
-                                            <li class="has-dropdown has-dropdown--ul-left-100">
-
-                                                <a>Empty<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
-
-                                                <!--====== Dropdown ======-->
-
-                                                <span class="js-menu-toggle"></span>
-                                                <ul style="width:200px">
-                                                    <li>
-
-                                                        <a href="empty-search.html">Empty Search</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="empty-cart.html">Empty Cart</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="empty-wishlist.html">Empty Wishlist</a>
-                                                    </li>
-                                                </ul>
-                                                <!--====== End - Dropdown ======-->
-                                            </li>
-                                            <li class="has-dropdown has-dropdown--ul-left-100">
-
-                                                <a>Product Details<i
-                                                        class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
-
-                                                <!--====== Dropdown ======-->
-
-                                                <span class="js-menu-toggle"></span>
-                                                <ul style="width:200px">
-                                                    <li>
-
-                                                        <a href="product-detail.html">Product Details</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="product-detail-variable.html">Product Details
-                                                            Variable</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="product-detail-affiliate.html">Product Details
-                                                            Affiliate</a>
-                                                    </li>
-                                                </ul>
-                                                <!--====== End - Dropdown ======-->
-                                            </li>
-                                            <li class="has-dropdown has-dropdown--ul-left-100">
-
-                                                <a>Shop Grid Layout<i
-                                                        class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
-
-                                                <!--====== Dropdown ======-->
-
-                                                <span class="js-menu-toggle"></span>
-                                                <ul style="width:200px">
-                                                    <li>
-
-                                                        <a href="shop-grid-left.html">Shop Grid Left Sidebar</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="shop-grid-right.html">Shop Grid Right Sidebar</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="shop-grid-full.html">Shop Grid Full Width</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="shop-side-version-2.html">Shop Side Version 2</a>
-                                                    </li>
-                                                </ul>
-                                                <!--====== End - Dropdown ======-->
-                                            </li>
-                                            <li class="has-dropdown has-dropdown--ul-left-100">
-
-                                                <a>Shop List Layout<i
-                                                        class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
-
-                                                <!--====== Dropdown ======-->
-
-                                                <span class="js-menu-toggle"></span>
-                                                <ul style="width:200px">
-                                                    <li>
-
-                                                        <a href="shop-list-left.html">Shop List Left Sidebar</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="shop-list-right.html">Shop List Right Sidebar</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a href="shop-list-full.html">Shop List Full Width</a>
-                                                    </li>
-                                                </ul>
-                                                <!--====== End - Dropdown ======-->
-                                            </li>
-                                            <li>
-
-                                                <a href="cart.html">Cart</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="wishlist.html">Wishlist</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="checkout.html">Checkout</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="faq.html">FAQ</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="about.html">About us</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="contact.html">Contact</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="404.html">404</a>
-                                            </li>
-                                        </ul>
-                                        <!--====== End - Dropdown ======-->
-                                    </li>
-                                    <li class="has-dropdown">
-
-                                        <a>BLOG<i class="fas fa-angle-down u-s-m-l-6"></i></a>
-
-                                        <!--====== Dropdown ======-->
-
-                                        <span class="js-menu-toggle"></span>
-                                        <ul style="width:200px">
-                                            <li>
-
-                                                <a href="blog-left-sidebar.html">Blog Left Sidebar</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="blog-right-sidebar.html">Blog Right Sidebar</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="blog-sidebar-none.html">Blog Sidebar None</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="blog-masonry.html">Blog Masonry</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="blog-detail.html">Blog Details</a>
-                                            </li>
-                                        </ul>
-                                        <!--====== End - Dropdown ======-->
-                                    </li>
-                                    <li>
-
-                                        <a href="shop-side-version-2.html">VALUE OF THE DAY</a>
-                                    </li>
-                                    <li>
-
-                                        <a href="shop-side-version-2.html">GIFT CARDS</a>
                                     </li>
                                 </ul>
-                                <!--====== End - List ======-->
                             </div>
                             <!--====== End - Menu ======-->
                         </div>
-                        <!--====== End - Dropdown Main plugin ======-->
 
+                        <form class="main-form" style="width: 350px">
+                            <label for="main-search"></label>
+                            <input class="input-text input-text--border-radius input-text--style-1" type="text"
+                                id="main-search" placeholder="Search" fdprocessedid="7dpa">
+
+                            <button class="btn btn--icon fas fa-search main-search-button" type="submit"
+                                fdprocessedid="ruj13s"></button>
+                        </form>
 
                         <!--====== Dropdown Main plugin ======-->
                         <div class="menu-init" id="navigation3">
@@ -476,7 +154,6 @@
                                 class="btn btn--icon toggle-button toggle-button--secondary fas fa-shopping-bag toggle-button-shop"
                                 type="button"></button>
 
-                            <span class="total-item-round">{{ $cartCount }}</span>
 
                             <!--====== Menu ======-->
                             <div class="ah-lg-mode">
@@ -486,7 +163,7 @@
                                 <!--====== List ======-->
                                 <ul class="ah-list ah-list--design1 ah-list--link-color-secondary">
                                     <li class="has-dropdown" data-tooltip="tooltip" data-placement="left"
-                                        title="Account">
+                                        title="{{ Auth::user() ? Auth::user()->name : 'Account' }}">
 
                                         <a><i class="far fa-user-circle"></i></a>
 
@@ -494,30 +171,34 @@
 
                                         <span class="js-menu-toggle"></span>
                                         <ul style="width:120px">
-                                            <li>
+                                            @if (Auth::user())
+                                                <li>
 
-                                                <a href="/member"><i class="fas fa-user-circle u-s-m-r-6"></i>
+                                                    <a href="/member"><i class="fas fa-user-circle u-s-m-r-6"></i>
 
-                                                    <span>Account</span></a>
-                                            </li>
-                                            <li>
+                                                        <span>Account</span></a>
+                                                </li>
+                                                <li>
 
-                                                <a href="/auth/register"><i class="fas fa-user-plus u-s-m-r-6"></i>
+                                                    <a href="/auth/logout"><i class="fas fa-lock-open u-s-m-r-6"></i>
 
-                                                    <span>Signup</span></a>
-                                            </li>
-                                            <li>
+                                                        <span>Signout</span></a>
+                                                </li>
+                                            @else
+                                                <li>
 
-                                                <a href="/auth/login"><i class="fas fa-lock u-s-m-r-6"></i>
+                                                    <a href="/auth/register"><i class="fas fa-user-plus u-s-m-r-6"></i>
 
-                                                    <span>Signin</span></a>
-                                            </li>
-                                            <li>
+                                                        <span>Signup</span></a>
+                                                </li>
+                                                <li>
 
-                                                <a href="/auth/logout"><i class="fas fa-lock-open u-s-m-r-6"></i>
+                                                    <a href="/auth/login"><i class="fas fa-lock u-s-m-r-6"></i>
 
-                                                    <span>Signout</span></a>
-                                            </li>
+                                                        <span>Signin</span></a>
+                                                </li>
+                                            @endif
+
                                         </ul>
                                         <!--====== End - Dropdown ======-->
                                     </li>
@@ -527,7 +208,9 @@
 
                                         <a href="/cart" class="mini-cart-shop-link"><i
                                                 class="fas fa-shopping-bag"></i>
-                                            <span class="total-item-round">{{ $cartCount }}</span></a>
+                                            <span class="total-item-round">
+                                                {{ Cart::count() }}
+                                            </span></a>
                                     </li>
 
                                 </ul>

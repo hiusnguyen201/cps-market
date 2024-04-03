@@ -8,7 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Models\Product;
-use App\Models\Category;
+use App\Models\Product_Attribute;
+use App\Models\Attribute;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Product_Images;
 use Illuminate\Support\Str;
@@ -18,11 +19,10 @@ class ProductController extends Controller
     public function create(ProductRequest $request)
     {
         try {
-
             $product = Product::create([
                 'name' => $request->name,
                 'price' => $request->price,
-                'market_price' => $request->market_price,
+                'sale_price' => $request->sale_price,
                 'quantity' => $request->quantity,
                 'description' => $request->description,
                 'brand_id' => $request->brand,
@@ -34,7 +34,7 @@ class ProductController extends Controller
             $promotion_image_path = $encrypted_id . "/" . $request->file('promotion_image')->hashName();
             $request->file('promotion_image')->storeAs('public', $promotion_image_path);
             Product_Images::create([
-                'thumbnail' => $promotion_image_path,
+                'thumbnail' => "storage/". $promotion_image_path,
                 'product_id' => $product->id,
                 'pin' => 1
             ]);
@@ -45,8 +45,19 @@ class ProductController extends Controller
                     $product_image_path = $encrypted_id . "/" . $image->hashName();
                     $image->storeAs('public', $product_image_path);
                     Product_Images::create([
-                        'thumbnail' => $product_image_path,
+                        'thumbnail' => "storage/" . $product_image_path,
                         'product_id' => $product->id,
+                    ]);
+                }
+            }
+
+            foreach($request->attribute_ids as $index => $id) {
+                $attribute = Attribute::find($id);
+                if($request->attribute_values[$index]) {
+                    Product_Attribute::create([
+                        'product_id' => $product->id,
+                        'attribute_id' => $attribute->id,
+                        'value' => $request->attribute_values[$index]
                     ]);
                 }
             }
@@ -56,6 +67,7 @@ class ProductController extends Controller
                 'data' => $product,
             ], 200);
         } catch (\Exception $err) {
+            error_log($err);
             return response()->json([
                 'message' => 'Server Error',
                 'error' => $err
@@ -63,14 +75,13 @@ class ProductController extends Controller
         }
     }
 
-
     public function update(Product $product, ProductRequest $request)
     {
         try {
             $product->update([
                 'name' => $request->name,
                 'price' => $request->price,
-                'market_price' => $request->market_price,
+                'sale_price' => $request->sale_price,
                 'quantity' => $request->quantity,
                 'description' => $request->description,
                 'brand_id' => $request->brand,
@@ -90,13 +101,15 @@ class ProductController extends Controller
 
             // Delete product image 
             Product_Images::where("product_id", $product->id)->delete();
+            // Delete value attributes
+            Product_Attribute::where("product_id", $product->id)->delete();
 
             // Create product images
             $encrypted_id = Crypt::encryptString($product->id);
             $promotion_image_path = $encrypted_id . "/" . $request->file('promotion_image')->hashName();
             $request->file('promotion_image')->storeAs('public', $promotion_image_path);
             Product_Images::create([
-                'thumbnail' => $promotion_image_path,
+                'thumbnail' =>"storage/" . $promotion_image_path,
                 'product_id' => $product->id,
                 'pin' => 1
             ]);
@@ -107,8 +120,19 @@ class ProductController extends Controller
                     $product_image_path = $encrypted_id . "/" . $image->hashName();
                     $image->storeAs('public', $product_image_path);
                     Product_Images::create([
-                        'thumbnail' => $product_image_path,
+                        'thumbnail' => "storage/" . $product_image_path,
                         'product_id' => $product->id,
+                    ]);
+                }
+            }
+
+            foreach($request->attribute_ids as $index => $id) {
+                $attribute = Attribute::find($id);
+                if($request->attribute_values[$index]) {
+                    Product_Attribute::create([
+                        'product_id' => $product->id,
+                        'attribute_id' => $attribute->id,
+                        'value' => $request->attribute_values[$index]
                     ]);
                 }
             }

@@ -10,7 +10,7 @@
                             @if (count($product->images))
                                 @foreach ($product->images as $image)
                                     @if ($image->pin)
-                                        <img src="{{ asset('storage/' . $image->thumbnail) }}" class="product-image"
+                                        <img src="{{ asset($image->thumbnail) }}" class="product-image"
                                             alt="{{ $product->name }}">
                                     @endif
                                 @endforeach
@@ -20,7 +20,7 @@
                             @if (count($product->images))
                                 @foreach ($product->images as $image)
                                     <div class="product-image-thumb {{ $image->pin ? 'active' : '' }}"><img
-                                            src="{{ asset('storage/' . $image->thumbnail) }}" class="product-image"
+                                            src="{{ asset($image->thumbnail) }}" class="product-image"
                                             alt="{{ $product->name }}">
                                     </div>
                                 @endforeach
@@ -58,9 +58,9 @@
                         </div>
 
                         <div class="form-group row align-items-center">
-                            <label class="col-sm-4 col-form-label">Market Price:</label>
+                            <label class="col-sm-4 col-form-label">Sale Price:</label>
                             <div class="col-sm-8">
-                                {{ $product->market_price }}
+                                {{ $product->sale_price }}
                             </div>
                         </div>
 

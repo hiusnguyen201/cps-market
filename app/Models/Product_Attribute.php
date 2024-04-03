@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cart extends Model
+class Product_Attribute extends Model
 {
     use HasFactory;
 
-    protected $table = 'carts';
+    protected $table = 'products_attributes';
 
     protected $fillable = [
+        'attribute_id',
         'product_id',
-        'user_id',
-        'quantity',
-        'price',
+        'value',
     ];
 
     /**
@@ -24,14 +23,18 @@ class Cart extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'attribute_id' => "integer",
         'product_id' => "integer",
-        'user_id' => "integer",
-        'quantity' => "integer",
-        'price' => "integer",
+        "value" => "string",
     ];
 
-    public function product()
+     public function attribute()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Attribute::class);
+    }
+
+     public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

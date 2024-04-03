@@ -30,8 +30,8 @@ class ProductRequest extends FormRequest
         return [
             'name' => 'required|string|min:4|max:150|unique:products,name'
                 . ($request->_method == 'PATCH' ? ',' . $request->id : ''),
+            'sale_price' => "nullable|integer|min:1",
             'price' => "required|integer|min:1",
-            'market_price' => "required|integer|min:1",
             'quantity' => "required|integer|min:0",
             'description' => "max:3000",
             "category" => 'required|integer|min:1|exists:categories,id',
@@ -39,17 +39,21 @@ class ProductRequest extends FormRequest
             "promotion_image" => [
                 'required',
                 'image',
-                'mimes:jpeg,png',
-                'mimetypes:image/jpeg,image/png',
-                'max:2048',
+                'mimes:jpeg,png,jpg',
+                'mimetypes:image/jpeg,image/png,image/jpg',
+                'max:10000',
             ],
             "product_images" => "array|max:7",
             "product_images.*" => [
                 'image',
-                'mimes:jpeg,png',
-                'mimetypes:image/jpeg,image/png',
-                'max:2048',
+                'mimes:jpeg,png,jpg',
+                'mimetypes:image/jpeg,image/png,image/jpg',
+                'max:10000',
             ],
+            "attribute_ids" => "required|array",
+            "attribute_ids.*" => "required|integer|min:1",
+            "attribute_values" => "array",
+            "attribute_values.*" => "nullable|string|max:300",
         ];
     }
 
@@ -64,9 +68,9 @@ class ProductRequest extends FormRequest
             'price.required' => ":attribute is required",
             'price.integer' => ":attribute is invalid",
             'price.min' => ":attribute is invalid",
-            'market_price.required' => ":attribute is required",
-            'market_price.integer' => ":attribute is invalid",
-            'market_price.min' => ":attribute is invalid",
+            'sale_price.required' => ":attribute is required",
+            'sale_price.integer' => ":attribute is invalid",
+            'sale_price.min' => ":attribute is invalid",
             'description.max' => ":attribute has invalid length, max is :max",
             'quantity.required' => ":attribute is required",
             'quantity.integer' => ":attribute is invalid",
@@ -90,6 +94,15 @@ class ProductRequest extends FormRequest
             "product_images.*.mimes" => ":attribute must be image in position :position",
             "product_images.*.mimetypes" => ":attribute must be image in position :position",
             "product_images.*.max" => ":attribute exceeds :max KB in position :position",
+            "attribute_ids.required" => ":attribute is required",
+            "attribute_ids.array" => ":attribute is invalid",
+            "attribute_ids.*.required" => ":attribute is required in position :position",
+            "attribute_ids.*.integer" => ":attribute is not found in position :position",
+            "attribute_ids.*.min" => ":attribute is not found in position :position",
+            "attribute_ids.*.exists" => ":attribute is not found in position :position",
+            "attribute_values.array" => ":attribute is invalid",
+            "attribute_values.*.string" => ":attribute is invalid",
+            "attribute_values.*.max" => ":attribute has invalid length, max is :max",
         ];
     }
     public function attributes()
@@ -97,14 +110,18 @@ class ProductRequest extends FormRequest
         return [
             "name" => "Name",
             "price" => "Price",
-            "market_price" => "Market price",
+            "sale_price" => "Sale price",
             "quantity" => "Quantity",
             "category" => "Category",
             "brand" => "Brand",
             "description" => "Description",
             "promotion_image" => "Promotion image",
             "product_images" => "Product images",
-            "product_images.*" => "Product images"
+            "product_images.*" => "Product images",
+            "attribute_ids" => "Attribute",
+            "attribute_ids.*" => "Attribute",
+            "attribute_values" => "Attribute value",
+            "attribute_values.*" => "Attribute value",
         ];
     }
 
@@ -114,7 +131,7 @@ class ProductRequest extends FormRequest
 
         $response = response()->json([
             'message' => 'Invalid data',
-            'error' => $errors->messages(),
+            'errors' => $errors->messages(),
         ], 422);
 
         throw new HttpResponseException($response);

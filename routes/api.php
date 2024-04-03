@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\BrandController;
+use App\Http\Controllers\Api\AttributeController;
 use App\Http\Controllers\Api\ProductController;
 
 /*
@@ -15,6 +15,6 @@ use App\Http\Controllers\Api\ProductController;
 |
 */
 
-Route::get("/categories/{category}/brands", [BrandController::class, 'getAllByCategory']);
+Route::get("/categories/{category}/attributes", [AttributeController::class, 'findAllAttributeByCategory']);
 Route::post("/products", [ProductController::class, 'create']);
 Route::patch("/products/{product}", [ProductController::class, 'update']);

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product_Attribute;
+use App\Models\Attribute;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -53,10 +55,14 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all();
+        $attributes = Attribute::whereHas('specification', function ($query) use ($product) {
+            $query->where('category_id', $product->category_id);
+        })->get();
 
         return view('admin.products.edit', [
             'categories' => $categories,
             'product' => $product,
+            'attributes' => $attributes,
             'breadcumbs' => [
                 'titles' => ['Products', 'Edit'],
                 'title_links' => ["/admin/products"]
@@ -95,6 +101,7 @@ class ProductController extends Controller
                 }
 
                 Product_Images::where("product_id", $product->id)->delete();
+                Product_Attribute::where("product_id", $product->id)->delete();
 
                 $product->delete();
                 session()->flash('success', 'Delete product successfully');

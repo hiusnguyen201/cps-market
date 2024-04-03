@@ -86,8 +86,8 @@
                                     <a href="/admin/products/details/{{ $product->id }}" class="row align-items-center">
                                         @foreach ($product->images as $image)
                                             @if ($image->pin)
-                                                <img src="{{ asset('storage/' . $image->thumbnail) }}"
-                                                    class="float-left table-img" alt="">
+                                                <img src="{{ asset($image->thumbnail) }}" class="float-left table-img"
+                                                    alt="">
                                             @break
                                         @endif
                                     @endforeach
@@ -99,7 +99,7 @@
                                     href="/admin/categories/details/{{ $product->category->id }}">{{ $product->category->name }}</a>
                             </td>
                             <td class="align-middle">
-                                {{ number_format($product->market_price, 0, ',', '.') }}&nbsp;₫
+                                {{ number_format($product->sale_price, 0, ',', '.') }}&nbsp;₫
                             </td>
                             <td class="align-middle">
                                 {{ number_format($product->price, 0, ',', '.') }}&nbsp;₫

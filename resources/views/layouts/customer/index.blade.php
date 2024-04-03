@@ -19,14 +19,22 @@
     <!--====== App ======-->
     <link rel="stylesheet" href="{{ asset('ludus/css/app.css') }}">
 
-    {{-- swiper --}}
+    <!-- Toast js -->
+    <link rel="stylesheet" href="{{ asset('toastjs/toastify.css') }}">
 
+    {{-- swiper --}}
     <link rel="stylesheet" href="{{ asset('swiper/package/swiper-bundle.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('custom/css/swiper.css') }}">
 
 </head>
 
 <body class="config">
+    @if (session('success'))
+        <input hidden type="text" name="message-success" value="{{ session('success') }}">
+    @endif
+    @if (session('error'))
+        <input hidden type="text" name="message-error" value="{{ session('error') }}">
+    @endif
+
     <div id="app">
         <!--====== Main Header ======-->
         @include('layouts.customer.parts.navbar')
@@ -51,8 +59,14 @@
     <script src="{{ asset('ludus/js/app.js') }}"></script>
 
     {{-- Swiper --}}
-
     <script src="{{ asset('swiper/package/swiper-bundle.min.js') }}"></script>
+
+    <!-- Toast js -->
+    <script src="{{ asset('toastjs/toastify.js') }}"></script>
+    <script defer src="{{ asset('custom/js/message.js') }}"></script>
+
+    <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
+    <script defer src="{{ asset('custom/js/cart.js') }}"></script>
 
     <script defer>
         const swiper = new Swiper(".swiper", {
@@ -61,70 +75,27 @@
                 prevEl: '.swiper-button-prev',
             },
             loop: false,
-
-            grid: {
-                rows: 2
-            },
             breakpoints: {
                 0: {
                     slidesPerView: 1,
-                    spaceBetween: 0,
-                    centeredSlides: true,
+                    spaceBetween: 5,
 
                 },
                 600: {
-                    slidesPerView: 2,
-                    spaceBetween: 30,
-                },
-                800: {
-                    centeredSlides: true,
-                    slidesPerView: 2,
-                    spaceBetween: 10,
-                },
-                1025: {
                     slidesPerView: 3,
                     spaceBetween: 10,
                 },
-                1281: {
-                    slidesPerView: 4,
-                    spaceBetween: 10,
-                },
-            }
-
-        })
-
-        const swiper2 = new Swiper(".swiper2", {
-            
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            slidesPerView: 4,
-            loop: false,
-            spaceBetween: 10,
-            breakpoints: {
-                0: {
-                    slidesPerView: 1,
-                    spaceBetween: 0,
-                    centeredSlides: true,
-
-                },
-                600: {
-                    slidesPerView: 2,
-                    spaceBetween: 30,
-                },
                 800: {
-                    centeredSlides: true,
-                    slidesPerView: 2,
-                    spaceBetween: 10,
+                    slidesPerView: 3,
+                    spaceBetween: 15,
                 },
                 1025: {
-                    slidesPerView: 3,
-                    spaceBetween: 10,
+                    slidesPerView: 5,
+                    spaceBetween: 15,
                 },
                 1281: {
-                    slidesPerView: 4,
-                    spaceBetween: 10,
+                    slidesPerView: 5,
+                    spaceBetween: 15,
                 },
             }
         })
