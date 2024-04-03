@@ -34,7 +34,7 @@ class ProductController extends Controller
             $promotion_image_path = $encrypted_id . "/" . $request->file('promotion_image')->hashName();
             $request->file('promotion_image')->storeAs('public', $promotion_image_path);
             Product_Images::create([
-                'thumbnail' => $promotion_image_path,
+                'thumbnail' => "storage/". $promotion_image_path,
                 'product_id' => $product->id,
                 'pin' => 1
             ]);
@@ -45,7 +45,7 @@ class ProductController extends Controller
                     $product_image_path = $encrypted_id . "/" . $image->hashName();
                     $image->storeAs('public', $product_image_path);
                     Product_Images::create([
-                        'thumbnail' => $product_image_path,
+                        'thumbnail' => "storage/" . $product_image_path,
                         'product_id' => $product->id,
                     ]);
                 }
@@ -74,7 +74,6 @@ class ProductController extends Controller
             ], 500);
         }
     }
-
 
     public function update(Product $product, ProductRequest $request)
     {
@@ -110,7 +109,7 @@ class ProductController extends Controller
             $promotion_image_path = $encrypted_id . "/" . $request->file('promotion_image')->hashName();
             $request->file('promotion_image')->storeAs('public', $promotion_image_path);
             Product_Images::create([
-                'thumbnail' => $promotion_image_path,
+                'thumbnail' =>"storage/" . $promotion_image_path,
                 'product_id' => $product->id,
                 'pin' => 1
             ]);
@@ -121,7 +120,7 @@ class ProductController extends Controller
                     $product_image_path = $encrypted_id . "/" . $image->hashName();
                     $image->storeAs('public', $product_image_path);
                     Product_Images::create([
-                        'thumbnail' => $product_image_path,
+                        'thumbnail' => "storage/" . $product_image_path,
                         'product_id' => $product->id,
                     ]);
                 }

@@ -132,12 +132,14 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('cart')->group(function () {
     Route::middleware(['check.auth'])->group(function () {
-        Route::get('/', [CartController::class, 'home']);
+        Route::get('/', [CartController::class, 'index'])->name("cart.index");
 
-        Route::post('/', [CartController::class, 'handleCreate']);
+        Route::post('/store', [CartController::class, 'addToCart'])->name("cart.store");
 
-        Route::patch('/', [CartController::class, 'handleUpdate']);
+        Route::patch('/', [CartController::class, 'handleUpdate'])->name("cart.update");
 
         Route::delete('/', [CartController::class, 'handleDelete']);
+
+        Route::get('/payment-info', [CartController::class, 'checkoutPage']);
     });
 });

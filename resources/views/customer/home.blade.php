@@ -20,7 +20,7 @@
 
                                         <span class="u-c-brand">$100.00</span></span>
 
-                                    <a class="shop-now-link btn--e-brand" href="shop-side-version-2.html">SHOP NOW</a>
+                                    <a class="shop-now-link btn--e-brand" href="">SHOP NOW</a>
                                 </div>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
 
                                         <span class="u-c-brand">$100.00</span></span>
 
-                                    <a class="shop-now-link btn--e-brand" href="shop-side-version-2.html">SHOP NOW</a>
+                                    <a class="shop-now-link btn--e-brand" href="">SHOP NOW</a>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
 
                                         <span class="u-c-brand">$100.00</span></span>
 
-                                    <a class="shop-now-link btn--e-brand" href="shop-side-version-2.html">SHOP NOW</a>
+                                    <a class="shop-now-link btn--e-brand" href="">SHOP NOW</a>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                         <div class="promotion-o">
                             <div class="aspect aspect--bg-grey aspect--square">
 
-                                <img class="aspect__img" src="./ImageSection/Mobile.jpg" alt="">
+                                <img class="aspect__img" src="./images/Mobile.jpg" alt="">
                             </div>
                             <div class="promotion-o__content">
 
@@ -98,7 +98,7 @@
                         <div class="promotion-o">
                             <div class="aspect aspect--bg-grey aspect--square">
 
-                                <img class="aspect__img" src="./ImageSection/Laptop.jpg" alt="">
+                                <img class="aspect__img" src="./images/Laptop.jpg" alt="">
                             </div>
                             <div class="promotion-o__content">
 
@@ -110,7 +110,7 @@
                         <div class="promotion-o">
                             <div class="aspect aspect--bg-grey aspect--square">
 
-                                <img class="aspect__img" src="./ImageSection/Watch.jpg" alt="">
+                                <img class="aspect__img" src="./images/Watch.jpg" alt="">
                             </div>
                             <div class="promotion-o__content">
 
@@ -161,7 +161,7 @@
                                                     <div class="aspect aspect--bg-grey aspect--square u-d-block">
                                                         @foreach ($product->images as $image)
                                                             @if ($image->pin == 1)
-                                                                <img src="{{ asset('storage/' . $image->thumbnail) }}"
+                                                                <img src="{{ asset($image->thumbnail) }}"
                                                                     class="aspect__img" alt="">
                                                             @break
                                                         @endif
@@ -217,7 +217,7 @@
                                                 href="/{{ $section9D->category->slug }}/{{ $section9D->brand->slug }}/{{ $section9D->slug }}.html">
                                                 @foreach ($section9D->images as $image)
                                                     @if ($image->pin == 1)
-                                                        <img src="{{ asset('storage/' . $image->thumbnail) }}"
+                                                        <img src="{{ asset($image->thumbnail) }}"
                                                             class="aspect__img" alt="">
                                                     @break
                                                 @endif
@@ -253,7 +253,7 @@
 
                                             @foreach ($section9W->images as $image)
                                                 @if ($image->pin == 1)
-                                                    <img src="{{ asset('storage/' . $image->thumbnail) }}"
+                                                    <img src="{{ asset($image->thumbnail) }}"
                                                         class="aspect__img" alt="">
                                                 @break
                                             @endif
@@ -293,7 +293,7 @@
 
                                         @foreach ($section9M->images as $image)
                                             @if ($image->pin == 1)
-                                                <img src="{{ asset('storage/' . $image->thumbnail) }}"
+                                                <img src="{{ asset($image->thumbnail) }}"
                                                     class="aspect__img" alt="">
                                             @break
                                         @endif

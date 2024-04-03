@@ -887,7 +887,7 @@
                                                         href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">
                                                         @foreach ($product->images as $image)
                                                             @if ($image->pin == 1)
-                                                                <img src="{{ asset('storage/' . $image->thumbnail) }}"
+                                                                <img src="{{ asset($image->thumbnail) }}"
                                                                     class="aspect__img" alt="">
                                                             @break
                                                         @endif
