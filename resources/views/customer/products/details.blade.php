@@ -42,10 +42,9 @@
 
                                     @if (count($product->images))
                                         @foreach ($product->images as $image)
-                                            <div class="pd-o-img-wrap"
-                                                data-src="{{ asset('storage/' . $image->thumbnail) }}">
-                                                <img class="u-img-fluid" src="{{ asset('storage/' . $image->thumbnail) }}"
-                                                    data-zoom-image="{{ asset('storage/' . $image->thumbnail) }}"
+                                            <div class="pd-o-img-wrap" data-src="{{ asset($image->thumbnail) }}">
+                                                <img class="u-img-fluid" src="{{ asset($image->thumbnail) }}"
+                                                    data-zoom-image="{{ asset($image->thumbnail) }}"
                                                     alt="{{ $product->name }}">
                                             </div>
                                         @endforeach
@@ -58,8 +57,7 @@
                                         @if (count($product->images))
                                             @foreach ($product->images as $image)
                                                 <div>
-                                                    <img class="u-img-fluid"
-                                                        src="{{ asset('storage/' . $image->thumbnail) }}"
+                                                    <img class="u-img-fluid" src="{{ asset($image->thumbnail) }}"
                                                         alt="{{ $product->name }}">
                                                 </div>
                                             @endforeach
@@ -114,10 +112,6 @@
                                 </div>
                             </div>
                             <div class="u-s-m-b-15">
-
-                                <span class="pd-detail__preview-desc">{{ $product->description }}</span>
-                            </div>
-                            <div class="u-s-m-b-15">
                                 <div class="pd-detail__inline">
 
                                     <span class="pd-detail__click-wrap"><i class="far fa-heart u-s-m-r-6"></i>
@@ -163,16 +157,22 @@
                                 </ul>
                             </div>
                             <div class="u-s-m-b-15">
-                                <form class="pd-detail__form" method="POST" action="/cart">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <div class="pd-detail-inline-2">
-                                        <div class="u-s-m-b-15">
-
-                                            <button class="btn btn--e-brand-b-2" type="submit">Add to Cart</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                <div class="pd-detail__form" style="display: flex; align-items:center; gap:15px">
+                                    <form method="POST" action="/cart">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <input type="hidden" name="action" value="buy">
+                                        <button class="btn btn--e-brand-b-2" type="submit">Buy now</button>
+                                    </form>
+                                    <form method="POST" action="/cart">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <input type="hidden" name="action" value="add">
+                                        <button class="btn btn--e-brand-b-1" type="submit">
+                                            <i class="fas fa-cart-plus"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                             <div class="u-s-m-b-15">
 
@@ -209,7 +209,7 @@
                                 <ul class="nav pd-tab__list">
                                     <li class="nav-item">
 
-                                        <a class="nav-link" data-toggle="tab" href="#pd-desc">DESCRIPTION</a>
+                                        <a class="nav-link active" data-toggle="tab" href="#pd-desc">DESCRIPTION</a>
                                     </li>
                                     <li class="nav-item">
 
@@ -217,8 +217,7 @@
                                     </li>
                                     <li class="nav-item">
 
-                                        <a class="nav-link active" id="view-review" data-toggle="tab"
-                                            href="#pd-rev">REVIEWS
+                                        <a class="nav-link" id="view-review" data-toggle="tab" href="#pd-rev">REVIEWS
 
                                             <span>(23)</span></a>
                                     </li>
@@ -227,20 +226,11 @@
                             <div class="tab-content">
 
                                 <!--====== Tab 1 ======-->
-                                <div class="tab-pane" id="pd-desc">
+                                <div class="tab-pane  fade show active" id="pd-desc">
                                     <div class="pd-tab__desc">
                                         <div class="u-s-m-b-15">
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                                Lorem Ipsum has been the industry's standard dummy text ever since the
-                                                1500s, when an unknown printer took a galley of type and scrambled it to
-                                                make a type specimen book. It has survived not only five centuries, but also
-                                                the leap into electronic typesetting, remaining essentially unchanged. It
-                                                was popularised in the 1960s with the release of Letraset sheets containing
-                                                Lorem Ipsum passages, and more recently with desktop publishing software
-                                                like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                            <p>{{ $product->description }}</p>
                                         </div>
-                                        <div class="u-s-m-b-30"><iframe src="https://www.youtube.com/embed/qKqSBm07KZk"
-                                                allowfullscreen></iframe></div>
                                         <div class="u-s-m-b-30">
                                             <ul>
                                                 <li><i class="fas fa-check u-s-m-r-8"></i>
@@ -330,7 +320,7 @@
 
 
                                 <!--====== Tab 3 ======-->
-                                <div class="tab-pane fade show active" id="pd-rev">
+                                <div class="tab-pane" id="pd-rev">
                                     <div class="pd-tab__rev">
                                         <div class="u-s-m-b-30">
                                             <div class="pd-tab__rev-score">
