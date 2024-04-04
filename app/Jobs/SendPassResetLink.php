@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use Illuminate\Support\Facades\Mail;
-use App\Mail\NewUserMail;
+use App\Mail\PassResetLink;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,7 +11,9 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SendPassword implements ShouldQueue
+use App\Models\User;
+
+class SendPassResetLink implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -35,7 +37,7 @@ class SendPassword implements ShouldQueue
      */
     public function handle()
     {
-        $newUserMail = new NewUserMail($this->details);
-        Mail::to($this->details['email'])->send($newUserMail);
+        $passResetLink = new PassResetLink($this->details);
+        Mail::to($this->details['email'])->send($passResetLink);
     }
 }

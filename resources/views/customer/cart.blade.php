@@ -54,92 +54,75 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="table-responsive">
-
-                            <div class="form-check"
-                                style="padding-bottom: 20px;color: rgb(14, 36, 49);font-size: 16px;padding-left: 5px;padding-top: 5px; position: relative;">
-                            </div>
-
                             <table class="table-p">
                                 <tbody>
+                                    @php
+                                        $totalPrice = 0;
+                                    @endphp
                                     @foreach ($carts as $cart)
-                                        @if ($cart->product->quantity > 0)
-                                            <!--====== Row ======-->
-                                            <tr data-cart-id="{{ $cart->id }}">
-                                                <td>
-                                                    <div class="table-p__box">
-                                                        <div class="table-p__img-wrap">
-                                                            @foreach ($cart->product->images as $image)
-                                                                @if ($image->pin == 1)
-                                                                    <img class="u-img-fluid"
-                                                                        style="height: 100%; object-fit: contain;"
-                                                                        src="{{ asset($image->thumbnail) }}" alt="">
-                                                                @endif
-                                                            @endforeach
-                                                        </div>
-
-                                                        <div class="table-p__info">
-
-                                                            <span class="table-p__name">
-
-                                                                <a
-                                                                    href="product-detail.html">{{ $cart->product->name }}</a></span>
-
-                                                            <span class="table-p__category">
-
-                                                                <a
-                                                                    href="shop-side-version-2.html">{{ $cart->product->category->name }}</a></span>
-
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-
-                                                    <span class="table-p__price"
-                                                        style="color: #ff4500">{{ number_format($cart->product->price, 0, ',', '.') }}&nbsp;₫</span>
-
-                                                </td>
-
-                                                <td class="customtd3">
-                                                    <span
-                                                        class="table-p__price">{{ number_format($cart->product->sale_price, 0, ',', '.') }}&nbsp;₫</span>
-                                                </td>
-
-                                                <td>
-
-                                                    <div class="input-counter">
-
-                                                        <span class="input-counter__minus fas fa-minus"></span>
-
-                                                        <input class="input-counter__text input-counter--text-primary-style"
-                                                            type="text" name="quantity" value="{{ $cart->quantity }}"
-                                                            data-min="0" data-max="{{ $cart->product->quantity }}"
-                                                            data-cart-id="{{ $cart->id }}"
-                                                            onchange="updateQuantity(this)">
-
-                                                        <p id="message" class="text-center"
-                                                            style="color: red; font-size: 10px;"></p>
-
-                                                        <span class="input-counter__plus fas fa-plus"></span>
+                                        @php
+                                            $totalPrice += $cart->product->sale_price
+                                                ? $cart->product->sale_price
+                                                : $cart->product->price;
+                                        @endphp
+                                        <tr data-cart-id="{{ $cart->id }}">
+                                            <td>
+                                                <div class="table-p__box">
+                                                    <div class="table-p__img-wrap">
+                                                        @foreach ($cart->product->images as $image)
+                                                            @if ($image->pin == 1)
+                                                                <img class="u-img-fluid"
+                                                                    style="height: 100%; object-fit: contain;"
+                                                                    src="{{ asset($image->thumbnail) }}" alt="">
+                                                            @endif
+                                                        @endforeach
                                                     </div>
 
-                                                </td>
+                                                    <div class="table-p__info">
+                                                        <span class="table-p__name">
+                                                            <a
+                                                                href="product-detail.html">{{ $cart->product->name }}</a></span>
+                                                        <span class="table-p__category">
+                                                            <a
+                                                                href="shop-side-version-2.html">{{ $cart->product->category->name }}</a></span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="table-p__price"
+                                                    style="color: #ff4500">{{ number_format($cart->product->price, 0, ',', '.') }}&nbsp;₫</span>
+                                            </td>
+                                            <td class="customtd3">
+                                                <span
+                                                    class="table-p__price">{{ number_format($cart->product->sale_price, 0, ',', '.') }}&nbsp;₫</span>
+                                            </td>
+                                            <td>
+                                                <div class="input-counter">
+                                                    <span class="input-counter__minus fas fa-minus"></span>
+                                                    <input class="input-counter__text input-counter--text-primary-style"
+                                                        type="text" name="quantity" value="{{ $cart->quantity }}"
+                                                        data-min="0" data-max="{{ $cart->product->quantity }}"
+                                                        data-cart-id="{{ $cart->id }}" onchange="updateQuantity(this)">
 
-                                                <td>
-                                                    <form class="text-right" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <input type="hidden" name="cart_id" value="{{ $cart->id }}">
-                                                        <button class="table-p__delete-link" type="submit"
-                                                            style="border: 0; background: none; cursor: pointer;">
-                                                            <i class="far fa-trash-alt "></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
+                                                    <p id="message" class="text-center"
+                                                        style="color: red; font-size: 10px;"></p>
 
-                                            </tr>
-                                            <!--====== End - Row ======-->
-                                        @endif
+                                                    <span class="input-counter__plus fas fa-plus"></span>
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <form class="text-right" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input type="hidden" name="cart_id" value="{{ $cart->id }}">
+                                                    <button class="table-p__delete-link" type="submit"
+                                                        style="border: 0; background: none; cursor: pointer;">
+                                                        <i class="far fa-trash-alt "></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -163,7 +146,9 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td>GRAND TOTAL</td>
-                                                                <td id="totalPriceDisplay">0&nbsp;₫</td>
+                                                                <td id="totalPriceDisplay">
+                                                                    {{ number_format($totalPrice, 0, ',', '.') }}&nbsp;₫
+                                                                </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>

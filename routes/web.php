@@ -110,16 +110,16 @@ Route::prefix('auth')->group(function () {
     Route::get('/login', [AuthController::class, 'localLogin']);
     Route::post('/login', [AuthController::class, 'handleLocalLogin']);
 
-    Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm']);
-    Route::post('/forget-password', [AuthController::class, 'submitForgetPasswordForm']);
-    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm']);
-    Route::post('/reset-password/{token}', [AuthController::class, 'submitResetPasswordForm']);
+    Route::get('/forget-password', [AuthController::class, 'forgetPasswordForm']);
+    Route::post('/forget-password', [AuthController::class, 'handleForgetPassword']);
+    Route::get('/reset-password/{token}', [AuthController::class, 'changePasswordForm']);
+    Route::post('/reset-password/{token}', [AuthController::class, 'handleChangePassword']);
 
     Route::get('/info-social', [AuthController::class, 'infoSocial']);
     Route::post('/info-social', [AuthController::class, 'handleUpdateInfoSocial']);
 
-    Route::get('/{provider?}/redirect', [AuthController::class, 'socialLogin']);
-    Route::get('/{provider?}/callback', [AuthController::class, 'handleSocialLogin']);
+    Route::get('/{provider}/redirect', [AuthController::class, 'socialLogin']);
+    Route::get('/{provider}/callback', [AuthController::class, 'handleSocialLogin']);
 
     Route::get('/register', [AuthController::class, 'register']);
     Route::post('/register', [AuthController::class, 'handleRegister']);
