@@ -54,7 +54,7 @@ class HomeController extends Controller
             'sections9W' => $sections9W,
             'sections9M' => $sections9M,
             'categories' => $categories,
-            'title' => "Cps Market"
+            'title' => "Home"
         ]);
     }
 

@@ -26,19 +26,5 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('*', function ($view) {
-            $cartCount = 0;
-
-            if ($user = Auth::user()) {
-
-                $cartCount = Cart::where('user_id', $user->id)
-                    ->whereHas('product', function ($query) {
-                        $query->where('quantity', '>', 0);
-                    })
-                    ->sum('quantity');
-            }
-
-            $view->with('cartCount', $cartCount);
-        });
     }
 }

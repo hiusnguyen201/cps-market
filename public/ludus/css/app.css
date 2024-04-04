@@ -7160,7 +7160,8 @@ input::-ms-clear {
     display: block;
 }
 
-.mega-menu-content [class*="col-"] > ul > li > a {
+.mega-menu-content [class*="col-"] > ul > li > a,
+.mega-menu-content [class*="col-"] > ul > li > span {
     padding: 4px 0;
     display: block;
     color: #333333;
@@ -7171,7 +7172,8 @@ input::-ms-clear {
     color: #fa4400;
 }
 
-.mega-menu-content [class*="col-"] > ul > .mega-list-title > a {
+.mega-menu-content [class*="col-"] > ul > .mega-list-title > a,
+.mega-menu-content [class*="col-"] > ul > .mega-list-title > span {
     font-weight: 700;
 }
 
@@ -7587,13 +7589,13 @@ input::-ms-clear {
     background-image: url(../images/slider/slide-6.jpg);
 }
 .hero-slide--7 {
-    background-image: url(/ImageSection/Mobile.jpg);
+    background-image: url(/images/Mobile.jpg);
 }
 .hero-slide--8 {
-    background-image: url(/ImageSection/Laptop.jpg);
+    background-image: url(/images/Laptop.jpg);
 }
 .hero-slide--9 {
-    background-image: url(/ImageSection/Watch.jpg);
+    background-image: url(/images/Watch.jpg);
 }
 
 .owl-carousel .owl-dots {

@@ -32,7 +32,7 @@ class AuthController extends Controller
     {
         $categories = Category::all();
         return view('auth.login', [
-            'title' => 'Login | Cps Market',
+            'title' => 'Login',
             'categories' => $categories
         ]);
     }

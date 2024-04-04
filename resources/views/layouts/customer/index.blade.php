@@ -21,7 +21,12 @@
 
     {{-- swiper --}}
     <link rel="stylesheet" href="{{ asset('swiper/package/swiper-bundle.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('custom/css/swiper.css') }}">
+
+    <!-- Toast js -->
+    <link rel="stylesheet" href="{{ asset('toastjs/toastify.css') }}">
+
+    {{-- Custom --}}
+    <link rel="stylesheet" href="{{ asset('custom/css/style.css') }}">
 
 </head>
 
@@ -50,8 +55,15 @@
     <script src="{{ asset('ludus/js/app.js') }}"></script>
 
     {{-- Swiper --}}
-
     <script src="{{ asset('swiper/package/swiper-bundle.min.js') }}"></script>
+
+    <!-- jQuery -->
+    <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
+    <script defer src="{{ asset('custom/js/cart.js') }}"></script>
+
+    <!-- Toast js -->
+    <script src="{{ asset('toastjs/toastify.js') }}"></script>
+    <script defer src="{{ asset('custom/js/message.js') }}"></script>
 
     <script defer>
         const swiper = new Swiper(".swiper", {
@@ -85,7 +97,6 @@
             }
         })
     </script>
-
 
 
 </body>

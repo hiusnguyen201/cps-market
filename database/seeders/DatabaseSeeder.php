@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Brand;
+use App\Models\Product_Images;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use \App\Models\User;
@@ -75,7 +76,7 @@ class DatabaseSeeder extends Seeder
 
         for ($i = 0; $i < 5; $i++) {
             for ($j = 0; $j < 30; $j++) {
-                Product::create([
+                $product = Product::create([
                     'name' => "Product " . $i + 1 . $j + 1,
                     'slug' => "Product-" . $i + 1 . $j + 1,
                     'price' => $i + 1000,
@@ -85,6 +86,13 @@ class DatabaseSeeder extends Seeder
                     "description" => "descrip " . $i,
                     "brand_id" => $i + 1,
                     "category_id" => $i + 1
+                ]);
+
+                Product_Images::create([
+                    'thumbnail' => "images/Phone.jpg", 
+                    'pin' => 1,
+                    'product_id' => $product->id
+
                 ]);
             }
         }

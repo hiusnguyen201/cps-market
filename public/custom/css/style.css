@@ -153,3 +153,14 @@
     width: 100%;
     object-fit: cover;
 }
+
+.btn--e-brand-b-1 {
+    color: #ff4500;
+    background-color: #ffffff;
+    border: 2px solid #ff4500;
+    transition: background-color 0.5s ease-in, border-color 0.5s ease-in;
+}
+.btn--e-brand-b-1:hover {
+    background-color: #ffffff;
+    border-color: #fa4400;
+}
