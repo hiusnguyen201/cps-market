@@ -50,30 +50,25 @@
 
     @if (count($carts))
         <div class="section__content">
-            <div class="container">
+            <div class="container u-s-m-b-30">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="table-responsive">
                             <table class="table-p">
                                 <tbody>
-                                    @php
-                                        $totalPrice = 0;
-                                    @endphp
                                     @foreach ($carts as $cart)
-                                        @php
-                                            $totalPrice += $cart->product->sale_price
-                                                ? $cart->product->sale_price
-                                                : $cart->product->price;
-                                        @endphp
                                         <tr data-cart-id="{{ $cart->id }}">
                                             <td>
                                                 <div class="table-p__box">
                                                     <div class="table-p__img-wrap">
                                                         @foreach ($cart->product->images as $image)
                                                             @if ($image->pin == 1)
-                                                                <img class="u-img-fluid"
-                                                                    style="height: 100%; object-fit: contain;"
-                                                                    src="{{ asset($image->thumbnail) }}" alt="">
+                                                                <a
+                                                                    href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html"><img
+                                                                        class="u-img-fluid"
+                                                                        style="height: 100%; object-fit: contain;"
+                                                                        src="{{ asset($image->thumbnail) }}"
+                                                                        alt="{{ $cart->product->name }}"></a>
                                                             @endif
                                                         @endforeach
                                                     </div>
@@ -81,10 +76,10 @@
                                                     <div class="table-p__info">
                                                         <span class="table-p__name">
                                                             <a
-                                                                href="product-detail.html">{{ $cart->product->name }}</a></span>
+                                                                href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html">{{ $cart->product->name }}</a></span>
                                                         <span class="table-p__category">
                                                             <a
-                                                                href="shop-side-version-2.html">{{ $cart->product->category->name }}</a></span>
+                                                                href="/{{ $cart->product->category->slug }}">{{ $cart->product->category->name }}</a></span>
                                                     </div>
                                                 </div>
                                             </td>
@@ -136,9 +131,8 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 u-s-m-b-30">
-                                <form class="f-cart">
+                                <div class="f-cart">
                                     <div class="row">
-
                                         <div class="col-lg-12 col-md-12 u-s-m-b-30">
                                             <div class="f-cart__pad-box">
                                                 <div class="u-s-m-b-30">
@@ -154,14 +148,14 @@
                                                     </table>
                                                 </div>
                                                 <div>
-
-                                                    <button class="btn btn--e-brand-b-2" type="submit"> PROCEED TO
-                                                        CHECKOUT</button>
+                                                    <a style="display: block; text-align:center" href="/cart/checkout"
+                                                        class="btn btn--e-brand-b-2">PROCEED TO
+                                                        CHECKOUT</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>

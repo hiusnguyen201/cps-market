@@ -16,13 +16,14 @@ class CartController extends Controller
     public function home()
     {
         $categories = Category::all();
-        $user = Auth::user();
-        $carts = Cart::where('user_id', $user->id)->get();
         $products = Product::all();
-
+        
+        $carts = Cart::where('user_id', Auth::id())->get();
         $countProductInCart = 0;
+        $totalPrice = 0;
         foreach ($carts as $cart) {
             $countProductInCart += $cart->quantity;
+            $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price  : $cart->product->price ) * $cart->quantity);
         }
 
         return view("customer/cart", [
@@ -30,7 +31,8 @@ class CartController extends Controller
             'carts' => $carts,
             'products' => $products,
             "categories" => $categories,
-            "countProductInCart" => $countProductInCart
+            "countProductInCart" => $countProductInCart,
+            "totalPrice" => $totalPrice
         ]);
     }
 
@@ -118,5 +120,25 @@ class CartController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function checkoutPage () 
+    {
+        $carts = Cart::where('user_id', Auth::id())->get();
+        $totalPrice = 0;
+        $countProductInCart = 0;
+        foreach ($carts as $cart) {
+            $countProductInCart += $cart->quantity;
+            $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price  : $cart->product->price ) * $cart->quantity);
+        }
+        
+        $categories = Category::all();
+        return view("customer/checkout", [
+            'title' => "Checkout",
+            "categories" => $categories,
+            "carts" => $carts,
+            "countProductInCart" => $countProductInCart,
+            "totalPrice" => $totalPrice,
+        ]);
     }
 }

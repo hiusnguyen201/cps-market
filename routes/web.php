@@ -133,11 +133,10 @@ Route::prefix('auth')->group(function () {
 Route::prefix('cart')->group(function () {
     Route::middleware(['check.auth'])->group(function () {
         Route::get('/', [CartController::class, 'home']);
-
         Route::post('/', [CartController::class, 'handleCreate']);
-
         Route::patch('/', [CartController::class, 'handleUpdate']);
-
         Route::delete('/', [CartController::class, 'handleDelete']);
+
+        Route::get('/checkout', [CartController::class, 'checkoutPage']);
     });
 });
