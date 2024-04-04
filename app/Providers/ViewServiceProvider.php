@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
+use App\Models\Category;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -28,6 +29,7 @@ class ViewServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             $cartCount = 0;
+            $categories = Category::all();
 
             if ($user = Auth::user()) {
 
@@ -36,9 +38,11 @@ class ViewServiceProvider extends ServiceProvider
                         $query->where('quantity', '>', 0);
                     })
                     ->sum('quantity');
+                    $view->with('user', $user);
             }
 
             $view->with('cartCount', $cartCount);
+            $view->with('categories', $categories);
         });
     }
 }
