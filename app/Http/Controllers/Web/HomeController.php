@@ -8,7 +8,6 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Carbon;
-use Cart;
 
 class HomeController extends Controller
 {
@@ -49,7 +48,6 @@ class HomeController extends Controller
             ->limit(3)
             ->get();
 
-        Cart::instance('cart');
         return view("customer/home", [
             'sections' => $sections,
             'sections9D' => $sections9D,
@@ -64,7 +62,7 @@ class HomeController extends Controller
     {
         $product = Product::where(['slug' => $productSlug])->first();
         $categories = Category::all();
-        Cart::instance('cart');
+
         return view('customer.products.details', [
             'product' => $product,
             'categories' => $categories,

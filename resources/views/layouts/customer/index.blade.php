@@ -19,22 +19,13 @@
     <!--====== App ======-->
     <link rel="stylesheet" href="{{ asset('ludus/css/app.css') }}">
 
-    <!-- Toast js -->
-    <link rel="stylesheet" href="{{ asset('toastjs/toastify.css') }}">
-
     {{-- swiper --}}
     <link rel="stylesheet" href="{{ asset('swiper/package/swiper-bundle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('custom/css/swiper.css') }}">
 
 </head>
 
 <body class="config">
-    @if (session('success'))
-        <input hidden type="text" name="message-success" value="{{ session('success') }}">
-    @endif
-    @if (session('error'))
-        <input hidden type="text" name="message-error" value="{{ session('error') }}">
-    @endif
-
     <div id="app">
         <!--====== Main Header ======-->
         @include('layouts.customer.parts.navbar')
@@ -59,14 +50,8 @@
     <script src="{{ asset('ludus/js/app.js') }}"></script>
 
     {{-- Swiper --}}
+
     <script src="{{ asset('swiper/package/swiper-bundle.min.js') }}"></script>
-
-    <!-- Toast js -->
-    <script src="{{ asset('toastjs/toastify.js') }}"></script>
-    <script defer src="{{ asset('custom/js/message.js') }}"></script>
-
-    <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
-    <script defer src="{{ asset('custom/js/cart.js') }}"></script>
 
     <script defer>
         const swiper = new Swiper(".swiper", {

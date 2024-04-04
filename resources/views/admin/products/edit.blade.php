@@ -28,7 +28,7 @@
                                 @foreach ($product->images as $image)
                                     @if (!$image->pin)
                                         <div class="input-file_uploaded">
-                                            <img class="input-file_image" src="{{ asset($image->thumbnail) }}"
+                                            <img class="input-file_image" src="{{ asset('storage/' . $image->thumbnail) }}"
                                                 alt="">
                                             <i class="far fa-file-image"></i>
                                             <span class="input-file_text">Add File</span>
@@ -72,7 +72,8 @@
 
                         @if ($imagePin)
                             <div class="input-file_uploaded">
-                                <img class="input-file_image" src="{{ asset($imagePin->thumbnail) }}" alt="">
+                                <img class="input-file_image" src="{{ asset('storage/' . $imagePin->thumbnail) }}"
+                                    alt="">
                                 <i class="far fa-file-image"></i>
                                 <span class="input-file_text">Add File</span>
                                 <input id="product" hidden class="input-file_form" type="file" name="promotion_image">

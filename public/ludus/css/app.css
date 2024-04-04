@@ -7587,13 +7587,13 @@ input::-ms-clear {
     background-image: url(../images/slider/slide-6.jpg);
 }
 .hero-slide--7 {
-    background-image: url(/images/Mobile.jpg);
+    background-image: url(/ImageSection/Mobile.jpg);
 }
 .hero-slide--8 {
-    background-image: url(/images/Laptop.jpg);
+    background-image: url(/ImageSection/Laptop.jpg);
 }
 .hero-slide--9 {
-    background-image: url(/images/Watch.jpg);
+    background-image: url(/ImageSection/Watch.jpg);
 }
 
 .owl-carousel .owl-dots {

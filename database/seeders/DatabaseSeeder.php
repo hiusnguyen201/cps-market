@@ -11,7 +11,6 @@ use \App\Models\User;
 use \App\Models\Role;
 use \App\Models\Category;
 use App\Models\Product;
-use App\Models\Product_Images;
 
 class DatabaseSeeder extends Seeder
 {
@@ -76,7 +75,7 @@ class DatabaseSeeder extends Seeder
 
         for ($i = 0; $i < 5; $i++) {
             for ($j = 0; $j < 30; $j++) {
-                $product = Product::create([
+                Product::create([
                     'name' => "Product " . $i + 1 . $j + 1,
                     'slug' => "Product-" . $i + 1 . $j + 1,
                     'price' => $i + 1000,
@@ -86,12 +85,6 @@ class DatabaseSeeder extends Seeder
                     "description" => "descrip " . $i,
                     "brand_id" => $i + 1,
                     "category_id" => $i + 1
-                ]);
-
-                Product_Images::create([
-                    'product_id' => $product->id,
-                    'thumbnail' => "images/Phone.jpg",
-                    "pin" => 1
                 ]);
             }
         }
