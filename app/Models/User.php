@@ -20,6 +20,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table = 'users';
+
     protected $fillable = [
         'name',
         'email',
@@ -67,5 +69,15 @@ class User extends Authenticatable
     public function otp(): HasOne
     {
         return $this->hasOne(User_Otp::class);
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function password_reset(): HasOne
+    {
+        return $this->hasOne(Password_Reset::class);
     }
 }

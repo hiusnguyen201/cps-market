@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class NewUserMail extends Mailable
+class PassCreateUserMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -33,7 +33,7 @@ class NewUserMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'New Account Create',
+            subject: 'Create New Account',
         );
     }
 
@@ -45,7 +45,7 @@ class NewUserMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'mail.newUser',
+            view: 'mail.passCreateUser',
             with: [
                 "password" => $this->details['password']
             ]

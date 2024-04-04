@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -48,12 +48,20 @@ class HomeController extends Controller
             ->limit(3)
             ->get();
 
+        $countProductInCart = 0;
+        if (Auth::user()) {
+            foreach (Auth::user()->carts as $cart) {
+                $countProductInCart += $cart->quantity;
+            }
+        }
+
         return view("customer/home", [
             'sections' => $sections,
             'sections9D' => $sections9D,
             'sections9W' => $sections9W,
             'sections9M' => $sections9M,
             'categories' => $categories,
+            'countProductInCart' => $countProductInCart,
             'title' => "Home"
         ]);
     }
@@ -63,9 +71,17 @@ class HomeController extends Controller
         $product = Product::where(['slug' => $productSlug])->first();
         $categories = Category::all();
 
+        $countProductInCart = 0;
+        if (Auth::user()) {
+            foreach (Auth::user()->carts as $cart) {
+                $countProductInCart += $cart->quantity;
+            }
+        }
+
         return view('customer.products.details', [
             'product' => $product,
             'categories' => $categories,
+            'countProductInCart' => $countProductInCart,
             'title' => 'Details Product',
         ]);
     }
@@ -85,8 +101,17 @@ class HomeController extends Controller
             ->orderBy('sold', 'desc');
 
         $products = $products->paginate($request->limit ?? 9);
+
+        $countProductInCart = 0;
+        if (Auth::user()) {
+            foreach (Auth::user()->carts as $cart) {
+                $countProductInCart += $cart->quantity;
+            }
+        }
+
         return view('customer.products.categories', [
             'title' => 'Categories Product',
+            'countProductInCart' => $countProductInCart,
             'products' => $products,
             'categories' => $categories,
         ]);

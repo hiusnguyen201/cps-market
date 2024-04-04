@@ -5,15 +5,15 @@ namespace App\Http\Controllers\Web;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Controller;
 
-use App\Models\PasswordResets;
+use App\Models\Password_Reset;
 use App\Models\User_Otp;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Social_Account;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -25,6 +25,7 @@ use App\Http\Requests\Auth\ForgetPasswordRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 
 use App\Jobs\SendOtp;
+use App\Jobs\SendPassResetLink;
 
 class AuthController extends Controller
 {
@@ -114,49 +115,52 @@ class AuthController extends Controller
 
     public function infoSocial()
     {
-        $social_user_info = session()->get('social_user_info');
+        $userSocial = session()->get('userSocial');
 
-        if (!$social_user_info) {
+        if (!$userSocial) {
             return redirect("/auth/login");
         }
+
         $categories = Category::all();
-        return view("auth.socialUpdateInfo", ['name' => $social_user_info[0]['name'], 'email' => $social_user_info[0]['email'], 'categories' => $categories]);
+        return view("auth.socialUpdateInfo", ['name' => $userSocial->name, 'email' => $userSocial->email, 'categories' => $categories, "title" => "Info Social Account"]);
     }
 
     public function handleUpdateInfoSocial(InfoSocialRequest $request)
     {
         try {
-            $social_user_info = session()->get('social_user_info')[0];
+            $userSocial = session()->get('userSocial');
 
             $role = Role::where("name", 'customer')->first();
             $user = User::create([
-                'name' => $request['name'],
-                'email' => $request['email'],
-                'phone' => $request['phone'],
-                'role_id' => $role['id'],
-                'google_id' => $social_user_info['provider'] == 'google' ? $social_user_info['id'] : null,
-                'facebook_id' => $social_user_info['provider'] == 'facebook' ? $social_user_info['id'] : null
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'role_id' => $role->id,
             ]);
 
-            session()->forget('social_user_info');
-            session()->flash('success', "We've sent a verification code to your email");
+            Social_Account::create([
+                "user_id" => $user->id,
+                "provider" => $userSocial->provider,
+                "provider_user_id" => $userSocial->id
+            ]);
+
+            session()->forget('userSocial');
+
+            Auth::login($user);
             $this->sendOtpToEmail($user);
-            return redirect("/auth/otp");
+            return redirect("/auth/otp")->with('success', "We've sent a verification code to your email");
         } catch (\Exception $e) {
             error_log($e->getMessage());
-            session()->flash("error", "Update info account failed");
-            return redirect()->back();
+            return redirect()->back()->with("error", "Update info account failed");
         }
     }
 
-    public function socialLogin($provider = null)
+    public function socialLogin($provider)
     {
-        if (!config("services.$provider"))
-            abort('404');
         return Socialite::driver($provider)->redirect();
     }
 
-    public function handleSocialLogin($provider = null)
+    public function handleSocialLogin($provider)
     {
         /*
             Khi mà social trả về thông tin người dùng
@@ -165,37 +169,34 @@ class AuthController extends Controller
                 + Nếu tồn tại, update id của social vào user đó, kiem tra active -> /auth/update-inactive-account
         */
 
-        $social_user_info = Socialite::driver($provider)->user();
-        if (!$social_user_info)
-            return redirect()->back();
-        $social_user_info['provider'] = $provider;
+        $userSocial = Socialite::driver($provider)->stateless()->user();
+        if (!$userSocial) return redirect()->back();
 
         try {
-            $exist_user = User::where(["email" => $social_user_info['email']])->first();
-            if (is_null($exist_user)) {
-                if (!session()->get('social_user_info'))
-                    session()->push("social_user_info", $social_user_info);
+            $exist_user = User::where(["email" => $userSocial['email']])->first();
+            if (!$exist_user) {
+                $userSocial->provider = $provider;
+                session()->put('userSocial', $userSocial);
                 return redirect("/auth/info-social");
             }
 
-            User::where("id", $exist_user['id'])->update([
-                'google_id' => $provider == 'google' ? $social_user_info['id'] : null,
-                'facebook_id' => $provider == 'facebook' ? $social_user_info['id'] : null
+            Social_Account::create([
+                "user_id" => $exist_user['id'],
+                "provider" => $provider,
+                "provider_user_id" => $userSocial['id']
             ]);
 
             if ($exist_user->status == config("constants.user_status.Inactive")) {
                 Auth::login($exist_user);
-                session()->flash('success', "We've sent a verification code to your email");
                 $this->sendOtpToEmail($exist_user);
-                return redirect("/auth/otp");
+                return redirect("/auth/otp")->with('success', "We've sent a verification code to your email");
             } else {
                 Auth::login($exist_user, true);
                 return redirect("/");
             }
         } catch (\Exception $e) {
             error_log($e->getMessage());
-            session()->flash('error', "Login with social error");
-            return redirect("/auth/login");
+            return redirect("/auth/login")->with('error', "Login with social error");
         }
     }
 
@@ -216,7 +217,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
-            'role_id' => $role['id'],
+            'role_id' => $role->id,
             'password' => Hash::make($request->password),
         ]);
 
@@ -228,7 +229,7 @@ class AuthController extends Controller
         }
     }
 
-    public function forgetPassword()
+    public function forgetPasswordForm()
     {
         $categories = Category::all();
         return view('auth.forgetPassword', [
@@ -239,42 +240,32 @@ class AuthController extends Controller
 
     public function handleForgetPassword(ForgetPasswordRequest $request)
     {
-        //search
-        $resetPassword = PasswordResets::where('email', $request['email'])->first();
-        if ($resetPassword) {
-            if (Carbon::now()->gt($resetPassword['expire_at'])) {
-                PasswordResets::where('email', $request['email'])->delete();
+        $user = User::where('email', $request->email)->first();
+
+        if ($user->password_reset) {
+            if (Carbon::now()->gt($user->password_reset->expire)) {
+                Password_Reset::where(["user_id" => $user->id])->delete();
             } else {
-                return redirect('/auth/forget-password')
-                    ->with("success", "Mail was sent. Please check your mail again!");
+                return redirect()->back()->with("success", "Mail was sent. Please check your mail again!");
             }
         }
 
-        $token = null;
-        do {
-            $token = Str::random(64);
-            $resetPassword = PasswordResets::where('token', $token)->first();
-        } while ($resetPassword);
-
-        PasswordResets::create([
-            'email' => $request['email'],
+        $token = Str::random(64);
+        Password_Reset::create([
+            'user_id' => $user->id,
             'token' => $token,
-            'created_at' => Carbon::now(),
-            'expire_at' => Carbon::now()->addMinutes(env('PASS_RESET_EXPIRE_MINUTES', 1)),
+            'expire' => Carbon::now()->addMinutes(env('PASS_RESET_EXPIRE_MINUTES', 1)),
         ]);
 
-        Mail::send("mail.forget-Password", ['token' => $token], function ($message) use ($request) {
-            $message->to($request['email']);
-            $message->subject("Reset Password");
-        });
+        $details = ["email" => $user->email, "token" => $token];
+        SendPassResetLink::dispatch($details);
 
-        return redirect('/auth/forget-password')
-            ->with("success", "Mail was sent. Please check your mail!");
+        return redirect()->back()->with("success", "Mail was sent. Please check your mail!");
     }
 
     public function changePasswordForm($token)
     {
-        $passwordReset = PasswordResets::where('token', $token)->first();
+        $passwordReset = Password_Reset::where('token', $token)->first();
 
         if (!$passwordReset) {
             return redirect('/auth/forget-password')
@@ -282,12 +273,13 @@ class AuthController extends Controller
         }
 
         if (Carbon::now()->gt($passwordReset->expire_at)) {
-            PasswordResets::where('token', $token)->delete();
+            Password_Reset::where('token', $token)->delete();
             return redirect('/auth/forget-password')
                 ->with("error", "Link has expired. Please try again!");
         }
 
         $categories = Category::all();
+
         return view('auth.changePassword', [
             'title' => 'Change Password',
             'categories' => $categories,
@@ -297,18 +289,17 @@ class AuthController extends Controller
 
     public function handleChangePassword(ResetPasswordRequest $request)
     {
-
-        $updatePassword = PasswordResets::where([
+        $passwordReset = Password_Reset::where([
             "token" => $request->token
         ])->first();
-        if (!$updatePassword) {
+        if (!$passwordReset) {
             $url = '/auth/reset-password/' . $request->token;
             return redirect()->to($url)->with("error", "Invalid");
         }
 
-        User::where("email", $updatePassword->email)
-            ->update(["password" => Hash::make($request['password'])]);
-        PasswordResets::where(["email" => $updatePassword->email])->delete();
+        $passwordReset->user->update(["password" => Hash::make($request->password)]);
+        $passwordReset->delete();
+
         return redirect('/auth/login')->with('success', 'Password reset successful');
     }
 

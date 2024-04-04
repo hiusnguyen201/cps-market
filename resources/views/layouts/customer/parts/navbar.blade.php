@@ -39,7 +39,7 @@
                                 <!--====== List ======-->
                                 <ul class="ah-list ah-list--design1 ah-list--link-color-secondary">
                                     <li class="has-dropdown" data-tooltip="tooltip" data-placement="left" title=""
-                                        data-original-title="{{ Auth::user()->name }}">
+                                        data-original-title="{{ Auth::user() ? Auth::user()->name : 'Account' }}">
 
                                         <a><i class="far fa-user-circle"></i></a>
 
@@ -363,7 +363,7 @@
                             <button class="btn btn--icon toggle-button fas fa-shopping-bag toggle-button-shop"
                                 type="button"></button>
 
-                            <span class="total-item-round">2</span>
+                            <span class="total-item-round">{{ $countProductInCart ?? 0 }}</span>
 
                             <!--====== Menu ======-->
                             <div class="ah-lg-mode">
@@ -385,7 +385,7 @@
                                         <a class="mini-cart-shop-link" href="/cart"><i
                                                 class="fas fa-shopping-bag"></i>
 
-                                            <span class="total-item-round">2</span></a>
+                                            <span class="total-item-round">{{ $countProductInCart ?? 0 }}</span></a>
                                         <span class="js-menu-toggle"></span>
                                     </li>
                                 </ul>

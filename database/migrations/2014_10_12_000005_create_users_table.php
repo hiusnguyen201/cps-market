@@ -23,8 +23,6 @@ return new class extends Migration
             $table->tinyInteger('status')->default(config("constants.user_status.Inactive"));
             $table->tinyInteger('gender')->nullable();
             $table->unsignedBigInteger('role_id');
-            $table->string("google_id", 100)->nullable();
-            $table->string("facebook_id", 100)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken(); // login token
             $table->foreign('role_id')->references('id')->on('roles');

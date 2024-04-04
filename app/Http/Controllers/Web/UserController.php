@@ -9,7 +9,7 @@ use App\Models\Role;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Admin\UserRequest;
-use App\Jobs\SendPassword;
+use App\Jobs\SendPassCreateUser;
 
 class UserController extends Controller
 {
@@ -78,7 +78,7 @@ class UserController extends Controller
             ]);
 
             $details = ["email" => $user->email, "password" => $password];
-            SendPassword::dispatch($details);
+            SendPassCreateUser::dispatch($details);
 
             session()->flash('success', 'create user was successful!');
         } catch (\Exception $e) {

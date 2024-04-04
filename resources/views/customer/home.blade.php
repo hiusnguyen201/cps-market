@@ -200,7 +200,7 @@
 @endforeach
 
 
-<section class="u-s-p-b-60">
+<section class="">
     <div class="section__content u-s-p-y-60">
         <section class="container">
             <div class="row">

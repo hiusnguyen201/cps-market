@@ -20,11 +20,17 @@ class CartController extends Controller
         $carts = Cart::where('user_id', $user->id)->get();
         $products = Product::all();
 
+        $countProductInCart = 0;
+        foreach ($carts as $cart) {
+            $countProductInCart += $cart->quantity;
+        }
+
         return view("customer/cart", [
             'title' => "Cart",
             'carts' => $carts,
             'products' => $products,
-            "categories" => $categories
+            "categories" => $categories,
+            "countProductInCart" => $countProductInCart
         ]);
     }
 
