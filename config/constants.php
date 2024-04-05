@@ -20,11 +20,18 @@ $LIMIT_PAGE = [
     100
 ];
 
-$PROVIDER_NAME = [
-    'facebook',
-    'google'
-];
-
 $DATE_FORMAT = "Y/m/d H:i:s";
 
-return ['genders' => $GENDERS, 'user_status' => $USER_STATUS, 'limit_page' => $LIMIT_PAGE, 'date_format' => $DATE_FORMAT, 'provider_name' => $PROVIDER_NAME];
+$PAYMENT_METHOD = ["cod" => 0, "momo" => 1, "vnpay" => 2];
+$PAYMENT_STATUS = ["pending" => 0, "paid" => 1, "canceled" => 2];
+$ORDER_STATUS = ["pending" => 0, "confirmed" => 1, "shipping" => 2, "completed" => 3, "canceled" => 4];
+
+return [
+    'genders' => $GENDERS,
+    'user_status' => $USER_STATUS,
+    'limit_page' => $LIMIT_PAGE,
+    'date_format' => $DATE_FORMAT,
+    'payment_method' => $PAYMENT_METHOD,
+    'payment_status' => $PAYMENT_STATUS,
+    'order_status' => $ORDER_STATUS,
+];

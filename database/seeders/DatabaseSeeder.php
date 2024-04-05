@@ -8,10 +8,13 @@ use App\Models\Brand;
 use App\Models\Product_Images;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use \App\Models\User;
 use \App\Models\Role;
 use \App\Models\Category;
 use App\Models\Product;
+use App\Models\Order;
+use App\Models\Shipping_Address;
 
 class DatabaseSeeder extends Seeder
 {
@@ -89,12 +92,34 @@ class DatabaseSeeder extends Seeder
                 ]);
 
                 Product_Images::create([
-                    'thumbnail' => "images/Phone.jpg", 
+                    'thumbnail' => "images/Phone.jpg",
                     'pin' => 1,
                     'product_id' => $product->id
 
                 ]);
             }
+        }
+
+        for ($i = 0; $i < 30; $i++) {
+            $order = Order::create([
+                'code' => Str::random(25),
+                'quantity' => 2,
+                'sub_total' => 10000,
+                "shipping_fee" => 0,
+                "total" => 10000,
+                "payment_method" => config("constants.payment_method.cod"),
+                "payment_status" => config("constants.payment_status.pending"),
+                "status" => config("constants.order_status.pending"),
+                "customer_id" => $i + 1
+            ]);
+
+            Shipping_Address::create([
+                'province' => 1,
+                'district' => 1,
+                'ward' => 7,
+                'note' => "Note " . $i + 1,
+                "order_id" => $order->id,
+            ]);
         }
     }
 }
