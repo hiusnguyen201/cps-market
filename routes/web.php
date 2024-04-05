@@ -13,6 +13,7 @@ use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\CustomerController;
 use App\Http\Controllers\Web\SpecificationController;
+use App\Http\Controllers\Web\WishlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -139,5 +140,15 @@ Route::prefix('cart')->group(function () {
         Route::patch('/', [CartController::class, 'handleUpdate']);
 
         Route::delete('/', [CartController::class, 'handleDelete']);
+    });
+});
+
+Route::prefix('wishlist')->group(function () {
+    Route::middleware(['check.auth'])->group(function () {
+        Route::get('/', [WishlistController::class, 'home']);
+
+        Route::post('/', [WishlistController::class, 'handleCreate']);
+
+        Route::delete('/', [WishlistController::class, 'handleDelete']);
     });
 });
