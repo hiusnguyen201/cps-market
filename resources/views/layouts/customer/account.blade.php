@@ -23,7 +23,7 @@
 <div class="app-content">
 
     <!--====== Section 2 ======-->
-    <div class="u-s-p-b-60">
+    <div class="u-s-p-b-60 u-s-p-t-60">
 
         <!--====== Section Content ======-->
         <div class="section__content">
