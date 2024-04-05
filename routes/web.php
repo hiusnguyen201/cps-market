@@ -148,9 +148,7 @@ Route::prefix('member')->group(function () {
         Route::get('/change-password', [AccountController::class, 'change_password']);
         Route::patch('/change-password', [AccountController::class, 'handleChange_password']);
 
-        Route::prefix('account')->group(function () {
-            Route::get('/user-info', [AccountController::class, 'user_info']);
-            Route::patch('/user-info', [AccountController::class, 'handleUpdate_User_info']);
-        });
+        Route::get('/user-info', [AccountController::class, 'user_info']);
+        Route::patch('/user-info', [AccountController::class, 'handleUpdate_User_info']);
     });
 });

@@ -7,29 +7,30 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ChangePasswordRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
-    //
-    public function index()
-    {
-        return view('layouts.customer.account', [
-            'title' => "Account"
-        ]);
-    }
-
     public function home()
     {
+        $user = Auth::user();
+        $categories = Category::all();
         return view("customer.account.home", [
-            'title' => "Account | Cps Market ",
+            'title' => "Member",
+            "user" => $user,
+            "categories" => $categories
         ]);
     }
 
     public function user_info()
     {
+        $user = Auth::user();
+        $categories = Category::all();
         return view("customer.account.user-info", [
-            'title' => "User info | Cps Market ",
+            'title' => "User info ",
+            "user" => $user,
+            "categories" => $categories
         ]);
     }
 
@@ -60,8 +61,12 @@ class AccountController extends Controller
 
     public function change_password()
     {
+        $user = Auth::user();
+        $categories = Category::all();
         return view("customer.account.change-password", [
-            'title' => "Change password | Cps Market ",
+            'title' => "Change password",
+            "user" => $user,
+            "categories" => $categories
         ]);
     }
 
