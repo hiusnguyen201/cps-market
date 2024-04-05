@@ -152,3 +152,15 @@ Route::prefix('cart')->group(function () {
         Route::get('/checkout', [CartController::class, 'checkoutPage']);
     });
 });
+
+Route::prefix('member')->group(function () {
+    Route::middleware(['check.auth'])->group(function () {
+        Route::get('/', [AccountController::class, 'home']);
+
+        Route::get('/change-password', [AccountController::class, 'change_password']);
+        Route::patch('/change-password', [AccountController::class, 'handleChange_password']);
+
+        Route::get('/user-info', [AccountController::class, 'user_info']);
+        Route::patch('/user-info', [AccountController::class, 'handleUpdate_User_info']);
+    });
+});
