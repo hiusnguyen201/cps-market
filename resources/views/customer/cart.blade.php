@@ -53,7 +53,7 @@
             <div class="container u-s-m-b-30">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="table-responsive">
+                        <div class="table-responsive mb-3">
                             <table class="table-p">
                                 <tbody>
                                     @foreach ($carts as $cart)

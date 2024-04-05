@@ -68,7 +68,7 @@
                 </div>
 
                 @if (count($category->specifications) > 0)
-                    <div class="table-responsive">
+                    <div class="table-responsive mb-3">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -91,7 +91,7 @@
                                         <td>{{ $specification->name }}</td>
 
                                         <td class="px-0 py-0">
-                                            <div class="table-responsive">
+                                            <div class="table-responsive mb-3">
                                                 <table class="table table-bordered mb-0">
                                                     <tbody>
                                                         @foreach ($specification->attributes as $attribute)

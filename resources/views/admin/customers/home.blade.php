@@ -7,52 +7,54 @@
 
 @extends('layouts.admin.index')
 @section('content')
-    <div class="card py-2 px-3">
-        <div class="d-flex mb-2">
-            <div class="col-2 px-0 mr-2">
+    <div class="card py-3 px-3">
+        <div class="row">
+            <div class="col-lg-3 col-12 mb-3">
                 <a href="/admin/customers/create" class="btn btn-success w-100 py-2">Create</a>
             </div>
-            <div class="col-2 px-0 mr-2">
+            <div class="col-lg-3 col-12 mb-3">
                 <button class="btn btn-danger w-100 py-2" data-toggle="modal" data-target="#modal-deleteAll">Delete
                     All</button>
             </div>
         </div>
-        <form action="" class="d-flex align-items-center mb-2" method="GET">
-            <div class="col-1 px-0 mr-2">
-                <select name="limit" id="" class="form-control">
-                    @if (!is_null($limit_page))
-                        @foreach ($limit_page as $limit)
-                            <option {{ request()->limit == $limit ? 'selected' : '' }} value="{{ $limit }}">
-                                {{ $limit }} </option>
-                        @endforeach
-                    @else
-                        <option selected value="10">10</option>
-                    @endif
-                </select>
-            </div>
-            <div class="col-2 px-0 mr-2">
-                <select name="status" id="" class="form-control">
-                    <option value="">All status</option>
-                    @if (!is_null($user_status))
-                        @foreach ($user_status as $index => $status)
-                            <option {{ request()->status == $index ? 'selected' : '' }} value="{{ $index }}">
-                                {{ $index }}</option>
-                        @endforeach
-                    @endif
-                </select>
-            </div>
-            <div class="col-3 px-0 ml-auto">
-                <div class="form-group d-flex mb-0">
-                    <input class="form-control" name="keyword" id="" placeholder="Search by keyword"
-                        value="{{ request()->keyword }}">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-search"></i>
-                    </button>
+        <form action="" method="GET">
+            <div class="row">
+                <div class="col-lg-2 col-4 mb-3">
+                    <select name="limit" id="" class="form-control">
+                        @if (!is_null($limit_page))
+                            @foreach ($limit_page as $limit)
+                                <option {{ request()->limit == $limit ? 'selected' : '' }} value="{{ $limit }}">
+                                    {{ $limit }} </option>
+                            @endforeach
+                        @else
+                            <option selected value="10">10</option>
+                        @endif
+                    </select>
+                </div>
+                <div class="col-lg-3 col-8 mb-3">
+                    <select name="status" id="" class="form-control">
+                        <option value="">All status</option>
+                        @if (!is_null($user_status))
+                            @foreach ($user_status as $index => $status)
+                                <option {{ request()->status == $index ? 'selected' : '' }} value="{{ $index }}">
+                                    {{ $index }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+                <div class="col-lg-4 col-12 mb-3 ml-auto">
+                    <div class="form-group d-flex mb-0">
+                        <input class="form-control" name="keyword" id="" placeholder="Search by keyword"
+                            value="{{ request()->keyword }}">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </form>
 
-        <div class="table-responsive">
+        <div class="table-responsive mb-3">
             <table class="home-table table table-hover">
                 <thead>
                     <tr>

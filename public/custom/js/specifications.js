@@ -2,7 +2,7 @@
 
 $("#addAttribute").click(function () {
     $("#attributeFieldsNew").append(
-        '<div class="att"><label class="mt-2" for="name">New attribute</label><div class="row"><div class="col-11"><input type="text" name="attributes_new[]" class="form-control mt-2" placeholder="Enter attribute..."></div><div style="margin-top: .5rem !important;" class="col-1"> <button type="button" class="btn btn-danger" id="removeAttribute"><i class="fas fa-trash-alt"></i></button></div></div></div>'
+        '<div class="att mb-3"><label for="name">New attribute</label><div class="d-flex align-items-center mb-2"><div class="col-9"><input type="text" name="attributes_new[]" class="form-control" placeholder="Enter attribute..."></div><div class="col-3"> <button type="button" class="btn btn-danger" id="removeAttribute"><i class="fas fa-trash-alt"></i></button></div></div></div>'
     );
 });
 
@@ -51,6 +51,6 @@ $("#attributeFields").on("click", "#removeAttribute", function () {
 
 $("#addAttribute").click(function () {
     $("#attributeFields").append(
-        '<div class="row"><div class="col-11"> <input type="text" name="attributes[]" class="form-control mt-2" placeholder="Enter attribute..."></div><div style="margin-top: .5rem !important;" class="col-1"> <button type="button" class="btn btn-danger" id="removeAttribute"><i class="fas fa-trash-alt"></i></button></div></div>'
+        '<div class="d-flex align-items-center mb-2"><div class="col-9"><input type="text" name="attributes[]" class="form-control" placeholder="Enter attribute..."></div><div class="col-3"> <button type="button" class="btn btn-danger" id="removeAttribute"><i class="fas fa-trash-alt"></i></button></div></div>'
     );
 });

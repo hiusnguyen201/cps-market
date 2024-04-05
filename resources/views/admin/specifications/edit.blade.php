@@ -16,42 +16,42 @@
                     <input type="text" name="name" class="form-control" id="name" placeholder="Enter name..."
                         value="{{ old('name') ?? $specification->name }}">
 
-
                     @error('name')
                         <span style="color: red">{{ $message }}</span>
                     @enderror
                 </div>
 
+                <div class="form-group">
+                    <label for="attribute"><span class="mr-2">Attribute</span><button type="button"
+                            class="btn btn-primary" id="addAttribute">+</button></label>
 
+                    @foreach ($specification->attributes as $attribute)
+                        <div class="attributeFields">
+                            <div class="d-flex align-items-center mb-2 ">
+                                <div class="col-9">
+                                    <input type="text" class="form-control attributeData"
+                                        placeholder="Enter attribute..." value="{{ old('attribute') ?? $attribute->key }}"
+                                        data-attId="{{ $attribute->id }}">
+                                </div>
 
-                <label for="attribute">Attribute</label>
-                <button type="button" class="btn btn-success py-2 w-100" id="addAttribute">+</button>
-                @foreach ($specification->attributes as $attribute)
-                    <div class="attributeFields">
-                        <div class="row">
-                            <div class="col-11">
-                                <input type="text" class="form-control mt-2 attributeData"
-                                    placeholder="Enter attribute..." value="{{ old('attribute') ?? $attribute->key }}"
-                                    data-attId="{{ $attribute->id }}">
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-danger removeAttributeCurrent"><i
+                                            class="fas fa-trash-alt"></i></button>
+                                </div>
+                                @error('attributes')
+                                    <span style="color: red">{{ $message }}</span>
+                                @enderror
                             </div>
-
-                            <div class="col-1" style="margin-top: .5rem !important;">
-                                <button type="button" class="btn btn-danger removeAttributeCurrent"><i
-                                        class="fas fa-trash-alt"></i></button>
-                            </div>
-                            @error('attributes')
-                                <span style="color: red">{{ $message }}</span>
-                            @enderror
                         </div>
+                    @endforeach
 
-                    </div>
-                @endforeach
+                    <div id="attributeFieldsNew" class="mt-3"></div>
+                </div>
 
-                <div class="form-group" id="attributeFieldsNew"></div>
                 @csrf
                 @method('PATCH')
                 <input type="hidden" name="id" value="{{ $specification->id }}">
-                <button type="submit" class="btn btn-primary py-2 w-100">Update</button>
+                <button type="submit" class="btn btn-success py-2 w-100">Save</button>
             </div>
         </form>
     </div>

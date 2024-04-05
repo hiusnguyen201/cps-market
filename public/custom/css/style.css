@@ -164,3 +164,7 @@
     background-color: #ffffff;
     border-color: #fa4400;
 }
+
+.pagination {
+    flex-wrap: wrap;
+}

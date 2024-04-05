@@ -42,7 +42,6 @@
                     <div class="pd u-s-m-b-30">
                         <div class="slider-fouc pd-wrap">
                             <div id="pd-o-initiate">
-
                                 @if (count($product->images))
                                     @foreach ($product->images as $image)
                                         <div class="pd-o-img-wrap" data-src="{{ asset($image->thumbnail) }}">
