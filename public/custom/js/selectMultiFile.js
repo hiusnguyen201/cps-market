@@ -115,7 +115,9 @@ divUploadedBlock.forEach(async (element) => {
                 return;
             }
 
-            addInputFileForm(element);
+            const parent = document.querySelector(".multiple-input_block");
+            parent.querySelector(".input-file_block").hidden = false;
+
             element.remove();
         });
 });

@@ -7,20 +7,26 @@
 
 @extends('layouts.admin.index')
 @section('content')
-    <div class="card card-primary mb-0">
+    <div class="card card-body">
         <form action="" method="POST">
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="name">Brand Name</label>
+            <div class="mb-3 row align-items-center">
+                <div class="col-lg-3 col-12">
+                    <label for="name" class="mb-0">Name&nbsp;<span class="required-text">*</span></label>
+                </div>
+                <div class="col-lg-7 col-12">
                     <input type="text" name="name" class="form-control" id="name" placeholder="Enter name..."
                         value="{{ old('name') ?? $brand->name }}">
                     @error('name')
                         <span style="color: red">{{ $message }}</span>
                     @enderror
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="category">Category</label>
+            <div class="mb-3 row align-items-center">
+                <div class="col-lg-3 col-12">
+                    <label for="category" class="mb-0">Category</label>
+                </div>
+                <div class="col-lg-7 col-12">
                     <select id="brand" name="category[]" multiple="multiple" style="width:100%"
                         data-placeholder="- - - Select a category - - -">
                         @foreach ($categories as $category)
@@ -34,17 +40,14 @@
                         <span style="color: red">{{ $message }}</span>
                     @enderror
                 </div>
-
-
             </div>
 
-            <div class="card-footer">
+            <div class="d-grid">
                 @csrf
                 @method('PATCH')
                 <input type="hidden" name="id" value="{{ $brand->id }}">
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-success py-2 w-100">Save</button>
             </div>
-            @csrf
         </form>
     </div>
 @endsection
