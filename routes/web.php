@@ -13,6 +13,7 @@ use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\CustomerController;
 use App\Http\Controllers\Web\SpecificationController;
+use App\Http\Controllers\Web\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +96,17 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{user}', [CustomerController::class, 'edit']);
         Route::patch('/edit/{user}', [CustomerController::class, 'handleUpdate']);
         Route::delete('/', [CustomerController::class, 'handleDelete']);
+    });
+
+    // Orders
+    Route::prefix('orders')->group(function () {
+        Route::get('/', [OrderController::class, 'home'])->name("orders.home");
+        Route::get('/details/{order}', [OrderController::class, 'details'])->name("orders.details");
+        Route::get('/create', [OrderController::class, 'create'])->name("orders.create");
+        Route::post('/create', [OrderController::class, 'handleCreate']);
+        Route::get('/edit/{order}', [OrderController::class, 'edit'])->name("orders.edit");
+        Route::patch('/edit/{order}', [OrderController::class, 'handleUpdate']);
+        Route::delete('/', [OrderController::class, 'handleDelete']);
     });
 });
 

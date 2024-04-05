@@ -82,7 +82,7 @@
                                                 <div class="ship-b">
                                                     <div class="u-s-m-b-30">
                                                         <label class="gl-label" for="province">NAME *</label>
-                                                        <input name="address" value="{{ $user->name }}"
+                                                        <input disabled name="address" value="{{ $user->name }}"
                                                             fdprocessedid="mf89an"
                                                             class="input-text input-text--primary-style" type="text"
                                                             placeholder="Name...">
@@ -93,7 +93,7 @@
                                                 <div class="ship-b">
                                                     <div class="u-s-m-b-30">
                                                         <label class="gl-label" for="district">PHONE *</label>
-                                                        <input name="address" fdprocessedid="mf89an"
+                                                        <input disabled name="address" fdprocessedid="mf89an"
                                                             value="{{ $user->phone }}"
                                                             class="input-text input-text--primary-style" type="text"
                                                             placeholder="Phone...">
@@ -104,7 +104,7 @@
                                                 <div class="ship-b">
                                                     <div class="u-s-m-b-30">
                                                         <label class="gl-label" for="ward">EMAIL *</label>
-                                                        <input name="address" fdprocessedid="mf89an"
+                                                        <input disabled name="address" fdprocessedid="mf89an"
                                                             value="{{ $user->email }}"
                                                             class="input-text input-text--primary-style" type="text"
                                                             placeholder="Email...">

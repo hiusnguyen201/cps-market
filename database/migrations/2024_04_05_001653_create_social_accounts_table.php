@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('provider_user_id', 150);
             $table->string('provider', 30);
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

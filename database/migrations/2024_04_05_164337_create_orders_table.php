@@ -15,7 +15,19 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string("code", 25);
+            $table->integer("quantity");
+            $table->integer("sub_total");
+            $table->integer("shipping_fee");
+            $table->integer("total");
+            $table->tinyInteger("payment_method");
+            $table->tinyInteger("payment_status");
+            $table->tinyInteger("status");
+            $table->unsignedBigInteger("customer_id");
             $table->timestamps();
+            $table->softDeletes();
+            
+            $table->foreign('customer_id')->references('id')->on('users');
         });
     }
 
