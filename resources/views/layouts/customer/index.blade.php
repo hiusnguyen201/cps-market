@@ -56,19 +56,22 @@
 
     <!-- jQuery -->
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
-    <script defer src="{{ asset('custom/js/cart.js') }}"></script>
-
-    {{-- Swiper --}}
-    <script src="{{ asset('swiper/package/swiper-bundle.min.js') }}"></script>
-    <script defer src="{{ asset('custom/js/swiper.js') }}"></script>
-
-    <!-- Toast js -->
-    <script src="{{ asset('toastjs/toastify.js') }}"></script>
-    <script defer src="{{ asset('custom/js/message.js') }}"></script>
+    <script src="{{ asset('custom/js/cart.js') }}"></script>
 
     {{-- Select viet nam location --}}
     <script src="{{ asset('vietnamlocalselector/vietnamlocalselector.js') }}"></script>
-    <script defer src="{{ asset('custom/js/vietnamlocalselector.js') }}"></script>
+    <script src="{{ asset('custom/js/vietnamlocalselector.js') }}"></script>
+
+    {{-- Swiper --}}
+    <script src="{{ asset('swiper/package/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('custom/js/swiper.js') }}"></script>
+
+    <!-- Toast js -->
+    <script src="{{ asset('toastjs/toastify.js') }}"></script>
+    <script src="{{ asset('custom/js/message.js') }}"></script>
+
+    {{-- UI --}}
+    <script defer defer src="{{ asset('custom/js/ui.js') }}"></script>
 </body>
 
 </html>

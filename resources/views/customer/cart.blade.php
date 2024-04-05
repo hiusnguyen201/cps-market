@@ -96,11 +96,8 @@
                                                     <span class="input-counter__minus fas fa-minus"></span>
                                                     <input class="input-counter__text input-counter--text-primary-style"
                                                         type="text" name="quantity" value="{{ $cart->quantity }}"
-                                                        data-min="0" data-max="{{ $cart->product->quantity }}"
+                                                        data-min="1" data-max="{{ $cart->product->quantity + 1 }}"
                                                         data-cart-id="{{ $cart->id }}" onchange="updateQuantity(this)">
-
-                                                    <p id="message" class="text-center"
-                                                        style="color: red; font-size: 10px;"></p>
 
                                                     <span class="input-counter__plus fas fa-plus"></span>
                                                 </div>

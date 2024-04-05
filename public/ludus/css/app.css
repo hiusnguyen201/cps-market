@@ -2067,10 +2067,9 @@ input::-ms-clear {
     max-width: 100%;
     font-size: 14px;
     font-weight: 600;
-    padding: 7px 12px 11px 15px;
+    padding: 8px 12px 8px 15px;
     cursor: pointer;
     line-height: 1.2;
-    max-height: 40px;
 }
 .select-box--primary-style {
     color: #333333;

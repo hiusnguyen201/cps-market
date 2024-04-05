@@ -129,16 +129,19 @@ class CartController extends Controller
         $countProductInCart = 0;
         foreach ($carts as $cart) {
             $countProductInCart += $cart->quantity;
-            $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price  : $cart->product->price ) * $cart->quantity);
+            $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price : $cart->product->price ) * $cart->quantity);
         }
         
         $categories = Category::all();
+        $user = Auth::user();
+
         return view("customer/checkout", [
             'title' => "Checkout",
             "categories" => $categories,
             "carts" => $carts,
             "countProductInCart" => $countProductInCart,
             "totalPrice" => $totalPrice,
+            "user" => $user
         ]);
     }
 }

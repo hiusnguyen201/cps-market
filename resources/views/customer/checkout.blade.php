@@ -60,10 +60,58 @@
                                                         </div>
                                                     </div>
 
-                                                    <a class="o-card__del far fa-trash-alt"></a>
+                                                    <form action="/cart" method="post">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <input type="hidden" name="cart_id" value="{{ $cart->id }}">
+                                                        <button type="submit"
+                                                            style="background: transparent; border:none; cursor: pointer;">
+                                                            <i class="o-card__del far fa-trash-alt"></i>
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             @endforeach
                                         @endif
+                                    </div>
+                                </div>
+                                <div class="o-summary__section u-s-m-b-30">
+                                    <div class="o-summary__box">
+                                        <h1 class="checkout-f__h1">CUSTOMER INFORMATION</h1>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="ship-b">
+                                                    <div class="u-s-m-b-30">
+                                                        <label class="gl-label" for="province">NAME *</label>
+                                                        <input name="address" value="{{ $user->name }}"
+                                                            fdprocessedid="mf89an"
+                                                            class="input-text input-text--primary-style" type="text"
+                                                            placeholder="Name...">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="ship-b">
+                                                    <div class="u-s-m-b-30">
+                                                        <label class="gl-label" for="district">PHONE *</label>
+                                                        <input name="address" fdprocessedid="mf89an"
+                                                            value="{{ $user->phone }}"
+                                                            class="input-text input-text--primary-style" type="text"
+                                                            placeholder="Phone...">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="ship-b">
+                                                    <div class="u-s-m-b-30">
+                                                        <label class="gl-label" for="ward">EMAIL *</label>
+                                                        <input name="address" fdprocessedid="mf89an"
+                                                            value="{{ $user->email }}"
+                                                            class="input-text input-text--primary-style" type="text"
+                                                            placeholder="Email...">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="o-summary__section u-s-m-b-30">
@@ -94,8 +142,9 @@
                                                 <div class="ship-b">
                                                     <div class="u-s-m-b-30">
                                                         <label class="gl-label" for="ward">WARD *</label>
-                                                        <select name="ward" class="select-box select-box--primary-style"
-                                                            id="ward" fdprocessedid="mf89an">
+                                                        <select name="ward"
+                                                            class="select-box select-box--primary-style" id="ward"
+                                                            fdprocessedid="mf89an">
                                                         </select>
                                                     </div>
                                                 </div>
