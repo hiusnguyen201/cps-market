@@ -24,7 +24,7 @@
                     <div class="col-3"><span class="mt-2">Product images</span></div>
                     <div class="col-7 input-product_form">
                         <div class="multiple-input_block">
-                            @if (count($product->images->toArray()) > 1)
+                            @if (count($product->images) > 1)
                                 @foreach ($product->images as $image)
                                     @if (!$image->pin)
                                         <div class="input-file_uploaded">
@@ -41,6 +41,19 @@
                                     @endif
                                 @endforeach
                             @else
+                                <div class="input-file_block">
+                                    <img hidden class="input-file_image">
+                                    <i class="far fa-file-image"></i>
+                                    <span class="input-file_text">Add File</span>
+                                    <input id="product" hidden class="input-file_form" type="file"
+                                        name="product_images[]" multiple>
+                                    <div class="remove-btn_block">
+                                        <i class="fas fa-trash"></i>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if (count($product->images) < 8)
                                 <div class="input-file_block">
                                     <img hidden class="input-file_image">
                                     <i class="far fa-file-image"></i>
@@ -115,7 +128,8 @@
                     <div class="col-3"><span class="mt-2">Description</span></div>
                     <div class="col-7 input-product_form">
                         <div class="input-group">
-                            <textarea id="product" style="resize: none" name="description" class="form-control" cols="30" rows="8">{{ $product->description }}</textarea>
+                            <textarea id="product" style="resize: none" name="description" class="form-control" cols="30"
+                                rows="8">{{ $product->description }}</textarea>
                         </div>
                     </div>
                 </div>

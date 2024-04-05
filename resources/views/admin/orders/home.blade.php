@@ -33,10 +33,24 @@
                 </select>
             </div>
 
+            <div class="col-2 px-0 mr-2">
+                <select name="status" class="form-control">
+                    <option selected value="">All status</option>
+                    @if (count(config('constants.order_status')))
+                        @foreach (config('constants.order_status') as $status => $value)
+                            <option {{ request()->status && +request()->status == +$value ? 'selected' : '' }}
+                                value="{{ $value }}">
+                                {{ $status }}
+                            </option>
+                        @endforeach
+                    @endif
+                </select>
+            </div>
+
             <div class="col-3 px-0 ml-auto">
                 <div class="form-group d-flex mb-0">
-                    <input class="form-control" name="keyword" id="" placeholder="Search by keyword"
-                        value="{{ request()->keyword }}">
+                    <input class="form-control" name="code" id="" placeholder="Search by code"
+                        value="{{ request()->code }}">
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-search"></i>
                     </button>
@@ -51,19 +65,49 @@
                         <th width='1%'>
                             <input type="checkbox" class="form-check-input" id="selectAll">
                         </th>
-                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Customer</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Payment Method</th>
                         <th width='1%'>Operation</th>
                     </tr>
                 </thead>
                 <tbody>
-
+                    @if (count($orders))
+                        @foreach ($orders as $order)
+                            <tr>
+                                <th width='1%'>
+                                    <input type="checkbox" class="form-check-input" id="selectAll">
+                                </th>
+                                <td>{{ $order->code }}</td>
+                                <td><a
+                                        href="/admin/customers/details/{{ $order->customer->id }}">{{ $order->customer->name }}</a>
+                                </td>
+                                <td>{{ $order->quantity }}</td>
+                                <td>{{ number_format($order->total, 0, ',', '.') }}&nbsp;₫</td>
+                                <td>{{ array_search($order->status, config('constants.order_status')) }}</td>
+                                <td>{{ array_search($order->payment_method, config('constants.payment_method')) }}</td>
+                                <td class="text-center align-middle">
+                                    <a class="btn btn-warning" href="/admin/orders/edit/{{ $order->id }}">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
+                                        data-target="#modal-delete-{{ $order->id }}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>
 
         <!-- Paginate -->
         <div class="d-flex ml-auto">
-            {{-- {{ $orders->appends(Request::all())->links() }} --}}
+            {{ $orders->appends(Request::all())->links() }}
         </div>
 
     </div>
