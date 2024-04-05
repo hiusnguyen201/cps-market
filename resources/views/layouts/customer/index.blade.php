@@ -54,51 +54,24 @@
     <!--====== App ======-->
     <script src="{{ asset('ludus/js/app.js') }}"></script>
 
-    {{-- Swiper --}}
-    <script src="{{ asset('swiper/package/swiper-bundle.min.js') }}"></script>
-
     <!-- jQuery -->
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
-    <script defer src="{{ asset('custom/js/cart.js') }}"></script>
+    <script src="{{ asset('custom/js/cart.js') }}"></script>
+
+    {{-- Select viet nam location --}}
+    <script src="{{ asset('vietnamlocalselector/vietnamlocalselector.js') }}"></script>
+    <script src="{{ asset('custom/js/vietnamlocalselector.js') }}"></script>
+
+    {{-- Swiper --}}
+    <script src="{{ asset('swiper/package/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('custom/js/swiper.js') }}"></script>
 
     <!-- Toast js -->
     <script src="{{ asset('toastjs/toastify.js') }}"></script>
-    <script defer src="{{ asset('custom/js/message.js') }}"></script>
+    <script src="{{ asset('custom/js/message.js') }}"></script>
 
-    <script defer>
-        const swiper = new Swiper(".swiper", {
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            loop: false,
-            breakpoints: {
-                0: {
-                    slidesPerView: 1,
-                    spaceBetween: 5,
-
-                },
-                600: {
-                    slidesPerView: 3,
-                    spaceBetween: 10,
-                },
-                800: {
-                    slidesPerView: 3,
-                    spaceBetween: 15,
-                },
-                1025: {
-                    slidesPerView: 5,
-                    spaceBetween: 15,
-                },
-                1281: {
-                    slidesPerView: 5,
-                    spaceBetween: 15,
-                },
-            }
-        })
-    </script>
-
-
+    {{-- UI --}}
+    <script defer defer src="{{ asset('custom/js/ui.js') }}"></script>
 </body>
 
 </html>
