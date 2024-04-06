@@ -378,7 +378,7 @@
                                     </li>
                                     <li>
 
-                                        <a href="wishlist.html"><i class="far fa-heart"></i></a>
+                                        <a href="/wishlist"><i class="far fa-heart"></i></a>
                                     </li>
                                     <li class="has-dropdown">
 

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Wishlist;
+use Illuminate\Auth\Events\Failed;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,16 +74,20 @@ class HomeController extends Controller
         $categories = Category::all();
 
         $countProductInCart = 0;
+        $wishlistCheck = null;
         if (Auth::user()) {
             foreach (Auth::user()->carts as $cart) {
                 $countProductInCart += $cart->quantity;
             }
+
+            $wishlistCheck = Wishlist::where('product_id', $product->id)->where('user_id', Auth::id())->first();
         }
 
         return view('customer.products.details', [
             'product' => $product,
             'categories' => $categories,
             'countProductInCart' => $countProductInCart,
+            'wishlistCheck' => $wishlistCheck,
             'title' => 'Details Product',
         ]);
     }

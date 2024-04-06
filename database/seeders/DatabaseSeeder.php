@@ -82,7 +82,7 @@ class DatabaseSeeder extends Seeder
                 $product = Product::create([
                     'name' => "Product " . $i + 1 . $j + 1,
                     'slug' => "Product-" . $i + 1 . $j + 1,
-                    'price' => $i + 1000,
+                    'price' => $i + 5000,
                     "sale_price" => $i + 1000,
                     "quantity" => $i + 10,
                     "sold" => $i + 10,
