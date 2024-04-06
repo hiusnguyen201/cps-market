@@ -52,14 +52,15 @@ class WishlistController extends Controller
                     'product_id' => $product->id,
                     'user_id' => $user->id,
                 ]);
+                return redirect()->back()->with('success', 'Add wishlist successfully');
             } else {
                 $wishlist->delete();
-            }
+                return redirect()->back()->with('error', 'Remove wishlist successfully');
 
-            return redirect()->back()->with('success', 'Add product to cart successfully');
+            }
         } catch (\Exception $e) {
             error_log($e->getMessage());
-            return redirect()->back()->with('error', 'Add product to cart failed');
+            return redirect()->back()->with('error', 'Add wishlist failed');
         }
     }
 
@@ -74,10 +75,10 @@ class WishlistController extends Controller
 
             $wishlist->delete();
 
-            session()->flash('error', 'Remove product from cart successfully!');
+            session()->flash('error', 'Remove wishlist successfully!');
         } catch (\Exception $e) {
             error_log($e->getMessage());
-            session()->flash('error', 'Remove product from cart unsuccessfully!');
+            session()->flash('error', 'Remove wishlist unsuccessfully!');
         }
 
         return redirect()->back();

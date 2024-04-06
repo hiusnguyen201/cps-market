@@ -19,8 +19,12 @@
     }
 </style>
 
-    <!--====== App Content ======-->
-    <div class="app-content">
+@if (session('success'))
+    <input hidden type="text" name="message-success" value="{{ session('success') }}">
+@endif
+@if (session('error'))
+    <input hidden type="text" name="message-error" value="{{ session('error') }}">
+@endif
 
         <!--====== Section 1 ======-->
         <div class="u-s-p-t-90">
@@ -1106,8 +1110,7 @@
             <!--====== End - Section Content ======-->
         </div>
         <!--====== End - Section 1 ======-->
-    </div>
-    <!--====== End - App Content ======-->
+
 
 
 @endsection
