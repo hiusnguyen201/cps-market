@@ -19,7 +19,6 @@
         }
     </style>
 
-
     <div class="u-s-p-y-60 u-s-p-t-60">
         <div class="section__content">
             <div class="container">
@@ -27,7 +26,6 @@
                     @if (count($wishlists))
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             @foreach ($wishlists as $wishlist)
-                                <!--====== Wishlist Product ======-->
                                 <div class="w-r u-s-m-b-30">
                                     <div class="w-r__container">
                                         <div class="w-r__wrap-1">
@@ -86,7 +84,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--====== End - Wishlist Product ======-->
                             @endforeach
                         </div>
                     @else
@@ -107,8 +104,5 @@
                 </div>
             </div>
         </div>
-        <!--====== End - Section Content ======-->
     </div>
-    <!--====== End - Section 2 ======-->
-
 @endsection

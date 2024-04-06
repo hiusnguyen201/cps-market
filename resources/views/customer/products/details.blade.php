@@ -31,7 +31,6 @@
                 <div class="pd-breadcrumb u-s-m-b-30">
                     <ul class="pd-breadcrumb__list">
                         <li class="has-separator">
-
                             <a href="/">Home</a>
                         </li>
                         <li class="has-separator">
@@ -132,10 +131,11 @@
                         </div>
                         <div class="u-s-m-b-15">
                             <div class="pd-detail__inline">
-                                @if ($wishlistCheck != null)
+                                @if ($wishlistCheck)
                                     <form action="/wishlist" method="post">
                                         @csrf
-                                        <input type="hidden" name="product_id" value="{{ $product->id }}"><i
+                                        @method('DELETE')
+                                        <input type="hidden" name="wishlist_id" value="{{ $wishlistCheck->id }}"><i
                                             class="fas fa-heart u-s-m-r-6" style="color: red;"></i>
                                         <button id="addToWishlist" class="pd-detail__click-wrap" type="submit">
                                             Remove Wishlist
@@ -145,7 +145,7 @@
                                     <form action="/wishlist" method="post">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}"><i
-                                            class="far fa-heart u-s-m-r-6"></i>
+                                            class="fas fa-heart u-s-m-r-6"></i>
                                         <button id="addToWishlist" class="pd-detail__click-wrap" type="submit">
                                             Add to Wishlist
                                         </button>
@@ -1095,7 +1095,5 @@
                 </div>
             </div>
         </div>
-
     </div>
-
 @endsection

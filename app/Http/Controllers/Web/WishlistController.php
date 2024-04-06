@@ -45,22 +45,19 @@ class WishlistController extends Controller
         try {
             $user = Auth::user();
             $product = Product::find($request->product_id);
-            $wishlist = Wishlist::where('user_id', $user->id)->where('product_id', $product->id)->first();
 
-            if (!$wishlist) {
-                Wishlist::create([
-                    'product_id' => $product->id,
-                    'user_id' => $user->id,
-                ]);
-            } else {
-                $wishlist->delete();
-            }
+            Wishlist::create([
+                'product_id' => $product->id,
+                'user_id' => $user->id,
+            ]);
 
-            return redirect()->back()->with('success', 'Add product to wishlist successfully');
+            session()->flash('success', 'Add product to wishlist successfully');
         } catch (\Exception $e) {
             error_log($e->getMessage());
-            return redirect()->back()->with('error', 'Add product to wishlist failed');
+            session()->flash('error', 'Add product to wishlist failed');
         }
+
+        return redirect()->back();
     }
 
     public function handleDelete(Request $request)
