@@ -98,15 +98,14 @@
                         <div>
                             <div class="pd-detail__inline">
 
-                                <span
-                                    class="pd-detail__price">{{ number_format($product->sale_price, 0, ',', '.') }}&nbsp;₫</span>
-                                @if ($product->price - $product->sale_price > 0)
+                                <span class="pd-detail__price">@convertCurrency($product->sale_price ?? $product->price)</span>
+                                @if ($product->sale_price && $product->price - $product->sale_price > 0)
                                     <span
                                         class="pd-detail__discount">({{ round((($product->price - $product->sale_price) * 100) / $product->price, 0) }}%
                                         OFF)
                                     </span>
+                                    <span class="pd-detail__del">@convertCurrency($product->price)</span>
                                 @endif
-                                <del class="pd-detail__del">{{ number_format($product->price, 0, ',', '.') }}&nbsp;₫</del>
                             </div>
                         </div>
                         <div class="u-s-m-b-15">

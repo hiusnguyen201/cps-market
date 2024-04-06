@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -19,7 +18,6 @@ return new class extends Migration
             $table->string('email', 150)->unique();
             $table->string('password', 200)->nullable();
             $table->string('phone', 15);
-            $table->string('address', 150)->nullable();
             $table->tinyInteger('status')->default(config("constants.user_status.Inactive"));
             $table->tinyInteger('gender')->nullable();
             $table->unsignedBigInteger('role_id');

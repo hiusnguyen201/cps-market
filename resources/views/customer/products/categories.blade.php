@@ -875,7 +875,7 @@
                                     @foreach ($products as $product)
                                         <div class="col-lg-4 col-md-6 col-sm-6">
                                             <div class="product-m">
-                                                @if ($product->price - $product->sale_price > 0)
+                                                @if ($product->sale_price && $product->price - $product->sale_price > 0)
                                                     <span class="product-bs__discount-label">
                                                         <span class="product-bs__discount-percent">SALE
                                                             {{ round((($product->price - $product->sale_price) * 100) / $product->price, 0) }}%</span>
@@ -916,16 +916,16 @@
                                                     <span class="product-m__review">(23)</span>
                                                 </div>
                                                 <div class="product-m__price"> <span
-                                                        class="product-bs__price">{{ number_format($product->sale_price, 0, ',', '.') }}&nbsp;₫
-                                                        <span
-                                                            class="product-bs__discount">{{ number_format($product->price, 0, ',', '.') }}&nbsp;₫</span>
-                                                    </span></div>
+                                                        class="product-bs__price">@convertCurrency($product->sale_price ?? $product->price)
+                                                        @if ($product->sale_price)
+                                                            <span class="product-bs__discount">@convertCurrency($product->price)</span>
+                                                        @endif
+                                                    </span>
+                                                </div>
                                                 <div class="product-m__hover">
                                                     <div class="product-m__preview-description">
-
                                                         <span>{{ $product->description }}</span>
                                                     </div>
-
                                                 </div>
 
                                             </div>
@@ -941,7 +941,6 @@
                         <div class="u-s-p-y-60">
                             {{ $products->appends(Request::all())->links() }}
                         </div>
-
                     </div>
                 </div>
             </div>

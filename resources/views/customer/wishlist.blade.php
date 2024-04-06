@@ -50,11 +50,12 @@
                                                     <a
                                                         href="/{{ $wishlist->product->category->slug }}.html">{{ $wishlist->product->category->name }}</a></span>
 
-                                                <span
-                                                    class="w-r__price">{{ number_format($wishlist->product->sale_price, 0, ',', '.') }}&nbsp;₫
+                                                <span class="w-r__price">@convertCurrency($wishlist->product->sale_price ?? $wishlist->product->price)
 
-                                                    <span
-                                                        class="w-r__discount">{{ number_format($wishlist->product->price, 0, ',', '.') }}&nbsp;₫</span></span>
+                                                    @if ($wishlist->product->sale_price)
+                                                        <span class="w-r__discount">@convertCurrency($wishlist->product->price)</span>
+                                                    @endif
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="w-r__wrap-2">

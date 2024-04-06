@@ -32,6 +32,9 @@
 
 <body class="config">
     <div id="app">
+        @php
+            setlocale(LC_MONETARY, 'vi_VN');
+        @endphp
         <!--====== Main Header ======-->
         @include('layouts.customer.parts.navbar')
 

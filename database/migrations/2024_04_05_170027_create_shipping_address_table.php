@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -15,9 +14,10 @@ return new class extends Migration
     {
         Schema::create('shipping_address', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger("province");
-            $table->tinyInteger("district");
-            $table->tinyInteger("ward");
+            $table->integer("province");
+            $table->integer("district");
+            $table->integer("ward");
+            $table->string("address", 100);
             $table->string("note", 100);
             $table->unsignedBigInteger("order_id");
             $table->timestamps();

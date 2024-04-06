@@ -22,9 +22,27 @@ $LIMIT_PAGE = [
 
 $DATE_FORMAT = "Y/m/d H:i:s";
 
-$PAYMENT_METHOD = ["cod" => 0, "momo" => 1, "vnpay" => 2];
+$PAYMENT_METHOD = [
+    "cod" => [
+        "value" => 0,
+        "name" => "Cash on Delivery",
+        "redirect" => "/payment/cod"
+    ],
+    "momo" => [
+        "value" => 1,
+        "name" => "Payment with Momo",
+        "redirect" => "/payment/momo"
+    ],
+    "vnpay" => [
+        "value" => 2,
+        "name" => "Payment with Vnpay",
+        "redirect" => "/payment/vnpay"
+    ]
+];
 $PAYMENT_STATUS = ["pending" => 0, "paid" => 1, "canceled" => 2];
 $ORDER_STATUS = ["pending" => 0, "confirmed" => 1, "shipping" => 2, "completed" => 3, "canceled" => 4];
+
+$SHIPPING_FEE = 0;
 
 return [
     'genders' => $GENDERS,
@@ -34,4 +52,5 @@ return [
     'payment_method' => $PAYMENT_METHOD,
     'payment_status' => $PAYMENT_STATUS,
     'order_status' => $ORDER_STATUS,
+    'shipping_fee' => $SHIPPING_FEE
 ];

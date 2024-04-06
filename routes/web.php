@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Web\AccountController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Web\MemberController;
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\CategoryController;
 use App\Http\Controllers\Web\UserController;
@@ -15,6 +15,7 @@ use App\Http\Controllers\Web\CustomerController;
 use App\Http\Controllers\Web\SpecificationController;
 use App\Http\Controllers\Web\OrderController;
 use App\Http\Controllers\Web\WishlistController;
+use App\Http\Controllers\Web\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -154,15 +155,22 @@ Route::prefix('cart')->group(function () {
     });
 });
 
+Route::prefix('payment')->group(function () {
+    Route::middleware(['check.auth'])->group(function () {
+        Route::post('/cod', [PaymentController::class, 'cod_payment']);
+        Route::post('/momo', [PaymentController::class, 'momo_payment']);
+    });
+});
+
 Route::prefix('member')->group(function () {
     Route::middleware(['check.auth'])->group(function () {
-        Route::get('/', [AccountController::class, 'home']);
+        Route::get('/', [MemberController::class, 'home']);
 
-        Route::get('/change-password', [AccountController::class, 'change_password']);
-        Route::patch('/change-password', [AccountController::class, 'handleChange_password']);
+        Route::get('/change-password', [MemberController::class, 'change_password']);
+        Route::patch('/change-password', [MemberController::class, 'handleChange_password']);
 
-        Route::get('/user-info', [AccountController::class, 'user_info']);
-        Route::patch('/user-info', [AccountController::class, 'handleUpdate_User_info']);
+        Route::get('/user-info', [MemberController::class, 'user_info']);
+        Route::patch('/user-info', [MemberController::class, 'handleUpdate_User_info']);
     });
 });
 

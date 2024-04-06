@@ -146,7 +146,7 @@
                         <div class="swiper-wrapper">
                             @foreach ($section as $product)
                                 <div class="swiper-slide">
-                                    @if ($product->price - $product->sale_price > 0)
+                                    @if ($product->sale_price && $product->price - $product->sale_price > 0)
                                         <span class="product-bs__discount-label">
                                             <span class="product-bs__discount-percent">SALE
                                                 {{ round((($product->price - $product->sale_price) * 100) / $product->price, 0) }}%</span>
@@ -180,11 +180,12 @@
                                                 <span class="product-bs__review">(23)</span>
                                             </div>
 
-                                            <span
-                                                class="product-bs__price">{{ number_format($product->sale_price, 0, ',', '.') }}&nbsp;₫
-                                                <span
-                                                    class="product-bs__discount">{{ number_format($product->price, 0, ',', '.') }}&nbsp;₫</span>
+                                            <span class="product-bs__price">@convertCurrency($product->sale_price ?? $product->price)
+                                                @if ($product->sale_price)
+                                                    <span class="product-bs__discount">@convertCurrency($product->price)</span>
+                                                @endif
                                             </span>
+
                                         </div>
                                     </a>
                                 </div>
@@ -225,12 +226,18 @@
                                         </a>
                                     </div>
                                     <div class="product-l__info-wrap">
-                                        <span class="product-l__category">{{ $section9D->category->name }}</span>
+                                        <span class="product-l__category">
+                                            <a
+                                                href="/{{ $section9D->category->slug }}.html">{{ $section9D->category->name }}</a></span>
                                         <span class="product-l__name">
                                             <a
-                                                href="/{{ $section9D->category->slug }}/{{ $section9D->brand->slug }}/{{ $section9D->slug }}.html">{{ $section9D->name }}</a></span>
-                                        <span
-                                            class="product-l__price">{{ number_format($section9D->sale_price, 0, ',', '.') }}&nbsp;₫</span>
+                                                href="/{{ $section9D->category->slug }}/{{ $section9D->brand->slug }}/{{ $section9D->slug }}.html">{{ $section9D->name }}</a>
+                                        </span>
+                                        <span class="product-l__price">@convertCurrency($section9D->sale_price ?? $section9D->price)
+                                            @if ($section9D->sale_price)
+                                                <span class="product-bs__discount">@convertCurrency($section9D->price)</span>
+                                            @endif
+                                        </span>
                                     </div>
                                 </div>
                             </li>
@@ -247,7 +254,6 @@
                             <li class="column-product__item">
                                 <div class="product-l">
                                     <div class="product-l__img-wrap">
-
                                         <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
                                             href="/{{ $section9W->category->slug }}/{{ $section9W->brand->slug }}/{{ $section9W->slug }}.html">
 
@@ -261,15 +267,20 @@
                                     </a>
                                 </div>
                                 <div class="product-l__info-wrap">
-                                    <span class="product-l__category">{{ $section9W->category->name }}</span>
+                                    <span class="product-l__category"><a
+                                            href="/{{ $section9W->category->slug }}.html">{{ $section9W->category->name }}</a>
+                                    </span>
 
                                     <span class="product-l__name">
 
                                         <a
                                             href="/{{ $section9W->category->slug }}/{{ $section9W->brand->slug }}/{{ $section9W->slug }}.html">{{ $section9W->name }}</a></span>
 
-                                    <span
-                                        class="product-l__price">{{ number_format($section9W->sale_price, 0, ',', '.') }}&nbsp;₫</span>
+                                    <span class="product-l__price">@convertCurrency($section9W->sale_price ?? $section9D->price)
+                                        @if ($section9W->sale_price)
+                                            <span class="product-bs__discount">@convertCurrency($section9W->price)</span>
+                                        @endif
+                                    </span>
                                 </div>
                             </div>
                         </li>
@@ -301,12 +312,17 @@
                                 </a>
                             </div>
                             <div class="product-l__info-wrap">
-                                <span class="product-l__category">{{ $section9M->category->name }}</span>
+                                <span class="product-l__category"><a
+                                        href="/{{ $section9M->category->slug }}.html">{{ $section9M->category->name }}</a>
+                                </span>
                                 <span class="product-l__name">
                                     <a
                                         href="/{{ $section9M->category->slug }}/{{ $section9M->brand->slug }}/{{ $section9M->slug }}.html">{{ $section9M->name }}</a></span>
-                                <span
-                                    class="product-l__price">{{ number_format($section9M->sale_price, 0, ',', '.') }}&nbsp;₫</span>
+                                <span class="product-l__price">@convertCurrency($section9M->sale_price ?? $section9D->price)
+                                    @if ($section9M->sale_price)
+                                        <span class="product-bs__discount">@convertCurrency($section9M->price)</span>
+                                    @endif
+                                </span>
                             </div>
                         </div>
                     </li>

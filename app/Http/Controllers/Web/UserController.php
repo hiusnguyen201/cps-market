@@ -31,7 +31,8 @@ class UserController extends Controller
         $users = $users->paginate($request->limit ?? 10);
 
         return view('admin.users.home', [
-            'users' => $users, compact('users'),
+            'users' => $users,
+            compact('users'),
             'user_status' => config('constants.user_status'),
             'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Users']],
@@ -71,7 +72,6 @@ class UserController extends Controller
                 'name' => $request['name'],
                 'email' => $request['email'],
                 'phone' => $request['phone'],
-                'address' => $request['address'],
                 'gender' => $request['gender'],
                 'role_id' => $role->id,
                 'password' => Hash::make($password)
