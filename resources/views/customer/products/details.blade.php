@@ -8,6 +8,23 @@
         <input hidden type="text" name="message-error" value="{{ session('error') }}">
     @endif
 
+    <style>
+        #addToWishlist {
+            font-size: 13px;
+            color: #a0a0a0;
+            border: 0;
+            padding: 0;
+            background: none;
+            cursor: pointer;
+            transition: color 110ms ease-in-out;
+        }
+
+        #addToWishlist:hover {
+            text-decoration: underline;
+            color: #b6b6b6;
+        }
+    </style>
+
     <div class="u-s-p-t-90">
         <div class="container">
             <div class="u-s-m-b-30">
@@ -115,12 +132,25 @@
                         </div>
                         <div class="u-s-m-b-15">
                             <div class="pd-detail__inline">
-
-                                <span class="pd-detail__click-wrap"><i class="far fa-heart u-s-m-r-6"></i>
-
-                                    <a href="signin.html">Add to Wishlist</a>
-
-                                    <span class="pd-detail__click-count">(222)</span></span>
+                                @if ($wishlistCheck != null)
+                                    <form action="/wishlist" method="post">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}"><i
+                                            class="fas fa-heart u-s-m-r-6" style="color: red;"></i>
+                                        <button id="addToWishlist" class="pd-detail__click-wrap" type="submit">
+                                            Remove Wishlist
+                                        </button>
+                                    </form>
+                                @else
+                                    <form action="/wishlist" method="post">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}"><i
+                                            class="far fa-heart u-s-m-r-6"></i>
+                                        <button id="addToWishlist" class="pd-detail__click-wrap" type="submit">
+                                            Add to Wishlist
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                         <div class="u-s-m-b-15">
@@ -209,7 +239,6 @@
                         <div class="u-s-m-b-30">
                             <ul class="nav pd-tab__list">
                                 <li class="nav-item">
-
                                     <a class="nav-link active" data-toggle="tab" href="#pd-desc">DESCRIPTION</a>
                                 </li>
                                 <li class="nav-item">
@@ -695,7 +724,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--====== End - Tab 3 ======-->
                         </div>
                     </div>
                 </div>

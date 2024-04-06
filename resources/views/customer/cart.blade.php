@@ -84,12 +84,15 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <span class="table-p__price"
-                                                    style="color: #ff4500">{{ number_format($cart->product->price, 0, ',', '.') }}&nbsp;₫</span>
+                                                <div class="">
+                                                    <span class="table-p__price"
+                                                        style="color: #ff4500;font-size: 16px">{{ number_format($cart->product->sale_price, 0, ',', '.') }}&nbsp;₫</span>
+                                                    <span class="table-p__price"
+                                                        style="text-decoration:line-through">{{ number_format($cart->product->price, 0, ',', '.') }}&nbsp;₫</span>
+                                                </div>
                                             </td>
                                             <td class="customtd3">
-                                                <span
-                                                    class="table-p__price">{{ number_format($cart->product->sale_price, 0, ',', '.') }}&nbsp;₫</span>
+
                                             </td>
                                             <td>
                                                 <div class="input-counter">

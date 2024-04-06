@@ -17,13 +17,13 @@ class CartController extends Controller
     {
         $categories = Category::all();
         $products = Product::all();
-        
+
         $carts = Cart::where('user_id', Auth::id())->get();
         $countProductInCart = 0;
         $totalPrice = 0;
         foreach ($carts as $cart) {
             $countProductInCart += $cart->quantity;
-            $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price  : $cart->product->price ) * $cart->quantity);
+            $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price : $cart->product->price) * $cart->quantity);
         }
 
         return view("customer/cart", [
@@ -105,7 +105,7 @@ class CartController extends Controller
     public function handleDelete(Request $request)
     {
         try {
-            $cart = Cart::where(["user_id" =>  Auth::id(), "id" => $request->cart_id]);
+            $cart = Cart::where(["user_id" => Auth::id(), "id" => $request->cart_id]);
 
             if (!$cart) {
                 return redirect()->back()->with("error", "Cart not found!");
@@ -113,7 +113,7 @@ class CartController extends Controller
 
             $cart->delete();
 
-            session()->flash('error', 'Remove product from cart successfully!');
+            session()->flash('success', 'Remove product from cart successfully!');
         } catch (\Exception $e) {
             error_log($e->getMessage());
             session()->flash('error', 'Remove product from cart unsuccessfully!');
@@ -122,16 +122,16 @@ class CartController extends Controller
         return redirect()->back();
     }
 
-    public function checkoutPage () 
+    public function checkoutPage()
     {
         $carts = Cart::where('user_id', Auth::id())->get();
         $totalPrice = 0;
         $countProductInCart = 0;
         foreach ($carts as $cart) {
             $countProductInCart += $cart->quantity;
-            $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price : $cart->product->price ) * $cart->quantity);
+            $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price : $cart->product->price) * $cart->quantity);
         }
-        
+
         $categories = Category::all();
         $user = Auth::user();
 

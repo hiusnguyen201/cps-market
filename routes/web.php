@@ -14,6 +14,7 @@ use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\CustomerController;
 use App\Http\Controllers\Web\SpecificationController;
 use App\Http\Controllers\Web\OrderController;
+use App\Http\Controllers\Web\WishlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -162,5 +163,15 @@ Route::prefix('member')->group(function () {
 
         Route::get('/user-info', [AccountController::class, 'user_info']);
         Route::patch('/user-info', [AccountController::class, 'handleUpdate_User_info']);
+    });
+});
+
+Route::prefix('wishlist')->group(function () {
+    Route::middleware(['check.auth'])->group(function () {
+        Route::get('/', [WishlistController::class, 'home']);
+
+        Route::post('/', [WishlistController::class, 'handleCreate']);
+
+        Route::delete('/', [WishlistController::class, 'handleDelete']);
     });
 });
