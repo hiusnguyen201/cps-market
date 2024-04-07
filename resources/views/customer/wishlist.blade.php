@@ -105,7 +105,7 @@
 
                                     <span class="empty__text-1">No items found on your wishlist.</span>
 
-                                    <a class="empty__redirect-link btn--e-brand" href="/catalogsearch">CONTINUE
+                                    <a class="empty__redirect-link btn--e-brand" href="/catalogsearch/result">CONTINUE
                                         SHOPPING</a>
                                 </div>
                             </div>

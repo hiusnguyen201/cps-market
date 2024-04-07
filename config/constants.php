@@ -30,14 +30,9 @@ $PAYMENT_METHOD = [
     ],
     "momo" => [
         "value" => 1,
-        "name" => "Payment with Momo",
+        "name" => "Momo Wallet",
         "redirect" => "/payment/momo"
     ],
-    "vnpay" => [
-        "value" => 2,
-        "name" => "Payment with Vnpay",
-        "redirect" => "/payment/vnpay"
-    ]
 ];
 $PAYMENT_STATUS = ["pending" => 0, "paid" => 1, "canceled" => 2];
 $ORDER_STATUS = ["pending" => 0, "confirmed" => 1, "shipping" => 2, "completed" => 3, "canceled" => 4];

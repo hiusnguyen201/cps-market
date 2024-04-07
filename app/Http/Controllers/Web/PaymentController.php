@@ -29,8 +29,8 @@ class PaymentController extends Controller
                 'Content-Length: ' . strlen($data)
             )
         );
-        curl_setopt($ch, CURLOPT_TIMEOUT, 120);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 120);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
         //execute post
         $result = curl_exec($ch);
         //close connection
@@ -38,17 +38,17 @@ class PaymentController extends Controller
         return $result;
     }
 
-    public function momo_payment(CheckoutRequest $request)
+    public function handleMomoPayment(CheckoutRequest $request)
     {
-        $endpoint = env('MOMO_ENDPOINT');
+        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
         $partnerCode = env('MOMO_PARTNER_CODE');
         $accessKey = env('MOMO_ACCESS_KEY');
         $secretKey = env('MOMO_SECRET_KEY');
 
         $orderInfo = "Thanh toán qua MoMo";
         $orderId = time() . "";
-        $redirectUrl = env("APP_URL") . "/cart";
-        $ipnUrl = env("APP_URL") . "/cart";
+        $redirectUrl = env("APP_URL") . "/cart/success";
+        $ipnUrl = env("APP_URL") . "/cart/success";
         $extraData = "";
         $requestId = time() . "";
         $requestType = "captureWallet";

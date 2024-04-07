@@ -152,13 +152,14 @@ Route::prefix('cart')->group(function () {
         Route::delete('/', [CartController::class, 'handleDelete']);
 
         Route::get('/checkout', [CartController::class, 'checkoutPage']);
+        Route::get('/success', [CartController::class, 'reponsePaymentPage']);
     });
 });
 
 Route::prefix('payment')->group(function () {
     Route::middleware(['check.auth'])->group(function () {
-        Route::post('/cod', [PaymentController::class, 'cod_payment']);
-        Route::post('/momo', [PaymentController::class, 'momo_payment']);
+        Route::post('/cod', [PaymentController::class, 'handleCodPayment']);
+        Route::post('/momo', [PaymentController::class, 'handleMomoPayment']);
     });
 });
 

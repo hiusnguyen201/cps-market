@@ -34,8 +34,8 @@
         <div class="section__content">
             <div class="container">
                 <div class="checkout-f">
-                    <div class="row">
-                        <div class="col-lg-12">
+                    <div class="row" style="justify-content: center">
+                        <div class="col-lg-10">
                             <h1 class="checkout-f__h1">ORDER SUMMARY</h1>
                             <div class="o-summary">
                                 <div class="o-summary__section u-s-m-b-30">
@@ -82,7 +82,6 @@
                                 </div>
                                 <form action="" id="payment-info_form" method="post">
                                     @csrf
-
                                     <div class="o-summary__section u-s-m-b-30">
                                         <div class="o-summary__box">
                                             <h1 class="checkout-f__h1">CUSTOMER INFORMATION</h1>

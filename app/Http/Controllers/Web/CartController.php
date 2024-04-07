@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 
 class CartController extends Controller
@@ -26,7 +27,7 @@ class CartController extends Controller
             $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price : $cart->product->price) * $cart->quantity);
         }
 
-        return view("customer/cart", [
+        return view("customer/carts/index", [
             'title' => "Cart",
             'carts' => $carts,
             'products' => $products,
@@ -39,7 +40,8 @@ class CartController extends Controller
     public function handleCreate(Request $request)
     {
         $request->validate([
-            'product_id' => 'required|integer|min:1|exists:products,id',
+            'product_id' => 'required|array',
+            "product_id.*" => "integer|min:1|exists:products,id'"
         ]);
 
         try {
@@ -139,7 +141,7 @@ class CartController extends Controller
 
         $categories = Category::all();
 
-        return view("customer/checkout", [
+        return view("customer/carts/checkout", [
             'title' => "Checkout",
             "categories" => $categories,
             "carts" => $carts,
@@ -149,5 +151,61 @@ class CartController extends Controller
         ]);
     }
 
+    public function reponsePaymentPage(Request $request)
+    {
+        $order = Order::where("code", $request->orderId)->first();
+        if (!$order)
+            return redirect()->back()->with("Order not found");
 
+        if ($order->payment_method != config("constants.payment_method.cod")['value'] && $order->status != config("constants.order_status.pending")) {
+            switch ($request->resultCode) {
+                case "0":
+                    $order->update([
+                        "payment_status" => config("constants.payment_status.paid"),
+                        "updated_at" => now()
+                    ]);
+                    break;
+                default:
+                    $order->update([
+                        "payment_status" => config("constants.payment_status.canceled"),
+                        "status" => config("constants.order_status.canceled"),
+                        "updated_at" => now()
+                    ]);
+                    break;
+            }
+        }
+
+        $statusOrderPayment = $order->status == config("constants.order_status.canceled") ? false : true;
+
+        $categories = Category::all();
+        return view("customer/carts/success", [
+            "order" => $order,
+            'title' => "Cart",
+            "categories" => $categories,
+            "statusOrderPayment" => $statusOrderPayment
+        ]);
+    }
+
+    function execPostRequest($url, $data)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt(
+            $ch,
+            CURLOPT_HTTPHEADER,
+            array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data)
+            )
+        );
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        //execute post
+        $result = curl_exec($ch);
+        //close connection
+        curl_close($ch);
+        return $result;
+    }
 }
