@@ -34,9 +34,10 @@ class OrderRequest extends FormRequest
             "note" => "nullable|string|max:100",
             "shipping_fee" => "required|integer|min:0",
             "sub_total" => "required|integer|min:1",
-            "total" => "required|integer|min:1",
             "quantity" => "required|integer|min:1",
+            "total" => "required|integer|min:1",
             "payment_method" => "required|integer|min:0",
+            ""
         ];
     }
 

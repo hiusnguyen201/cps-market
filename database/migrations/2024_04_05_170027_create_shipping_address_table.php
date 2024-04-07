@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->integer("district");
             $table->integer("ward");
             $table->string("address", 100);
-            $table->string("note", 100);
+            $table->string("note", 100)->nullable();
             $table->unsignedBigInteger("order_id");
             $table->timestamps();
             $table->softDeletes();

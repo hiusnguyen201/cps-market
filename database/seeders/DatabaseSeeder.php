@@ -117,6 +117,7 @@ class DatabaseSeeder extends Seeder
                 'province' => 1,
                 'district' => 1,
                 'ward' => 7,
+                'address' => "Addres " . $i + 1,
                 'note' => "Note " . $i + 1,
                 "order_id" => $order->id,
             ]);

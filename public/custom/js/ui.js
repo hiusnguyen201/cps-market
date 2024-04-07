@@ -40,6 +40,3 @@ if (formPaymentInfo) {
             .getAttribute("data");
     });
 }
-
-const province = document.querySelector("select#province");
-console.log(province);

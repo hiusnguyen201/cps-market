@@ -166,7 +166,7 @@
             </div>
         </div>
     @else
-        <div class="u-s-p-y-60">
+        <div class="u-s-p-y-120">
             <div class="section__content">
                 <div class="container">
                     <div class="row">

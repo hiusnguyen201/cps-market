@@ -17441,10 +17441,63 @@
                 let o = document.createElement("option");
                 o.text = (provincePrefix ? data[i].t + " " : "") + data[i].n;
                 o.value = data[i][s];
+
                 if (levelAsAttribute)
                     o.setAttribute(levelAttributeName, data[i].t);
                 p.add(o);
             }
+
+            const oldDataProvince = p.getAttribute("old-data");
+            if (oldDataProvince) {
+                p.querySelector(
+                    `option[value='${oldDataProvince}']`
+                ).selected = true;
+
+                let l = p.selectedIndex - 1;
+                n = l;
+                for (let i = 0; i < data[l].c.length - 1; i++) {
+                    let o = document.createElement("option");
+                    o.text =
+                        (districtPrefix ? data[l].c[i].t + " " : "") +
+                        data[l].c[i].n;
+                    o.value = data[l].c[i][s];
+
+                    if (levelAsAttribute)
+                        o.setAttribute(levelAttributeName, data[l].c[i].t);
+                    d.add(o);
+                }
+
+                const oldDataDistrict = d.getAttribute("old-data");
+                if (oldDataDistrict) {
+                    d.querySelector(
+                        `option[value='${oldDataDistrict}']`
+                    ).selected = true;
+
+                    let l = d.selectedIndex - 1;
+                    for (let i = 0; i < data[n].c[l].c.length - 1; i++) {
+                        let o = document.createElement("option");
+                        o.text =
+                            (districtPrefix ? data[n].c[l].c[i].t + " " : "") +
+                            data[n].c[l].c[i].n;
+                        o.value = data[n].c[l].c[i][s];
+
+                        if (levelAsAttribute)
+                            o.setAttribute(
+                                levelAttributeName,
+                                data[n].c[l].c[i].t
+                            );
+                        w.add(o);
+                    }
+
+                    const oldDataWard = w.getAttribute("old-data");
+                    if (oldDataWard) {
+                        w.querySelector(
+                            `option[value='${oldDataWard}']`
+                        ).selected = true;
+                    }
+                }
+            }
+
             p.addEventListener("change", function () {
                 d.innerHTML = "";
                 w.innerHTML = "";
@@ -17470,6 +17523,7 @@
                         (districtPrefix ? data[l].c[i].t + " " : "") +
                         data[l].c[i].n;
                     o.value = data[l].c[i][s];
+
                     if (levelAsAttribute)
                         o.setAttribute(levelAttributeName, data[l].c[i].t);
                     d.add(o);
@@ -17499,6 +17553,7 @@
                             (districtPrefix ? data[n].c[l].c[i].t + " " : "") +
                             data[n].c[l].c[i].n;
                         o.value = data[n].c[l].c[i][s];
+
                         if (levelAsAttribute)
                             o.setAttribute(
                                 levelAttributeName,

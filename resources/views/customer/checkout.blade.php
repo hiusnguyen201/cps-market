@@ -1,6 +1,13 @@
 @extends('layouts.customer.index')
 
 @section('content')
+    @if (session('success'))
+        <input hidden type="text" name="message-success" value="{{ session('success') }}">
+    @endif
+    @if (session('error'))
+        <input hidden type="text" name="message-error" value="{{ session('error') }}">
+    @endif
+
     <div class="u-s-p-y-60">
         <div class="u-s-p-b-30">
             <div class="section__content">
@@ -75,6 +82,7 @@
                                 </div>
                                 <form action="" id="payment-info_form" method="post">
                                     @csrf
+
                                     <div class="o-summary__section u-s-m-b-30">
                                         <div class="o-summary__box">
                                             <h1 class="checkout-f__h1">CUSTOMER INFORMATION</h1>
@@ -135,9 +143,9 @@
                                                     <div class="ship-b">
                                                         <div class="u-s-m-b-30">
                                                             <label class="gl-label" for="province">PROVINCE *</label>
-                                                            <select name="province"
-                                                                class="select-box select-box--primary-style" id="province"
-                                                                fdprocessedid="mf89an">
+                                                            <select name="province" old-data="{{ old('province') }}"
+                                                                class="select-box select-box--primary-style"
+                                                                id="province" fdprocessedid="mf89an">
                                                             </select>
 
                                                             @error('province')
@@ -150,7 +158,7 @@
                                                     <div class="ship-b">
                                                         <div class="u-s-m-b-30">
                                                             <label class="gl-label" for="district">DISTRICT *</label>
-                                                            <select name="district"
+                                                            <select name="district" old-data="{{ old('district') }}"
                                                                 class="select-box select-box--primary-style"
                                                                 id="district" fdprocessedid="mf89an">
                                                             </select>
@@ -165,7 +173,8 @@
                                                     <div class="ship-b">
                                                         <div class="u-s-m-b-30">
                                                             <label class="gl-label">WARD *</label>
-                                                            <select name="ward"
+                                                            <select id="ward" name="ward"
+                                                                old-data="{{ old('ward') }}"
                                                                 class="select-box select-box--primary-style"
                                                                 fdprocessedid="mf89an">
                                                             </select>
@@ -223,7 +232,6 @@
                                                         <td>SUBTOTAL</td>
                                                         <td><span>@convertCurrency($totalPrice)</span>
                                                         </td>
-
                                                     </tr>
                                                     <tr>
                                                         <td>GRAND TOTAL</td>
@@ -242,7 +250,9 @@
                                                     @foreach (config('constants.payment_method') as $method)
                                                         <div class="u-s-m-b-20">
                                                             <div class="radio-box">
-                                                                <input type="radio" name="payment_method"
+                                                                <input
+                                                                    {{ old('payment_method') && old('payment_method') == $method['value'] ? 'checked' : '' }}
+                                                                    type="radio" name="payment_method"
                                                                     data="{{ $method['redirect'] }}"
                                                                     value="{{ $method['value'] }}">
                                                                 <div class="radio-box__state radio-box__state--primary">

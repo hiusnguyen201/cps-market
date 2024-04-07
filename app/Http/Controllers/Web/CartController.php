@@ -18,9 +18,9 @@ class CartController extends Controller
         $categories = Category::all();
         $products = Product::all();
 
-        $carts = Cart::where('user_id', Auth::id())->get();
         $countProductInCart = 0;
         $totalPrice = 0;
+        $carts = Auth::user()->carts;
         foreach ($carts as $cart) {
             $countProductInCart += $cart->quantity;
             $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price : $cart->product->price) * $cart->quantity);
@@ -108,7 +108,7 @@ class CartController extends Controller
             $cart = Cart::where(["user_id" => Auth::id(), "id" => $request->cart_id]);
 
             if (!$cart) {
-                return redirect()->back()->with("error", "Cart not found!");
+                return redirect()->back()->with("error", "Cart not found");
             }
 
             $cart->delete();
@@ -124,16 +124,20 @@ class CartController extends Controller
 
     public function checkoutPage()
     {
-        $carts = Cart::where('user_id', Auth::id())->get();
+        $user = Auth::user();
+        $carts = $user->carts;
+        if (!$carts || !count($carts)) {
+            return redirect("/cart");
+        }
+
         $totalPrice = 0;
         $countProductInCart = 0;
         foreach ($carts as $cart) {
             $countProductInCart += $cart->quantity;
-            $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price : $cart->product->price) * $cart->quantity);
+            $totalPrice += (($cart->product->sale_price ?? $cart->product->price) * $cart->quantity);
         }
 
         $categories = Category::all();
-        $user = Auth::user();
 
         return view("customer/checkout", [
             'title' => "Checkout",

@@ -19,11 +19,11 @@
         }
     </style>
 
-    <div class="u-s-p-y-60 u-s-p-t-60">
-        <div class="section__content">
-            <div class="container">
-                <div class="row">
-                    @if (count($wishlists))
+    @if (count($wishlists))
+        <div class="u-s-p-y-60 u-s-p-t-60">
+            <div class="section__content">
+                <div class="container">
+                    <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             @foreach ($wishlists as $wishlist)
                                 <div class="w-r u-s-m-b-30">
@@ -87,23 +87,32 @@
                                 </div>
                             @endforeach
                         </div>
-                    @else
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    @else
+        <div class="u-s-p-y-120">
+            <div class="section__content">
+                <div class="container">
+                    <div class="row">
                         <div class="col-lg-12 col-md-12 u-s-m-b-30">
                             <div class="empty">
                                 <div class="empty__wrap">
-
                                     <span class="empty__big-text">EMPTY</span>
 
                                     <span class="empty__text-1">No items found on your wishlist.</span>
 
-                                    <a class="empty__redirect-link btn--e-brand" href="/">CONTINUE SHOPPING</a>
+                                    <a class="empty__redirect-link btn--e-brand" href="/catalogsearch">CONTINUE
+                                        SHOPPING</a>
                                 </div>
                             </div>
                         </div>
-                    @endif
-
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 @endsection
