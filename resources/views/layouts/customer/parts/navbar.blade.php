@@ -14,12 +14,12 @@
 
 
                         <!--====== Search Form ======-->
-                        <form class="main-form" style="min-width: 120px">
+                        <form class="main-form" style="min-width: 120px" method="get" action="/catalogsearch">
 
                             <label for="main-search"></label>
 
                             <input class="input-text input-text--border-radius input-text--style-1" type="text"
-                                id="main-search" placeholder="Search">
+                                id="main-search" placeholder="Search" name="keyword">
 
                             <button class="btn btn--icon fas fa-search main-search-button" type="submit"></button>
                         </form>

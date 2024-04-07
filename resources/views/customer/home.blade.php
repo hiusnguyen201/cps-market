@@ -3,7 +3,7 @@
 @section('content')
     <div class="s-skeleton s-skeleton--h-640 s-skeleton--bg-grey">
         <div class="owl-carousel primary-style-3" id="hero-slider">
-            <div class="hero-slide hero-slide--7" style="background: ">
+            <div class="hero-slide hero-slide--7">
                 <div class="primary-style-3-wrap">
                     <div class="container">
                         <div class="row">

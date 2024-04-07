@@ -175,3 +175,8 @@ Route::prefix('wishlist')->group(function () {
         Route::delete('/', [WishlistController::class, 'handleDelete']);
     });
 });
+
+Route::prefix('catalogsearch')->group(function () {
+    Route::get('/', [HomeController::class, 'search']);
+
+});
