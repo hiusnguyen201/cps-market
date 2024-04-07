@@ -157,7 +157,7 @@ class CartController extends Controller
         if (!$order)
             return redirect()->back()->with("Order not found");
 
-        if ($order->payment_method != config("constants.payment_method.cod")['value'] && $order->status != config("constants.order_status.pending")) {
+        if ($order->payment_method != config("constants.payment_method.cod")['value'] && $order->status != config("constants.order_status.canceled")) {
             switch ($request->resultCode) {
                 case "0":
                     $order->update([
