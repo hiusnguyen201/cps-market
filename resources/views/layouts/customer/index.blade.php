@@ -32,6 +32,9 @@
 
 <body class="config">
     <div id="app">
+        @php
+            setlocale(LC_MONETARY, 'vi_VN');
+        @endphp
         <!--====== Main Header ======-->
         @include('layouts.customer.parts.navbar')
 
@@ -71,7 +74,7 @@
     <script src="{{ asset('custom/js/message.js') }}"></script>
 
     {{-- UI --}}
-    <script defer defer src="{{ asset('custom/js/ui.js') }}"></script>
+    <script defer src="{{ asset('custom/js/ui.js') }}"></script>
 </body>
 
 </html>

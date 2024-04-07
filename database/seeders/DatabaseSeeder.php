@@ -107,7 +107,7 @@ class DatabaseSeeder extends Seeder
                 'sub_total' => 10000,
                 "shipping_fee" => 0,
                 "total" => 10000,
-                "payment_method" => config("constants.payment_method.cod"),
+                "payment_method" => config("constants.payment_method.cod")['value'],
                 "payment_status" => config("constants.payment_status.pending"),
                 "status" => config("constants.order_status.pending"),
                 "customer_id" => $i + 1
@@ -117,6 +117,7 @@ class DatabaseSeeder extends Seeder
                 'province' => 1,
                 'district' => 1,
                 'ward' => 7,
+                'address' => "Addres " . $i + 1,
                 'note' => "Note " . $i + 1,
                 "order_id" => $order->id,
             ]);

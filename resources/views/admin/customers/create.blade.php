@@ -47,18 +47,6 @@
             </div>
             <div class="mb-3 row align-items-center">
                 <div class="col-lg-3 col-12">
-                    <label for="address" class="mb-0">Address</label>
-                </div>
-                <div class="col-lg-7 col-12">
-                    <input type="text" name="address" class="form-control" id="address" placeholder="Enter address..."
-                        value="{{ old('address') }}">
-                    @error('address')
-                        <span style="color: red">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
-            <div class="mb-3 row align-items-center">
-                <div class="col-lg-3 col-12">
                     <label for="gender" class="mb-0">Gender</label>
                 </div>
                 <div class="col-lg-7 col-12">

@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Models\Category;
 use Illuminate\Support\Facades\Hash;
 
-class AccountController extends Controller
+class MemberController extends Controller
 {
     public function home()
     {

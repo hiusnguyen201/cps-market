@@ -26,10 +26,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        "address",
         "avatar",
         "phone",
-        "address",
         "gender",
         "role_id"
     ];
@@ -53,9 +51,7 @@ class User extends Authenticatable
         'name' => "string",
         'email' => "string",
         'password' => "string",
-        "avatar" => "string",
         "phone" => "string",
-        "address" => "string",
         "status" => "integer",
         "gender" => "integer",
         "role_id" => "integer",

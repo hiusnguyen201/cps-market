@@ -16,6 +16,7 @@ class Shipping_Address extends Model
         'district',
         "ward",
         "note",
+        "address",
         "order_id"
     ];
 
@@ -23,6 +24,7 @@ class Shipping_Address extends Model
         'province' => "integer",
         'district' => "integer",
         "ward" => "integer",
+        "address" => "string",
         "note" => "string",
         "order_id" => "integer",
     ];

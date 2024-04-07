@@ -11,5 +11,7 @@ if (provinceInitSelect && wardInitSelect && districtInitSelect) {
         provinceText: "Select province",
         districtText: "Select district",
         wardText: "Select ward",
+
+        emptyValue: "",
     });
 }

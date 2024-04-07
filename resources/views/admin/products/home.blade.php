@@ -69,7 +69,6 @@
                         </th>
                         <th>Name</th>
                         <th>Category</th>
-                        <th>Price</th>
                         <th>Sale Price</th>
                         <th>Quantity</th>
                         <th>Sold</th>
@@ -104,10 +103,7 @@
                                         href="/admin/categories/details/{{ $product->category->id }}">{{ $product->category->name }}</a>
                                 </td>
                                 <td class="align-middle">
-                                    {{ number_format($product->price, 0, ',', '.') }}&nbsp;₫
-                                </td>
-                                <td class="align-middle">
-                                    {{ number_format($product->sale_price, 0, ',', '.') }}&nbsp;₫
+                                    @convertCurrency($product->sale_price)
                                 </td>
                                 <td class="align-middle">
                                     {{ $product->quantity > 0 ? $product->quantity : 'Out of stock' }}

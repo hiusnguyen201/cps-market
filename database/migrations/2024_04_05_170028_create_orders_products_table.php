@@ -12,18 +12,18 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('shipping_address', function (Blueprint $table) {
+        Schema::create('orders_products', function (Blueprint $table) {
             $table->id();
-            $table->integer("province");
-            $table->integer("district");
-            $table->integer("ward");
-            $table->string("address", 100);
-            $table->string("note", 100)->nullable();
             $table->unsignedBigInteger("order_id");
+            $table->unsignedBigInteger("product_id");
+            $table->integer("quantity");
+            $table->integer("price");
+            $table->integer("sale_price")->nullable();
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 
@@ -34,6 +34,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('shipping_address');
+        Schema::dropIfExists('orders_products');
     }
 };

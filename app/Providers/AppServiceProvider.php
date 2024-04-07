@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,5 +27,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
         Paginator::useBootstrapFour();
-    }
+
+        Blade::directive('convertCurrency', function ($money) {
+            return "<?php echo $money? number_format($money, 0, ',', '.') . ' ₫' : 'Free'; ?>";
+});
+}
 }
