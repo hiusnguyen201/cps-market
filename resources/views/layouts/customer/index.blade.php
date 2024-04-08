@@ -72,6 +72,9 @@
 
     {{-- UI --}}
     <script defer defer src="{{ asset('custom/js/ui.js') }}"></script>
+
+    <script src="{{ asset('custom/js/search.js') }}"></script>
+
 </body>
 
 </html>

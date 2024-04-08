@@ -173,11 +173,15 @@ class HomeController extends Controller
 
         ////////// Category and Brand filter /////////////
         $products_categories = $products->get();
-        $categories_fil = [];
+        $categories_fill = [];
         foreach ($products_categories as $products_category) {
-            if (!isset($categories_fil[$products_category->category_id])) {
-                $categories_fil[$products_category->category_id] = $products_category->category->name;
+            if (!isset($categories_fill[$products_category->category_id])) {
+                $categories_fill[$products_category->category_id] = $products_category->category->name;
             }
+        }
+
+        if (!empty($request->category_id)) {
+            $products->where('category_id', $request->category_id);
         }
 
         $products_brands = $products->get();
@@ -187,14 +191,11 @@ class HomeController extends Controller
                 $brands[$product_brand->brand_id] = $product_brand->brand->name;
             }
         }
-        //////////////////////////////////////////////////////
 
-        if (!empty($request->brand_ids)) {
-            $brandIds = explode(',', $request->brand_ids);
-            $products->whereIn('brand_id', $brandIds);
+        if (!empty($request->brand_id)) {
+            $products->where('brand_id', $request->brand_id);
         }
-
-        // dd($brands);
+        //////////////////////////////////////////////////////
 
         $products = $products->paginate($per_page);
 
@@ -216,6 +217,8 @@ class HomeController extends Controller
             'price_min' => $price_min,
             'price_max' => $price_max,
             'wishlists' => $wishlists,
+            'keyword' => $request->keyword,
+            'categories_fill' => $categories_fill,
         ]);
     }
 }
