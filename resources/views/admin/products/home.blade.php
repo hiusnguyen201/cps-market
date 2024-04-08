@@ -92,10 +92,14 @@
                                                         alt="">
                                                 @endif
                                             @endforeach
-
                                         </a>
-                                        <a href="/admin/products/details/{{ $product->id }}"
-                                            class="mx-1">{{ $product->name }}</a>
+                                        <div class="row">
+                                            <div class="col-12"><a href="/admin/products/details/{{ $product->id }}"
+                                                    class="mx-1">{{ $product->name }}</a></div>
+                                            <div class="col-12">
+                                                {{ $product->code }}
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
                                 <td class="align-middle">
@@ -159,7 +163,7 @@
     </div>
 
     <!-- Modal delete -->
-    <div class="modal " id="modal-deleteAll" aria-modal="true" role="dialog">
+    <div class="modal fade" id="modal-deleteAll" aria-modal="true" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

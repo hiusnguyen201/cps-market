@@ -70,6 +70,7 @@
 
         $("select#brand[name='category[]']").select2();
     </script>
+
     <script defer src="{{ asset('custom/js/message.js') }}"></script>
     <script defer src="{{ asset('custom/js/selectMultiFile.js') }}"></script>
     <script defer src="{{ asset('custom/js/products.js') }}"></script>

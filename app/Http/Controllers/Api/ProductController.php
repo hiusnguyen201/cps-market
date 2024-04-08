@@ -18,12 +18,24 @@ class ProductController extends Controller
 {
     public function findAllProduct(Request $request)
     {
-        $products = Product::where(function ($query) use ($request) {
-            $query->orWhere('code', 'like', '%' . $request->keyword . '%');
-            $query->orWhere('name', 'like', '%' . $request->keyword . '%');
-        })->get();
+        if (!$request->code) {
+            return response()->json([
+                'message' => 'Code is required',
+            ], 400);
+        }
 
-        return $products;
+        $product = Product::where("code", $request->code)->with("images")->first();
+
+        if (!$product) {
+            return response()->json([
+                'message' => 'Product not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'Product is found',
+            'product' => $product
+        ], 200);
     }
 
     public function create(ProductRequest $request)

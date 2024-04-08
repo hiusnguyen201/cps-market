@@ -27,8 +27,14 @@
                 <div class="col-12">
                     <label for="" class="form-label mb-3">
                         <span>Products:</span>
-                        <button type="button" class="btn btn-primary ml-3" id="addCartBtn">+</button>
+                        <button type="button" class="btn btn-primary ml-3" data-toggle="modal"
+                            data-target="#modal-searchProduct">+</button>
                     </label>
+                    <div class="table-responsive">
+                        <table id="cartOrder" class="w-100">
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -36,7 +42,6 @@
                 <div class="col-12">
                     <label for="" class="form-label mb-3">
                         <span>Delivery Details:</span>
-                        <button type="button" class="btn btn-primary ml-3" id="addCartBtn">+</button>
                     </label>
                 </div>
             </div>
@@ -46,5 +51,26 @@
                 <button type="submit" class="btn btn-success w-100 py-2">Create</button>
             </div>
         </form>
+    </div>
+
+    <div class="modal fade" id="modal-searchProduct" aria-modal="true" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Product</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" name="code" placeholder="Code...">
+                    <span class="error-message" style="color: red"></span>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="searchProduct-btn" class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
