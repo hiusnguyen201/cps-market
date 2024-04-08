@@ -871,7 +871,9 @@
                                         @foreach ($brands as $brand_id => $brand_name)
                                         <li>
                                             <div class="list__content">
-                                                <input type="checkbox" class="brand-checkbox" name="brand" value="{{ $brand_id }}">
+                                                <input type="checkbox" class="brand-checkbox" name="brand" value="{{ $brand_id }}"
+                                                @if(request()->has('brand_ids') && in_array($brand_id, explode(',', request()->brand_ids)))checked
+                                                @endif>
                                                 <span>{{ $brand_name }}</span>
                                             </div>
                                             <span class="shop-w__total-text">(23)</span>
@@ -1127,11 +1129,11 @@
             let price_min = $('#price-min').val();
             let price_max = $('#price-max').val();
 
-            if (price_min > price_max) {
-                let temp = price_min;
-                price_min = price_max;
-                price_max = temp;
-            }
+            // if (price_min > price_max) {
+            //     let temp = price_min;
+            //     price_min = price_max;
+            //     price_max = temp;
+            // }
 
             let searchParams = new URLSearchParams(window.location.search);
 
@@ -1143,6 +1145,7 @@
             searchParams.set('sort_by', sortBy);
             searchParams.set('price_min', price_min);
             searchParams.set('price_max', price_max);
+            searchParams.set('page', 1);
 
             let newUrl = window.location.pathname + '?' + searchParams.toString();
             window.location.href = newUrl;
@@ -1154,12 +1157,7 @@
                 return $(this).val();
             }).get();
 
-            let queryString = `?brand_ids=${brandIds.join(',')}`;
-
-            // Tạo URL mới bằng cách thêm query string vào URL hiện tại
-            let newUrl = window.location.pathname + queryString;
-
-            // Chuyển hướng đến URL mới
+            let newUrl = window.location.pathname + window.location.search + `&brand_ids=${brandIds.join(',')}&page=1`;
             window.location.href = newUrl;
         }
 

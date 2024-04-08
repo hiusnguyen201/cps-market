@@ -126,6 +126,7 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
+        // dd($request->all());
         $categories = Category::all();
 
         $wishlists = Wishlist::where('user_id', Auth::id())->pluck('product_id', 'id')->toArray();
@@ -161,11 +162,11 @@ class HomeController extends Controller
         $price_min = $request->price_min;
         $price_max = $request->price_max;
 
-        if ($price_min > $price_max) {
-            $temp = $price_min;
-            $price_min = $price_max;
-            $price_max = $temp;
-        }
+        // if ($price_min > $price_max) {
+        //     $temp = $price_min;
+        //     $price_min = $price_max;
+        //     $price_max = $temp;
+        // }
 
         if (!empty($price_min)) {
             $products->where('price', '>=', $price_min);
@@ -182,6 +183,11 @@ class HomeController extends Controller
             if (!isset($brands[$product_brand->brand_id])) {
                 $brands[$product_brand->brand_id] = $product_brand->brand->name;
             }
+        }
+
+        if (!empty($request->brand_ids)) {
+            $brandIds = explode(',', $request->brand_ids);
+            $products->whereIn('brand_id', $brandIds);
         }
 
         // dd($brands);
