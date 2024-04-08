@@ -871,8 +871,7 @@
                                         @foreach ($brands as $brand_id => $brand_name)
                                         <li>
                                             <div class="list__content">
-                                                <input type="checkbox" class="brand-checkbox" name="brand" value="{{ $brand_id }}"
-                                                @if(request()->has('brand_ids') && in_array($brand_id, explode(',', request()->brand_ids)))checked
+                                                <input type="checkbox" class="brand-checkbox" name="brand" value="{{ $brand_id }}" @if(request()->has('brand_ids') && in_array($brand_id, explode(',', request()->brand_ids)))checked
                                                 @endif>
                                                 <span>{{ $brand_name }}</span>
                                             </div>
@@ -1111,29 +1110,21 @@
 <script>
     $(document).ready(function() {
         $('#perPageSelect, #sortBySelect').change(function() {
-            applyFilter();
+            sort_show_Filter();
         });
 
         $('#price-filter').submit(function(event) {
             event.preventDefault();
-            applyFilter();
+            priceFilter();
         });
 
         $('.brand-checkbox').change(function() {
-            filterBrands();
+            brandsFilter();
         });
 
-        function applyFilter() {
+        function sort_show_Filter() {
             let perPage = $('#perPageSelect').val();
             let sortBy = $('#sortBySelect').val();
-            let price_min = $('#price-min').val();
-            let price_max = $('#price-max').val();
-
-            // if (price_min > price_max) {
-            //     let temp = price_min;
-            //     price_min = price_max;
-            //     price_max = temp;
-            // }
 
             let searchParams = new URLSearchParams(window.location.search);
 
@@ -1143,6 +1134,25 @@
 
             searchParams.set('per_page', perPage);
             searchParams.set('sort_by', sortBy);
+            searchParams.set('page', 1);
+
+            let newUrl = window.location.pathname + '?' + searchParams.toString();
+            window.location.href = newUrl;
+        }
+
+        function priceFilter() {
+            let price_min = $('#price-min').val();
+            let price_max = $('#price-max').val();
+
+            if (price_min && price_max && price_min > price_max) {
+                price_max = parseInt(price_min) + 1;
+            }
+
+            let searchParams = new URLSearchParams(window.location.search);
+            searchParams.forEach((value, key) => {
+                searchParams.set(key, value);
+            });
+
             searchParams.set('price_min', price_min);
             searchParams.set('price_max', price_max);
             searchParams.set('page', 1);
@@ -1151,13 +1161,17 @@
             window.location.href = newUrl;
         }
 
-        function filterBrands() {
+        function brandsFilter() {
             let selectedBrands = $('.brand-checkbox:checked');
             let brandIds = selectedBrands.map(function() {
                 return $(this).val();
             }).get();
 
-            let newUrl = window.location.pathname + window.location.search + `&brand_ids=${brandIds.join(',')}&page=1`;
+            let searchParams = new URLSearchParams(window.location.search);
+            searchParams.set('brand_ids', brandIds.join(','));
+            searchParams.set('page', 1);
+
+            let newUrl = window.location.pathname + '?' + searchParams.toString();
             window.location.href = newUrl;
         }
 

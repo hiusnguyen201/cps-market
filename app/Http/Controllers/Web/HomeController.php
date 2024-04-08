@@ -158,15 +158,9 @@ class HomeController extends Controller
                     break;
             }
         }
-
+        ///////// Price filter ////////////////////
         $price_min = $request->price_min;
         $price_max = $request->price_max;
-
-        // if ($price_min > $price_max) {
-        //     $temp = $price_min;
-        //     $price_min = $price_max;
-        //     $price_max = $temp;
-        // }
 
         if (!empty($price_min)) {
             $products->where('price', '>=', $price_min);
@@ -175,15 +169,25 @@ class HomeController extends Controller
         if (!empty($price_max)) {
             $products->where('price', '<=', $price_max);
         }
+        //////////////////////////////
+
+        ////////// Category and Brand filter /////////////
+        $products_categories = $products->get();
+        $categories_fil = [];
+        foreach ($products_categories as $products_category) {
+            if (!isset($categories_fil[$products_category->category_id])) {
+                $categories_fil[$products_category->category_id] = $products_category->category->name;
+            }
+        }
 
         $products_brands = $products->get();
-
         $brands = [];
         foreach ($products_brands as $product_brand) {
             if (!isset($brands[$product_brand->brand_id])) {
                 $brands[$product_brand->brand_id] = $product_brand->brand->name;
             }
         }
+        //////////////////////////////////////////////////////
 
         if (!empty($request->brand_ids)) {
             $brandIds = explode(',', $request->brand_ids);
@@ -211,7 +215,6 @@ class HomeController extends Controller
             'sort_by' => $sort_by,
             'price_min' => $price_min,
             'price_max' => $price_max,
-
             'wishlists' => $wishlists,
         ]);
     }
