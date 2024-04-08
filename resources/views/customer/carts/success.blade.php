@@ -74,13 +74,6 @@
                                 <h2 class="checkout-f__h2" style="margin: 0">CUSTOMER INFORMATION</h2>
                                 <div class="o-summary__section u-s-m-b-30">
                                     <div class="o-summary__box">
-                                        <input hidden type="text" id="wardName" disabled
-                                            data="{{ $order->shipping_address->ward }}">
-                                        <input hidden type="text" id="districtName" disabled
-                                            data="{{ $order->shipping_address->district }}">
-                                        <input hidden id="provinceName" disabled
-                                            data='{{ $order->shipping_address->province }}' type="text">
-
                                         <table class="o-summary__table">
                                             <tbody>
                                                 <tr>
@@ -100,7 +93,14 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Address</td>
-                                                    <td><span
+                                                    <td>
+                                                        <input hidden type="text" id="wardName" disabled
+                                                            data="{{ $order->shipping_address->ward }}">
+                                                        <input hidden type="text" id="districtName" disabled
+                                                            data="{{ $order->shipping_address->district }}">
+                                                        <input hidden id="provinceName" disabled
+                                                            data='{{ $order->shipping_address->province }}' type="text">
+                                                        <span
                                                             id="addressShipping">{{ $order->shipping_address->address }}</span>
                                                     </td>
                                                 </tr>

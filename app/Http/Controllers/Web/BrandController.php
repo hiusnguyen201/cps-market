@@ -14,12 +14,10 @@ class BrandController extends Controller
 {
     public function home(Request $request)
     {
-        // Áp dụng điều kiện tìm kiếm nếu có
         $brands = Brand::where(function ($query) use ($request) {
             $query->orWhere('name', 'like', '%' . $request->keyword . '%');
-        });
+        })->orderBy('created_at', 'desc');
 
-        // Thực hiện phân trang
         $brands = $brands->paginate($request->limit ?? 10);
 
         $categories = Category::all();

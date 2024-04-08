@@ -74,6 +74,10 @@
     <script defer src="{{ asset('custom/js/selectMultiFile.js') }}"></script>
     <script defer src="{{ asset('custom/js/products.js') }}"></script>
     <script defer src="{{ asset('custom/js/specifications.js') }}"></script>
+    <script defer src="{{ asset('custom/js/orders.js') }}"></script>
+
+    <!-- Custom UI -->
+    <script src="{{ asset('custom/js/ui.js') }}"></script>
 </body>
 
 </html>

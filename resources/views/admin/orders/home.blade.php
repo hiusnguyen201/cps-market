@@ -36,7 +36,7 @@
 
                 <div class="col-lg-4 col-12 mb-3 ml-auto">
                     <div class="form-group d-flex mb-0">
-                        <input class="form-control" name="keyword" id="" placeholder="Search by keyword"
+                        <input class="form-control" name="keyword" id="" placeholder="Search by code"
                             value="{{ request()->keyword }}">
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-search"></i>
@@ -53,25 +53,67 @@
                         <th width='1%'>
                             <input type="checkbox" class="form-check-input" id="selectAll">
                         </th>
-                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Status</th>
                         <th width='1%'>Operation</th>
                     </tr>
                 </thead>
                 <tbody>
-
+                    @if ($orders && count($orders))
+                        @foreach ($orders as $order)
+                            <tr>
+                                <td class="align-middle">
+                                    <input type="checkbox" class="form-check-input" name="id"
+                                        value="{{ $order->id }}">
+                                </td>
+                                <td class="align-middle"><a
+                                        href="{{ '/admin/orders/details/' . $order->id }}">{{ $order->code }}</a>
+                                </td>
+                                <td class="align-middle">
+                                    {{ date(config('constants.date_format'), strtotime($order->created_at)) }}</td>
+                                <td class="align-middle"><a
+                                        href="{{ '/admin/customers/details/' . $order->customer->id }}">{{ $order->customer->name }}</a>
+                                </td>
+                                <td class="align-middle">{{ $order->quantity }}</td>
+                                <td class="align-middle">@convertCurrency($order->total)</td>
+                                <td class="align-middle">
+                                    @if (config('constants.order_status') && count(config('constants.order_status')))
+                                        @foreach (config('constants.order_status') as $status => $value)
+                                            @if ($order->status == $value)
+                                                {{ $status }}
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </td>
+                                <td class="text-center align-middle">
+                                    <a class="btn btn-warning" href="/admin/orders/edit/{{ $order->id }}">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
+                                        data-target="#modal-delete-{{ $order->id }}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>
 
         <!-- Paginate -->
         <div class="d-flex ml-auto">
-            {{-- {{ $orders->appends(Request::all())->links() }} --}}
+            {{ $orders->appends(Request::all())->links() }}
         </div>
 
     </div>
 
     <!-- Modal delete -->
-    <div class="modal " id="modal-deleteAll" aria-modal="true" role="dialog">
+    <div class="modal" id="modal-deleteAll" aria-modal="true" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

@@ -124,6 +124,10 @@ class PaymentController extends Controller
                     "price" => $cart->product->price,
                     "sale_price" => $cart->product->sale_price,
                 ]);
+
+                $cart->product->update([
+                    "quantity" => $cart->product->quantity - $cart->quantity
+                ]);
             }
 
             Shipping_Address::create([

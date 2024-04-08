@@ -15,6 +15,7 @@ class Product extends Model
     protected $table = 'products';
 
     protected $fillable = [
+        'code',
         'name',
         'price',
         'sale_price',
@@ -32,6 +33,7 @@ class Product extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'code' => "string",
         'name' => "string",
         'price' => "integer",
         "sale_price" => "integer",

@@ -40,8 +40,7 @@ class CartController extends Controller
     public function handleCreate(Request $request)
     {
         $request->validate([
-            'product_id' => 'required|array',
-            "product_id.*" => "integer|min:1|exists:products,id'"
+            'product_id' => 'required|integer|min:1|exists:products,id',
         ]);
 
         try {
@@ -171,6 +170,13 @@ class CartController extends Controller
                         "status" => config("constants.order_status.canceled"),
                         "updated_at" => now()
                     ]);
+
+                    foreach ($order->products as $order_product) {
+                        $order_product->product->update([
+                            "quantity" => $order_product->product->quantity + $order_product->quantity
+                        ]);
+                    }
+
                     break;
             }
         }

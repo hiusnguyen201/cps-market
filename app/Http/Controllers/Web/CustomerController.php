@@ -15,14 +15,12 @@ class CustomerController extends Controller
 {
     public function home(Request $request)
     {
-        $kw = $request->keyword;
-
-        $users = User::where(function ($query) use ($kw) {
-            $query->orWhere('name', 'like', '%' . $kw . '%');
-            $query->orWhere('email', 'like', '%' . $kw . '%');
+        $users = User::where(function ($query) use ($request) {
+            $query->orWhere('name', 'like', '%' . $request->kw . '%');
+            $query->orWhere('email', 'like', '%' . $request->kw . '%');
         })->whereHas('role', function ($query) {
             $query->where('name', '=', 'customer');
-        });
+        })->orderBy('created_at', 'desc');
 
         if ($request->status) {
             $users = $users->where('status', $request->status);
@@ -31,7 +29,8 @@ class CustomerController extends Controller
         $users = $users->paginate($request->limit ?? 10);
 
         return view('admin.customers.home', [
-            'users' => $users, compact('users'),
+            'users' => $users,
+            compact('users'),
             'user_status' => config('constants.user_status'),
             'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Customers']],

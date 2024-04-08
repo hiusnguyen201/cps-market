@@ -16,11 +16,9 @@ class ProductController extends Controller
 {
     public function home(Request $request)
     {
-        $kw = $request->keyword;
-
-        $products = Product::where(function ($query) use ($kw) {
-            $query->orWhere('name', 'like', '%' . $kw . '%');
-        });
+        $products = Product::where(function ($query) use ($request) {
+            $query->orWhere('name', 'like', '%' . $request->kw . '%');
+        })->orderBy('created_at', 'desc');
 
         if ($request->category) {
             $products = $products->where("category_id", $request->category);
@@ -36,6 +34,18 @@ class ProductController extends Controller
             'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Products']],
             'title' => 'Manage Products'
+        ]);
+    }
+
+    public function details(Product $product)
+    {
+        return view('admin.products.details', [
+            'product' => $product,
+            'breadcumbs' => [
+                'titles' => ['Products', 'Details'],
+                'title_links' => ["/admin/products"]
+            ],
+            'title' => 'Details Product',
         ]);
     }
 
@@ -71,26 +81,15 @@ class ProductController extends Controller
         ]);
     }
 
-    public function details(Product $product)
-    {
-        return view('admin.products.details', [
-            'product' => $product,
-            'breadcumbs' => [
-                'titles' => ['Products', 'Details'],
-                'title_links' => ["/admin/products"]
-            ],
-            'title' => 'Details Product',
-        ]);
-    }
-
     public function handleDelete(Request $request)
     {
         try {
-            $ids = is_array($request->id) ?  $request->id : [$request->id];
+            $ids = is_array($request->id) ? $request->id : [$request->id];
 
             foreach ($ids as $index => $id) {
                 $product = Product::find($id);
-                if (!$product) throw new ModelNotFoundException;
+                if (!$product)
+                    throw new ModelNotFoundException;
 
                 foreach ($product->images as $image) {
                     $folder_path = explode("/", $image->thumbnail)[0];

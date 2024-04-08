@@ -13,11 +13,9 @@ class CategoryController extends Controller
 
     public function home(Request $request)
     {
-        $kw = $request->keyword;
-
-        $categories = Category::where(function ($query) use ($kw) {
-            $query->orWhere('name', 'like', '%' . $kw . '%');
-        });
+        $categories = Category::where(function ($query) use ($request) {
+            $query->orWhere('name', 'like', '%' . $request->kw . '%');
+        })->orderBy('created_at', 'desc');
 
         $categories = $categories->paginate($request->limit ?? 10);
 

@@ -16,10 +16,21 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+    public function findAllProduct(Request $request)
+    {
+        $products = Product::where(function ($query) use ($request) {
+            $query->orWhere('code', 'like', '%' . $request->keyword . '%');
+            $query->orWhere('name', 'like', '%' . $request->keyword . '%');
+        })->get();
+
+        return $products;
+    }
+
     public function create(ProductRequest $request)
     {
         try {
             $product = Product::create([
+                'code' => time(),
                 'name' => $request->name,
                 'price' => $request->price,
                 'sale_price' => $request->sale_price,

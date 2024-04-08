@@ -15,14 +15,12 @@ class UserController extends Controller
 {
     public function home(Request $request)
     {
-        $kw = $request->keyword;
-
-        $users = User::where(function ($query) use ($kw) {
-            $query->orWhere('name', 'like', '%' . $kw . '%');
-            $query->orWhere('email', 'like', '%' . $kw . '%');
+        $users = User::where(function ($query) use ($request) {
+            $query->orWhere('name', 'like', '%' . $request->kw . '%');
+            $query->orWhere('email', 'like', '%' . $request->kw . '%');
         })->whereHas('role', function ($query) {
             $query->where('name', '=', 'admin');
-        });
+        })->orderBy('created_at', 'desc');
 
         if ($request->status) {
             $users = $users->where('status', $request->status);
