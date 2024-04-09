@@ -31,6 +31,7 @@ use App\Http\Controllers\Web\PaymentController;
 Route::get('/', [HomeController::class, 'home']);
 Route::get('/{categorySlug}.html', [HomeController::class, 'categories'])->name('categories.show');
 Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
+Route::get('/catalogsearch/result', [HomeController::class, 'search']);
 
 
 // Admin

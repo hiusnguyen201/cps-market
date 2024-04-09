@@ -73,8 +73,12 @@
     <script src="{{ asset('toastjs/toastify.js') }}"></script>
     <script src="{{ asset('custom/js/message.js') }}"></script>
 
+    <script src="{{ asset('custom/js/search.js') }}"></script>
+
     {{-- UI --}}
     <script defer src="{{ asset('custom/js/ui.js') }}"></script>
+
+
 </body>
 
 </html>
