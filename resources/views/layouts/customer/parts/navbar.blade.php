@@ -9,17 +9,18 @@
                         <!--====== Main Logo ======-->
 
                         <a class="main-logo" href="/">
-                            Logo</a>
+                            THIS IS LOGO
+                        </a>
                         <!--====== End - Main Logo ======-->
 
 
                         <!--====== Search Form ======-->
-                        <form class="main-form" style="min-width: 120px">
+                        <form class="main-form" style="min-width: 120px" method="get" action="/catalogsearch/result">
 
                             <label for="main-search"></label>
 
                             <input class="input-text input-text--border-radius input-text--style-1" type="text"
-                                id="main-search" placeholder="Search">
+                                id="main-search" placeholder="Search" name="keyword" value="{{ $keyword ?? '' }}">
 
                             <button class="btn btn--icon fas fa-search main-search-button" type="submit"></button>
                         </form>
@@ -77,77 +78,15 @@
                                         </ul>
                                         <!--====== End - Dropdown ======-->
                                     </li>
-                                    <li class="has-dropdown" data-tooltip="tooltip" data-placement="left" title=""
-                                        data-original-title="Settings">
-
-                                        <a><i class="fas fa-user-cog"></i></a>
-
-                                        <!--====== Dropdown ======-->
-
-                                        <span class="js-menu-toggle"></span>
-                                        <ul style="width:120px">
-                                            <li class="has-dropdown has-dropdown--ul-right-100">
-
-                                                <a>Language<i class="fas fa-angle-down u-s-m-l-6"></i></a>
-
-                                                <!--====== Dropdown ======-->
-
-                                                <span class="js-menu-toggle"></span>
-                                                <ul style="width:120px">
-                                                    <li>
-
-                                                        <a class="u-c-brand">ENGLISH</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a>ARABIC</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a>FRANCAIS</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a>ESPANOL</a>
-                                                    </li>
-                                                </ul>
-                                                <!--====== End - Dropdown ======-->
-                                            </li>
-                                            <li class="has-dropdown has-dropdown--ul-right-100">
-
-                                                <a>Currency<i class="fas fa-angle-down u-s-m-l-6"></i></a>
-
-                                                <!--====== Dropdown ======-->
-
-                                                <span class="js-menu-toggle"></span>
-                                                <ul style="width:225px">
-                                                    <li>
-
-                                                        <a class="u-c-brand">$ - US DOLLAR</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a>£ - BRITISH POUND STERLING</a>
-                                                    </li>
-                                                    <li>
-
-                                                        <a>€ - EURO</a>
-                                                    </li>
-                                                </ul>
-                                                <!--====== End - Dropdown ======-->
-                                            </li>
-                                        </ul>
-                                        <!--====== End - Dropdown ======-->
-                                    </li>
                                     <li data-tooltip="tooltip" data-placement="left" title=""
                                         data-original-title="Contact">
 
-                                        <a href="tel:+0900901904"><i class="fas fa-phone-volume"></i></a>
+                                        <a href="tel:+0383460015"><i class="fas fa-phone-volume"></i></a>
                                     </li>
                                     <li data-tooltip="tooltip" data-placement="left" title=""
                                         data-original-title="Mail">
 
-                                        <a href="mailto:contact@domain.com"><i class="far fa-envelope"></i></a>
+                                        <a href="mailto:hiusnguyen201@gmail.com"><i class="far fa-envelope"></i></a>
                                     </li>
                                 </ul>
                                 <!--====== End - List ======-->
@@ -308,7 +247,7 @@
                                 <!--====== List ======-->
                                 <ul class="ah-list ah-list--design2 ah-list--link-color-secondary">
                                     <li>
-                                        <a href="shop-side-version-2.html">NEW ARRIVALS</a>
+                                        <a href="/catalogsearch/result">NEW ARRIVALS</a>
                                     </li>
                                     <li class="has-dropdown">
 
@@ -340,14 +279,6 @@
                                             </li>
                                         </ul>
                                         <!--====== End - Dropdown ======-->
-                                    </li>
-                                    <li>
-
-                                        <a href="shop-side-version-2.html">VALUE OF THE DAY</a>
-                                    </li>
-                                    <li>
-
-                                        <a href="shop-side-version-2.html">GIFT CARDS</a>
                                     </li>
                                 </ul>
                                 <!--====== End - List ======-->
