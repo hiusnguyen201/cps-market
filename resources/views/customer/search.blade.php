@@ -66,9 +66,14 @@
                                             <div class="range-input">
                                                 <div class="u-s-m-b-30">
                                                     <div class="slider">
-                                                        <div class="progress"></div>
+                                                        @php
+                                                        $leftProgress = $price_min ? ($price_min / 100000000) * 100 : $price_min = 1;
+                                                        $rightProgress = $price_max ? 100 - (( $price_max / 100000000) * 100) : 25;
+                                                        @endphp
+                                                        <div class="progress" style="left: {{ $leftProgress }}%; right: {{ $rightProgress }}%;"></div>
                                                     </div>
-                                                    <input type="range" class="range-min" min="0" max="100000000" value="{{ $price_min ?? 25000000 }}" step="100000">
+
+                                                    <input type="range" class="range-min" min="0" max="100000000" value="{{ $price_min ?? 1 }}" step="100000">
                                                     <input type="range" class="range-max" min="0" max="100000000" value="{{ $price_max ?? 75000000 }}" step="100000">
                                                 </div>
                                                 <button class="priceSearchBtn btn btn--icon fas fa-angle-right btn--e-transparent-platinum-b-2" type="submit"></button>
