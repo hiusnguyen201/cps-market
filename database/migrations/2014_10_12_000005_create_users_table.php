@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -19,12 +18,9 @@ return new class extends Migration
             $table->string('email', 150)->unique();
             $table->string('password', 200)->nullable();
             $table->string('phone', 15);
-            $table->string('address', 150)->nullable();
             $table->tinyInteger('status')->default(config("constants.user_status.Inactive"));
             $table->tinyInteger('gender')->nullable();
             $table->unsignedBigInteger('role_id');
-            $table->string("google_id", 100)->nullable();
-            $table->string("facebook_id", 100)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken(); // login token
             $table->foreign('role_id')->references('id')->on('roles');

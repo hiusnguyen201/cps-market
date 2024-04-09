@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Web\AccountController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Web\MemberController;
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\CategoryController;
 use App\Http\Controllers\Web\UserController;
@@ -13,6 +13,9 @@ use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\CustomerController;
 use App\Http\Controllers\Web\SpecificationController;
+use App\Http\Controllers\Web\OrderController;
+use App\Http\Controllers\Web\WishlistController;
+use App\Http\Controllers\Web\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +31,7 @@ use App\Http\Controllers\Web\SpecificationController;
 Route::get('/', [HomeController::class, 'home']);
 Route::get('/{categorySlug}.html', [HomeController::class, 'categories'])->name('categories.show');
 Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
+Route::get('/catalogsearch/result', [HomeController::class, 'search']);
 
 
 // Admin
@@ -96,6 +100,17 @@ Route::prefix('admin')->group(function () {
         Route::patch('/edit/{user}', [CustomerController::class, 'handleUpdate']);
         Route::delete('/', [CustomerController::class, 'handleDelete']);
     });
+
+    // Orders
+    Route::prefix('orders')->group(function () {
+        Route::get('/', [OrderController::class, 'home'])->name("orders.home");
+        Route::get('/details/{order}', [OrderController::class, 'details'])->name("orders.details");
+        Route::get('/create', [OrderController::class, 'create'])->name("orders.create");
+        Route::post('/create', [OrderController::class, 'handleCreate']);
+        Route::get('/edit/{order}', [OrderController::class, 'edit'])->name("orders.edit");
+        Route::patch('/edit/{order}', [OrderController::class, 'handleUpdate']);
+        Route::delete('/', [OrderController::class, 'handleDelete']);
+    });
 });
 
 // Auth
@@ -110,16 +125,16 @@ Route::prefix('auth')->group(function () {
     Route::get('/login', [AuthController::class, 'localLogin']);
     Route::post('/login', [AuthController::class, 'handleLocalLogin']);
 
-    Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm']);
-    Route::post('/forget-password', [AuthController::class, 'submitForgetPasswordForm']);
-    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm']);
-    Route::post('/reset-password/{token}', [AuthController::class, 'submitResetPasswordForm']);
+    Route::get('/forget-password', [AuthController::class, 'forgetPasswordForm']);
+    Route::post('/forget-password', [AuthController::class, 'handleForgetPassword']);
+    Route::get('/reset-password/{token}', [AuthController::class, 'changePasswordForm']);
+    Route::post('/reset-password/{token}', [AuthController::class, 'handleChangePassword']);
 
     Route::get('/info-social', [AuthController::class, 'infoSocial']);
     Route::post('/info-social', [AuthController::class, 'handleUpdateInfoSocial']);
 
-    Route::get('/{provider?}/redirect', [AuthController::class, 'socialLogin']);
-    Route::get('/{provider?}/callback', [AuthController::class, 'handleSocialLogin']);
+    Route::get('/{provider}/redirect', [AuthController::class, 'socialLogin']);
+    Route::get('/{provider}/callback', [AuthController::class, 'handleSocialLogin']);
 
     Route::get('/register', [AuthController::class, 'register']);
     Route::post('/register', [AuthController::class, 'handleRegister']);
@@ -132,14 +147,41 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('cart')->group(function () {
     Route::middleware(['check.auth'])->group(function () {
-        Route::get('/', [CartController::class, 'index'])->name("cart.index");
-
-        Route::post('/store', [CartController::class, 'addToCart'])->name("cart.store");
-
-        Route::patch('/', [CartController::class, 'handleUpdate'])->name("cart.update");
-
+        Route::get('/', [CartController::class, 'home']);
+        Route::post('/', [CartController::class, 'handleCreate']);
+        Route::patch('/', [CartController::class, 'handleUpdate']);
         Route::delete('/', [CartController::class, 'handleDelete']);
 
-        Route::get('/payment-info', [CartController::class, 'checkoutPage']);
+        Route::get('/checkout', [CartController::class, 'checkoutPage']);
+        Route::get('/success', [CartController::class, 'reponsePaymentPage']);
+    });
+});
+
+Route::prefix('payment')->group(function () {
+    Route::middleware(['check.auth'])->group(function () {
+        Route::post('/cod', [PaymentController::class, 'handleCodPayment']);
+        Route::post('/momo', [PaymentController::class, 'handleMomoPayment']);
+    });
+});
+
+Route::prefix('member')->group(function () {
+    Route::middleware(['check.auth'])->group(function () {
+        Route::get('/', [MemberController::class, 'home']);
+
+        Route::get('/change-password', [MemberController::class, 'change_password']);
+        Route::patch('/change-password', [MemberController::class, 'handleChange_password']);
+
+        Route::get('/user-info', [MemberController::class, 'user_info']);
+        Route::patch('/user-info', [MemberController::class, 'handleUpdate_User_info']);
+    });
+});
+
+Route::prefix('wishlist')->group(function () {
+    Route::middleware(['check.auth'])->group(function () {
+        Route::get('/', [WishlistController::class, 'home']);
+
+        Route::post('/', [WishlistController::class, 'handleCreate']);
+
+        Route::delete('/', [WishlistController::class, 'handleDelete']);
     });
 });

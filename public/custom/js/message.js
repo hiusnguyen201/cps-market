@@ -6,11 +6,12 @@ if (successDiv.length) {
         duration: 2000,
         newWindow: true,
         gravity: "top", // `top` or `bottom`
-        position: "right", // `left`, `center` or `right`
-        stopOnFocus: false, // Prevents dismissing of toast on hover
+        position: "center", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
         style: {
             background: "#28C76F",
         },
+        close: true,
     }).showToast();
 }
 
@@ -21,10 +22,11 @@ if (errorDiv.length) {
         duration: 2000,
         newWindow: true,
         gravity: "top", // `top` or `bottom`
-        position: "right", // `left`, `center` or `right`
-        stopOnFocus: false, // Prevents dismissing of toast on hover
+        position: "center", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
         style: {
             background: "#F05F57",
         },
+        close: true,
     }).showToast();
 }

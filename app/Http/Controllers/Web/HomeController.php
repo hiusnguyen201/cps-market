@@ -7,8 +7,10 @@ use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Wishlist;
+use Illuminate\Auth\Events\Failed;
 use Illuminate\Support\Carbon;
-use Cart;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -49,14 +51,21 @@ class HomeController extends Controller
             ->limit(3)
             ->get();
 
-        Cart::instance('cart');
+        $countProductInCart = 0;
+        if (Auth::user()) {
+            foreach (Auth::user()->carts as $cart) {
+                $countProductInCart += $cart->quantity;
+            }
+        }
+
         return view("customer/home", [
             'sections' => $sections,
             'sections9D' => $sections9D,
             'sections9W' => $sections9W,
             'sections9M' => $sections9M,
             'categories' => $categories,
-            'title' => "Cps Market"
+            'countProductInCart' => $countProductInCart,
+            'title' => "Home"
         ]);
     }
 
@@ -64,10 +73,22 @@ class HomeController extends Controller
     {
         $product = Product::where(['slug' => $productSlug])->first();
         $categories = Category::all();
-        Cart::instance('cart');
+
+        $countProductInCart = 0;
+        $wishlistCheck = null;
+        if (Auth::user()) {
+            foreach (Auth::user()->carts as $cart) {
+                $countProductInCart += $cart->quantity;
+            }
+
+            $wishlistCheck = Wishlist::where('product_id', $product->id)->where('user_id', Auth::id())->first();
+        }
+
         return view('customer.products.details', [
             'product' => $product,
             'categories' => $categories,
+            'countProductInCart' => $countProductInCart,
+            'wishlistCheck' => $wishlistCheck,
             'title' => 'Details Product',
         ]);
     }
@@ -87,10 +108,99 @@ class HomeController extends Controller
             ->orderBy('sold', 'desc');
 
         $products = $products->paginate($request->limit ?? 9);
+
+        $countProductInCart = 0;
+        if (Auth::user()) {
+            foreach (Auth::user()->carts as $cart) {
+                $countProductInCart += $cart->quantity;
+            }
+        }
+
         return view('customer.products.categories', [
             'title' => 'Categories Product',
+            'countProductInCart' => $countProductInCart,
             'products' => $products,
             'categories' => $categories,
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        $categories = Category::all();
+        $brands = Brand::all();
+
+        $wishlists = Wishlist::where('user_id', Auth::id())->pluck('product_id', 'id')->toArray();
+        $products = Product::where('name', 'like', '%' . $request->keyword . '%');
+
+        $per_page = $request->per_page ?? 12;
+        $sort_by = $request->sort_by ?? 'newest';
+
+        if ($request->sort_by) {
+            switch ($sort_by) {
+                case 'newest':
+                    $products = $products->orderByDesc('created_at');
+                    break;
+
+                case 'latest':
+                    $products = $products->orderBy('created_at');
+                    break;
+
+                case 'lowest_price':
+                    $products = $products->orderBy('price');
+                    break;
+
+                case 'highest_price':
+                    $products = $products->orderByDesc('price');
+                    break;
+
+                default:
+                    # code...
+                    break;
+            }
+        }
+
+        if ($request->price_min) {
+            $products->where('price', '>=', $request->price_min ?? 0);
+        }
+
+        if ($request->price_max) {
+            $products->where('price', '<=', $request->price_max ?? 100000000);
+        }
+
+        if ($request->category_id) {
+            $products->where('category_id', $request->category_id ?? null);
+        }
+
+
+        if ($request->brand_id) {
+            $products->where('brand_id', $request->brand_id ?? null);
+        }
+
+        $countAllProducts = count($products->get());
+
+        $products = $products->paginate($per_page);
+
+        $countProductInCart = 0;
+        if (Auth::user()) {
+            foreach (Auth::user()->carts as $cart) {
+                $countProductInCart += $cart->quantity;
+            }
+        }
+
+
+        return view('customer.search', [
+            'title' => 'Search Product',
+            'countProductInCart' => $countProductInCart,
+            'products' => $products,
+            'categories' => $categories,
+            'brands' => $brands,
+            'per_page' => $per_page,
+            'sort_by' => $sort_by,
+            'price_min' => $request->price_min,
+            'price_max' => $request->price_max,
+            'wishlists' => $wishlists,
+            'keyword' => $request->keyword,
+            "countAllProducts" => $countAllProducts,
         ]);
     }
 }

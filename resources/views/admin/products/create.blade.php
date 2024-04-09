@@ -8,21 +8,22 @@
 @extends('layouts.admin.index')
 @section('content')
     <form id="product" action="" enctype="multipart/form-data" method="POST">
-        <div class="card card-primary px-3 py-3">
-            <span class="font-weight-bold title-create mb-2">Basic information</span>
+        <div class="card card-body">
+            <h3 class="font-weight-bold title-create mb-3">Basic information</h3>
             <div class="card-body">
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Name</span><span class="required-text ml-1">*</span></div>
-                    <div class="col-7 input-product_form">
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2">Name</span><span class="required-text ml-1">*</span>
+                    </div>
+                    <div class="col-lg-7 col-12 input-product_form">
                         <div class="input-group">
                             <input id="product" type="text" name="name" class="form-control"
                                 placeholder="Enter product name..." value="">
                         </div>
                     </div>
                 </div>
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Product images</span></div>
-                    <div class="col-7 input-product_form">
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2">Product images</span></div>
+                    <div class="col-lg-7 col-12 input-product_form">
                         <div class="multiple-input_block">
                             <div class="input-file_block">
                                 <img hidden class="input-file_image" src="" alt="">
@@ -38,10 +39,10 @@
                     </div>
                 </div>
 
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2"><span>Promotion Image</span><span
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2"><span>Promotion Image</span><span
                                 class="required-text ml-1">*</span></span></div>
-                    <div class="col-7 input-product_form">
+                    <div class="col-lg-7 col-12 input-product_form">
                         <div class="input-file_block">
                             <img hidden class="input-file_image" src="" alt="">
                             <i class="far fa-file-image"></i>
@@ -54,10 +55,11 @@
                     </div>
                 </div>
 
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Category</span><span class="required-text ml-1">*</span>
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2">Category</span><span
+                            class="required-text ml-1">*</span>
                     </div>
-                    <div class="col-7 input-product_form">
+                    <div class="col-lg-7 col-12 input-product_form">
                         <div class="input-group">
                             <select id="product" name="category" class="form-control create_product">
                                 <option value="">Please set category</option>
@@ -70,9 +72,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Description</span></div>
-                    <div class="col-7 input-product_form">
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2">Description</span></div>
+                    <div class="col-lg-7 col-12 input-product_form">
                         <div class="input-group">
                             <textarea id="product" style="resize: none" name="description" class="form-control" cols="30" rows="8"></textarea>
                         </div>
@@ -81,24 +83,24 @@
             </div>
         </div>
 
-        <div class="card card-primary px-3 py-3 inactive-content">
-            <span class="font-weight-bold title-create mb-2">Specification</span>
+        <div class="card card-body inactive-content">
+            <h3 class="font-weight-bold title-create mb-3">Specification</h3>
             <span class="inactive-text">Available only after you select a product category</span>
             <div id="specification" class="card-body hide">
-                <div class="row align-items-start input-block">
+                <div class="row align-items-start mb-3 input-block">
 
                 </div>
             </div>
         </div>
 
-        <div class="card card-primary px-3 py-3 inactive-content">
-            <span class="font-weight-bold title-create mb-2">Sales Information</span>
+        <div class="card card-body inactive-content">
+            <h3 class="font-weight-bold title-create mb-3">Sales Information</h3>
             <span class="inactive-text">Available only after you select a product category</span>
             <div id="sales" class="card-body hide">
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Price</span><span class="required-text ml-1">*</span>
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2">Price</span><span class="required-text ml-1">*</span>
                     </div>
-                    <div class="col-7 input-product_form">
+                    <div class="col-lg-7 col-12 input-product_form">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">₫</div>
@@ -108,10 +110,10 @@
                     </div>
                 </div>
 
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Sale Price</span>
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2">Sale Price</span>
                     </div>
-                    <div class="col-7 input-product_form">
+                    <div class="col-lg-7 col-12 input-product_form">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">₫</div>
@@ -121,10 +123,11 @@
                     </div>
                 </div>
 
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Quantity</span><span class="required-text ml-1">*</span>
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2">Quantity</span><span
+                            class="required-text ml-1">*</span>
                     </div>
-                    <div class="col-7 input-product_form">
+                    <div class="col-lg-7 col-12 input-product_form">
                         <div class="input-group">
                             <input id="product" type="number" name="quantity" class="form-control" value="0">
                         </div>
@@ -133,10 +136,10 @@
             </div>
         </div>
 
-        <div class="d-grid mb-3">
+        <div class="d-grid pb-3">
             @csrf
             @method('POST')
-            <button type="submit" class="btn btn-primary w-100 py-3">Submit</button>
+            <button type="submit" class="btn btn-success w-100 py-3">Create</button>
         </div>
     </form>
 @endsection

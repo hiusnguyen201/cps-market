@@ -5,19 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Login_Token extends Model
+class Wishlist extends Model
 {
     use HasFactory;
-    protected $table = 'login_token';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $table = 'wishlists';
+
     protected $fillable = [
-        "user_id",
-        "token"
+        'product_id',
+        'user_id',
     ];
 
     /**
@@ -26,8 +22,12 @@ class Login_Token extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'product_id' => "integer",
         'user_id' => "integer",
-        'token' => "string",
     ];
 
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }

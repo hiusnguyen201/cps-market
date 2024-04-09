@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ $title }}</title>
+    <title>{{ $title }} - {{ env('APP_NAME') }}</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
@@ -19,23 +19,22 @@
     <!--====== App ======-->
     <link rel="stylesheet" href="{{ asset('ludus/css/app.css') }}">
 
+    {{-- swiper --}}
+    <link rel="stylesheet" href="{{ asset('swiper/package/swiper-bundle.min.css') }}">
+
     <!-- Toast js -->
     <link rel="stylesheet" href="{{ asset('toastjs/toastify.css') }}">
 
-    {{-- swiper --}}
-    <link rel="stylesheet" href="{{ asset('swiper/package/swiper-bundle.min.css') }}">
+    {{-- Custom --}}
+    <link rel="stylesheet" href="{{ asset('custom/css/style.css') }}">
 
 </head>
 
 <body class="config">
-    @if (session('success'))
-        <input hidden type="text" name="message-success" value="{{ session('success') }}">
-    @endif
-    @if (session('error'))
-        <input hidden type="text" name="message-error" value="{{ session('error') }}">
-    @endif
-
     <div id="app">
+        @php
+            setlocale(LC_MONETARY, 'vi_VN');
+        @endphp
         <!--====== Main Header ======-->
         @include('layouts.customer.parts.navbar')
 
@@ -58,49 +57,26 @@
     <!--====== App ======-->
     <script src="{{ asset('ludus/js/app.js') }}"></script>
 
+    <!-- jQuery -->
+    <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('custom/js/cart.js') }}"></script>
+
+    {{-- Select viet nam location --}}
+    <script src="{{ asset('vietnamlocalselector/vietnamlocalselector.js') }}"></script>
+    <script src="{{ asset('custom/js/vietnamlocalselector.js') }}"></script>
+
     {{-- Swiper --}}
     <script src="{{ asset('swiper/package/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('custom/js/swiper.js') }}"></script>
 
     <!-- Toast js -->
     <script src="{{ asset('toastjs/toastify.js') }}"></script>
-    <script defer src="{{ asset('custom/js/message.js') }}"></script>
+    <script src="{{ asset('custom/js/message.js') }}"></script>
 
-    <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
-    <script defer src="{{ asset('custom/js/cart.js') }}"></script>
+    <script src="{{ asset('custom/js/search.js') }}"></script>
 
-    <script defer>
-        const swiper = new Swiper(".swiper", {
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            loop: false,
-            breakpoints: {
-                0: {
-                    slidesPerView: 1,
-                    spaceBetween: 5,
-
-                },
-                600: {
-                    slidesPerView: 3,
-                    spaceBetween: 10,
-                },
-                800: {
-                    slidesPerView: 3,
-                    spaceBetween: 15,
-                },
-                1025: {
-                    slidesPerView: 5,
-                    spaceBetween: 15,
-                },
-                1281: {
-                    slidesPerView: 5,
-                    spaceBetween: 15,
-                },
-            }
-        })
-    </script>
-
+    {{-- UI --}}
+    <script defer src="{{ asset('custom/js/ui.js') }}"></script>
 
 
 </body>

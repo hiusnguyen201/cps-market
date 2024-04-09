@@ -8,23 +8,24 @@
 @extends('layouts.admin.index')
 @section('content')
     <form id="product" enctype="multipart/form-data" method="POST">
-        <div class="card card-primary px-3 py-3">
-            <span class="font-weight-bold title-create mb-2">Basic information</span>
+        <div class="card card-body">
+            <h3 class="font-weight-bold title-create mb-3">Basic information</h3>
             <div class="card-body">
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Name</span><span class="required-text ml-1">*</span></div>
-                    <div class="col-7 input-product_form">
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2">Name</span><span class="required-text ml-1">*</span>
+                    </div>
+                    <div class="col-lg-7 col-12 input-product_form">
                         <div class="input-group">
                             <input id="product" type="text" name="name" class="form-control"
                                 placeholder="Enter product name..." value="{{ $product->name }}">
                         </div>
                     </div>
                 </div>
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Product images</span></div>
-                    <div class="col-7 input-product_form">
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2">Product images</span></div>
+                    <div class="col-lg-7 col-12 input-product_form">
                         <div class="multiple-input_block">
-                            @if (count($product->images->toArray()) > 1)
+                            @if (count($product->images))
                                 @foreach ($product->images as $image)
                                     @if (!$image->pin)
                                         <div class="input-file_uploaded">
@@ -40,7 +41,22 @@
                                         </div>
                                     @endif
                                 @endforeach
-                            @else
+
+                                @if (count($product->images) >= 8)
+                                    <div hidden class="input-file_block">
+                                        <img hidden class="input-file_image">
+                                        <i class="far fa-file-image"></i>
+                                        <span class="input-file_text">Add File</span>
+                                        <input id="product" hidden class="input-file_form" type="file"
+                                            name="product_images[]" multiple>
+                                        <div class="remove-btn_block">
+                                            <i class="fas fa-trash"></i>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endif
+
+                            @if (count($product->images) < 8)
                                 <div class="input-file_block">
                                     <img hidden class="input-file_image">
                                     <i class="far fa-file-image"></i>
@@ -56,10 +72,10 @@
                     </div>
                 </div>
 
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2"><span>Promotion Image</span><span
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2"><span>Promotion Image</span><span
                                 class="required-text ml-1">*</span></span></div>
-                    <div class="col-7 input-product_form">
+                    <div class="col-lg-7 col-12 input-product_form">
                         @php
                             $imagePin = null;
                             for ($i = 0; $i < count($product->images); $i++) {
@@ -94,10 +110,11 @@
                     </div>
                 </div>
 
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Category</span><span class="required-text ml-1">*</span>
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2">Category</span><span
+                            class="required-text ml-1">*</span>
                     </div>
-                    <div class="col-7 input-product_form">
+                    <div class="col-lg-7 col-12 input-product_form">
                         <div class="input-group">
                             <select id="product" name="category" class="form-control create_product">
                                 <option value="">Please set category</option>
@@ -111,27 +128,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Description</span></div>
-                    <div class="col-7 input-product_form">
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2">Description</span></div>
+                    <div class="col-lg-7 col-12 input-product_form">
                         <div class="input-group">
-                            <textarea id="product" style="resize: none" name="description" class="form-control" cols="30" rows="8">{{ $product->description }}</textarea>
+                            <textarea id="product" style="resize: none" name="description" class="form-control" cols="30"
+                                rows="8">{{ $product->description }}</textarea>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="card card-primary px-3 py-3 {{ $product->category_id ? '' : 'inactive-content' }}">
-            <span class="font-weight-bold title-create mb-2">Specification</span>
+        <div class="card card-body {{ $product->category_id ? '' : 'inactive-content' }}">
+            <h3 class="font-weight-bold title-create mb-3">Specification</h3>
             @if (!$product->category_id)
                 <span class="inactive-text">Available only after you select a product category</span>
             @endif
             <div id="specification" class="card-body {{ $product->category_id ? '' : 'hide' }}">
-                <div class="row align-items-start input-block">
-                    <div class='col-6 d-flex mb-3'>
-                        <div class="col-4"><span>Brand</span><span class="required-text ml-1">*</span></div>
-                        <div class="col-8 input-product_form">
+                <div class="row align-items-start mb-3 input-block">
+                    <div class='col-lg-6 col-12 row mb-3'>
+                        <div class="col-lg-4 col-12"><span>Brand</span><span class="required-text ml-1">*</span></div>
+                        <div class="col-lg-7 col-12 input-product_form">
                             <div class="input-group">
                                 <select id="product" name="brand" class="form-control">
                                     <option value="">Please select</option>
@@ -148,9 +166,9 @@
                     </div>
                     @if (count($attributes))
                         @foreach ($attributes as $attribute)
-                            <div class='col-6 d-flex mb-3'>
-                                <div class="col-4"><span>{{ $attribute->key }}</span></div>
-                                <div class="col-8 input-product_form">
+                            <div class='col-lg-6 col-12 row mb-3'>
+                                <div class="col-lg-4 col-12"><span>{{ $attribute->key }}</span></div>
+                                <div class="col-lg-7 col-12 input-product_form">
                                     <input id='product' hidden name='attribute_ids[]' value='{{ $attribute->id }}'>
                                     @php
                                         $product_attribute = $product->products_attributes
@@ -170,16 +188,17 @@
             </div>
         </div>
 
-        <div class="card card-primary px-3 py-3 {{ $product->category_id ? '' : 'inactive-content' }}">
-            <span class="font-weight-bold title-create mb-2">Sales Information</span>
+        <div class="card card-body {{ $product->category_id ? '' : 'inactive-content' }}">
+            <h3 class="font-weight-bold title-create mb-3">Sales Information</h3>
             @if (!$product->category_id)
                 <span class="inactive-text">Available only after you select a product category</span>
             @endif
             <div id="sales" class="card-body {{ $product->category_id ? '' : 'hide' }}">
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Price</span><span class="required-text ml-1">*</span>
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2">Price</span><span
+                            class="required-text ml-1">*</span>
                     </div>
-                    <div class="col-7 input-product_form">
+                    <div class="col-lg-7 col-12 input-product_form">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">₫</div>
@@ -189,9 +208,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Sale price</span></div>
-                    <div class="col-7 input-product_form">
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2">Sale price</span></div>
+                    <div class="col-lg-7 col-12 input-product_form">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">₫</div>
@@ -202,10 +221,11 @@
 
                     </div>
                 </div>
-                <div class="row align-items-start input-block">
-                    <div class="col-3"><span class="mt-2">Quantity</span><span class="required-text ml-1">*</span>
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2">Quantity</span><span
+                            class="required-text ml-1">*</span>
                     </div>
-                    <div class="col-7 input-product_form">
+                    <div class="col-lg-7 col-12 input-product_form">
                         <div class="input-group">
                             <input id="product" type="number" name="quantity" class="form-control"
                                 value="{{ $product->quantity }}">
@@ -215,11 +235,11 @@
             </div>
         </div>
 
-        <div class="d-grid mb-3">
+        <div class="d-grid pb-3">
             @csrf
             @method('PATCH')
             <input type="hidden" name="id" value="{{ $product->id }}">
-            <button type="submit" class="btn btn-primary w-100 py-3">Submit</button>
+            <button type="submit" class="btn btn-success w-100 py-3">Save</button>
         </div>
     </form>
 @endsection

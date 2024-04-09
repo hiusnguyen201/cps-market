@@ -34,7 +34,7 @@ class ProductController extends Controller
             $promotion_image_path = $encrypted_id . "/" . $request->file('promotion_image')->hashName();
             $request->file('promotion_image')->storeAs('public', $promotion_image_path);
             Product_Images::create([
-                'thumbnail' => "storage/". $promotion_image_path,
+                'thumbnail' => "storage/" . $promotion_image_path,
                 'product_id' => $product->id,
                 'pin' => 1
             ]);
@@ -51,14 +51,16 @@ class ProductController extends Controller
                 }
             }
 
-            foreach($request->attribute_ids as $index => $id) {
-                $attribute = Attribute::find($id);
-                if($request->attribute_values[$index]) {
-                    Product_Attribute::create([
-                        'product_id' => $product->id,
-                        'attribute_id' => $attribute->id,
-                        'value' => $request->attribute_values[$index]
-                    ]);
+            if ($request->attribute_ids) {
+                foreach ($request->attribute_ids as $index => $id) {
+                    $attribute = Attribute::find($id);
+                    if ($request->attribute_values[$index]) {
+                        Product_Attribute::create([
+                            'product_id' => $product->id,
+                            'attribute_id' => $attribute->id,
+                            'value' => $request->attribute_values[$index]
+                        ]);
+                    }
                 }
             }
 
@@ -67,13 +69,14 @@ class ProductController extends Controller
                 'data' => $product,
             ], 200);
         } catch (\Exception $err) {
-            error_log($err);
+            error_log($err->getMessage());
             return response()->json([
                 'message' => 'Server Error',
                 'error' => $err
             ], 500);
         }
     }
+
 
     public function update(Product $product, ProductRequest $request)
     {
@@ -109,7 +112,7 @@ class ProductController extends Controller
             $promotion_image_path = $encrypted_id . "/" . $request->file('promotion_image')->hashName();
             $request->file('promotion_image')->storeAs('public', $promotion_image_path);
             Product_Images::create([
-                'thumbnail' =>"storage/" . $promotion_image_path,
+                'thumbnail' => "storage/" . $promotion_image_path,
                 'product_id' => $product->id,
                 'pin' => 1
             ]);
@@ -126,14 +129,16 @@ class ProductController extends Controller
                 }
             }
 
-            foreach($request->attribute_ids as $index => $id) {
-                $attribute = Attribute::find($id);
-                if($request->attribute_values[$index]) {
-                    Product_Attribute::create([
-                        'product_id' => $product->id,
-                        'attribute_id' => $attribute->id,
-                        'value' => $request->attribute_values[$index]
-                    ]);
+            if ($request->attribute_ids) {
+                foreach ($request->attribute_ids as $index => $id) {
+                    $attribute = Attribute::find($id);
+                    if ($request->attribute_values[$index]) {
+                        Product_Attribute::create([
+                            'product_id' => $product->id,
+                            'attribute_id' => $attribute->id,
+                            'value' => $request->attribute_values[$index]
+                        ]);
+                    }
                 }
             }
 
@@ -142,6 +147,7 @@ class ProductController extends Controller
                 'data' => $product,
             ], 200);
         } catch (\Exception $err) {
+            error_log($err->getMessage());
             return response()->json([
                 'message' => 'Server Error',
                 'error' => $err

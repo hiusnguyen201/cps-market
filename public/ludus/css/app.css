@@ -1131,7 +1131,7 @@ body {
 
 /* Input Text Component */
 .input-text {
-    font-size: 12px;
+    font-size: 14px;
     background-clip: padding-box;
     padding: 0 18px;
     height: 40px;
@@ -2065,9 +2065,9 @@ input::-ms-clear {
 .select-box {
     display: block;
     max-width: 100%;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
-    padding: 10px 12px 11px 15px;
+    padding: 8px 12px 8px 15px;
     cursor: pointer;
     line-height: 1.2;
 }
@@ -7160,7 +7160,8 @@ input::-ms-clear {
     display: block;
 }
 
-.mega-menu-content [class*="col-"] > ul > li > a {
+.mega-menu-content [class*="col-"] > ul > li > a,
+.mega-menu-content [class*="col-"] > ul > li > span {
     padding: 4px 0;
     display: block;
     color: #333333;
@@ -7171,7 +7172,8 @@ input::-ms-clear {
     color: #fa4400;
 }
 
-.mega-menu-content [class*="col-"] > ul > .mega-list-title > a {
+.mega-menu-content [class*="col-"] > ul > .mega-list-title > a,
+.mega-menu-content [class*="col-"] > ul > .mega-list-title > span {
     font-weight: 700;
 }
 

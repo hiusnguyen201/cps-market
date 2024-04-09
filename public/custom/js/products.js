@@ -44,9 +44,9 @@ selectFormCategory.change(async (e) => {
             });
             activeCards(cardArr);
 
-            let attributesHtml = `<div class='col-6 d-flex mb-3'>
-                        <div class="col-4"><span>Brand</span><span class="required-text ml-1">*</span></div>
-                        <div class="col-8 input-product_form">
+            let attributesHtml = `<div class='col-lg-6 col-12 row mb-3'>
+                        <div class="col-lg-4 col-12"><span>Brand</span><span class="required-text ml-1">*</span></div>
+                        <div class="col-lg-7 col-12 input-product_form">
                             <div class="input-group">
                                 <select id="product" name="brand" class="form-control">
                                     ${brandsHtml}
@@ -57,9 +57,9 @@ selectFormCategory.change(async (e) => {
 
             specifications.forEach((spec) => {
                 spec.attributes.forEach((attribute, index) => {
-                    attributesHtml += `<div class='col-6 d-flex mb-3'>
-                        <div class="col-4"><span>${attribute.key}</span></div>
-                        <div class="col-8 input-product_form">
+                    attributesHtml += `<div class='col-lg-6 col-12 row mb-3'>
+                        <div class="col-lg-4 col-12"><span>${attribute.key}</span></div>
+                        <div class="col-lg-7 col-12 input-product_form">
                             <input id='product' hidden name='attribute_ids[]' value='${attribute.id}'>
                             <input id='product' class='form-control' name='attribute_values[]' placeholder='Please enter...'>
                         </div>
@@ -150,14 +150,16 @@ formElement.find("button[type='submit']").click((e) => {
         },
         error: (err) => {
             const { errors, message } = err?.responseJSON;
+            console.log(errors);
             if (err.status == 422) {
                 Toastify({
                     text: message,
                     duration: 2000,
                     newWindow: true,
                     gravity: "top",
-                    position: "right",
-                    stopOnFocus: false,
+                    close: true,
+                    position: "center",
+                    stopOnFocus: true,
                     style: {
                         background: "#F05F57",
                     },
@@ -182,8 +184,9 @@ document.addEventListener("DOMContentLoaded", () => {
         duration: 2000,
         newWindow: true,
         gravity: "top",
-        position: "right",
-        stopOnFocus: false,
+        close: true,
+        position: "center",
+        stopOnFocus: true,
         style: {
             background: "#28C76F",
         },

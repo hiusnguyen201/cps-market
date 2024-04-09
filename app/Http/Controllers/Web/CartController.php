@@ -7,71 +7,204 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
-use Cart;
 
 class CartController extends Controller
 {
-    public function index()
+    public function home()
     {
         $categories = Category::all();
-        $cart = Cart::instance('cart');
+        $products = Product::all();
 
-        return view("customer/cart", [
+        $countProductInCart = 0;
+        $totalPrice = 0;
+        $carts = Auth::user()->carts;
+        foreach ($carts as $cart) {
+            $countProductInCart += $cart->quantity;
+            $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price : $cart->product->price) * $cart->quantity);
+        }
+
+        return view("customer/carts/index", [
             'title' => "Cart",
-            'cartItems' => $cart->content(),
-            "categories" => $categories
+            'carts' => $carts,
+            'products' => $products,
+            "categories" => $categories,
+            "countProductInCart" => $countProductInCart,
+            "totalPrice" => $totalPrice
         ]);
     }
 
-    public function addToCart(Request $request)
+    public function handleCreate(Request $request)
     {
-        $product = Product::find($request->product_id);
-        if (!$product) return redirect()->back()->with("error", "Product is not found");
-        $cart = Cart::instance('cart');
+        $request->validate([
+            'product_id' => 'required|integer|min:1|exists:products,id',
+        ]);
 
-        $exist_cart = $cart->search(function ($cartItem) use ($product) {
-            return $cartItem->id === $product->id;
-        });
+        try {
+            $user = Auth::user();
+            $product = Product::find($request->product_id);
+            $cart = Cart::where('user_id', $user->id)->where('product_id', $product->id)->first();
 
-        if ($exist_cart->count() > 0) {
-            foreach ($exist_cart as $index => $item) {
-                $cart->update(
-                    $index,
-                    ++$item->qty
-                );
-                break;
+
+            if ($product->quantity <= 0 || ($cart && $cart->quantity > $product->quantity)) {
+                return redirect()->back()->with('error', 'Not enough quantity available');
             }
-        } else {
-            $cart->add([
-                'id' => $product->id,
-                'name' => $product->name,
-                'price' => $product->price,
-                'qty' => 1,
-            ])->associate('App\Models\Product');
-        }
 
-        return redirect()->back()->with("success", "Add product to cart successfully");
+            if (!$cart) {
+                Cart::create([
+                    'product_id' => $product->id,
+                    'user_id' => $user->id,
+                    'quantity' => 1,
+                ]);
+            } else {
+                $cart->update([
+                    'quantity' => $cart->quantity + 1,
+                ]);
+            }
+
+            if ($request->action == 'buy') {
+                return redirect("/cart")->with('success', 'Add product to cart successfully');
+            } else {
+                return redirect()->back()->with('success', 'Add product to cart successfully');
+            }
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+            return redirect()->back()->with('error', 'Add product to cart failed');
+        }
     }
 
-    public function handleUpdate(Request $request) {
-        Cart::instance('cart')->update($request->rowId, $request->qty);
+    public function handleUpdate(Request $request)
+    {
+        try {
+            $cart = Cart::find($request->cart_id);
+
+            if (!$cart) {
+                return redirect()->back()->with('error', 'Cart not found!');
+            }
+
+            if ($request->quantity > $cart->product->quantity) {
+                return redirect()->back()->with('error', 'Not enough quantity available');
+            }
+
+            $cart->update([
+                "quantity" => $request->quantity,
+                "updated_at" => now()
+            ]);
+
+            session()->flash("success", "Update quantity successfully");
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+            session()->flash('error', 'Update quantity unsuccessfully!');
+        }
+
         return redirect()->back();
     }
 
     public function handleDelete(Request $request)
     {
-        Cart::instance('cart')->remove($request->rowId);
+        try {
+            $cart = Cart::where(["user_id" => Auth::id(), "id" => $request->cart_id]);
+
+            if (!$cart) {
+                return redirect()->back()->with("error", "Cart not found");
+            }
+
+            $cart->delete();
+
+            session()->flash('success', 'Remove product from cart successfully!');
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+            session()->flash('error', 'Remove product from cart unsuccessfully!');
+        }
+
         return redirect()->back();
     }
 
-    public function checkoutPage(Request $request)
+    public function checkoutPage()
     {
+        $user = Auth::user();
+        $carts = $user->carts;
+        if (!$carts || !count($carts)) {
+            return redirect("/cart");
+        }
+
+        $totalPrice = 0;
+        $countProductInCart = 0;
+        foreach ($carts as $cart) {
+            $countProductInCart += $cart->quantity;
+            $totalPrice += (($cart->product->sale_price ?? $cart->product->price) * $cart->quantity);
+        }
+
         $categories = Category::all();
-        return view("customer.checkout", [
-            "title" => "Cart",
-            "categories" => $categories
+
+        return view("customer/carts/checkout", [
+            'title' => "Checkout",
+            "categories" => $categories,
+            "carts" => $carts,
+            "countProductInCart" => $countProductInCart,
+            "totalPrice" => $totalPrice,
+            "user" => $user
         ]);
+    }
+
+    public function reponsePaymentPage(Request $request)
+    {
+        $order = Order::where("code", $request->orderId)->first();
+        if (!$order)
+            return redirect()->back()->with("Order not found");
+
+        if ($order->payment_method != config("constants.payment_method.cod")['value'] && $order->status != config("constants.order_status.canceled")) {
+            switch ($request->resultCode) {
+                case "0":
+                    $order->update([
+                        "payment_status" => config("constants.payment_status.paid"),
+                        "updated_at" => now()
+                    ]);
+                    break;
+                default:
+                    $order->update([
+                        "payment_status" => config("constants.payment_status.canceled"),
+                        "status" => config("constants.order_status.canceled"),
+                        "updated_at" => now()
+                    ]);
+                    break;
+            }
+        }
+
+        $statusOrderPayment = $order->status == config("constants.order_status.canceled") ? false : true;
+
+        $categories = Category::all();
+        return view("customer/carts/success", [
+            "order" => $order,
+            'title' => "Cart",
+            "categories" => $categories,
+            "statusOrderPayment" => $statusOrderPayment
+        ]);
+    }
+
+    function execPostRequest($url, $data)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt(
+            $ch,
+            CURLOPT_HTTPHEADER,
+            array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data)
+            )
+        );
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        //execute post
+        $result = curl_exec($ch);
+        //close connection
+        curl_close($ch);
+        return $result;
     }
 }

@@ -1,28 +1,51 @@
 @extends('layouts.customer.index')
 
 @section('content')
-    <!--====== Section 1 ======-->
+    @if (session('success'))
+        <input hidden type="text" name="message-success" value="{{ session('success') }}">
+    @endif
+    @if (session('error'))
+        <input hidden type="text" name="message-error" value="{{ session('error') }}">
+    @endif
+
+    <style>
+        #addToWishlist {
+            font-size: 13px;
+            color: #a0a0a0;
+            border: 0;
+            padding: 0;
+            background: none;
+            cursor: pointer;
+            transition: color 110ms ease-in-out;
+        }
+
+        #addToWishlist:hover {
+            text-decoration: underline;
+            color: #b6b6b6;
+        }
+    </style>
+
     <div class="u-s-p-t-90">
         <div class="container">
             <div class="u-s-m-b-30">
-                <!--====== Product Breadcrumb ======-->
                 <div class="pd-breadcrumb u-s-m-b-30">
                     <ul class="pd-breadcrumb__list">
                         <li class="has-separator">
-
                             <a href="/">Home</a>
                         </li>
                         <li class="has-separator">
 
-                            <a href="/{{ $product->category_id }}">{{ $product->category->name }}</a>
+                            <a href="/{{ $product->category->slug }}.html">{{ $product->category->name }}</a>
                         </li>
                         <li class="has-separator">
 
-                            <a href="/{{ $product->brand_id }}">{{ $product->brand->name }}</a>
+                            <a
+                                href="/{{ $product->category->slug }}/{{ $product->brand->slug }}.html">{{ $product->brand->name }}</a>
                         </li>
                         <li class="is-marked">
 
-                            <a href="/{{ $product->slug }}.html">{{ $product->name }}</a>
+                            <a
+                                href="//{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a>
                         </li>
                     </ul>
                 </div>
@@ -39,7 +62,8 @@
                                     @foreach ($product->images as $image)
                                         <div class="pd-o-img-wrap" data-src="{{ asset($image->thumbnail) }}">
                                             <img class="u-img-fluid" src="{{ asset($image->thumbnail) }}"
-                                                data-zoom-image="{{ asset($image->thumbnail) }}" alt="{{ $product->name }}">
+                                                data-zoom-image="{{ asset($image->thumbnail) }}"
+                                                alt="{{ $product->name }}">
                                         </div>
                                     @endforeach
                                 @endif
@@ -56,6 +80,7 @@
                                             </div>
                                         @endforeach
                                     @endif
+
                                 </div>
                             </div>
                         </div>
@@ -73,15 +98,14 @@
                         <div>
                             <div class="pd-detail__inline">
 
-                                <span
-                                    class="pd-detail__price">{{ number_format($product->market_price, 0, ',', '.') }}&nbsp;₫</span>
-                                @if ($product->price - $product->market_price > 0)
+                                <span class="pd-detail__price">@convertCurrency($product->sale_price ?? $product->price)</span>
+                                @if ($product->sale_price && $product->price - $product->sale_price > 0)
                                     <span
-                                        class="pd-detail__discount">({{ round((($product->price - $product->market_price) * 100) / $product->price, 0) }}%
+                                        class="pd-detail__discount">({{ round((($product->price - $product->sale_price) * 100) / $product->price, 0) }}%
                                         OFF)
                                     </span>
+                                    <span class="pd-detail__del">@convertCurrency($product->price)</span>
                                 @endif
-                                <del class="pd-detail__del">{{ number_format($product->price, 0, ',', '.') }}&nbsp;₫</del>
                             </div>
                         </div>
                         <div class="u-s-m-b-15">
@@ -104,17 +128,27 @@
                             </div>
                         </div>
                         <div class="u-s-m-b-15">
-
-                            <span class="pd-detail__preview-desc">{{ $product->description }}</span>
-                        </div>
-                        <div class="u-s-m-b-15">
                             <div class="pd-detail__inline">
-
-                                <span class="pd-detail__click-wrap"><i class="far fa-heart u-s-m-r-6"></i>
-
-                                    <a href="signin.html">Add to Wishlist</a>
-
-                                    <span class="pd-detail__click-count">(222)</span></span>
+                                @if ($wishlistCheck)
+                                    <form action="/wishlist" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="hidden" name="wishlist_id" value="{{ $wishlistCheck->id }}"><i
+                                            class="fas fa-heart u-s-m-r-6" style="color: red;"></i>
+                                        <button id="addToWishlist" class="pd-detail__click-wrap" type="submit">
+                                            Remove Wishlist
+                                        </button>
+                                    </form>
+                                @else
+                                    <form action="/wishlist" method="post">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}"><i
+                                            class="fas fa-heart u-s-m-r-6"></i>
+                                        <button id="addToWishlist" class="pd-detail__click-wrap" type="submit">
+                                            Add to Wishlist
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                         <div class="u-s-m-b-15">
@@ -152,15 +186,22 @@
                             </ul>
                         </div>
                         <div class="u-s-m-b-15">
-                            <form class="pd-detail__form" method="POST" action="{{ route('cart.store') }}">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <div class="pd-detail-inline-2">
-                                    <div class="u-s-m-b-15">
-                                        <button class="btn btn--e-brand-b-2" type="submit">Add to Cart</button>
-                                    </div>
-                                </div>
-                            </form>
+                            <div class="pd-detail__form" style="display: flex; align-items:center; gap:15px">
+                                <form method="POST" action="/cart">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="action" value="buy">
+                                    <button class="btn btn--e-brand-b-2" type="submit">Buy now</button>
+                                </form>
+                                <form method="POST" action="/cart">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="action" value="add">
+                                    <button class="btn btn--e-brand-b-1" type="submit">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                         <div class="u-s-m-b-15">
 
@@ -196,29 +237,9 @@
                         <div class="u-s-m-b-30">
                             <ul class="nav pd-tab__list">
                                 <li class="nav-item">
-
-<<<<<<< HEAD
-                                    <span
-                                        class="pd-detail__price">{{ number_format($product->sale_price, 0, ',', '.') }}&nbsp;₫</span>
-                                    @if ($product->price - $product->sale_price > 0)
-                                        <span
-                                            class="pd-detail__discount">({{ round((($product->price - $product->sale_price) * 100) / $product->price, 0) }}%
-                                            OFF)
-                                        </span>
-                                    @endif
-                                    <del
-                                        class="pd-detail__del">{{ number_format($product->price, 0, ',', '.') }}&nbsp;₫</del>
-                                </div>
-                            </div>
-                            <div class="u-s-m-b-15">
-                                <div class="pd-detail__rating gl-rating-style"><i class="fas fa-star"></i><i
-                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                        class="fas fa-star-half-alt"></i>
-=======
                                     <a class="nav-link active" data-toggle="tab" href="#pd-desc">DESCRIPTION</a>
                                 </li>
                                 <li class="nav-item">
->>>>>>> feature/62-checkout
 
                                     <a class="nav-link" data-toggle="tab" href="#pd-tag">TAGS</a>
                                 </li>
@@ -233,20 +254,11 @@
                         <div class="tab-content">
 
                             <!--====== Tab 1 ======-->
-                            <div class="tab-pane fade show active" id="pd-desc">
+                            <div class="tab-pane  fade show active" id="pd-desc">
                                 <div class="pd-tab__desc">
                                     <div class="u-s-m-b-15">
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy text ever since the
-                                            1500s, when an unknown printer took a galley of type and scrambled it to
-                                            make a type specimen book. It has survived not only five centuries, but also
-                                            the leap into electronic typesetting, remaining essentially unchanged. It
-                                            was popularised in the 1960s with the release of Letraset sheets containing
-                                            Lorem Ipsum passages, and more recently with desktop publishing software
-                                            like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                        <p>{{ $product->description }}</p>
                                     </div>
-                                    <div class="u-s-m-b-30"><iframe src="https://www.youtube.com/embed/qKqSBm07KZk"
-                                            allowfullscreen></iframe></div>
                                     <div class="u-s-m-b-30">
                                         <ul>
                                             <li><i class="fas fa-check u-s-m-r-8"></i>
@@ -710,7 +722,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--====== End - Tab 3 ======-->
                         </div>
                     </div>
                 </div>
@@ -1082,9 +1093,5 @@
                 </div>
             </div>
         </div>
-        <!--====== End - Section Content ======-->
     </div>
-    <!--====== End - Section 1 ======-->
-
-
 @endsection
