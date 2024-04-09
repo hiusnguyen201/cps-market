@@ -49,9 +49,9 @@
     <script src="{{ asset('toastjs/toastify.js') }}"></script>
 
     <!-- AdminLTE App -->
-    <script defer src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
 
-    <script defer>
+    <script>
         $("#selectAll").on("click", function() {
             if ($(this).is(":checked")) {
                 $(".form-check-input").prop("checked", true);
@@ -69,16 +69,22 @@
         });
 
         $("select#brand[name='category[]']").select2();
+
+        $('.select2').select2()
     </script>
 
-    <script defer src="{{ asset('custom/js/message.js') }}"></script>
-    <script defer src="{{ asset('custom/js/selectMultiFile.js') }}"></script>
-    <script defer src="{{ asset('custom/js/products.js') }}"></script>
-    <script defer src="{{ asset('custom/js/specifications.js') }}"></script>
-    <script defer src="{{ asset('custom/js/orders.js') }}"></script>
+    <script src="{{ asset('custom/js/message.js') }}"></script>
+    <script src="{{ asset('custom/js/specifications.js') }}"></script>
+    <script src="{{ asset('custom/js/orders.js') }}"></script>
+    <script src="{{ asset('custom/js/products.js') }}"></script>
 
+    {{-- Select viet nam location --}}
+    <script src="{{ asset('vietnamlocalselector/vietnamlocalselector.js') }}"></script>
+    <script src="{{ asset('custom/js/vietnamlocalselector.js') }}"></script>
+
+    <script src="{{ asset('custom/js/selectMultiFile.js') }}"></script>
     <!-- Custom UI -->
-    <script src="{{ asset('custom/js/ui.js') }}"></script>
+    <script defer src="{{ asset('custom/js/ui.js') }}"></script>
 </body>
 
 </html>

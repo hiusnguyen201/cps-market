@@ -40,10 +40,12 @@ class AuthController extends Controller
 
     public function handleLocalLogin(LoginRequest $request)
     {
-        if (!Auth::attempt([
-            'email' => $request->email,
-            'password' => $request->password,
-        ])) {
+        if (
+            !Auth::attempt([
+                'email' => $request->email,
+                'password' => $request->password,
+            ])
+        ) {
             session()->flash('error', 'Email or password is incorrect');
             return redirect()->back();
         }
@@ -92,7 +94,7 @@ class AuthController extends Controller
         Auth::login($user, true);
         $user_otp->delete();
         if ($user->role->name === 'customer') {
-            return redirect("/");
+            return redirect("/member");
         } else {
             return redirect("/admin");
         }
@@ -170,7 +172,8 @@ class AuthController extends Controller
         */
 
         $userSocial = Socialite::driver($provider)->stateless()->user();
-        if (!$userSocial) return redirect()->back();
+        if (!$userSocial)
+            return redirect()->back();
 
         try {
             $exist_user = User::where(["email" => $userSocial['email']])->first();

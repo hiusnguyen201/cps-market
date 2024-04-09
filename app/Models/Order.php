@@ -19,6 +19,7 @@ class Order extends Model
         "total",
         "payment_method",
         "payment_status",
+        "paid_date",
         "status",
         "customer_id",
     ];
@@ -31,6 +32,7 @@ class Order extends Model
         "total" => "integer",
         "payment_method" => "integer",
         "payment_status" => "integer",
+        "paid_date" => "datetime",
         "status" => "integer",
         "customer_id" => "integer",
     ];

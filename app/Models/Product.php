@@ -17,6 +17,7 @@ class Product extends Model
     protected $fillable = [
         'code',
         'name',
+        'market_price',
         'price',
         'sale_price',
         'quantity',
@@ -35,6 +36,7 @@ class Product extends Model
     protected $casts = [
         'code' => "string",
         'name' => "string",
+        'market_price' => "string",
         'price' => "integer",
         "sale_price" => "integer",
         "quantity" => "integer",

@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->integer("total");
             $table->tinyInteger("payment_method");
             $table->tinyInteger("payment_status");
+            $table->timestamp("paid_date")->nullable();
             $table->tinyInteger("status");
             $table->unsignedBigInteger("customer_id");
             $table->timestamps();

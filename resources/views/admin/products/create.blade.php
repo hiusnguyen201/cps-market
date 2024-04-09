@@ -98,7 +98,22 @@
             <span class="inactive-text">Available only after you select a product category</span>
             <div id="sales" class="card-body hide">
                 <div class="row align-items-start mb-3 input-block">
-                    <div class="col-lg-3 col-12"><span class="mt-2">Price</span><span class="required-text ml-1">*</span>
+                    <div class="col-lg-3 col-12"><span class="mt-2">Market Price</span><span
+                            class="required-text ml-1">*</span>
+                    </div>
+                    <div class="col-lg-7 col-12 input-product_form">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">₫</div>
+                            </div>
+                            <input id="product" type="number" name="market_price" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-start mb-3 input-block">
+                    <div class="col-lg-3 col-12"><span class="mt-2">Price</span><span
+                            class="required-text ml-1">*</span>
                     </div>
                     <div class="col-lg-7 col-12 input-product_form">
                         <div class="input-group">

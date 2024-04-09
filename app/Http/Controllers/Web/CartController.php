@@ -161,7 +161,8 @@ class CartController extends Controller
                 case "0":
                     $order->update([
                         "payment_status" => config("constants.payment_status.paid"),
-                        "updated_at" => now()
+                        "updated_at" => now(),
+                        "paid_date" => now(),
                     ]);
                     break;
                 default:

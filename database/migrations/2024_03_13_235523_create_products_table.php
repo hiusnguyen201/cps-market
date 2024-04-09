@@ -17,7 +17,8 @@ return new class extends Migration {
             $table->string("code", 15)->unique();
             $table->string('name', 150)->unique();
             $table->string('slug', 250)->unique();
-            $table->integer('price')->default(0);
+            $table->integer('market_price');
+            $table->integer('price');
             $table->integer('sale_price')->nullable();
             $table->integer('quantity')->default(0);
             $table->integer('sold')->default(0);
