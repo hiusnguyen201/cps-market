@@ -45,7 +45,7 @@
                                         <option>Select</option>
                                         @if (config('constants.genders'))
                                             @foreach (config('constants.genders') as $gender => $value)
-                                                <option value="$value" {{ $user->gender == $value ? 'selected' : '' }}>
+                                                <option value="{{$value}}" {{ $user->gender == $value ? 'selected' : '' }}>
                                                     {{ $gender }}</option>
                                             @endforeach
                                         @endif
@@ -60,15 +60,6 @@
 
                                     <input class="input-text input-text--primary-style" type="text"
                                         value="{{ $user->phone }}">
-                                </div>
-
-                            </div>
-
-                            <div class="gl-inline">
-                                <div class="u-s-m-b-30">
-                                    <label class="gl-label" for="address">ADDRESS</label>
-                                    <input class="input-text input-text--primary-style" type="text" id="address"
-                                        name="address" value="{{ $user->address }}">
                                 </div>
 
                             </div>

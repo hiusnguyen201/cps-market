@@ -102,7 +102,7 @@ class DatabaseSeeder extends Seeder
 
         for ($i = 0; $i < 30; $i++) {
             $order = Order::create([
-                'code' => Str::random(25),
+                'code' => Str::random(15),
                 'quantity' => 2,
                 'sub_total' => 10000,
                 "shipping_fee" => 0,

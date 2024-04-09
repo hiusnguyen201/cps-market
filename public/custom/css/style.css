@@ -196,3 +196,12 @@
     color: #0a3622;
     background: #d1e7dd;
 }
+
+.badge--canceled {
+    background-color: rgba(230, 53, 53, 0.352);
+    color: red;
+}
+
+.manage-o__description {
+    margin-bottom: 15px;
+}

@@ -40,7 +40,7 @@ class CartController extends Controller
     public function handleCreate(Request $request)
     {
         $request->validate([
-            'product_id' => 'required|array',
+            'product_id' => 'required|integer',
             "product_id.*" => "integer|min:1|exists:products,id'"
         ]);
 

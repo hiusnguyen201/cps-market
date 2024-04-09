@@ -166,6 +166,8 @@ Route::prefix('payment')->group(function () {
 Route::prefix('member')->group(function () {
     Route::middleware(['check.auth'])->group(function () {
         Route::get('/', [MemberController::class, 'home']);
+        Route::get('/orders', [MemberController::class, 'orders']);
+        Route::get('/order/{id}', [MemberController::class, 'order_detail']);
 
         Route::get('/change-password', [MemberController::class, 'change_password']);
         Route::patch('/change-password', [MemberController::class, 'handleChange_password']);

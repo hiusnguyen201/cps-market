@@ -8,6 +8,8 @@ use App\Http\Requests\Auth\ChangePasswordRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Order;
+use App\Models\Order_Product;
 use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
@@ -39,7 +41,6 @@ class MemberController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'gender' => 'in:0,1,2',
-            'address' => 'string|max:150',
         ]);
 
         try {
@@ -48,11 +49,11 @@ class MemberController extends Controller
             $request->request->add(['updated_at' => now()]);
             $user->name = $request->name;
             $user->gender = $request->gender;
-            $user->address = $request->address;
             $user->save();
             session()->flash('success', 'Update info was successful!');
         } catch (\Exception $e) {
             error_log($e->getMessage());
+            dd($e);
             session()->flash('error', 'Edit info was not successful!');
         }
 
@@ -83,5 +84,60 @@ class MemberController extends Controller
         $user->save();
 
         return redirect('/member/account/user-info')->with('success', 'Password changed successfully.');
+    }
+
+    public function orders()
+    {
+        $user = Auth::user();
+        $categories = Category::all();
+        $orders = Order::where('customer_id', Auth::id())->get();
+
+        $countProductInCart = 0;
+        if (Auth::user()) {
+            foreach (Auth::user()->carts as $cart) {
+                $countProductInCart += $cart->quantity;
+            }
+        }
+
+        // foreach ($orders as $order) {
+        //    foreach($order->products as $product)
+        //    {
+        //     dd($product->product->name);
+        //    }
+        // }
+
+        return view("customer.account.orders", [
+            'title' => "Order",
+            "user" => $user,
+            "categories" => $categories,
+            "orders" => $orders,
+            'countProductInCart' => $countProductInCart,
+        ]);
+    }
+
+    public function order_detail($order_id)
+    {
+        $user = Auth::user();
+        $categories = Category::all();
+
+        $countProductInCart = 0;
+        if (Auth::user()) {
+            foreach (Auth::user()->carts as $cart) {
+                $countProductInCart += $cart->quantity;
+            }
+        }
+
+        $order_Products = Order_Product::where('order_id', $order_id)->get();
+        $order = Order::findOrFail($order_id);
+        // dd($order->shipping_address);
+
+        return view("customer.account.order-detail", [
+            'title' => "Order",
+            "user" => $user,
+            "categories" => $categories,
+            "order_Products" => $order_Products,
+            "order" => $order,
+            'countProductInCart' => $countProductInCart,
+        ]);
     }
 }
