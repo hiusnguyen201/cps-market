@@ -27,9 +27,12 @@ class UserController extends Controller
     public function home(Request $request)
     {
         $users = $this->userService->findAllAndPaginateWithRole($request, "admin");
+        if (!count($users) && +$request->page > 1) {
+            return redirect()->route('admin.users.home', ['page' => +$request->page - 1]);
+        }
+
         return view('admin.users.home', [
             'users' => $users,
-            'user_status' => config('constants.user_status'),
             'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Users']],
             'title' => 'Manage Users'
@@ -40,8 +43,6 @@ class UserController extends Controller
     {
         return view('admin.users.details', [
             'user' => $user,
-            'user_status' => config('constants.user_status'),
-            'genders' => config('constants.genders'),
             'breadcumbs' => ['titles' => ['Users', 'Details'], 'title_links' => ["/admin/users"]],
             'title' => 'Details User'
         ]);
@@ -54,7 +55,6 @@ class UserController extends Controller
                 'titles' => ['Users', 'Create'],
                 'title_links' => ["/admin/users"]
             ],
-            'genders' => config('constants.genders'),
             'title' => 'Create User'
         ]);
     }
@@ -77,7 +77,6 @@ class UserController extends Controller
     {
         return view('admin.users.edit', [
             'user' => $user,
-            'genders' => config('constants.genders'),
             'breadcumbs' => [
                 'titles' => ['Users', 'Edit'],
                 'title_links' => ["/admin/users"]

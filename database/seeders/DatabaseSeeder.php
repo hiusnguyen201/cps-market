@@ -113,8 +113,8 @@ class DatabaseSeeder extends Seeder
                 "shipping_fee" => 0,
                 "total" => 10000,
                 "payment_method" => config("constants.payment_method.cod")['value'],
-                "payment_status" => config("constants.payment_status.pending"),
-                "status" => config("constants.order_status.pending"),
+                "payment_status" => config("constants.payment_status.pending")['value'],
+                "status" => config("constants.order_status.pending")['value'],
                 "customer_id" => $i + 1
             ]);
 

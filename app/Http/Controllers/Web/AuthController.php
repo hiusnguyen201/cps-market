@@ -49,7 +49,7 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->status == config("constants.user_status.Active")) {
+        if ($user->status == config("constants.user_status.active")['value']) {
             Auth::login($user, true);
             return $user->role->name == "admin" ? redirect("/admin") : redirect("/member");
         }
@@ -164,7 +164,7 @@ class AuthController extends Controller
             return redirect("/auth/login")->with('error', $e->getMessage());
         }
 
-        if ($user->status == config("constants.user_status.Inactive")) {
+        if ($user->status == config("constants.user_status.inactive")['value']) {
             $this->userService->sendOtpToEmail($user);
             Auth::login($user);
             return redirect("/auth/otp")->with('success', "We've sent a verification code to your email");

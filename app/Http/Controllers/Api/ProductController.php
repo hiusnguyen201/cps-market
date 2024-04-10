@@ -48,6 +48,7 @@ class ProductController extends Controller
                 'code' => time(),
                 'name' => $request->name,
                 'price' => $request->price,
+                'market_price' => $request->market_price,
                 'sale_price' => $request->sale_price,
                 'quantity' => $request->quantity,
                 'description' => $request->description,
@@ -113,6 +114,7 @@ class ProductController extends Controller
         try {
             $product->update([
                 'name' => $request->name,
+                'market_price' => $request->market_price,
                 'price' => $request->price,
                 'sale_price' => $request->sale_price,
                 'quantity' => $request->quantity,
@@ -174,7 +176,7 @@ class ProductController extends Controller
 
             DB::commit();
             return response()->json([
-                'message' => 'Update product successfully',
+                'message' => 'Edit product successfully',
                 'data' => $product,
             ], 200);
         } catch (\Exception $err) {

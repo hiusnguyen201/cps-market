@@ -23,7 +23,7 @@ class OrderService
     public function findAllAndPaginate($request)
     {
         $orders = Order::where(function ($query) use ($request) {
-            $query->orWhere('code', 'like', '%' . $request->kw . '%');
+            $query->orWhere('code', 'like', '%' . $request->keyword . '%');
         });
 
         $orders = $orders->orderBy('created_at', 'desc')->paginate($request->limit ?? 10);
@@ -57,9 +57,9 @@ class OrderService
                 'shipping_fee' => config("constants.shipping_fee"),
                 'total' => $totalPrice + config("constants.shipping_fee"),
                 'payment_method' => $request->payment_method,
-                'payment_status' => config("constants.payment_status.pending"),
+                'payment_status' => config("constants.payment_status.pending")['value'],
                 'paid_date' => now(),
-                'status' => config("constants.order_status.pending"),
+                'status' => config("constants.order_status.pending")['value'],
                 'customer_id' => $customer->id
             ]);
 
@@ -106,15 +106,15 @@ class OrderService
             switch ($resultCode) {
                 case "0":
                     $order->update([
-                        "payment_status" => config("constants.payment_status.paid"),
+                        "payment_status" => config("constants.payment_status.paid")['value'],
                         "updated_at" => now(),
                         "paid_date" => now(),
                     ]);
                     break;
                 default:
                     $order->update([
-                        "payment_status" => config("constants.payment_status.canceled"),
-                        "status" => config("constants.order_status.canceled"),
+                        "payment_status" => config("constants.payment_status.canceled")['value'],
+                        "status" => config("constants.order_status.canceled")['value'],
                         "updated_at" => now()
                     ]);
 
@@ -159,8 +159,8 @@ class OrderService
                 'shipping_fee' => config("constants.shipping_fee"),
                 'total' => $totalPrice + config("constants.shipping_fee"),
                 'payment_method' => $request->payment_method,
-                'payment_status' => config("constants.payment_status.pending"),
-                'status' => config("constants.order_status.pending"),
+                'payment_status' => $request->payment_status,
+                'status' => $request->order_status,
                 'customer_id' => $customer->id
             ]);
 
@@ -195,6 +195,98 @@ class OrderService
             DB::rollBack();
             error_log($e->getMessage());
             throw new \Exception("Create order failed");
+        }
+    }
+
+    public function updateOrderInAdmin($request, $customer, $order)
+    {
+        DB::beginTransaction();
+        try {
+            $totalPrice = 0;
+            $countProductInCart = 0;
+            $products = [];
+
+            foreach ($request->product_id as $index => $product_id) {
+                $result = $this->productService->findOneById($product_id);
+                array_push($products, $result);
+                $countProductInCart += +$request->quantity[$index];
+                $totalPrice += (($result->sale_price ?? $result->price) * +$request->quantity[$index]);
+            }
+
+            $order->update([
+                'quantity' => $countProductInCart,
+                'sub_total' => $totalPrice,
+                'shipping_fee' => config("constants.shipping_fee"),
+                'total' => $totalPrice + config("constants.shipping_fee"),
+                'payment_method' => $request->payment_method,
+                'payment_status' => $request->payment_status,
+                'status' => $request->order_status,
+                'customer_id' => $customer->id
+            ]);
+
+            Shipping_Address::where("order_id", $order->id)->update([
+                "customer_name" => $customer->name,
+                "customer_email" => $customer->email,
+                "customer_phone" => $customer->phone,
+                "province" => $request->province,
+                "district" => $request->district,
+                "ward" => $request->ward,
+                "address" => $request->address,
+                "note" => $request->note,
+            ]);
+
+            $orders_products = Order_Product::where("order_id", $order->id)->get();
+            foreach ($orders_products as $order_product) {
+                $order_product->product->update([
+                    "quantity" => $order_product->product->quantity + $order_product->quantity
+                ]);
+
+                $order_product->delete();
+            }
+
+            foreach ($products as $index => $product) {
+                Order_Product::create([
+                    "product_id" => $product->id,
+                    "order_id" => $order->id,
+                    "quantity" => +$request->quantity[$index],
+                    "price" => $product->sale_price ?? $product->price,
+                ]);
+
+                $product->update([
+                    "quantity" => $product->quantity - +$request->quantity[$index]
+                ]);
+            }
+
+            DB::commit();
+            return $order;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            error_log($e->getMessage());
+            throw new \Exception("Create order failed");
+        }
+    }
+
+    public function deleteOrders($ids)
+    {
+        $position = null;
+        try {
+            foreach ($ids as $index => $id) {
+                $order = Order::find($id);
+                if (!$order) {
+                    throw new \InvalidArgumentException("Order is not found in position " . $position + 1);
+                }
+
+                $status = $order->delete();
+                if (!$status) {
+                    $position = $index;
+                    break;
+                }
+            }
+
+            return true;
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+            throw new \Exception('Delete order failed in position ' . $position + 1);
         }
     }
 }

@@ -17,7 +17,7 @@ class CategoryService
     public function findAllAndPaginate($request)
     {
         $categories = Category::where(function ($query) use ($request) {
-            $query->orWhere('name', 'like', '%' . $request->kw . '%');
+            $query->orWhere('name', 'like', '%' . $request->keyword . '%');
         });
 
         $categories = $categories->orderBy('created_at', 'desc')->paginate($request->limit ?? 10);

@@ -25,11 +25,15 @@ class OrderController extends Controller
     public function home(Request $request)
     {
         $orders = $this->orderService->findAllAndPaginate($request);
+        if (!count($orders) && +$request->page > 1) {
+            return redirect()->route('admin.orders.home', ['page' => +$request->page - 1]);
+        }
+
         return view('admin.orders.home', [
             'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Orders']],
             'title' => 'Manage Orders',
-            "orders" => $orders
+            "orders" => $orders,
         ]);
     }
     public function details(Order $order)
@@ -38,7 +42,7 @@ class OrderController extends Controller
             'order' => $order,
             'breadcumbs' => [
                 'titles' => ['Orders', 'Details'],
-                'title_links' => ["/admin/orders"]
+                'title_links' => [route("admin.orders.home")]
             ],
             'title' => 'Details Order',
         ]);
@@ -49,7 +53,7 @@ class OrderController extends Controller
         return view('admin.orders.create', [
             'breadcumbs' => [
                 'titles' => ['Orders', 'Create'],
-                'title_links' => ["/admin/orders"]
+                'title_links' => [route("admin.orders.home")]
             ],
             'title' => 'Create Order',
             'customers' => $customers
@@ -67,16 +71,43 @@ class OrderController extends Controller
 
         return redirect()->back();
     }
-    public function edit()
+    public function edit(Order $order)
     {
-
+        $customers = $this->userService->findAllWithRole("customer");
+        return view('admin.orders.edit', [
+            'order' => $order,
+            'breadcumbs' => [
+                'titles' => ['Orders', 'Edit'],
+                'title_links' => [route("admin.orders.home")]
+            ],
+            'title' => 'Edit Order',
+            "customers" => $customers
+        ]);
     }
-    public function handleUpdate()
-    {
 
+    public function handleUpdate(OrderRequest $request, Order $order)
+    {
+        try {
+            $customer = $this->userService->findOneById($request->customer_id);
+            $this->orderService->updateOrderInAdmin($request, $customer, $order);
+            session()->flash("success", "Edit order successfully");
+        } catch (\Exception $e) {
+            session()->flash("error", $e->getMessage());
+        }
+
+        return redirect()->back();
     }
-    public function handleDelete()
-    {
 
+    public function handleDelete(Request $request)
+    {
+        try {
+            $ids = is_array($request->id) ? $request->id : [$request->id];
+            $this->orderService->deleteOrders($ids);
+            session()->flash('success', 'Delete order successfully');
+        } catch (\Exception $e) {
+            session()->flash('error', $e->getMessage());
+        }
+
+        return redirect()->back();
     }
 }

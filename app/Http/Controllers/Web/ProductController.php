@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 use App\Services\ProductService;
 use App\Services\CategoryService;
-use App\Services\AttributeService;
 
 use App\Models\Product;
 
@@ -15,7 +14,6 @@ class ProductController extends Controller
 {
     private ProductService $productService;
     private CategoryService $categoryService;
-    private AttributeService $attributeService;
 
     public function __construct()
     {
@@ -26,6 +24,10 @@ class ProductController extends Controller
     public function home(Request $request)
     {
         $products = $this->productService->findAllAndPaginate($request);
+        if (!count($products) && +$request->page > 1) {
+            return redirect()->route('admin.products.home', ['page' => +$request->page - 1]);
+        }
+
         $categories = $this->categoryService->findAll();
 
         return view('admin.products.home', [
@@ -64,7 +66,7 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $attributes = $this->attributeService->findAllWithSpecificationByCategoryId($product);
+        $attributes = $this->productService->findAllAttributesByCategoryId($product->categoryId);
         $categories = $this->categoryService->findAll();
 
         return view('admin.products.edit', [

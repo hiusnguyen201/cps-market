@@ -256,7 +256,7 @@
                                                                     value="{{ $method['value'] }}">
                                                                 <div class="radio-box__state radio-box__state--primary">
                                                                     <label
-                                                                        class="radio-box__label">{{ $method['name'] }}</label>
+                                                                        class="radio-box__label">{{ $method['title'] }}</label>
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -4,14 +4,14 @@ namespace App\Services;
 
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Carbon;
+use App\Models\Attribute;
 
 class ProductService
 {
     public function findAllAndPaginate($request)
     {
         $products = Product::where(function ($query) use ($request) {
-            $query->orWhere('name', 'like', '%' . $request->kw . '%');
+            $query->orWhere('name', 'like', '%' . $request->keyword . '%');
         });
 
         if ($request->category) {
@@ -35,7 +35,6 @@ class ProductService
 
     public function deleteProducts($ids)
     {
-
         $position = null;
         try {
             foreach ($ids as $index => $id) {
@@ -64,7 +63,15 @@ class ProductService
             error_log($e->getMessage());
             throw new \Exception('Delete product failed in position ' . $position + 1);
         }
+    }
 
+    public function findAllAttributesByCategoryId($categoryId)
+    {
+        $attributes = Attribute::whereHas('specification', function ($query) use ($categoryId) {
+            $query->where('category_id', $categoryId);
+        })->get();
+
+        return $attributes && count($attributes) ? $attributes : [];
     }
 
     public function findOneBySlug($slug)

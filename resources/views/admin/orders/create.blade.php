@@ -11,9 +11,9 @@
         <div class="row">
             <div class="col-sm-8 col-12">
                 <div class="card card-body">
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-sm-6 col-12 mb-3">
-                            <label for="" class="form-label">Customer:</label>
+                            <label for="" class="form-label"><span>Customer:</span></label>
                             <select class="form-control select2" name="customer_id" style="width: 100%;">
                                 <option selected disabled value="">Select customer</option>
                                 @if ($customers && count($customers))
@@ -23,18 +23,28 @@
                                     @endforeach
                                 @endif
                             </select>
+                            @error('customer_id')
+                                <span class="d-block" style="color: red">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-sm-6 col-12 mb-3">
-                            <div class="row h-100">
-                                <div class="col-12 align-self-end">
-                                    <a href="/admin/customers/create" class="btn btn-danger w-100">Create new
-                                        customer</a>
-                                </div>
-                            </div>
+                            <label for="" class="form-label">Order Status:</label>
+                            <select name="order_status" class="form-control">
+                                @if (config('constants.order_status') && count(config('constants.order_status')))
+                                    @foreach (config('constants.order_status') as $status)
+                                        <option
+                                            {{ (old('order_status') ? old('order_status') == $status['value'] : $status['value'] == config('constants.order_status.pending')['value']) ? 'selected' : '' }}
+                                            value="{{ $status['value'] }}">{{ $status['title'] }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            @error('order_status')
+                                <span class="d-block" style="color: red">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-12 mb-3">
                             <label for="" class="form-label mb-0">
                                 Products:
@@ -70,46 +80,77 @@
                         </div>
                     </div>
 
-                    <div>
+                    <div class="mb-3">
                         <label for="" class="form-label">Shipping Address:</label>
                         <div class="row">
                             <div class="col-sm-6 col-12 mb-3">
                                 <select class="form-control" old-data="{{ old('province') }}" name="province"></select>
+                                @error('province')
+                                    <span class="d-block" style="color: red">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-sm-6 col-12 mb-3">
                                 <select class="form-control" old-data="{{ old('district') }}" name="district"></select>
+                                @error('district')
+                                    <span class="d-block" style="color: red">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-sm-6 col-12 mb-3">
                                 <select class="form-control" old-data="{{ old('ward') }}" name="ward"></select>
+                                @error('ward')
+                                    <span class="d-block" style="color: red">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-sm-6 col-12 mb-3">
                                 <input class="form-control" name="address" placeholder="Address..."
                                     value="{{ old('address') }}"></input>
+                                @error('address')
+                                    <span class="d-block" style="color: red">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-sm-12 col-12 mb-3">
                                 <input class="form-control" name="note" placeholder="Note..."
                                     value="{{ old('note') }}"></input>
+                                @error('note')
+                                    <span class="d-block" style="color: red">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="" class="form-label">Payment Method:</label>
-                        <div class="row flex-column">
-                            <div class="col-12">
-                                @if (config('constants.payment_method') && count(config('constants.payment_method')))
-                                    @foreach (config('constants.payment_method') as $index => $method)
-                                        <div class="mb-2">
-                                            <input
-                                                {{ old('payment_method') != '' && old('payment_method') == $method['value'] ? 'checked' : '' }}
-                                                id="{{ $index }}" type="radio" name="payment_method"
-                                                value="{{ $method['value'] }}">
-                                            <label style="font-weight: 400;" class="mb-0"
-                                                for="{{ $index }}">{{ $method['name'] }}</label>
-                                        </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-12 mb-3">
+                            <label for="" class="form-label mb-0">Payment Method:</label>
+                            @if (config('constants.payment_method') && count(config('constants.payment_method')))
+                                @foreach (config('constants.payment_method') as $index => $method)
+                                    <div class="mt-2">
+                                        <input
+                                            {{ old('payment_method') != '' && old('payment_method') == $method['value'] ? 'checked' : '' }}
+                                            id="{{ $index }}" type="radio" name="payment_method"
+                                            value="{{ $method['value'] }}">
+                                        <label style="font-weight: 400;" class="mb-0"
+                                            for="{{ $index }}">{{ $method['title'] }}</label>
+                                    </div>
+                                @endforeach
+                            @endif
+                            @error('payment_method')
+                                <span class="d-block" style="color: red">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-sm-6 col-12 mb-3">
+                            <label for="" class="form-label">Payment Status:</label>
+                            <select name="payment_status" class="form-control">
+                                @if (config('constants.payment_status') && count(config('constants.payment_status')))
+                                    @foreach (config('constants.payment_status') as $status)
+                                        <option
+                                            {{ (old('payment_status') ? old('payment_status') == $status['value'] : $status['value'] == config('constants.payment_status.pending')['value']) ? 'selected' : '' }}
+                                            value="{{ $status['value'] }}">{{ $status['title'] }}</option>
                                     @endforeach
                                 @endif
-                            </div>
+                            </select>
+                            @error('payment_status')
+                                <span class="d-block" style="color: red">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                 </div>

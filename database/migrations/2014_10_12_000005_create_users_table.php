@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('email', 150)->unique();
             $table->string('password', 200)->nullable();
             $table->string('phone', 15);
-            $table->tinyInteger('status')->default(config("constants.user_status.Inactive"));
+            $table->tinyInteger('status')->default(config("constants.user_status.inactive")['value']);
             $table->tinyInteger('gender')->nullable();
             $table->unsignedBigInteger('role_id');
             $table->timestamp('email_verified_at')->nullable();

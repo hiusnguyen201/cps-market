@@ -14,7 +14,8 @@
                     <div class="form-group row align-items-center">
                         <label for="inputCategory" class="col-sm-4 col-form-label">Customer:</label>
                         <div class="col-sm-8">
-                            <a href="/admin/customers/details/{{ $order->customer->id }}">{{ $order->customer->name }}</a>
+                            <a
+                                href="{{ route('admin.customers.details', [$order->customer->id]) }}">{{ $order->customer->name }}</a>
                         </div>
                     </div>
 
@@ -37,9 +38,9 @@
                         <label class="col-sm-4 col-form-label">Payment Status:</label>
                         <div class="col-sm-8">
                             @if (config('constants.payment_status') && count(config('constants.payment_status')))
-                                @foreach (config('constants.payment_status') as $status => $value)
-                                    @if ($order->payment_status == $value)
-                                        {{ $status }}
+                                @foreach (config('constants.payment_status') as $status)
+                                    @if ($order->payment_status == $status['value'])
+                                        <span class="{{ $status['css'] }}">{{ $status['title'] }}</span>
                                     @endif
                                 @endforeach
                             @endif
@@ -50,9 +51,9 @@
                         <label class="col-sm-4 col-form-label">Order Status:</label>
                         <div class="col-sm-8">
                             @if (config('constants.order_status') && count(config('constants.order_status')))
-                                @foreach (config('constants.order_status') as $status => $value)
-                                    @if ($order->status == $value)
-                                        {{ $status }}
+                                @foreach (config('constants.order_status') as $status)
+                                    @if ($order->status == $status['value'])
+                                        <span class="{{ $status['css'] }}">{{ $status['title'] }}</span>
                                     @endif
                                 @endforeach
                             @endif
@@ -68,7 +69,7 @@
                             @if (config('constants.payment_method') && count(config('constants.payment_method')))
                                 @foreach (config('constants.payment_method') as $method)
                                     @if ($method['value'] == $order->payment_method)
-                                        {{ $method['name'] }}
+                                        {{ $method['title'] }}
                                     @endif
                                 @endforeach
                             @endif

@@ -36,7 +36,7 @@ class Product extends Model
     protected $casts = [
         'code' => "string",
         'name' => "string",
-        'market_price' => "string",
+        'market_price' => "integer",
         'price' => "integer",
         "sale_price" => "integer",
         "quantity" => "integer",

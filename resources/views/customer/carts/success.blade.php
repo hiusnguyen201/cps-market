@@ -51,9 +51,9 @@
                                                     <td>
                                                         <span>
                                                             @if (config('constants.payment_method') && count(config('constants.payment_method')))
-                                                                @foreach (config('constants.payment_method') as $payment_method)
-                                                                    @if ($order->payment_method == $payment_method['value'])
-                                                                        <span>{{ $payment_method['name'] }}</span>
+                                                                @foreach (config('constants.payment_method') as $method)
+                                                                    @if ($order->payment_method == $method['value'])
+                                                                        <span>{{ $method['title'] }}</span>
                                                                     @endif
                                                                 @endforeach
                                                             @endif

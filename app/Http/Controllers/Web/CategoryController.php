@@ -21,6 +21,10 @@ class CategoryController extends Controller
     public function home(Request $request)
     {
         $categories = $this->categoryService->findAllAndPaginate($request);
+        if (!count($categories) && +$request->page > 1) {
+            return redirect()->route('admin.categories.home', ['page' => +$request->page - 1]);
+        }
+
         return view('admin.categories.home', [
             'categories' => $categories,
             'limit_page' => config('constants.limit_page'),
@@ -34,7 +38,6 @@ class CategoryController extends Controller
     {
         return view('admin.categories.details', [
             'category' => $category,
-            'user_status' => config('constants.user_status'),
             'breadcumbs' => ['titles' => ['Categories', 'Details'], 'title_links' => ["/admin/categories"]],
             'title' => 'Details Category'
         ]);

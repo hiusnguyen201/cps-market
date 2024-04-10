@@ -127,7 +127,7 @@ class CartController extends Controller
         }
 
         // Check code payment
-        if ($order->payment_method != config("constants.payment_method.cod")['value'] && $order->status != config("constants.order_status.canceled")) {
+        if ($order->payment_method != config("constants.payment_method.cod")['value'] && $order->status != config("constants.order_status.canceled")['value']) {
             try {
                 $this->orderService->updatePaymentStatus($order, $request->resultCode);
             } catch (\Exception $e) {
@@ -135,7 +135,7 @@ class CartController extends Controller
             }
         }
 
-        $statusOrderPayment = $order->status == config("constants.order_status.canceled") ? false : true;
+        $statusOrderPayment = $order->status == config("constants.order_status.canceled")['value'] ? false : true;
 
         $categories = $this->categoryService->findAll();
 

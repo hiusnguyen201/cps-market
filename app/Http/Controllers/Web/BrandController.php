@@ -27,6 +27,9 @@ class BrandController extends Controller
     public function home(Request $request)
     {
         $brands = $this->brandService->findAllAndPaginate($request);
+        if (!count($brands) && +$request->page > 1) {
+            return redirect()->route('admin.brands.home', ['page' => +$request->page - 1]);
+        }
         $categories = $this->categoryService->findAll();
 
         return view('admin.brands.home', [
@@ -77,8 +80,6 @@ class BrandController extends Controller
         return redirect()->back();
     }
 
-
-
     public function edit(Brand $brand)
     {
         $categories = $this->categoryService->findAll();
@@ -101,7 +102,7 @@ class BrandController extends Controller
     {
         try {
             $this->brandService->update($request, $brand);
-            session()->flash('success', 'Update brand was successful!');
+            session()->flash('success', 'Edit brand was successful!');
         } catch (\Exception $e) {
             session()->flash('error', $e->getMessage());
         }

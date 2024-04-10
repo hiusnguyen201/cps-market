@@ -30,6 +30,19 @@ function updatePriceInOrderSummary(orderSummaryCard) {
     totalPriceInput.next().html(convertToVnd(+totalPriceInput.val()));
 }
 
+function addEventToUpdatePrice(orderSummaryCard) {
+    updatePriceInOrderSummary(orderSummaryCard);
+
+    $("#cartOrder").on("change", "input[name='quantity[]']", function (e) {
+        updatePriceInOrderSummary(orderSummaryCard);
+    });
+
+    $("#cartOrder").on("click", ".removeSelectProduct", function (e) {
+        $(this).closest("tr").remove();
+        updatePriceInOrderSummary(orderSummaryCard);
+    });
+}
+
 function appendProduct(product) {
     const imagePin = product.images.find((image) => image.pin == 1);
     const existProduct = $(`#cartOrder>tbody>tr[data-product=${product.id}]`);
@@ -99,23 +112,12 @@ function appendProduct(product) {
     </tr>
     `);
 
-    updatePriceInOrderSummary(orderSummaryCard);
-
-    $("#cartOrder").on("click", ".removeSelectProduct", function (e) {
-        updatePriceInOrderSummary(orderSummaryCard);
-        $(this).closest("tr").remove();
-    });
+    addEventToUpdatePrice(orderSummaryCard);
 }
 
-const removeSelectsProduct = document.querySelectorAll(".removeSelectProduct");
-if (removeSelectsProduct && removeSelectsProduct.length) {
-    removeSelectsProduct.forEach((element) => {
-        element.addEventListener("click", () => {
-            element.parentNode.parentNode.remove();
-        });
-    });
-}
+addEventToUpdatePrice($("#orderSummaryCard"));
 
+// Search Product
 $("#searchProduct-btn").click(() => {
     const input = $("#modal-searchProduct").find("input[name='code']");
     const span = $("#modal-searchProduct").find("span.error-message");

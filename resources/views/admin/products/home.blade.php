@@ -107,7 +107,7 @@
                                         href="/admin/categories/details/{{ $product->category->id }}">{{ $product->category->name }}</a>
                                 </td>
                                 <td class="align-middle">
-                                    @convertCurrency($product->sale_price)
+                                    @convertCurrency($product->price ?? $product->sale_price)
                                 </td>
                                 <td class="align-middle">
                                     {{ $product->quantity > 0 ? $product->quantity : 'Out of stock' }}
@@ -125,7 +125,7 @@
                                     </button>
                                 </td>
                             </tr>
-                            <div class="modal" id="modal-delete-{{ $product->id }}" aria-modal="true" role="dialog">
+                            <div class="modal fade" id="modal-delete-{{ $product->id }}" aria-modal="true" role="dialog">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -157,9 +157,11 @@
         </div>
 
         <!-- Paginate -->
-        <div class="d-flex ml-auto">
-            {{ $products->onEachSide(3)->appends(Request::all())->links() }}
-        </div>
+        @if (count($products))
+            <div class="d-flex ml-auto">
+                {{ $products->appends(Request::all())->links() }}
+            </div>
+        @endif
     </div>
 
     <!-- Modal delete -->

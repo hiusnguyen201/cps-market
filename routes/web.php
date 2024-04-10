@@ -82,7 +82,7 @@ Route::prefix('admin')->group(function () {
     // Products
     Route::prefix('products')->group(function () {
         Route::get('/', [ProductController::class, 'home']);
-        Route::get('/details/{product}', [ProductController::class, 'details']);
+        Route::get('/details/{product}', [ProductController::class, 'details'])->name("admin.products.details");
         Route::get('/create', [ProductController::class, 'create']);
         Route::get('/edit/{product}', [ProductController::class, 'edit']);
         Route::delete('/', [ProductController::class, 'handleDelete']);
@@ -90,22 +90,22 @@ Route::prefix('admin')->group(function () {
 
     // Customers
     Route::prefix('customers')->group(function () {
-        Route::get('/', [CustomerController::class, 'home']);
-        Route::get('/details/{user}', [CustomerController::class, 'details']);
-        Route::get('/create', [CustomerController::class, 'create']);
+        Route::get('/', [CustomerController::class, 'home'])->name("admin.customers.home");
+        Route::get('/details/{user}', [CustomerController::class, 'details'])->name("admin.customers.details");
+        Route::get('/create', [CustomerController::class, 'create'])->name("admin.customers.create");
         Route::post('/create', [CustomerController::class, 'handleCreate']);
-        Route::get('/edit/{user}', [CustomerController::class, 'edit']);
+        Route::get('/edit/{user}', [CustomerController::class, 'edit'])->name("admin.customers.edit");
         Route::patch('/edit/{user}', [CustomerController::class, 'handleUpdate']);
         Route::delete('/', [CustomerController::class, 'handleDelete']);
     });
 
     // Orders
     Route::prefix('orders')->group(function () {
-        Route::get('/', [OrderController::class, 'home'])->name("orders.home");
-        Route::get('/details/{order}', [OrderController::class, 'details'])->name("orders.details");
-        Route::get('/create', [OrderController::class, 'create'])->name("orders.create");
+        Route::get('/', [OrderController::class, 'home'])->name("admin.orders.home");
+        Route::get('/details/{order}', [OrderController::class, 'details'])->name("admin.orders.details");
+        Route::get('/create', [OrderController::class, 'create'])->name("admin.orders.create");
         Route::post('/create', [OrderController::class, 'handleCreate']);
-        Route::get('/edit/{order}', [OrderController::class, 'edit'])->name("orders.edit");
+        Route::get('/edit/{order}', [OrderController::class, 'edit'])->name("admin.orders.edit");
         Route::patch('/edit/{order}', [OrderController::class, 'handleUpdate']);
         Route::delete('/', [OrderController::class, 'handleDelete']);
     });

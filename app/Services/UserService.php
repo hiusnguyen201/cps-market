@@ -25,8 +25,8 @@ class UserService
     public function findAllAndPaginateWithRole($request, $roleName)
     {
         $users = User::where(function ($query) use ($request) {
-            $query->orWhere('name', 'like', '%' . $request->kw . '%');
-            $query->orWhere('email', 'like', '%' . $request->kw . '%');
+            $query->orWhere('name', 'like', '%' . $request->keyword . '%');
+            $query->orWhere('email', 'like', '%' . $request->keyword . '%');
         })->whereHas('role', function ($query) use ($roleName) {
             $query->where('name', '=', $roleName);
         });
@@ -59,10 +59,11 @@ class UserService
         try {
             $password = Str::random(16);
             $user = User::create([
-                'name' => $request['name'],
-                'email' => $request['email'],
-                'phone' => $request['phone'],
-                'gender' => $request['gender'],
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'gender' => $request->gender,
+                'status' => $request->status,
                 'role_id' => $role->id,
                 'password' => Hash::make($password)
             ]);
@@ -180,7 +181,7 @@ class UserService
                 'password' => Hash::make($request->password),
             ]);
 
-            $this->otpService->sendOtpToEmail($user);
+            $this->sendOtpToEmail($user);
 
             return $user;
         } catch (\Exception $e) {
@@ -207,7 +208,7 @@ class UserService
                 "provider_user_id" => $accountSocialInfo->id
             ]);
 
-            $this->otpService->sendOtpToEmail($user);
+            $this->sendOtpToEmail($user);
 
             DB::commit();
             return $user;
@@ -256,9 +257,9 @@ class UserService
                 throw new \InvalidArgumentException('Invalid OTP! Please try again');
             }
 
-            if ($user->status == config("constants.user_status.Inactive")) {
+            if ($user->status == config("constants.user_status.inactive")['value']) {
                 User::where("id", $user->id)->update([
-                    'status' => config("constants.user_status.Active"),
+                    'status' => config("constants.user_status.active")['value'],
                     'email_verified_at' => Carbon::now()
                 ]);
             }

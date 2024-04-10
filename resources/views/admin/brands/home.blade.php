@@ -109,10 +109,11 @@
         </div>
 
         <!-- Paginate -->
-        <div class="d-flex ml-auto">
-            {{ $brands->appends(Request::all())->links() }}
-        </div>
-
+        @if (count($brands))
+            <div class="d-flex ml-auto">
+                {{ $brands->appends(Request::all())->links() }}
+            </div>
+        @endif
     </div>
 
     <!-- Modal delete -->

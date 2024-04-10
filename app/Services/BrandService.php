@@ -17,7 +17,7 @@ class BrandService
     public function findAllAndPaginate($request)
     {
         $brands = Brand::where(function ($query) use ($request) {
-            $query->orWhere('name', 'like', '%' . $request->kw . '%');
+            $query->orWhere('name', 'like', '%' . $request->keyword . '%');
         });
 
         $brands = $brands->orderBy('created_at', 'desc')->paginate($request->limit ?? 10);

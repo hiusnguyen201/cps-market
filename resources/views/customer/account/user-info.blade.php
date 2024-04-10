@@ -43,10 +43,11 @@
                                     <select class="select-box select-box--primary-style u-w-100" id="gender"
                                         name="gender">
                                         <option>Select</option>
-                                        @if (config('constants.genders'))
-                                            @foreach (config('constants.genders') as $gender => $value)
-                                                <option value="$value" {{ $user->gender == $value ? 'selected' : '' }}>
-                                                    {{ $gender }}</option>
+                                        @if (config('constants.genders') && count(config('constants.genders')))
+                                            @foreach (config('constants.genders') as $gender)
+                                                <option {{ $user->gender == $gender['value'] ? 'selected' : '' }}
+                                                    value="{{ $gender['value'] }}">
+                                                    {{ $gender['title'] }}</option>
                                             @endforeach
                                         @endif
                                     </select>

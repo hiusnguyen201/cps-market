@@ -23,11 +23,13 @@ class CustomerController extends Controller
     public function home(Request $request)
     {
         $users = $this->userService->findAllAndPaginateWithRole($request, "customer");
+        if (!count($users) && +$request->page > 1) {
+            return redirect()->route('admin.customers.home', ['page' => +$request->page - 1]);
+        }
 
         return view('admin.customers.home', [
             'users' => $users,
             compact('users'),
-            'user_status' => config('constants.user_status'),
             'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Customers']],
             'title' => 'Manage Customers'
@@ -38,9 +40,7 @@ class CustomerController extends Controller
     {
         return view('admin.customers.details', [
             'user' => $user,
-            'user_status' => config('constants.user_status'),
-            'genders' => config('constants.genders'),
-            'breadcumbs' => ['titles' => ['Customers', 'Details'], 'title_links' => ["/admin/customers"]],
+            'breadcumbs' => ['titles' => ['Customers', 'Details'], 'title_links' => [route("admin.customers.home")]],
             'title' => 'Details Customer'
         ]);
     }
@@ -50,9 +50,8 @@ class CustomerController extends Controller
         return view('admin.customers.create', [
             'breadcumbs' => [
                 'titles' => ['Customers', 'Create'],
-                'title_links' => ["/admin/customers"]
+                'title_links' => [route("admin.customers.home")]
             ],
-            'genders' => config('constants.genders'),
             'title' => 'Create Customer'
         ]);
     }
@@ -75,10 +74,9 @@ class CustomerController extends Controller
     {
         return view('admin.customers.edit', [
             'user' => $user,
-            'genders' => config('constants.genders'),
             'breadcumbs' => [
                 'titles' => ['Customers', 'Edit'],
-                'title_links' => ["/admin/customers"]
+                'title_links' => [route("admin.customers.home")]
             ],
             'title' => 'Edit Customer'
         ]);

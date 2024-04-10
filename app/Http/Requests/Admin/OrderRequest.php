@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class OrderRequest extends FormRequest
 {
@@ -23,6 +24,10 @@ class OrderRequest extends FormRequest
      */
     public function rules()
     {
+        $paymentMethodValues = array_column(config("constants.payment_method"), 'value');
+        $paymentStatusValues = array_column(config("constants.payment_status"), 'value');
+        $orderStatusValues = array_column(config("constants.order_status"), 'value');
+
         return [
             'customer_id' => 'required|integer|min:1|exists:users,id',
             'product_id' => 'required|array',
@@ -34,7 +39,21 @@ class OrderRequest extends FormRequest
             "ward" => "required|integer",
             "address" => "required|string|max:100",
             "note" => "nullable|string|max:100",
-            "payment_method" => "required|integer|min:0",
+            "payment_method" => [
+                "required",
+                "integer",
+                "in_array" => Rule::in($paymentMethodValues)
+            ],
+            "payment_status" => [
+                "required",
+                "integer",
+                "in_array" => Rule::in($paymentStatusValues)
+            ],
+            "order_status" => [
+                "required",
+                "integer",
+                "in_array" => Rule::in($orderStatusValues)
+            ],
         ];
     }
 
@@ -71,7 +90,10 @@ class OrderRequest extends FormRequest
             'note.max' => ':attribute has a maximum of :max characters',
             'payment_method.required' => ':attribute is required',
             'payment_method.integer' => ':attribute is invalid',
-            'payment_method.min' => ':attribute is invalid',
+            'payment_status.required' => ':attribute is required',
+            'payment_status.integer' => ':attribute is invalid',
+            'order_status.required' => ':attribute is required',
+            'order_status.integer' => ':attribute is invalid',
         ];
     }
 
@@ -89,6 +111,8 @@ class OrderRequest extends FormRequest
             "address" => "Address",
             "note" => "Note",
             "payment_method" => "Payment method",
+            "payment_status" => "Payment status",
+            "order_status" => "Order status",
         ];
     }
 }
