@@ -86,11 +86,11 @@ class MemberController extends Controller
         return redirect('/member/account/user-info')->with('success', 'Password changed successfully.');
     }
 
-    public function orders()
+    public function orders(Request $request)
     {
         $user = Auth::user();
         $categories = Category::all();
-        $orders = Order::where('customer_id', Auth::id())->get();
+        $ordersQuery = Order::where('customer_id', Auth::id());
 
         $countProductInCart = 0;
         if (Auth::user()) {
@@ -99,18 +99,34 @@ class MemberController extends Controller
             }
         }
 
-        // foreach ($orders as $order) {
-        //    foreach($order->products as $product)
-        //    {
-        //     dd($product->product->name);
-        //    }
-        // }
+        $time_sort = $request->input('time_sort');
+        switch ($time_sort) {
+            case '5':
+                $orders = $ordersQuery->latest()->take(5)->get();
+                break;
+            case '15':
+                $orders = $ordersQuery->where('created_at', '>=', now()->subDays(15))->get();
+                break;
+            case '30':
+                $orders = $ordersQuery->where('created_at', '>=', now()->subDays(30))->get();
+                break;
+            case '180':
+                $orders = $ordersQuery->where('created_at', '>=', now()->subMonths(6))->get();
+                break;
+            case 'all':
+                $orders = $ordersQuery->get();
+                break;
+            default:
+                $orders = $ordersQuery->latest()->take(5)->get();
+                break;
+        }
 
         return view("customer.account.orders", [
             'title' => "Order",
             "user" => $user,
             "categories" => $categories,
             "orders" => $orders,
+            "time_sort" => $time_sort,
             'countProductInCart' => $countProductInCart,
         ]);
     }
@@ -129,7 +145,7 @@ class MemberController extends Controller
 
         $order_Products = Order_Product::where('order_id', $order_id)->get();
         $order = Order::findOrFail($order_id);
-        // dd($order->shipping_address);
+        // dd($order->shipping_address->order->customer->name);
 
         return view("customer.account.order-detail", [
             'title' => "Order",

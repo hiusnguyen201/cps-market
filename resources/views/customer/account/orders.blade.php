@@ -18,11 +18,11 @@
                 <div class="m-order__select-wrapper">
 
                     <label class="u-s-m-r-8" for="my-order-sort">Show:</label><select class="select-box select-box--primary-style" id="my-order-sort">
-                        <option selected>Last 5 orders</option>
-                        <option>Last 15 days</option>
-                        <option>Last 30 days</option>
-                        <option>Last 6 months</option>
-                        <option>All Orders</option>
+                        <option value="5" {{ $time_sort == 5 ? 'selected' : '' }}>Last 5 orders</option>
+                        <option value="15" {{ $time_sort == 15 ? 'selected' : '' }}>Last 15 days</option>
+                        <option value="30" {{ $time_sort == 30 ? 'selected' : '' }}>Last 30 days</option>
+                        <option value="180" {{ $time_sort == 180 ? 'selected' : '' }}>Last 6 months</option>
+                        <option value="all" {{ $time_sort == 'all' ? 'selected' : '' }}>All Orders</option>
                     </select>
                 </div>
             </form>

@@ -75,6 +75,9 @@
 
     {{-- UI --}}
     <script defer src="{{ asset('custom/js/ui.js') }}"></script>
+
+    <script src="{{ asset('custom/js/manage_order.js') }}"></script>
+
 </body>
 
 </html>

@@ -46,6 +46,7 @@
                 </div>
                 <div class="manage-o__timeline">
                     <div class="timeline-row">
+                        @if ( $order->status != 4 )
                         <div class="col-lg-3 u-s-m-b-30">
                             <div class="timeline-step">
                                 <div class="timeline-l-i timeline-l-i--finish">
@@ -86,6 +87,18 @@
                                 <span class="timeline-text">Completed</span>
                             </div>
                         </div>
+                        @else
+                        <div class="col-lg-12 u-s-m-b-30">
+                            <div class="timeline-step">
+                                <div class="timeline-l-i timeline-l-i--finish">
+
+                                    <span class="timeline-circle"></span>
+                                </div>
+
+                                <span class="timeline-text">Canceled</span>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
                 @foreach ($order_Products as $order_Product)
@@ -127,11 +140,11 @@
             <div class="dash__box dash__box--bg-white dash__box--shadow u-s-m-b-30">
                 <div class="dash__pad-3">
                     <h2 class="dash__h2 u-s-m-b-8">Shipping Address</h2>
-                    <h2 class="dash__h2 u-s-m-b-8">{{ $order->shipping_address}}</h2>
+                    <h2 class="dash__h2 u-s-m-b-8">{{ $order->shipping_address->order->customer->name}}</h2>
 
                     <span class="dash__text-2">4247 Ashford Drive Virginia - VA-20006 - USA</span>
 
-                    <span class="dash__text-2">(+0) 900901904</span>
+                    <span class="dash__text-2">{{ $order->shipping_address->order->customer->phone}}</span>
                 </div>
             </div>
 
