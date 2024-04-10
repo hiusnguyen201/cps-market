@@ -382,7 +382,7 @@
                                     </li>
                                     <li class="has-dropdown">
 
-                                        <a class="mini-cart-shop-link" href="/cart"><i
+                                        <a class="mini-cart-shop-link" href="{{ route('cart.index') }}"><i
                                                 class="fas fa-shopping-bag"></i>
 
                                             <span class="total-item-round">{{ $countProductInCart ?? 0 }}</span></a>

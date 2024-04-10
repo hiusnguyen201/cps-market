@@ -29,7 +29,6 @@ use App\Http\Controllers\Web\PaymentController;
 */
 
 Route::get('/', [HomeController::class, 'home']);
-Route::get('/{categorySlug}.html', [HomeController::class, 'categories'])->name('categories.show');
 Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
 
 
@@ -130,7 +129,7 @@ Route::prefix('auth')->group(function () {
     Route::post('/reset-password/{token}', [AuthController::class, 'handleChangePassword']);
 
     Route::get('/info-social', [AuthController::class, 'infoSocial']);
-    Route::post('/info-social', [AuthController::class, 'handleUpdateInfoSocial']);
+    Route::post('/info-social', [AuthController::class, 'handleCreateWithAccountSocial']);
 
     Route::get('/{provider}/redirect', [AuthController::class, 'socialLogin']);
     Route::get('/{provider}/callback', [AuthController::class, 'handleSocialLogin']);
@@ -146,13 +145,13 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('cart')->group(function () {
     Route::middleware(['check.auth'])->group(function () {
-        Route::get('/', [CartController::class, 'home']);
-        Route::post('/', [CartController::class, 'handleCreate']);
-        Route::patch('/', [CartController::class, 'handleUpdate']);
-        Route::delete('/', [CartController::class, 'handleDelete']);
+        Route::get('/', [CartController::class, 'home'])->name("cart.index");
+        Route::post('/', [CartController::class, 'handleCreate'])->name("cart.create");
+        Route::patch('/', [CartController::class, 'handleUpdate'])->name("cart.update");
+        Route::delete('/', [CartController::class, 'handleDelete'])->name("cart.delete");
 
-        Route::get('/checkout', [CartController::class, 'checkoutPage']);
-        Route::get('/success', [CartController::class, 'reponsePaymentPage']);
+        Route::get('/checkout', [CartController::class, 'checkoutPage'])->name("cart.checkout");
+        Route::get('/success', [CartController::class, 'success'])->name("cart.success");
     });
 });
 
@@ -167,8 +166,8 @@ Route::prefix('member')->group(function () {
     Route::middleware(['check.auth'])->group(function () {
         Route::get('/', [MemberController::class, 'home']);
 
-        Route::get('/change-password', [MemberController::class, 'change_password']);
-        Route::patch('/change-password', [MemberController::class, 'handleChange_password']);
+        Route::get('/change-password', [MemberController::class, 'changePasswordPage']);
+        Route::patch('/change-password', [MemberController::class, 'handleChangePassword']);
 
         Route::get('/user-info', [MemberController::class, 'user_info']);
         Route::patch('/user-info', [MemberController::class, 'handleUpdate_User_info']);

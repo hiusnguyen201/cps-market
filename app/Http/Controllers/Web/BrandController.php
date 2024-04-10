@@ -4,23 +4,30 @@ namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BrandRequest;
+use App\Services\BrandService;
+use App\Services\CategoryService;
+
 use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Support\Str;
 
-use App\Http\Requests\Admin\BrandRequest;
 
 class BrandController extends Controller
 {
+    private CategoryService $categoryService;
+    private BrandService $brandService;
+
+    public function __construct()
+    {
+        $this->categoryService = new CategoryService();
+        $this->brandService = new BrandService();
+    }
+
     public function home(Request $request)
     {
-        $brands = Brand::where(function ($query) use ($request) {
-            $query->orWhere('name', 'like', '%' . $request->keyword . '%');
-        })->orderBy('created_at', 'desc');
-
-        $brands = $brands->paginate($request->limit ?? 10);
-
-        $categories = Category::all();
+        $brands = $this->brandService->findAllAndPaginate($request);
+        $categories = $this->categoryService->findAll();
 
         return view('admin.brands.home', [
             'brands' => $brands,
@@ -61,17 +68,10 @@ class BrandController extends Controller
     public function handleCreate(BrandRequest $request)
     {
         try {
-            $brand = Brand::create([
-                'name' => $request['name'],
-                'slug' => Str::slug($request['name'], '-'),
-            ]);
-
-            $brand->categories()->attach($request['category']);
-
+            $this->brandService->create($request);
             session()->flash('success', 'Create brand was successful!');
         } catch (\Exception $e) {
-            error_log($e->getMessage());
-            session()->flash('error', 'Create brand was not successful!');
+            session()->flash('error', $e->getMessage());
         }
 
         return redirect()->back();
@@ -81,7 +81,7 @@ class BrandController extends Controller
 
     public function edit(Brand $brand)
     {
-        $categories = Category::all();
+        $categories = $this->categoryService->findAll();
 
         $brand_category_ids = [];
         foreach ($brand->categories as $category) {
@@ -100,17 +100,10 @@ class BrandController extends Controller
     public function handleUpdate(Brand $brand, BrandRequest $request)
     {
         try {
-            $request->request->add(['updated_at' => now()]);
-            $request->request->add(['slug' => Str::slug($request->name, '-')]);
-            $brand->fill($request->all());
-            $brand->save();
-            $brand->categories()->detach();
-            $brand->categories()->attach($request['category']);
-
+            $this->brandService->update($request, $brand);
             session()->flash('success', 'Update brand was successful!');
         } catch (\Exception $e) {
-            error_log($e->getMessage());
-            session()->flash('error', 'Edit brand was not successful!');
+            session()->flash('error', $e->getMessage());
         }
 
         return redirect()->back();
@@ -119,26 +112,11 @@ class BrandController extends Controller
     public function handleDelete(Request $request)
     {
         try {
-            $brandIds = $request->id;
-
-            if (!is_array($brandIds)) {
-                $brandIds = [$brandIds];
-            }
-
-            foreach ($brandIds as $index => $brandIds) {
-                $brand = Brand::find($brandIds);
-
-                if (is_null($brand)) {
-                    session()->flash('error', 'Delete brand was not successful! in position ' . $index);
-                    return redirect()->back();
-                }
-                $brand->categories()->detach();
-                $brand->delete();
-                session()->flash('success', 'Delete brand was successful!');
-            }
+            $brandIds = is_array($request->id) ? $request->id : [$request->id];
+            $this->brandService->deleteBrands($brandIds);
+            session()->flash('success', 'Delete brand was successful!');
         } catch (\Exception $e) {
-            error_log($e->getMessage());
-            session()->flash('error', 'Delete brand was not successful!');
+            session()->flash('error', $e->getMessage());
         }
 
         return redirect()->back();

@@ -2,34 +2,43 @@
 
 namespace App\Http\Controllers\Web;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
 use App\Http\Requests\Auth\ChangePasswordRequest;
+
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use App\Models\Category;
-use Illuminate\Support\Facades\Hash;
+
+use App\Services\CategoryService;
+use App\Services\UserService;
 
 class MemberController extends Controller
 {
+    private CategoryService $categoryService;
+    private UserService $userService;
+
+    public function __construct()
+    {
+        $this->categoryService = new CategoryService();
+        $this->userService = new UserService();
+    }
+
     public function home()
     {
-        $user = Auth::user();
-        $categories = Category::all();
+        $categories = $this->categoryService->findAll();
         return view("customer.account.home", [
             'title' => "Member",
-            "user" => $user,
+            "user" => Auth::user(),
             "categories" => $categories
         ]);
     }
 
     public function user_info()
     {
-        $user = Auth::user();
-        $categories = Category::all();
+        $categories = $this->categoryService->findAll();
         return view("customer.account.user-info", [
             'title' => "User info ",
-            "user" => $user,
+            "user" => Auth::user(),
             "categories" => $categories
         ]);
     }
@@ -43,45 +52,34 @@ class MemberController extends Controller
         ]);
 
         try {
-            $user = Auth::user();
-            $user = User::findOrFail($user->id);
-            $request->request->add(['updated_at' => now()]);
-            $user->name = $request->name;
-            $user->gender = $request->gender;
-            $user->address = $request->address;
-            $user->save();
-            session()->flash('success', 'Update info was successful!');
+            $this->userService->updateInfoMember($request, Auth::user());
+            session()->flash('success', "Edit information successfully");
         } catch (\Exception $e) {
-            error_log($e->getMessage());
-            session()->flash('error', 'Edit info was not successful!');
+            session()->flash('error', $e->getMessage());
         }
 
         return redirect()->back();
     }
 
-    public function change_password()
+    public function changePasswordPage()
     {
-        $user = Auth::user();
-        $categories = Category::all();
+        $categories = $this->categoryService->findAll();
         return view("customer.account.change-password", [
             'title' => "Change password",
-            "user" => $user,
+            "user" => Auth::user(),
             "categories" => $categories
         ]);
     }
 
-    public function handleChange_password(ChangePasswordRequest $request)
+    public function handleChangePassword(ChangePasswordRequest $request)
     {
-        $user = Auth::user();
-        $user = User::findorFail($user->id);
-
-        if (!Hash::check($request->current_password, $user->password)) {
-            return redirect()->back()->with('error', 'The current password is incorrect.');
+        try {
+            $this->userService->changePassword(Auth::user(), $request->new_password, $request->current_password);
+            session()->flash('success', 'Change password successfully');
+        } catch (\Exception $e) {
+            session()->flash('error', $e->getMessage());
         }
 
-        $user->password = Hash::make($request->new_password);
-        $user->save();
-
-        return redirect('/member/account/user-info')->with('success', 'Password changed successfully.');
+        return redirect()->back();
     }
 }

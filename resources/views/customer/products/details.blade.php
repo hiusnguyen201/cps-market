@@ -187,13 +187,13 @@
                         </div>
                         <div class="u-s-m-b-15">
                             <div class="pd-detail__form" style="display: flex; align-items:center; gap:15px">
-                                <form method="POST" action="/cart">
+                                <form method="POST" action="{{ route('cart.create') }}">
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <input type="hidden" name="action" value="buy">
                                     <button class="btn btn--e-brand-b-2" type="submit">Buy now</button>
                                 </form>
-                                <form method="POST" action="/cart">
+                                <form method="POST" action="{{ route('cart.create') }}">
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <input type="hidden" name="action" value="add">

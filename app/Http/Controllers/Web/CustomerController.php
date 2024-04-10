@@ -4,29 +4,25 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Role;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Admin\UserRequest;
-use App\Jobs\SendPassCreateUser;
+
+use App\Services\UserService;
+use App\Services\RoleService;
+
+use App\Models\User;
 
 class CustomerController extends Controller
 {
+    private UserService $userService;
+    private RoleService $roleService;
+    public function __construct()
+    {
+        $this->userService = new UserService();
+        $this->roleService = new RoleService();
+    }
     public function home(Request $request)
     {
-        $users = User::where(function ($query) use ($request) {
-            $query->orWhere('name', 'like', '%' . $request->kw . '%');
-            $query->orWhere('email', 'like', '%' . $request->kw . '%');
-        })->whereHas('role', function ($query) {
-            $query->where('name', '=', 'customer');
-        })->orderBy('created_at', 'desc');
-
-        if ($request->status) {
-            $users = $users->where('status', $request->status);
-        }
-
-        $users = $users->paginate($request->limit ?? 10);
+        $users = $this->userService->findAllAndPaginateWithRole($request, "customer");
 
         return view('admin.customers.home', [
             'users' => $users,
@@ -64,25 +60,11 @@ class CustomerController extends Controller
     public function handleCreate(UserRequest $request)
     {
         try {
-            $role = Role::where('name', 'customer')->first();
-            $password = Str::random(16);
-            $user = User::create([
-                'name' => $request['name'],
-                'email' => $request['email'],
-                'phone' => $request['phone'],
-                'address' => $request['address'],
-                'gender' => $request['gender'],
-                'role_id' => $role->id,
-                'password' => Hash::make($password)
-            ]);
-
-            $details = ["email" => $user->email, "password" => $password];
-            SendPassCreateUser::dispatch($details);
-
+            $role = $this->roleService->findRoleByName("customer");
+            $this->userService->createUserWithRole($request, $role);
             session()->flash('success', 'Create customer was successful!');
         } catch (\Exception $e) {
-            error_log($e->getMessage());
-            session()->flash('error', 'Create customer was not successful!');
+            session()->flash('error', $e->getMessage());
         }
 
         return redirect()->back();
@@ -105,13 +87,10 @@ class CustomerController extends Controller
     public function handleUpdate(User $user, UserRequest $request)
     {
         try {
-            $request->request->add(['updated_at' => now()]);
-            $user->fill($request->input());
-            $user->save();
+            $this->userService->updateUser($request, $user);
             session()->flash('success', 'Edit customer was successful!');
         } catch (\Exception $e) {
-            error_log($e->getMessage());
-            session()->flash('error', 'Edit customer was not successful!');
+            session()->flash('error', $e->getMessage());
         }
 
         return redirect()->back();
@@ -120,26 +99,10 @@ class CustomerController extends Controller
     public function handleDelete(Request $request)
     {
         try {
-            $userIds = $request->id;
-
-            if (!is_array($userIds)) {
-                $userIds = [$userIds];
-            }
-
-            foreach ($userIds as $index => $userId) {
-                $user = User::find($userId);
-
-                if (is_null($user)) {
-                    session()->flash('error', 'Delete customer was not successful! in position ' . $index);
-                    return redirect()->back();
-                }
-
-                $user->delete();
-                session()->flash('success', 'Delete customer was successful!');
-            }
+            $userIds = is_array($request->id) ? $request->id : [$request->id];
+            $this->userService->deleteUsers($userIds, "customer");
         } catch (\Exception $e) {
-            error_log($e->getMessage());
-            session()->flash('error', 'Delete customer was not successful!');
+            session()->flash('error', $e->getMessage());
         }
 
         return redirect()->back();

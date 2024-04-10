@@ -7,16 +7,18 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\ProductRequest;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+
 use App\Models\Product;
 use App\Models\Product_Attribute;
 use App\Models\Attribute;
-use Illuminate\Support\Facades\Crypt;
 use App\Models\Product_Images;
-use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    public function findAllProduct(Request $request)
+    public function findProductByCode(Request $request)
     {
         if (!$request->code) {
             return response()->json([
@@ -33,13 +35,14 @@ class ProductController extends Controller
         }
 
         return response()->json([
-            'message' => 'Product is found',
+            'message' => 'Success',
             'product' => $product
         ], 200);
     }
 
     public function create(ProductRequest $request)
     {
+        DB::beginTransaction();
         try {
             $product = Product::create([
                 'code' => time(),
@@ -87,15 +90,18 @@ class ProductController extends Controller
                 }
             }
 
+            DB::commit();
+
             return response()->json([
                 'message' => 'Create product successfully',
                 'data' => $product,
             ], 200);
         } catch (\Exception $err) {
             error_log($err->getMessage());
+            DB::rollBack();
             return response()->json([
-                'message' => 'Server Error',
-                'error' => $err
+                'message' => 'Error',
+                'error' => "Create Product failed"
             ], 500);
         }
     }
@@ -103,6 +109,7 @@ class ProductController extends Controller
 
     public function update(Product $product, ProductRequest $request)
     {
+        DB::beginTransaction();
         try {
             $product->update([
                 'name' => $request->name,
@@ -165,15 +172,17 @@ class ProductController extends Controller
                 }
             }
 
+            DB::commit();
             return response()->json([
                 'message' => 'Update product successfully',
                 'data' => $product,
             ], 200);
         } catch (\Exception $err) {
             error_log($err->getMessage());
+            DB::rollBack();
             return response()->json([
-                'message' => 'Server Error',
-                'error' => $err
+                'message' => 'Error',
+                'error' => "Edit product failed",
             ], 500);
         }
     }

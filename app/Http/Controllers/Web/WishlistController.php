@@ -6,32 +6,37 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
-use App\Models\Wishlist;
-use App\Models\Category;
-use App\Models\Product;
 
+use App\Services\WishlistService;
+use App\Services\CategoryService;
 
 class WishlistController extends Controller
 {
+    private WishlistService $wishlistService;
+    private CategoryService $categoryService;
+
+    public function __construct()
+    {
+        $this->wishlistService = new WishlistService();
+        $this->categoryService = new CategoryService();
+    }
+
     public function home()
     {
-        $categories = Category::all();
         $user = Auth::user();
-        $wishlists = Wishlist::where('user_id', $user->id)->get();
-        $products = Product::all();
-        $countProductInCart = 0;
 
-        if (Auth::user()) {
-            foreach (Auth::user()->carts as $cart) {
-                $countProductInCart += $cart->quantity;
-            }
+        $countProductInCart = 0;
+        foreach ($user->carts as $cart) {
+            $countProductInCart += $cart->quantity;
         }
+
+        $categories = $this->categoryService->findAll();
+        $wishlist = $this->wishlistService->findAllByCustomerId($user->id);
 
         return view("customer/wishlist", [
             'title' => "Wishlist",
-            'wishlists' => $wishlists,
-            'products' => $products,
             "categories" => $categories,
+            'wishlist' => $wishlist,
             'countProductInCart' => $countProductInCart,
         ]);
     }
@@ -43,18 +48,10 @@ class WishlistController extends Controller
         ]);
 
         try {
-            $user = Auth::user();
-            $product = Product::find($request->product_id);
-
-            Wishlist::create([
-                'product_id' => $product->id,
-                'user_id' => $user->id,
-            ]);
-
+            $this->wishlistService->add($request, Auth::id());
             session()->flash('success', 'Add product to wishlist successfully');
         } catch (\Exception $e) {
-            error_log($e->getMessage());
-            session()->flash('error', 'Add product to wishlist failed');
+            session()->flash('error', $e->getMessage());
         }
 
         return redirect()->back();
@@ -63,18 +60,10 @@ class WishlistController extends Controller
     public function handleDelete(Request $request)
     {
         try {
-            $wishlist = Wishlist::where(["user_id" => Auth::id(), "id" => $request->wishlist_id]);
-
-            if (!$wishlist) {
-                return redirect()->back()->with("error", "Wishlist not found!");
-            }
-
-            $wishlist->delete();
-
+            $this->wishlistService->delete($request->wishlist_id, Auth::id());
             session()->flash('success', 'Remove product from wishlist successfully!');
         } catch (\Exception $e) {
-            error_log($e->getMessage());
-            session()->flash('error', 'Remove product from wishlist unsuccessfully!');
+            session()->flash('error', $e->getMessage());
         }
 
         return redirect()->back();

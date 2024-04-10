@@ -5,19 +5,25 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Services\OrderService;
+use App\Services\UserService;
+
 use App\Models\Order;
-use App\Models\User;
 
 class OrderController extends Controller
 {
+    private OrderService $orderService;
+    private UserService $userService;
+
+    public function __construct()
+    {
+        $this->orderService = new OrderService();
+        $this->userService = new UserService();
+    }
+
     public function home(Request $request)
     {
-        $orders = Order::where(function ($query) use ($request) {
-            $query->orWhere('code', 'like', '%' . $request->kw . '%');
-        })->orderBy('created_at', 'desc');
-
-        $orders = $orders->paginate($request->limit ?? 10);
-
+        $orders = $this->orderService->findAllAndPaginate($request);
         return view('admin.orders.home', [
             'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Orders']],
@@ -38,10 +44,7 @@ class OrderController extends Controller
     }
     public function create()
     {
-        $customers = User::whereHas('role', function ($query) {
-            $query->where("name", "=", "customer");
-        })->get();
-
+        $customers = $this->userService->findAllWithRole("customer");
         return view('admin.orders.create', [
             'breadcumbs' => [
                 'titles' => ['Orders', 'Create'],

@@ -3,30 +3,30 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product_Attribute;
-use App\Models\Attribute;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use App\Models\Category;
+
+use App\Services\ProductService;
+use App\Services\CategoryService;
+use App\Services\AttributeService;
+
 use App\Models\Product;
-use App\Models\Product_Images;
 
 class ProductController extends Controller
 {
+    private ProductService $productService;
+    private CategoryService $categoryService;
+    private AttributeService $attributeService;
+
+    public function __construct()
+    {
+        $this->productService = new ProductService();
+        $this->categoryService = new CategoryService();
+    }
+
     public function home(Request $request)
     {
-        $products = Product::where(function ($query) use ($request) {
-            $query->orWhere('name', 'like', '%' . $request->kw . '%');
-        })->orderBy('created_at', 'desc');
-
-        if ($request->category) {
-            $products = $products->where("category_id", $request->category);
-        }
-
-        $products = $products->paginate($request->limit ?? 10);
-
-        $categories = Category::all();
+        $products = $this->productService->findAllAndPaginate($request);
+        $categories = $this->categoryService->findAll();
 
         return view('admin.products.home', [
             'products' => $products,
@@ -51,7 +51,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $categories = Category::all();
+        $categories = $this->categoryService->findAll();
         return view('admin.products.create', [
             'categories' => $categories,
             'breadcumbs' => [
@@ -64,10 +64,8 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $categories = Category::all();
-        $attributes = Attribute::whereHas('specification', function ($query) use ($product) {
-            $query->where('category_id', $product->category_id);
-        })->get();
+        $attributes = $this->attributeService->findAllWithSpecificationByCategoryId($product);
+        $categories = $this->categoryService->findAll();
 
         return view('admin.products.edit', [
             'categories' => $categories,
@@ -85,29 +83,10 @@ class ProductController extends Controller
     {
         try {
             $ids = is_array($request->id) ? $request->id : [$request->id];
-
-            foreach ($ids as $index => $id) {
-                $product = Product::find($id);
-                if (!$product)
-                    throw new ModelNotFoundException;
-
-                foreach ($product->images as $image) {
-                    $folder_path = explode("/", $image->thumbnail)[0];
-                    if (Storage::directoryExists("public/" . $folder_path)) {
-                        Storage::deleteDirectory("public/" . $folder_path);
-                        break;
-                    }
-                }
-
-                Product_Images::where("product_id", $product->id)->delete();
-                Product_Attribute::where("product_id", $product->id)->delete();
-
-                $product->delete();
-                session()->flash('success', 'Delete product successfully');
-            }
+            $this->productService->deleteProducts($ids);
+            session()->flash('success', 'Delete product successfully');
         } catch (\Exception $e) {
-            error_log($e->getMessage());
-            session()->flash('error', 'Delete product failed');
+            session()->flash('error', $e->getMessage());
         }
 
         return redirect()->back();

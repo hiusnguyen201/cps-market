@@ -9,30 +9,43 @@
                                 <span class="outer-footer__content-title">Contact Us</span>
                                 <div class="outer-footer__text-wrap"><i class="fas fa-home"></i>
 
-                                    <span>4247 Ashford Drive Virginia VA-20006 USA</span></div>
+                                    <span>4247 Ashford Drive Virginia VA-20006 USA</span>
+                                </div>
                                 <div class="outer-footer__text-wrap"><i class="fas fa-phone-volume"></i>
 
-                                    <span>(+0) 900 901 904</span></div>
+                                    <span>(+0) 900 901 904</span>
+                                </div>
                                 <div class="outer-footer__text-wrap"><i class="far fa-envelope"></i>
 
-                                    <span>contact@domain.com</span></div>
+                                    <span>contact@domain.com</span>
+                                </div>
                                 <div class="outer-footer__social">
                                     <ul>
                                         <li>
 
-                                            <a class="s-fb--color-hover" href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                            <a class="s-fb--color-hover" href="#"><i
+                                                    class="fab fa-facebook-f"></i></a>
+                                        </li>
                                         <li>
 
-                                            <a class="s-tw--color-hover" href="#"><i class="fab fa-twitter"></i></a></li>
+                                            <a class="s-tw--color-hover" href="#"><i
+                                                    class="fab fa-twitter"></i></a>
+                                        </li>
                                         <li>
 
-                                            <a class="s-youtube--color-hover" href="#"><i class="fab fa-youtube"></i></a></li>
+                                            <a class="s-youtube--color-hover" href="#"><i
+                                                    class="fab fa-youtube"></i></a>
+                                        </li>
                                         <li>
 
-                                            <a class="s-insta--color-hover" href="#"><i class="fab fa-instagram"></i></a></li>
+                                            <a class="s-insta--color-hover" href="#"><i
+                                                    class="fab fa-instagram"></i></a>
+                                        </li>
                                         <li>
 
-                                            <a class="s-gplus--color-hover" href="#"><i class="fab fa-google-plus-g"></i></a></li>
+                                            <a class="s-gplus--color-hover" href="#"><i
+                                                    class="fab fa-google-plus-g"></i></a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -47,19 +60,24 @@
                                             <ul>
                                                 <li>
 
-                                                    <a href="/cart">Cart</a></li>
+                                                    <a href="{{ route('cart.index') }}">Cart</a>
+                                                </li>
                                                 <li>
 
-                                                    <a href="dashboard.html">Account</a></li>
+                                                    <a href="dashboard.html">Account</a>
+                                                </li>
                                                 <li>
 
-                                                    <a href="shop-side-version-2.html">Manufacturer</a></li>
+                                                    <a href="shop-side-version-2.html">Manufacturer</a>
+                                                </li>
                                                 <li>
 
-                                                    <a href="dash-payment-option.html">Finance</a></li>
+                                                    <a href="dash-payment-option.html">Finance</a>
+                                                </li>
                                                 <li>
 
-                                                    <a href="shop-side-version-2.html">Shop</a></li>
+                                                    <a href="shop-side-version-2.html">Shop</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -72,19 +90,24 @@
                                             <ul>
                                                 <li>
 
-                                                    <a href="about.html">About us</a></li>
+                                                    <a href="about.html">About us</a>
+                                                </li>
                                                 <li>
 
-                                                    <a href="contact.html">Contact Us</a></li>
+                                                    <a href="contact.html">Contact Us</a>
+                                                </li>
                                                 <li>
 
-                                                    <a href="index.html">Sitemap</a></li>
+                                                    <a href="index.html">Sitemap</a>
+                                                </li>
                                                 <li>
 
-                                                    <a href="dash-my-order.html">Delivery</a></li>
+                                                    <a href="dash-my-order.html">Delivery</a>
+                                                </li>
                                                 <li>
 
-                                                    <a href="shop-side-version-2.html">Store</a></li>
+                                                    <a href="shop-side-version-2.html">Store</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -102,25 +125,31 @@
                                             <input type="radio" id="male" name="gender">
                                             <div class="radio-box__state radio-box__state--primary">
 
-                                                <label class="radio-box__label" for="male">Male</label></div>
+                                                <label class="radio-box__label" for="male">Male</label>
+                                            </div>
                                         </div>
                                         <div class="radio-box newsletter__radio">
 
                                             <input type="radio" id="female" name="gender">
                                             <div class="radio-box__state radio-box__state--primary">
 
-                                                <label class="radio-box__label" for="female">Female</label></div>
+                                                <label class="radio-box__label" for="female">Female</label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="newsletter__group">
 
                                         <label for="newsletter"></label>
 
-                                        <input class="input-text input-text--only-white" type="text" id="newsletter" placeholder="Enter your Email">
+                                        <input class="input-text input-text--only-white" type="text" id="newsletter"
+                                            placeholder="Enter your Email">
 
-                                        <button class="btn btn--e-brand newsletter__btn" type="submit">SUBSCRIBE</button></div>
+                                        <button class="btn btn--e-brand newsletter__btn"
+                                            type="submit">SUBSCRIBE</button>
+                                    </div>
 
-                                    <span class="newsletter__text">Subscribe to the mailing list to receive updates on promotions, new arrivals, discount and coupons.</span>
+                                    <span class="newsletter__text">Subscribe to the mailing list to receive updates on
+                                        promotions, new arrivals, discount and coupons.</span>
                                 </form>
                             </div>
                         </div>
@@ -138,7 +167,8 @@
 
                                     <a href="index.html">Reshop</a>
 
-                                    <span>All Right Reserved</span></div>
+                                    <span>All Right Reserved</span>
+                                </div>
                                 <div class="lower-footer__payment">
                                     <ul>
                                         <li><i class="fab fa-cc-stripe"></i></li>

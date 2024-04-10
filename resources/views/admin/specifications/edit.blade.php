@@ -29,7 +29,7 @@
                         <div class="attributeFields">
                             <div class="d-flex align-items-center mb-2 ">
                                 <div class="col-9">
-                                    <input type="text" class="form-control attributeData"
+                                    <input type="text" name="attributes[]" class="form-control attributeData"
                                         placeholder="Enter attribute..." value="{{ old('attribute') ?? $attribute->key }}"
                                         data-attId="{{ $attribute->id }}">
                                 </div>
@@ -50,7 +50,8 @@
 
                 @csrf
                 @method('PATCH')
-                <input type="hidden" name="id" value="{{ $specification->id }}">
+                <input type="hidden" name="specification_id" value="{{ $specification->id }}">
+                <input type="hidden" name="category_id" value="{{ $specification->category->id }}">
                 <button type="submit" class="btn btn-success py-2 w-100">Save</button>
             </div>
         </form>

@@ -30,6 +30,6 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::directive('convertCurrency', function ($money) {
             return "<?php echo $money? number_format($money, 0, ',', '.') . ' ₫' : 'Free'; ?>";
-});
-}
+        });
+    }
 }
