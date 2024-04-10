@@ -47,6 +47,8 @@ Route::prefix('admin')->group(function () {
         Route::post('/create', [UserController::class, 'handleCreate']);
         Route::get('/edit/{user}', [UserController::class, 'edit']);
         Route::patch('/edit/{user}', [UserController::class, 'handleUpdate']);
+        Route::get('/edit/{user}/change-password', [UserController::class, 'change_password']);
+        Route::patch('/edit/{user}/change-password', [UserController::class, 'handleChange_password']);
         Route::delete('/', [UserController::class, 'handleDelete']);
     });
 

@@ -74,4 +74,6 @@
             </div>
         </div>
     </form>
+
+    <a href="change-password" class="btn btn-warning w-30 py-2">Change Password</a>
 @endsection

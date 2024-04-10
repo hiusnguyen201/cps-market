@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Admin\UserRequest;
 use App\Jobs\SendPassCreateUser;
+use App\Http\Requests\Auth\ChangePasswordRequest;
 
 class UserController extends Controller
 {
@@ -141,6 +142,38 @@ class UserController extends Controller
         } catch (\Exception $e) {
             error_log($e->getMessage());
             session()->flash('error', 'Delete user was not successful!');
+        }
+
+        return redirect()->back();
+    }
+
+    public function change_password(User $user)
+    {
+        return view('admin.users.change-password', [
+            'user' => $user,
+            'genders' => config('constants.genders'),
+            'breadcumbs' => [
+                'titles' => ['Users', 'Edit'],
+                'title_links' => ["/admin/users"]
+            ],
+            'title' => 'Change Password'
+        ]);
+    }
+
+    public function handleChange_password(User $user, ChangePasswordRequest $request)
+    {
+        try {
+            if (!Hash::check($request->current_password, $user->password)) {
+                return redirect()->back()->with('error', 'The current password is incorrect.');
+            }
+
+            $request->request->add(['updated_at' => now()]);
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+            session()->flash('success', 'Change password was successful!');
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+            session()->flash('error', 'Change password was not successful!');
         }
 
         return redirect()->back();
