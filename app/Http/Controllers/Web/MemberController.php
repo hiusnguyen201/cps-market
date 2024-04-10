@@ -18,10 +18,24 @@ class MemberController extends Controller
     {
         $user = Auth::user();
         $categories = Category::all();
+
+        $countProductInCart = 0;
+        if (Auth::user()) {
+            foreach (Auth::user()->carts as $cart) {
+                $countProductInCart += $cart->quantity;
+            }
+        }
+
+        $ordersQuery = Order::where('customer_id', Auth::id());
+        $orders = $ordersQuery->latest()->take(5)->get();
+
         return view("customer.account.home", [
             'title' => "Member",
             "user" => $user,
-            "categories" => $categories
+            "categories" => $categories,
+            "orders" => $orders,
+            'countProductInCart' => $countProductInCart,
+
         ]);
     }
 
@@ -29,10 +43,19 @@ class MemberController extends Controller
     {
         $user = Auth::user();
         $categories = Category::all();
+
+        $countProductInCart = 0;
+        if (Auth::user()) {
+            foreach (Auth::user()->carts as $cart) {
+                $countProductInCart += $cart->quantity;
+            }
+        }
+
         return view("customer.account.user-info", [
             'title' => "User info ",
             "user" => $user,
-            "categories" => $categories
+            "categories" => $categories,
+            'countProductInCart' => $countProductInCart,
         ]);
     }
 
@@ -64,10 +87,19 @@ class MemberController extends Controller
     {
         $user = Auth::user();
         $categories = Category::all();
+
+        $countProductInCart = 0;
+        if (Auth::user()) {
+            foreach (Auth::user()->carts as $cart) {
+                $countProductInCart += $cart->quantity;
+            }
+        }
+
         return view("customer.account.change-password", [
             'title' => "Change password",
             "user" => $user,
-            "categories" => $categories
+            "categories" => $categories,
+            'countProductInCart' => $countProductInCart,
         ]);
     }
 

@@ -142,7 +142,7 @@
                     <h2 class="dash__h2 u-s-m-b-8">Shipping Address</h2>
                     <h2 class="dash__h2 u-s-m-b-8">{{ $order->shipping_address->order->customer->name}}</h2>
 
-                    <span class="dash__text-2">4247 Ashford Drive Virginia - VA-20006 - USA</span>
+                    <span class="dash__text-2">{{ $order->shipping_address->address }} - {{ $order->shipping_address->province }} - {{ $order->shipping_address->district }} - {{ $order->shipping_address->ward }}</span>
 
                     <span class="dash__text-2">{{ $order->shipping_address->order->customer->phone}}</span>
                 </div>
