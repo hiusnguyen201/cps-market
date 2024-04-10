@@ -8,7 +8,6 @@
 @extends('layouts.admin.index')
 @section('content')
     <form action="" method="POST">
-
         <div class="row">
             <div class="col-sm-8 col-12">
                 <div class="card card-body">
@@ -19,7 +18,8 @@
                                 <option selected disabled value="">Select customer</option>
                                 @if ($customers && count($customers))
                                     @foreach ($customers as $customer)
-                                        <option value="{{ $customer->id }}">{{ $customer->email }}</option>
+                                        <option {{ old('customer_id') == $customer->id ? 'selected' : '' }}
+                                            value="{{ $customer->id }}">{{ $customer->email }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -44,6 +44,25 @@
                         </div>
                         <div class="col-12">
                             <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <td width='52%' class="py-0" style="border: none">
+                                                @error('product_id')
+                                                    <span class="d-block" style="color: red">{{ $message }}</span>
+                                                @enderror
+                                            </td>
+                                            <td width='30%' class="py-0" style="border: none">
+                                                @error('quantity')
+                                                    <span class="d-block" style="color: red">{{ $message }}</span>
+                                                @enderror
+                                            </td>
+                                            <td class="py-0" style="border: none"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="table-responsive">
                                 <table id="cartOrder" class="table table-bordered">
                                     <tbody></tbody>
                                 </table>
@@ -55,19 +74,21 @@
                         <label for="" class="form-label">Shipping Address:</label>
                         <div class="row">
                             <div class="col-sm-6 col-12 mb-3">
-                                <select class="form-control" name="province"></select>
+                                <select class="form-control" old-data="{{ old('province') }}" name="province"></select>
                             </div>
                             <div class="col-sm-6 col-12 mb-3">
-                                <select class="form-control" name="district"></select>
+                                <select class="form-control" old-data="{{ old('district') }}" name="district"></select>
                             </div>
                             <div class="col-sm-6 col-12 mb-3">
-                                <select class="form-control" name="ward"></select>
+                                <select class="form-control" old-data="{{ old('ward') }}" name="ward"></select>
                             </div>
                             <div class="col-sm-6 col-12 mb-3">
-                                <input class="form-control" name="address" placeholder="Address..."></input>
+                                <input class="form-control" name="address" placeholder="Address..."
+                                    value="{{ old('address') }}"></input>
                             </div>
                             <div class="col-sm-12 col-12 mb-3">
-                                <input class="form-control" name="note" placeholder="Note..."></input>
+                                <input class="form-control" name="note" placeholder="Note..."
+                                    value="{{ old('note') }}"></input>
                             </div>
                         </div>
                     </div>
@@ -79,7 +100,9 @@
                                 @if (config('constants.payment_method') && count(config('constants.payment_method')))
                                     @foreach (config('constants.payment_method') as $index => $method)
                                         <div class="mb-2">
-                                            <input id="{{ $index }}" type="radio" name="payment_method"
+                                            <input
+                                                {{ old('payment_method') != '' && old('payment_method') == $method['value'] ? 'checked' : '' }}
+                                                id="{{ $index }}" type="radio" name="payment_method"
                                                 value="{{ $method['value'] }}">
                                             <label style="font-weight: 400;" class="mb-0"
                                                 for="{{ $index }}">{{ $method['name'] }}</label>
@@ -111,7 +134,8 @@
                                 Shipping Fee
                             </div>
                             <div class="col-6 text-right shippingFeeInput">
-                                <input type="hidden" id="shippingFeeInput" value="{{ config('constants.shipping_fee') }}">
+                                <input type="hidden" id="shippingFeeInput"
+                                    value="{{ config('constants.shipping_fee') }}">
                                 @convertCurrency(config('constants.shipping_fee'))
                             </div>
                         </div>

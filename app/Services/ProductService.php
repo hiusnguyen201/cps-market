@@ -23,6 +23,16 @@ class ProductService
         return $products && count($products) ? $products : [];
     }
 
+    public function findOneById($id)
+    {
+        if (!$id) {
+            return null;
+        }
+
+        $product = Product::find($id);
+        return $product ? $product : null;
+    }
+
     public function deleteProducts($ids)
     {
 

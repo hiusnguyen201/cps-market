@@ -48,6 +48,11 @@ class UserService
 
         return $users && count($users) ? $users : [];
     }
+    public function findOneById($id)
+    {
+        $user = User::find($id);
+        return $user ? $user : [];
+    }
 
     public function createUserWithRole($request, $role)
     {
@@ -333,7 +338,8 @@ class UserService
         return $passwordReset ? $passwordReset : null;
     }
 
-    public function verifyTokenRestPassword($token) {
+    public function verifyTokenRestPassword($token)
+    {
         $passwordReset = $this->findOnePasswordResetByToken($token);
 
         if (!$passwordReset) {

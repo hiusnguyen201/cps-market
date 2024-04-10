@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Http\Requests\Admin\CheckoutRequest;
+use App\Http\Requests\Customer\CheckoutRequest;
 use App\Services\OrderService;
 
 class PaymentController extends Controller
@@ -89,7 +89,7 @@ class PaymentController extends Controller
         }
 
         try {
-            $this->orderService->createOrder($request, $orderId, Auth::user());
+            $this->orderService->createOrderInCustomer($request, $orderId, Auth::user());
         } catch (\Exception $e) {
             return redirect()->back()->with("error", "Create order failed");
         }
@@ -103,7 +103,7 @@ class PaymentController extends Controller
     {
         $orderId = time() . "";
         try {
-            $this->orderService->createOrder($request, $orderId, Auth::user());
+            $this->orderService->createOrderInCustomer($request, $orderId, Auth::user());
             return redirect(route('cart.success') . '?orderId=' . $orderId);
         } catch (\Exception $e) {
             return redirect()->back()->with("error", "Create order failed");

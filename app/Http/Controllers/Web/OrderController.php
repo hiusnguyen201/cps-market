@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\Admin\OrderRequest;
 
 use App\Services\OrderService;
 use App\Services\UserService;
@@ -54,9 +55,17 @@ class OrderController extends Controller
             'customers' => $customers
         ]);
     }
-    public function handleCreate()
+    public function handleCreate(OrderRequest $request)
     {
+        try {
+            $customer = $this->userService->findOneById($request->customer_id);
+            $this->orderService->createOrderInAdmin($request, $customer);
+            session()->flash("success", "Create order successfully");
+        } catch (\Exception $e) {
+            session()->flash("error", $e->getMessage());
+        }
 
+        return redirect()->back();
     }
     public function edit()
     {

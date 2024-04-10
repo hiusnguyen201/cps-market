@@ -250,7 +250,7 @@
                                                         <div class="u-s-m-b-20">
                                                             <div class="radio-box">
                                                                 <input
-                                                                    {{ old('payment_method') && old('payment_method') == $method['value'] ? 'checked' : '' }}
+                                                                    {{ old('payment_method') != '' && old('payment_method') == $method['value'] ? 'checked' : '' }}
                                                                     type="radio" name="payment_method"
                                                                     data="{{ $method['redirect'] }}"
                                                                     value="{{ $method['value'] }}">

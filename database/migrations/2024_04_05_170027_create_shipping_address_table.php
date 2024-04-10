@@ -24,7 +24,6 @@ return new class extends Migration {
             $table->string("note", 100)->nullable();
             $table->unsignedBigInteger("order_id");
             $table->timestamps();
-            $table->softDeletes();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
