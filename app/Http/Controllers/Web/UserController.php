@@ -5,12 +5,10 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-
 use App\Http\Requests\Admin\UserRequest;
-
+use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Services\RoleService;
 use App\Services\UserService;
-
 use App\Models\User;
 
 class UserController extends Controller
@@ -76,7 +74,6 @@ class UserController extends Controller
     public function edit(User $user)
     {
         return view('admin.users.edit', [
-            'user' => $user,
             'breadcumbs' => [
                 'titles' => ['Users', 'Edit'],
                 'title_links' => ["/admin/users"]

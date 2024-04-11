@@ -41,7 +41,7 @@ $LIMIT_PAGE = [
     100
 ];
 
-$DATE_FORMAT = "Y/m/d H:i:s";
+$DATE_FORMAT = "d/m/Y H:i:s";
 
 $PAYMENT_METHOD = [
     "cod" => [
