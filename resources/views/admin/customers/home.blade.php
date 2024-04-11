@@ -70,60 +70,64 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
-                        <tr>
-                            <td class="align-middle">
-                                <input type="checkbox" class="form-check-input" name="id" value="{{ $user->id }}">
-                            </td>
-                            <td class="align-middle"><a
-                                    href="{{ route('admin.customers.details', [$user->id]) }}">{{ $user->name }}</a>
-                            </td>
-                            <td class="align-middle">{{ $user->email }}</td>
-                            <td class="align-middle">{{ $user->phone }}</td>
-                            <td class="align-middle">
-                                @if (config('constants.user_status') && count(config('constants.user_status')))
-                                    @foreach (config('constants.user_status') as $status)
-                                        @if ($user->status == $status['value'])
-                                            <span class="{{ $status['css'] }}">{{ $status['title'] }}</span>
-                                        @endif
-                                    @endforeach
-                                @endif
-                            </td>
-                            <td class="text-center align-middle">
-                                <a class="btn btn-warning" href="{{ route('admin.customers.edit', [$user->id]) }}">
-                                    <i class="fas fa-pen"></i>
-                                </a>
-                                <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
-                                    data-target="#modal-delete-{{ $user->id }}">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <div class="modal fade" id="modal-delete-{{ $user->id }}" aria-modal="true" role="dialog">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Warning!</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Are you really want delete?</p>
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <form action="" method="POST">
-                                            <input type="hidden" name="id" value="{{ $user->id }}">
-                                            <button class="btn btn-primary" type="submit">Submit</button>
-                                            <input type="hidden" name="_method" value="delete">
-                                            @csrf
-                                        </form>
+                    @if ($users && count($users))
+                        @foreach ($users as $user)
+                            <tr>
+                                <td class="align-middle">
+                                    <input type="checkbox" class="form-check-input" name="id"
+                                        value="{{ $user->id }}">
+                                </td>
+                                <td class="align-middle"><a
+                                        href="{{ route('admin.customers.details', [$user->id]) }}">{{ $user->name }}</a>
+                                </td>
+                                <td class="align-middle">{{ $user->email }}</td>
+                                <td class="align-middle">{{ $user->phone }}</td>
+                                <td class="align-middle">
+                                    @if (config('constants.user_status') && count(config('constants.user_status')))
+                                        @foreach (config('constants.user_status') as $status)
+                                            @if ($user->status == $status['value'])
+                                                <span class="{{ $status['css'] }}">{{ $status['title'] }}</span>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </td>
+                                <td class="text-center align-middle">
+                                    <a class="btn btn-warning" href="{{ route('admin.customers.edit', [$user->id]) }}">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
+                                        data-target="#modal-delete-{{ $user->id }}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <div class="modal fade" id="modal-delete-{{ $user->id }}" aria-modal="true" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Warning!</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you really want delete?</p>
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">Close</button>
+                                            <form action="" method="POST">
+                                                <input type="hidden" name="id" value="{{ $user->id }}">
+                                                <button class="btn btn-primary" type="submit">Submit</button>
+                                                <input type="hidden" name="_method" value="delete">
+                                                @csrf
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>

@@ -9,9 +9,6 @@ use App\Services\BrandService;
 use App\Services\CategoryService;
 
 use App\Models\Brand;
-use App\Models\Category;
-use Illuminate\Support\Str;
-
 
 class BrandController extends Controller
 {
@@ -57,7 +54,7 @@ class BrandController extends Controller
 
     public function create()
     {
-        $categories = Category::all();
+        $categories = $this->categoryService->findAll();
         return view('admin.brands.create', [
             'categories' => $categories,
             'breadcumbs' => [

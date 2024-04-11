@@ -16,6 +16,7 @@ use App\Http\Controllers\Web\SpecificationController;
 use App\Http\Controllers\Web\OrderController;
 use App\Http\Controllers\Web\WishlistController;
 use App\Http\Controllers\Web\PaymentController;
+use App\Http\Controllers\Web\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,6 +110,12 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{order}', [OrderController::class, 'edit'])->name("admin.orders.edit");
         Route::patch('/edit/{order}', [OrderController::class, 'handleUpdate']);
         Route::delete('/', [OrderController::class, 'handleDelete']);
+    });
+
+    // Settings
+    Route::prefix('settings')->group(function () {
+        Route::get('/password', [SettingController::class, 'changePasswordPage']);
+        Route::patch('/password', [SettingController::class, 'handleChangePassword']);
     });
 });
 

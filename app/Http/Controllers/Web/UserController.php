@@ -5,12 +5,10 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-
 use App\Http\Requests\Admin\UserRequest;
-
+use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Services\RoleService;
 use App\Services\UserService;
-
 use App\Models\User;
 
 class UserController extends Controller
@@ -76,7 +74,6 @@ class UserController extends Controller
     public function edit(User $user)
     {
         return view('admin.users.edit', [
-            'user' => $user,
             'breadcumbs' => [
                 'titles' => ['Users', 'Edit'],
                 'title_links' => ["/admin/users"]
@@ -105,6 +102,37 @@ class UserController extends Controller
             session()->flash('success', 'Delete user was successful!');
         } catch (\Exception $e) {
             session()->flash('error', $e->getMessage());
+        }
+
+        return redirect()->back();
+    }
+
+    public function change_password(User $user)
+    {
+        return view('admin.users.change-password', [
+            'user' => $user,
+            'breadcumbs' => [
+                'titles' => ['Users', 'Edit'],
+                'title_links' => ["/admin/users"]
+            ],
+            'title' => 'Change Password'
+        ]);
+    }
+
+    public function handleChange_password(User $user, ChangePasswordRequest $request)
+    {
+        try {
+            if (!Hash::check($request->current_password, $user->password)) {
+                return redirect()->back()->with('error', 'The current password is incorrect.');
+            }
+
+            $request->request->add(['updated_at' => now()]);
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+            session()->flash('success', 'Change password was successful!');
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+            session()->flash('error', 'Change password was not successful!');
         }
 
         return redirect()->back();

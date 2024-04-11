@@ -81,70 +81,72 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($category->specifications as $specification)
-                                    <tr>
-                                        <td class="align-middle">
-                                            <input type="checkbox" class="form-check-input" name="id"
-                                                value="{{ $specification->id }}">
-                                        </td>
+                                @if ($category->specifications && count($category->specifications))
+                                    @foreach ($category->specifications as $specification)
+                                        <tr>
+                                            <td class="align-middle">
+                                                <input type="checkbox" class="form-check-input" name="id"
+                                                    value="{{ $specification->id }}">
+                                            </td>
 
-                                        <td>{{ $specification->name }}</td>
+                                            <td>{{ $specification->name }}</td>
 
-                                        <td class="px-0 py-0">
-                                            <div class="table-responsive mb-3">
-                                                <table class="table table-bordered mb-0">
-                                                    <tbody>
-                                                        @foreach ($specification->attributes as $attribute)
-                                                            <tr>
-                                                                <td>{{ $attribute->key }}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </td>
-
-                                        <td class="text-center align-middle">
-                                            <a class="btn btn-warning"
-                                                href="/admin/categories/{{ $category->id }}/specifications/edit/{{ $specification->id }}">
-                                                <i class="fas fa-pen"></i>
-                                            </a>
-                                            <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
-                                                data-target="#modal-delete-{{ $specification->id }}">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <div class="modal" id="modal-delete-{{ $specification->id }}" aria-modal="true"
-                                        role="dialog">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">Warning!</h4>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">×</span>
-                                                    </button>
+                                            <td class="px-0 py-0">
+                                                <div class="table-responsive mb-3">
+                                                    <table class="table table-bordered mb-0">
+                                                        <tbody>
+                                                            @foreach ($specification->attributes as $attribute)
+                                                                <tr>
+                                                                    <td>{{ $attribute->key }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <p>Are you really want delete?</p>
-                                                </div>
-                                                <div class="modal-footer justify-content-between">
-                                                    <button type="button" class="btn btn-default"
-                                                        data-dismiss="modal">Close</button>
-                                                    <form action="/admin/categories/{{ $category->id }}/specifications"
-                                                        method="POST">
-                                                        <input type="hidden" name="id"
-                                                            value="{{ $specification->id }}">
-                                                        <button class="btn btn-primary" type="submit">Submit</button>
-                                                        <input type="hidden" name="_method" value="delete">
-                                                        @csrf
-                                                    </form>
+                                            </td>
+
+                                            <td class="text-center align-middle">
+                                                <a class="btn btn-warning"
+                                                    href="/admin/categories/{{ $category->id }}/specifications/edit/{{ $specification->id }}">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>
+                                                <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
+                                                    data-target="#modal-delete-{{ $specification->id }}">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <div class="modal" id="modal-delete-{{ $specification->id }}" aria-modal="true"
+                                            role="dialog">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Warning!</h4>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Are you really want delete?</p>
+                                                    </div>
+                                                    <div class="modal-footer justify-content-between">
+                                                        <button type="button" class="btn btn-default"
+                                                            data-dismiss="modal">Close</button>
+                                                        <form action="/admin/categories/{{ $category->id }}/specifications"
+                                                            method="POST">
+                                                            <input type="hidden" name="id"
+                                                                value="{{ $specification->id }}">
+                                                            <button class="btn btn-primary" type="submit">Submit</button>
+                                                            <input type="hidden" name="_method" value="delete">
+                                                            @csrf
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>

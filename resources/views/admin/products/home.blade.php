@@ -76,7 +76,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (count($products) > 0)
+                    @if ($products && count($products))
                         @foreach ($products as $product)
                             <tr>
                                 <td class="align-middle">
