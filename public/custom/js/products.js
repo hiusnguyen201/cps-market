@@ -150,26 +150,25 @@ formElement.find("button[type='submit']").click((e) => {
         },
         error: (err) => {
             const { errors, message } = err?.responseJSON;
-            console.log(errors);
             if (err.status == 422) {
-                Toastify({
-                    text: message,
-                    duration: 2000,
-                    newWindow: true,
-                    gravity: "top",
-                    close: true,
-                    position: "center",
-                    stopOnFocus: true,
-                    style: {
-                        background: "#F05F57",
-                    },
-                }).showToast();
-
                 printAllMessage(
                     $("input#product, select#product, textarea#product"),
                     errors
                 );
             }
+
+            Toastify({
+                text: message,
+                duration: 2000,
+                newWindow: true,
+                gravity: "top",
+                close: true,
+                position: "center",
+                stopOnFocus: true,
+                style: {
+                    background: "#F05F57",
+                },
+            }).showToast();
         },
     });
 });

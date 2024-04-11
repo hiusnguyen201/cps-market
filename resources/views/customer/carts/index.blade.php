@@ -8,7 +8,7 @@
         <input hidden type="text" name="message-error" value="{{ session('error') }}">
     @endif
 
-    <form id="updateCart" method="post">
+    <form id="updateCart" method="post" action="{{ route('cart.update') }}">
         @csrf
         @method('PATCH')
         <input type="hidden" name="quantity">
@@ -27,7 +27,7 @@
                                         <a href="/">Home</a>
                                     </li>
                                     <li class="is-marked">
-                                        <a href="/cart">Cart</a>
+                                        <a href="{{ route('cart.index') }}">Cart</a>
                                     </li>
                                 </ul>
                             </div>
@@ -80,7 +80,7 @@
                                                                     href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html">{{ $cart->product->name }}</a></span>
                                                             <span class="table-p__category">
                                                                 <a
-                                                                    href="/{{ $cart->product->category->slug }}">{{ $cart->product->category->name }}</a></span>
+                                                                    href="/catalogsearch/result?category_id={{ $cart->product->category->id }}">{{ $cart->product->category->name }}</a></span>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -152,7 +152,8 @@
                                                 </table>
                                             </div>
                                             <div>
-                                                <a style="display: block; text-align:center" href="/cart/checkout"
+                                                <a style="display: block; text-align:center"
+                                                    href="{{ route('cart.checkout') }}"
                                                     class="btn btn--e-brand-b-2">PROCEED TO
                                                     CHECKOUT</a>
                                             </div>

@@ -28,7 +28,7 @@
                         <span style="color: red">{{ $message }}</span>
                     @enderror
                 </div>
-                <input type="hidden" name="id" value="{{ $category->id }}">
+                <input type="hidden" name="category_id" value="{{ $category->id }}">
 
                 <button type="submit" class="btn btn-success w-100 p-2">Add</button>
                 @csrf

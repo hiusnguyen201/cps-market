@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\CheckoutRequest;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Order;
-use App\Models\Cart;
-use App\Models\Order_Product;
-use App\Models\Shipping_Address;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
+use App\Http\Requests\Customer\CheckoutRequest;
+use App\Services\OrderService;
 
 class PaymentController extends Controller
 {
+    private OrderService $orderService;
+
+    public function __construct()
+    {
+        $this->orderService = new OrderService();
+    }
+
     function execPostRequest($url, $data)
     {
         $ch = curl_init($url);
@@ -47,8 +50,8 @@ class PaymentController extends Controller
 
         $orderInfo = "Thanh toán qua MoMo";
         $orderId = time() . "";
-        $redirectUrl = env("APP_URL") . "/cart/success";
-        $ipnUrl = env("APP_URL") . "/cart/success";
+        $redirectUrl = env("APP_URL") . route("cart.success");
+        $ipnUrl = env("APP_URL") . route("cart.success");
         $extraData = "";
         $requestId = time() . "";
         $requestType = "captureWallet";
@@ -81,72 +84,29 @@ class PaymentController extends Controller
 
         $result = $this->execPostRequest($endpoint, json_encode($data));
 
-        if (!$result)
+        if (!$result) {
             return redirect()->back()->with("error", "Error Payment with Momo");
+        }
 
-        $this->createOrder($request, $orderId, Auth::user());
+        try {
+            $this->orderService->createOrderInCustomer($request, $orderId, Auth::user());
+        } catch (\Exception $e) {
+            return redirect()->back()->with("error", "Create order failed");
+        }
 
         $jsonResult = json_decode($result, true);
         return redirect($jsonResult['payUrl']);
 
     }
 
-    public function createOrder($request, $orderId, $customer)
+    public function handleCodPayment(CheckoutRequest $request)
     {
-        DB::beginTransaction();
+        $orderId = time() . "";
         try {
-            // Tính tổng price và quantity
-            $totalPrice = 0;
-            $countProductInCart = 0;
-            foreach ($customer->carts as $cart) {
-                $countProductInCart += $cart->quantity;
-                $totalPrice += (($cart->product->sale_price ?? $cart->product->price) * $cart->quantity);
-            }
-
-            // Tạo order
-            $order = Order::create([
-                'code' => $orderId,
-                'quantity' => $countProductInCart,
-                'sub_total' => $totalPrice,
-                'shipping_fee' => config("constants.shipping_fee"),
-                'total' => $totalPrice + config("constants.shipping_fee"),
-                'payment_method' => $request->payment_method,
-                'payment_status' => config("constants.payment_status.pending"),
-                'status' => config("constants.order_status.pending"),
-                'customer_id' => $customer->id
-            ]);
-
-            foreach ($customer->carts as $cart) {
-                Order_Product::create([
-                    "product_id" => $cart->product->id,
-                    "order_id" => $order->id,
-                    "quantity" => $cart->quantity,
-                    "price" => $cart->product->price,
-                    "sale_price" => $cart->product->sale_price,
-                ]);
-            }
-
-            Shipping_Address::create([
-                "customer_name" => $request->customer_name,
-                "customer_email" => $request->customer_email,
-                "customer_phone" => $request->customer_phone,
-                "province" => $request->province,
-                "district" => $request->district,
-                "ward" => $request->ward,
-                "address" => $request->address,
-                "note" => $request->note,
-                "order_id" => $order->id
-            ]);
-
-            Cart::where('user_id', Auth::id())->delete();
-
-            DB::commit();
-            return $order;
-        } catch (\Exception $err) {
-            DB::rollBack();
-            \Log::error('Order creation failed: ' . $err->getMessage());
-            throw new \Exception($err->getMessage());
+            $this->orderService->createOrderInCustomer($request, $orderId, Auth::user());
+            return redirect(route('cart.success') . '?orderId=' . $orderId);
+        } catch (\Exception $e) {
+            return redirect()->back()->with("error", "Create order failed");
         }
     }
-
 }

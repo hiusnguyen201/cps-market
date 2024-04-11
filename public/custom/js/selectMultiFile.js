@@ -42,6 +42,8 @@ const addInputFileForm = (inputDivPrevious) => {
     element.addEventListener("click", clickInput);
     const input = element.querySelector("input.input-file_form[type=file]");
     input.addEventListener("change", handleChangeFile);
+
+    return element;
 };
 
 const clickInput = (e) => {
@@ -108,7 +110,7 @@ divUploadedBlock.forEach(async (element) => {
 
     element
         .querySelector("div.remove-btn_block>i")
-        .addEventListener("click", () => {
+        .addEventListener("click", (e) => {
             if (!input.multiple) {
                 clearInputFileForm(input, img);
                 input.disabled = false;

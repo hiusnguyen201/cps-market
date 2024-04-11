@@ -58,65 +58,69 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($brands as $brand)
-                        <tr>
-                            <td class="align-middle">
-                                <input type="checkbox" class="form-check-input" id="selectAll" name="id"
-                                    value="{{ $brand->id }}">
-                            </td>
+                    @if ($brands && count($brands))
+                        @foreach ($brands as $brand)
+                            <tr>
+                                <td class="align-middle">
+                                    <input type="checkbox" class="form-check-input" id="selectAll" name="id"
+                                        value="{{ $brand->id }}">
+                                </td>
 
-                            <td class="align-middle"><a
-                                    href="/admin/brands/details/{{ $brand->id }}">{{ $brand->name }}</a></td>
+                                <td class="align-middle"><a
+                                        href="/admin/brands/details/{{ $brand->id }}">{{ $brand->name }}</a></td>
 
-                            <td class="text-center align-middle">
-                                <a class="btn btn-warning" href="/admin/brands/edit/{{ $brand->id }}">
-                                    <i class="fas fa-pen"></i>
-                                </a>
-                                <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
-                                    data-target="#modal-delete-{{ $brand->id }}">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </td>
-                        </tr>
+                                <td class="text-center align-middle">
+                                    <a class="btn btn-warning" href="/admin/brands/edit/{{ $brand->id }}">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
+                                        data-target="#modal-delete-{{ $brand->id }}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
 
-                        <div class="modal " id="modal-delete-{{ $brand->id }}" aria-modal="true" role="dialog">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Warning!</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Are you really want delete?</p>
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <form action="" method="POST">
-                                            <input type="hidden" name="id" value="{{ $brand->id }}">
-                                            <button class="btn btn-primary" type="submit">Submit</button>
-                                            <input type="hidden" name="_method" value="delete">
-                                            @csrf
-                                        </form>
+                            <div class="modal fade" id="modal-delete-{{ $brand->id }}" aria-modal="true" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Warning!</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you really want delete?</p>
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">Close</button>
+                                            <form action="" method="POST">
+                                                <input type="hidden" name="id" value="{{ $brand->id }}">
+                                                <button class="btn btn-primary" type="submit">Submit</button>
+                                                <input type="hidden" name="_method" value="delete">
+                                                @csrf
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>
 
         <!-- Paginate -->
-        <div class="d-flex ml-auto">
-            {{ $brands->appends(Request::all())->links() }}
-        </div>
-
+        @if (count($brands))
+            <div class="d-flex ml-auto">
+                {{ $brands->appends(Request::all())->links() }}
+            </div>
+        @endif
     </div>
 
     <!-- Modal delete -->
-    <div class="modal " id="modal-deleteAll" aria-modal="true" role="dialog">
+    <div class="modal fade" id="modal-deleteAll" aria-modal="true" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

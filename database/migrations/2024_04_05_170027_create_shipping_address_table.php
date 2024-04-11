@@ -14,6 +14,9 @@ return new class extends Migration {
     {
         Schema::create('shipping_address', function (Blueprint $table) {
             $table->id();
+            $table->string("customer_name", 100);
+            $table->string("customer_email", 150);
+            $table->string("customer_phone", 15);
             $table->integer("province");
             $table->integer("district");
             $table->integer("ward");
@@ -21,7 +24,6 @@ return new class extends Migration {
             $table->string("note", 100)->nullable();
             $table->unsignedBigInteger("order_id");
             $table->timestamps();
-            $table->softDeletes();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });

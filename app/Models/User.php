@@ -26,10 +26,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        "avatar",
         "phone",
+        "status",
         "gender",
-        "role_id"
+        "role_id",
+        "address"
     ];
 
     /**
@@ -55,6 +56,7 @@ class User extends Authenticatable
         "status" => "integer",
         "gender" => "integer",
         "role_id" => "integer",
+        "address" => "string",
     ];
 
     public function role(): BelongsTo
@@ -71,9 +73,18 @@ class User extends Authenticatable
     {
         return $this->hasMany(Cart::class);
     }
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
 
     public function password_reset(): HasOne
     {
         return $this->hasOne(Password_Reset::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, "customer_id");
     }
 }

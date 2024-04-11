@@ -25,9 +25,10 @@ class SpecificationRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'name' => 'required|string|max:150|unique:specifications,name' . ($request->_method == 'PATCH' ? ',' . $request->id : ''),
-            'attributes' => 'array',
-            'category.*id' => 'integer|min:1|exists:categories,id',
+            'name' => 'required|string|max:150|unique:specifications,name' . ($request->_method == 'PATCH' ? ',' . $request->specification_id : ''),
+            'attributes' => 'nullable|array',
+            'attributes.*' => 'nullable|string|max:150',
+            'category_id' => 'required|integer|min:1|exists:categories,id',
         ];
     }
 
@@ -39,9 +40,12 @@ class SpecificationRequest extends FormRequest
             'name.max' => ':attribute have invalid length characters',
             'name.unique' => ':attribute is existed',
             'attributes.array' => ':attribute invalid',
-            'category.*.integer' => ':attribute is not found',
-            'category.*.min' => ':attribute is not found',
-            'category.*.exists' => ':attribute not is found',
+            'attributes.*.string' => ':attribute invalid in position :position',
+            'attributes.*.max' => ':attribute invalid length in position :position',
+            'category_id.required' => ':attribute is required',
+            'category_id.integer' => ':attribute is not found',
+            'category_id.min' => ':attribute is not found',
+            'category_id.exists' => ':attribute not is found',
         ];
     }
     public function attributes()
@@ -49,6 +53,7 @@ class SpecificationRequest extends FormRequest
         return [
             'name' => "Name",
             'attributes' => "Attributes",
+            'attributes.*' => "Attribute",
             'category' => 'Category',
         ];
     }

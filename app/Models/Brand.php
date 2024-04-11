@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Brand extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
+
     protected $table = 'brands';
 
     /**
@@ -30,7 +30,7 @@ class Brand extends Model
     protected $casts = [
         'name' => "string",
         'slug' => "string",
-        
+
     ];
 
     public function categories()

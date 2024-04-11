@@ -12,6 +12,9 @@ class Shipping_Address extends Model
     protected $table = "shipping_address";
 
     protected $fillable = [
+        "customer_name",
+        "customer_email",
+        "customer_phone",
         'province',
         'district',
         "ward",
@@ -21,6 +24,9 @@ class Shipping_Address extends Model
     ];
 
     protected $casts = [
+        "customer_name" => "string",
+        "customer_email" => "string",
+        "customer_phone" => "string",
         'province' => "integer",
         'district' => "integer",
         "ward" => "integer",
@@ -37,5 +43,10 @@ class Shipping_Address extends Model
     public function shipping_address()
     {
         return $this->hasOne(Shipping_Address::class);
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
 }

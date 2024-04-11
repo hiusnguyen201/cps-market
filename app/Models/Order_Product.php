@@ -16,7 +16,6 @@ class Order_Product extends Model
         'order_id',
         "quantity",
         "price",
-        "sale_price",
     ];
 
     protected $casts = [
@@ -24,7 +23,6 @@ class Order_Product extends Model
         "order_id" => "integer",
         "quantity" => "integer",
         "price" => "integer",
-        "sale_price" => "integer",
     ];
 
     public function order()

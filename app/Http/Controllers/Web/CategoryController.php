@@ -3,23 +3,28 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\admin\CategoryRequest;
-use Illuminate\Support\Str;
+use App\Services\CategoryService;
+
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
+    private CategoryService $categoryService;
+
+    public function __construct()
+    {
+        $this->categoryService = new CategoryService();
+    }
+
 
     public function home(Request $request)
     {
-        $kw = $request->keyword;
-
-        $categories = Category::where(function ($query) use ($kw) {
-            $query->orWhere('name', 'like', '%' . $kw . '%');
-        });
-
-        $categories = $categories->paginate($request->limit ?? 10);
+        $categories = $this->categoryService->findAllAndPaginate($request);
+        if (!count($categories) && +$request->page > 1) {
+            return redirect()->route('admin.categories.home', ['page' => +$request->page - 1]);
+        }
 
         return view('admin.categories.home', [
             'categories' => $categories,
@@ -34,7 +39,6 @@ class CategoryController extends Controller
     {
         return view('admin.categories.details', [
             'category' => $category,
-            'user_status' => config('constants.user_status'),
             'breadcumbs' => ['titles' => ['Categories', 'Details'], 'title_links' => ["/admin/categories"]],
             'title' => 'Details Category'
         ]);
@@ -51,16 +55,12 @@ class CategoryController extends Controller
     public function handleCreate(CategoryRequest $request)
     {
         try {
-            Category::create([
-                'name' => $request['name'],
-                'slug' => Str::slug($request['name'], '-'),
-            ]);
-
-            session()->flash('success', 'create category was successful!');
+            $this->categoryService->create($request);
+            session()->flash('success', 'Create category successfully');
         } catch (\Exception $e) {
-            error_log($e->getMessage());
-            session()->flash('error', 'create category was not successful!');
+            session()->flash('error', $e->getMessage());
         }
+
         return redirect()->back();
     }
 
@@ -77,14 +77,10 @@ class CategoryController extends Controller
     public function handleUpdate(Category $category, CategoryRequest $request)
     {
         try {
-            $request->request->add(['updated_at' => now()]);
-            $request->request->add(['slug' => Str::slug($request->name, '-')]);
-            $category->fill($request->input());
-            $category->save();
-            session()->flash('success', 'update category was successful!');
+            $this->categoryService->update($request, $category);
+            session()->flash('success', 'Edit category successfully');
         } catch (\Exception $e) {
-            error_log($e->getMessage());
-            session()->flash('error', 'Edit category was not successful!');
+            session()->flash('error', $e->getMessage());
         }
         return redirect()->back();
     }
@@ -92,25 +88,11 @@ class CategoryController extends Controller
     public function handleDelete(Request $request)
     {
         try {
-            $categoryIds = $request->id;
-
-            if (!is_array($categoryIds)) {
-                $categoryIds = [$categoryIds];
-            }
-
-            foreach ($categoryIds as $index => $categoryId) {
-                $category = Category::find($categoryId);
-
-                if (is_null($category)) {
-                    session()->flash('error', 'Delete category was not successful! in position ' . $index);
-                    return redirect()->back();
-                }
-                $category->delete();
-                session()->flash('success', 'Delete category was successful!');
-            }
+            $categoryIds = is_array($request->id) ? $request->id : [$request->id];
+            $this->categoryService->deleteCategories($categoryIds);
+            session()->flash('success', 'Delete category successfully');
         } catch (\Exception $e) {
-            error_log($e->getMessage());
-            session()->flash('error', 'Delete category was not successful!');
+            session()->flash('error', $e->getMessage());
         }
 
         return redirect()->back();

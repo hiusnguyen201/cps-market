@@ -3,59 +3,48 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
-use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Models\Product;
-use App\Models\Wishlist;
-use Illuminate\Auth\Events\Failed;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+
+use App\Services\CategoryService;
+use App\Services\WishlistService;
+use App\Services\ProductService;
+use App\Services\BrandService;
+use App\Services\UserService;
 
 class HomeController extends Controller
 {
+    private CategoryService $categoryService;
+    private BrandService $brandService;
+    private WishlistService $wishlistService;
+    private ProductService $productService;
+    private UserService $userService;
+
+    public function __construct()
+    {
+        $this->categoryService = new CategoryService();
+        $this->brandService = new BrandService();
+        $this->wishlistService = new WishlistService();
+        $this->productService = new ProductService();
+        $this->userService = new UserService();
+    }
+
     public function home()
     {
         $sections = [];
-        $categories = Category::all();
+        $categories = $this->categoryService->findAll();
 
         for ($i = 0; $i < count($categories); $i++) {
-            $categoryName = $categories[$i]->name;
-            $products = Product::whereHas('category', function ($query) use ($categoryName) {
-                $query->where('name', $categoryName);
-            })
-                ->orderBy('sold', 'desc')
-                ->limit(10)
-                ->get();
-
+            $products = $this->productService->findAllWithLimitByCategoryName(10, $categories[$i]->name);
             array_push($sections, $products);
         }
 
-        //best sold in day
-        $sections9D = Product::whereDate('updated_at', today())
-            ->orderBy('sold', 'desc')
-            ->limit(3)
-            ->get();
+        $sections9D = $this->productService->findAllWithLimitBestSoldInDay(3);
+        $sections9W = $this->productService->findAllWithLimitBestSoldInWeek(3);
+        $sections9M = $this->productService->findAllWithLimitBestSoldInMonth(3);
 
-        //best sold in week
-        $sections9W = Product::whereYear('updated_at', now()->year)
-            ->whereBetween('updated_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
-            ->orderBy('sold', 'desc')
-            ->limit(3)
-            ->get();
-
-        //best sold in month
-        $sections9M = Product::whereYear('updated_at', now()->year)
-            ->whereMonth('updated_at', now()->month)
-            ->orderBy('sold', 'desc')
-            ->limit(3)
-            ->get();
-
-        $countProductInCart = 0;
         if (Auth::user()) {
-            foreach (Auth::user()->carts as $cart) {
-                $countProductInCart += $cart->quantity;
-            }
+            [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
         }
 
         return view("customer/home", [
@@ -64,143 +53,49 @@ class HomeController extends Controller
             'sections9W' => $sections9W,
             'sections9M' => $sections9M,
             'categories' => $categories,
-            'countProductInCart' => $countProductInCart,
+            'countProductsInCart' => $countProductsInCart,
             'title' => "Home"
         ]);
     }
 
     public function details($categorySlug, $brandSlug, $productSlug)
     {
-        $product = Product::where(['slug' => $productSlug])->first();
-        $categories = Category::all();
+        $product = $this->productService->findOneBySlug($productSlug);
 
-        $countProductInCart = 0;
         $wishlistCheck = null;
         if (Auth::user()) {
-            foreach (Auth::user()->carts as $cart) {
-                $countProductInCart += $cart->quantity;
-            }
-
-            $wishlistCheck = Wishlist::where('product_id', $product->id)->where('user_id', Auth::id())->first();
+            $wishlistCheck = $this->wishlistService->findOneByProductIdAndCustomerId($product->id, Auth::id());
+            [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
         }
+
+        $categories = $this->categoryService->findAll();
 
         return view('customer.products.details', [
             'product' => $product,
             'categories' => $categories,
-            'countProductInCart' => $countProductInCart,
+            'countProductsInCart' => $countProductsInCart,
             'wishlistCheck' => $wishlistCheck,
             'title' => 'Details Product',
         ]);
     }
 
-
-    public function categories($categorySlug, Request $request)
-    {
-        $categories = Category::all();
-        $category = Category::where('slug', $categorySlug)->firstOrFail();
-
-        $kw = $request->keyword;
-        $products = Product::where(function ($query) use ($kw) {
-            $query->orWhere('name', 'like', '%' . $kw . '%');
-        });
-
-        $products = Product::where('category_id', $category->id)
-            ->orderBy('sold', 'desc');
-
-        $products = $products->paginate($request->limit ?? 9);
-
-        $countProductInCart = 0;
-        if (Auth::user()) {
-            foreach (Auth::user()->carts as $cart) {
-                $countProductInCart += $cart->quantity;
-            }
-        }
-
-        return view('customer.products.categories', [
-            'title' => 'Categories Product',
-            'countProductInCart' => $countProductInCart,
-            'products' => $products,
-            'categories' => $categories,
-        ]);
-    }
-
     public function search(Request $request)
     {
-        $categories = Category::all();
-        $brands = Brand::all();
+        $categories = $this->categoryService->findAll();
+        $brands = $this->brandService->findAll();
+        $products = $this->productService->searchProductWithFilterInCustomer($request);
 
-        $wishlists = Wishlist::where('user_id', Auth::id())->pluck('product_id', 'id')->toArray();
-        $products = Product::where('name', 'like', '%' . $request->keyword . '%');
-
-        $per_page = $request->per_page ?? 12;
-        $sort_by = $request->sort_by ?? 'newest';
-
-        if ($request->sort_by) {
-            switch ($sort_by) {
-                case 'newest':
-                    $products = $products->orderByDesc('created_at');
-                    break;
-
-                case 'latest':
-                    $products = $products->orderBy('created_at');
-                    break;
-
-                case 'lowest_price':
-                    $products = $products->orderBy('price');
-                    break;
-
-                case 'highest_price':
-                    $products = $products->orderByDesc('price');
-                    break;
-
-                default:
-                    # code...
-                    break;
-            }
-        }
-
-        if ($request->price_min) {
-            $products->where('price', '>=', $request->price_min ?? 0);
-        }
-
-        if ($request->price_max) {
-            $products->where('price', '<=', $request->price_max ?? 100000000);
-        }
-
-        if ($request->category_id) {
-            $products->where('category_id', $request->category_id ?? null);
-        }
-
-
-        if ($request->brand_id) {
-            $products->where('brand_id', $request->brand_id ?? null);
-        }
-
-        $countAllProducts = count($products->get());
-
-        $products = $products->paginate($per_page);
-
-        $countProductInCart = 0;
         if (Auth::user()) {
-            foreach (Auth::user()->carts as $cart) {
-                $countProductInCart += $cart->quantity;
-            }
+            [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
         }
-
 
         return view('customer.search', [
             'title' => 'Search Product',
-            'countProductInCart' => $countProductInCart,
+            'countProductsInCart' => $countProductsInCart,
             'products' => $products,
             'categories' => $categories,
             'brands' => $brands,
-            'per_page' => $per_page,
-            'sort_by' => $sort_by,
-            'price_min' => $request->price_min,
-            'price_max' => $request->price_max,
-            'wishlists' => $wishlists,
-            'keyword' => $request->keyword,
-            "countAllProducts" => $countAllProducts,
+            'wishlistUser' => Auth::user()->wishlist,
         ]);
     }
 }
