@@ -9,37 +9,33 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\OrderService;
 use App\Services\CartService;
 use App\Services\CategoryService;
+use App\Services\UserService;
 
 class CartController extends Controller
 {
     private OrderService $orderService;
     private CartService $cartService;
     private CategoryService $categoryService;
-
+    private UserService $userService;
     public function __construct()
     {
         $this->orderService = new OrderService();
         $this->cartService = new CartService();
         $this->categoryService = new CategoryService();
+        $this->userService = new UserService();
     }
 
     public function home()
     {
         $categories = $this->categoryService->findAll();
-        $carts = Auth::user()->carts;
 
-        $countProductInCart = 0;
-        $totalPrice = 0;
-        foreach ($carts as $cart) {
-            $countProductInCart += $cart->quantity;
-            $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price : $cart->product->price) * $cart->quantity);
-        }
+        [$countProductsInCart, $totalPrice] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
 
         return view("customer/carts/index", [
             'title' => "Cart",
-            'carts' => $carts,
+            'carts' => Auth::user()->carts,
             "categories" => $categories,
-            "countProductInCart" => $countProductInCart,
+            "countProductsInCart" => $countProductsInCart,
             "totalPrice" => $totalPrice
         ]);
     }
@@ -94,28 +90,19 @@ class CartController extends Controller
 
     public function checkoutPage()
     {
-        $user = Auth::user();
-        $carts = $user->carts;
-        if (!$carts || !count($carts)) {
+        if (!Auth::user()->carts || !count(Auth::user()->carts)) {
             return redirect()->route("cart.index");
         }
 
-        $totalPrice = 0;
-        $countProductInCart = 0;
-        foreach ($carts as $cart) {
-            $countProductInCart += $cart->quantity;
-            $totalPrice += (($cart->product->sale_price ?? $cart->product->price) * $cart->quantity);
-        }
+        [$countProductsInCart, $totalPrice] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
 
         $categories = $categories = $this->categoryService->findAll();
 
         return view("customer/carts/checkout", [
             'title' => "Checkout",
             "categories" => $categories,
-            "carts" => $carts,
-            "countProductInCart" => $countProductInCart,
+            "countProductsInCart" => $countProductsInCart,
             "totalPrice" => $totalPrice,
-            "user" => $user
         ]);
     }
 
