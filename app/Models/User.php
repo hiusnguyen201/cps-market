@@ -29,7 +29,8 @@ class User extends Authenticatable
         "phone",
         "status",
         "gender",
-        "role_id"
+        "role_id",
+        "address"
     ];
 
     /**
@@ -55,6 +56,7 @@ class User extends Authenticatable
         "status" => "integer",
         "gender" => "integer",
         "role_id" => "integer",
+        "address" => "string",
     ];
 
     public function role(): BelongsTo
@@ -79,5 +81,10 @@ class User extends Authenticatable
     public function password_reset(): HasOne
     {
         return $this->hasOne(Password_Reset::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, "customer_id");
     }
 }

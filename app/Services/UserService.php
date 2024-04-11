@@ -11,11 +11,10 @@ use App\Jobs\SendPassCreateUser;
 use App\Jobs\SendOtp;
 use App\Jobs\SendPassResetLink;
 
-use App\Services\OtpService;
-
 use App\Models\User;
 use App\Models\Social_Account;
 use App\Models\Role;
+use App\Models\Order;
 use App\Models\User_Otp;
 use App\Models\Password_Reset;
 
@@ -64,6 +63,7 @@ class UserService
                 'phone' => $request->phone,
                 'gender' => $request->gender,
                 'status' => $request->status,
+                'address' => $request->address,
                 'role_id' => $role->id,
                 'password' => Hash::make($password)
             ]);
@@ -406,5 +406,68 @@ class UserService
                 throw new \Exception($e->getMessage());
             }
         }
+    }
+
+    public function getRecentOrdersWithLimit($userId, $limit)
+    {
+        $orders = Order::where("customer_id", $userId)->orderBy('created_at', 'desc')->limit($limit)->get();
+        return ($orders && count($orders)) ? $orders : [];
+    }
+
+    public function countPlacedOrders($userId)
+    {
+        $orders = Order::where(function ($query) use ($userId) {
+            $query->where("customer_id", $userId);
+            $query->where("status", "!=", config("constants.order_status.canceled")['value']);
+        })->get();
+
+        return $orders ? count($orders) : 0;
+    }
+
+    public function countCancelOrders($userId)
+    {
+        $orders = Order::where(function ($query) use ($userId) {
+            $query->where("customer_id", $userId);
+            $query->where("status", "=", config("constants.order_status.canceled")['value']);
+        })->get();
+
+        return $orders ? count($orders) : 0;
+    }
+
+    public function countProductsAndCalculatePriceInCart($user)
+    {
+        $countProductsInCart = 0;
+        $totalPrice = 0;
+        foreach ($user->carts as $cart) {
+            $countProductsInCart += $cart->quantity;
+            $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price : $cart->product->price) * $cart->quantity);
+        }
+
+        return [$countProductsInCart, $totalPrice];
+    }
+
+    public function showOrdersWithFilterInCustomer($userId, $timeSort)
+    {
+        $orders = Order::where(function ($query) use ($userId, $timeSort) {
+            $query->where("customer_id", $userId);
+            switch ($timeSort) {
+                case '15':
+                    $query->where('created_at', '>=', now()->subDays(15));
+                    break;
+                case '30':
+                    $query->where('created_at', '>=', now()->subDays(30));
+                    break;
+                case '180':
+                    $query->where('created_at', '>=', now()->subMonths(6));
+                    break;
+                case 'all':
+                    break;
+                default:
+                    $query->orderBy('created_at', 'desc')->limit(5);
+                    break;
+            }
+        })->get();
+
+        return $orders && count($orders) ? $orders : [];
     }
 }

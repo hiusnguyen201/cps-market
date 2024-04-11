@@ -296,7 +296,7 @@
                             <button class="btn btn--icon toggle-button fas fa-shopping-bag toggle-button-shop"
                                 type="button"></button>
 
-                            <span class="total-item-round">{{ $countProductInCart ?? 0 }}</span>
+                            <span class="total-item-round">{{ $countProductsInCart ?? 0 }}</span>
 
                             <!--====== Menu ======-->
                             <div class="ah-lg-mode">
@@ -318,7 +318,7 @@
                                         <a class="mini-cart-shop-link" href="{{ route('cart.index') }}"><i
                                                 class="fas fa-shopping-bag"></i>
 
-                                            <span class="total-item-round">{{ $countProductInCart ?? 0 }}</span></a>
+                                            <span class="total-item-round">{{ $countProductsInCart ?? 0 }}</span></a>
                                         <span class="js-menu-toggle"></span>
                                     </li>
                                 </ul>

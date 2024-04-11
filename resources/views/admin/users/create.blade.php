@@ -72,18 +72,29 @@
                     <label for="gender" class="mb-0">Status</label>
                 </div>
                 <div class="col-lg-7 col-12">
-                    <div class="d-flex align-items-center justify-content-start g-2">
-                        @if (config('constants.user_status') && count(config('constants.user_status')))
-                            <select name="status" class="form-control">
-                                @foreach (config('constants.user_status') as $status)
-                                    <option
-                                        {{ $status['value'] == config('constants.user_status.inactive')['value'] ? 'selected' : '' }}
-                                        value="{{ $status['value'] }}">{{ $status['title'] }}</option>
-                                @endforeach
-                            </select>
-                        @endif
-                    </div>
+                    @if (config('constants.user_status') && count(config('constants.user_status')))
+                        <select name="status" class="form-control">
+                            @foreach (config('constants.user_status') as $status)
+                                <option
+                                    {{ $status['value'] == config('constants.user_status.inactive')['value'] ? 'selected' : '' }}
+                                    value="{{ $status['value'] }}">{{ $status['title'] }}</option>
+                            @endforeach
+                        </select>
+                    @endif
                     @error('status')
+                        <span style="color: red">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+                <div class="col-lg-3 col-12">
+                    <label for="address" class="mb-0">Address</span></label>
+                </div>
+                <div class="col-lg-7 col-12">
+                    <input type="address" name="address" class="form-control" id="address" placeholder="Address..."
+                        value="{{ old('address') }}">
+                    @error('address')
                         <span style="color: red">{{ $message }}</span>
                     @enderror
                 </div>

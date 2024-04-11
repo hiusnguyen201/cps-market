@@ -40,8 +40,8 @@
                             <div class="o-summary">
                                 <div class="o-summary__section u-s-m-b-30">
                                     <div class="o-summary__item-wrap gl-scroll">
-                                        @if (count($carts))
-                                            @foreach ($carts as $cart)
+                                        @if (Auth::user()->carts && count(Auth::user()->carts))
+                                            @foreach (Auth::user()->carts as $cart)
                                                 <div class="o-card">
                                                     <div class="o-card__flex">
                                                         <div class="o-card__img-wrap">
@@ -90,7 +90,7 @@
                                                     <div class="ship-b">
                                                         <div class="u-s-m-b-30">
                                                             <label class="gl-label">NAME *</label>
-                                                            <input name="customer_name" value="{{ $user->name }}"
+                                                            <input name="customer_name" value="{{ Auth::user()->name }}"
                                                                 fdprocessedid="mf89an"
                                                                 class="input-text input-text--primary-style" type="text"
                                                                 placeholder="Name...">
@@ -106,7 +106,7 @@
                                                         <div class="u-s-m-b-30">
                                                             <label class="gl-label">PHONE *</label>
                                                             <input name="customer_phone" fdprocessedid="mf89an"
-                                                                value="{{ $user->phone }}"
+                                                                value="{{ Auth::user()->phone }}"
                                                                 class="input-text input-text--primary-style" type="tel"
                                                                 placeholder="Phone...">
 
@@ -121,7 +121,7 @@
                                                         <div class="u-s-m-b-30">
                                                             <label class="gl-label">EMAIL *</label>
                                                             <input name="customer_email" fdprocessedid="mf89an"
-                                                                value="{{ $user->email }}"
+                                                                value="{{ Auth::user()->email }}"
                                                                 class="input-text input-text--primary-style" type="email"
                                                                 placeholder="Email...">
 

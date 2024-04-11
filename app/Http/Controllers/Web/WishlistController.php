@@ -9,35 +9,32 @@ use Illuminate\Http\Request;
 
 use App\Services\WishlistService;
 use App\Services\CategoryService;
+use App\Services\UserService;
 
 class WishlistController extends Controller
 {
     private WishlistService $wishlistService;
     private CategoryService $categoryService;
+    private UserService $userService;
 
     public function __construct()
     {
         $this->wishlistService = new WishlistService();
         $this->categoryService = new CategoryService();
+        $this->userService = new UserService();
     }
 
     public function home()
     {
-        $user = Auth::user();
-
-        $countProductInCart = 0;
-        foreach ($user->carts as $cart) {
-            $countProductInCart += $cart->quantity;
-        }
-
         $categories = $this->categoryService->findAll();
-        $wishlist = $this->wishlistService->findAllByCustomerId($user->id);
+        $wishlist = $this->wishlistService->findAllByCustomerId(Auth::id());
+        [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
 
         return view("customer/wishlist", [
             'title' => "Wishlist",
             "categories" => $categories,
             'wishlist' => $wishlist,
-            'countProductInCart' => $countProductInCart,
+            'countProductsInCart' => $countProductsInCart,
         ]);
     }
 

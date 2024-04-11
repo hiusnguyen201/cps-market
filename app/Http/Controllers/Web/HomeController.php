@@ -10,6 +10,7 @@ use App\Services\CategoryService;
 use App\Services\WishlistService;
 use App\Services\ProductService;
 use App\Services\BrandService;
+use App\Services\UserService;
 
 class HomeController extends Controller
 {
@@ -17,6 +18,7 @@ class HomeController extends Controller
     private BrandService $brandService;
     private WishlistService $wishlistService;
     private ProductService $productService;
+    private UserService $userService;
 
     public function __construct()
     {
@@ -24,6 +26,7 @@ class HomeController extends Controller
         $this->brandService = new BrandService();
         $this->wishlistService = new WishlistService();
         $this->productService = new ProductService();
+        $this->userService = new UserService();
     }
 
     public function home()
@@ -40,11 +43,8 @@ class HomeController extends Controller
         $sections9W = $this->productService->findAllWithLimitBestSoldInWeek(3);
         $sections9M = $this->productService->findAllWithLimitBestSoldInMonth(3);
 
-        $countProductInCart = 0;
         if (Auth::user()) {
-            foreach (Auth::user()->carts as $cart) {
-                $countProductInCart += $cart->quantity;
-            }
+            [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
         }
 
         return view("customer/home", [
@@ -53,7 +53,7 @@ class HomeController extends Controller
             'sections9W' => $sections9W,
             'sections9M' => $sections9M,
             'categories' => $categories,
-            'countProductInCart' => $countProductInCart,
+            'countProductsInCart' => $countProductsInCart,
             'title' => "Home"
         ]);
     }
@@ -62,14 +62,10 @@ class HomeController extends Controller
     {
         $product = $this->productService->findOneBySlug($productSlug);
 
-        $countProductInCart = 0;
         $wishlistCheck = null;
         if (Auth::user()) {
-            foreach (Auth::user()->carts as $cart) {
-                $countProductInCart += $cart->quantity;
-            }
-
             $wishlistCheck = $this->wishlistService->findOneByProductIdAndCustomerId($product->id, Auth::id());
+            [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
         }
 
         $categories = $this->categoryService->findAll();
@@ -77,7 +73,7 @@ class HomeController extends Controller
         return view('customer.products.details', [
             'product' => $product,
             'categories' => $categories,
-            'countProductInCart' => $countProductInCart,
+            'countProductsInCart' => $countProductsInCart,
             'wishlistCheck' => $wishlistCheck,
             'title' => 'Details Product',
         ]);
@@ -87,24 +83,19 @@ class HomeController extends Controller
     {
         $categories = $this->categoryService->findAll();
         $brands = $this->brandService->findAll();
-
-        $wishlistUser = Auth::user()->wishlist;
         $products = $this->productService->searchProductWithFilterInCustomer($request);
 
-        $countProductInCart = 0;
         if (Auth::user()) {
-            foreach (Auth::user()->carts as $cart) {
-                $countProductInCart += $cart->quantity;
-            }
+            [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
         }
 
         return view('customer.search', [
             'title' => 'Search Product',
-            'countProductInCart' => $countProductInCart,
+            'countProductsInCart' => $countProductsInCart,
             'products' => $products,
             'categories' => $categories,
             'brands' => $brands,
-            'wishlistUser' => $wishlistUser,
+            'wishlistUser' => Auth::user()->wishlist,
         ]);
     }
 }

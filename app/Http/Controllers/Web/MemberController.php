@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\Auth\ChangePasswordRequest;
+use App\Http\Requests\Customer\ProfileRequest;
 
 use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
 
 use App\Services\CategoryService;
 use App\Services\UserService;
@@ -25,32 +27,62 @@ class MemberController extends Controller
 
     public function home()
     {
+        $recentOrders = $this->userService->getRecentOrdersWithLimit(Auth::id(), 5);
+        [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
+        $countPlacedOrders = $this->userService->countPlacedOrders(Auth::id());
+        $countCancelOrders = $this->userService->countCancelOrders(Auth::id());
+        $countWishlist = count(Auth::user()->wishlist);
+
         $categories = $this->categoryService->findAll();
         return view("customer.account.home", [
             'title' => "Member",
-            "user" => Auth::user(),
-            "categories" => $categories
+            "categories" => $categories,
+            "recentOrders" => $recentOrders,
+            'countProductsInCart' => $countProductsInCart,
+            "countPlacedOrders" => $countPlacedOrders,
+            "countCancelOrders" => $countCancelOrders,
+            "countWishlist" => $countWishlist
         ]);
     }
 
-    public function user_info()
+    public function profilePage()
     {
+        [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
+        $countPlacedOrders = $this->userService->countPlacedOrders(Auth::id());
+        $countCancelOrders = $this->userService->countCancelOrders(Auth::id());
+        $countWishlist = count(Auth::user()->wishlist);
+
         $categories = $this->categoryService->findAll();
-        return view("customer.account.user-info", [
-            'title' => "User info ",
-            "user" => Auth::user(),
-            "categories" => $categories
+        return view("customer.account.profile", [
+            'title' => "My Profile",
+            "categories" => $categories,
+            'countProductsInCart' => $countProductsInCart,
+            "countPlacedOrders" => $countPlacedOrders,
+            "countCancelOrders" => $countCancelOrders,
+            "countWishlist" => $countWishlist
         ]);
     }
 
-    public function handleUpdate_User_info(Request $request)
+    public function editProfilePage()
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'gender' => 'in:0,1,2',
-            'address' => 'string|max:150',
-        ]);
+        [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
+        $countPlacedOrders = $this->userService->countPlacedOrders(Auth::id());
+        $countCancelOrders = $this->userService->countCancelOrders(Auth::id());
+        $countWishlist = count(Auth::user()->wishlist);
 
+        $categories = $this->categoryService->findAll();
+        return view("customer.account.edit-profile", [
+            'title' => "My Profile",
+            "categories" => $categories,
+            'countProductsInCart' => $countProductsInCart,
+            "countPlacedOrders" => $countPlacedOrders,
+            "countCancelOrders" => $countCancelOrders,
+            "countWishlist" => $countWishlist
+        ]);
+    }
+
+    public function handleUpdateProfile(ProfileRequest $request)
+    {
         try {
             $this->userService->updateInfoMember($request, Auth::user());
             session()->flash('success', "Edit information successfully");
@@ -63,11 +95,19 @@ class MemberController extends Controller
 
     public function changePasswordPage()
     {
+        [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
+        $countPlacedOrders = $this->userService->countPlacedOrders(Auth::id());
+        $countCancelOrders = $this->userService->countCancelOrders(Auth::id());
+        $countWishlist = count(Auth::user()->wishlist);
+
         $categories = $this->categoryService->findAll();
         return view("customer.account.change-password", [
             'title' => "Change password",
-            "user" => Auth::user(),
-            "categories" => $categories
+            "categories" => $categories,
+            'countProductsInCart' => $countProductsInCart,
+            "countPlacedOrders" => $countPlacedOrders,
+            "countCancelOrders" => $countCancelOrders,
+            "countWishlist" => $countWishlist
         ]);
     }
 
@@ -81,5 +121,44 @@ class MemberController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function orders(Request $request)
+    {
+        $categories = $this->categoryService->findAll();
+        [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
+        $countPlacedOrders = $this->userService->countPlacedOrders(Auth::id());
+        $countCancelOrders = $this->userService->countCancelOrders(Auth::id());
+        $countWishlist = count(Auth::user()->wishlist);
+
+        $orders = $this->userService->showOrdersWithFilterInCustomer(Auth::id(), $request->time_sort);
+        return view("customer.account.orders", [
+            'title' => "My Orders",
+            "categories" => $categories,
+            "orders" => $orders,
+            'countProductsInCart' => $countProductsInCart,
+            "countPlacedOrders" => $countPlacedOrders,
+            "countCancelOrders" => $countCancelOrders,
+            "countWishlist" => $countWishlist
+        ]);
+    }
+
+    public function orderDetailsPage(Order $order)
+    {
+        $categories = $this->categoryService->findAll();
+        [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
+        $countPlacedOrders = $this->userService->countPlacedOrders(Auth::id());
+        $countCancelOrders = $this->userService->countCancelOrders(Auth::id());
+        $countWishlist = count(Auth::user()->wishlist);
+
+        return view("customer.account.order-details", [
+            'title' => "Order Details",
+            "categories" => $categories,
+            "order" => $order,
+            'countProductsInCart' => $countProductsInCart,
+            "countPlacedOrders" => $countPlacedOrders,
+            "countCancelOrders" => $countCancelOrders,
+            "countWishlist" => $countWishlist
+        ]);
     }
 }

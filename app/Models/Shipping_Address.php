@@ -44,4 +44,9 @@ class Shipping_Address extends Model
     {
         return $this->hasOne(Shipping_Address::class);
     }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

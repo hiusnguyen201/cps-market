@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Support\Facades\DB;
 
 use App\Services\ProductService;
+use App\Services\UserService;
 
 use App\Models\Order;
 use App\Models\Order_Product;
@@ -14,10 +15,12 @@ use App\Models\Cart;
 class OrderService
 {
     private ProductService $productService;
+    private UserService $userService;
 
     public function __construct()
     {
         $this->productService = new ProductService();
+        $this->userService = new UserService();
     }
 
     public function findAllAndPaginate($request)
@@ -42,17 +45,12 @@ class OrderService
         DB::beginTransaction();
         try {
             // Tính tổng price và quantity
-            $totalPrice = 0;
-            $countProductInCart = 0;
-            foreach ($customer->carts as $cart) {
-                $countProductInCart += $cart->quantity;
-                $totalPrice += (($cart->product->sale_price ?? $cart->product->price) * $cart->quantity);
-            }
+            [$countProductsInCart, $totalPrice] = $this->userService->countProductsAndCalculatePriceInCart($customer);
 
             // Tạo order
             $order = Order::create([
                 'code' => $orderId,
-                'quantity' => $countProductInCart,
+                'quantity' => $countProductsInCart,
                 'sub_total' => $totalPrice,
                 'shipping_fee' => config("constants.shipping_fee"),
                 'total' => $totalPrice + config("constants.shipping_fee"),
@@ -147,13 +145,13 @@ class OrderService
     {
         // Tính tổng price và quantity
         $totalPrice = 0;
-        $countProductInCart = 0;
+        $countProductsInCart = 0;
         $products = [];
 
         foreach ($request->product_id as $index => $product_id) {
             $result = $this->productService->findOneById($product_id);
             array_push($products, $result);
-            $countProductInCart += +$request->quantity[$index];
+            $countProductsInCart += +$request->quantity[$index];
             $totalPrice += (($result->sale_price ?? $result->price) * +$request->quantity[$index]);
         }
 
@@ -162,7 +160,7 @@ class OrderService
             // Tạo order
             $order = Order::create([
                 'code' => time() . "",
-                'quantity' => $countProductInCart,
+                'quantity' => $countProductsInCart,
                 'sub_total' => $totalPrice,
                 'shipping_fee' => config("constants.shipping_fee"),
                 'total' => $totalPrice + config("constants.shipping_fee"),
@@ -213,21 +211,21 @@ class OrderService
     public function updateOrderInAdmin($request, $customer, $order)
     {
         $totalPrice = 0;
-        $countProductInCart = 0;
+        $countProductsInCart = 0;
         $products = [];
         $existingProductIds = [];
 
         foreach ($request->product_id as $index => $product_id) {
             $result = $this->productService->findOneById($product_id);
             array_push($products, $result);
-            $countProductInCart += +$request->quantity[$index];
+            $countProductsInCart += +$request->quantity[$index];
             $totalPrice += (($result->sale_price ?? $result->price) * +$request->quantity[$index]);
         }
 
         DB::beginTransaction();
         try {
             $order->update([
-                'quantity' => $countProductInCart,
+                'quantity' => $countProductsInCart,
                 'sub_total' => $totalPrice,
                 'shipping_fee' => config("constants.shipping_fee"),
                 'total' => $totalPrice + config("constants.shipping_fee"),

@@ -89,6 +89,20 @@
                     @enderror
                 </div>
             </div>
+
+            <div class="mb-3 row align-items-center">
+                <div class="col-lg-3 col-12">
+                    <label for="address" class="mb-0">Address</span></label>
+                </div>
+                <div class="col-lg-7 col-12">
+                    <input type="address" name="address" class="form-control" id="address" placeholder="Address..."
+                        value="{{ old('address') ?? $user->address }}">
+                    @error('address')
+                        <span style="color: red">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
             <div class="d-grid">
                 @csrf
                 @method('PATCH')
