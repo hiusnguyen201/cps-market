@@ -177,7 +177,15 @@ class MemberController extends Controller
 
         $order_Products = Order_Product::where('order_id', $order_id)->get();
         $order = Order::findOrFail($order_id);
-        // dd($order->shipping_address->order->customer->name);
+
+        if($order->customer_id != Auth::id()) {
+            return view("customer.404", [
+                'title' => "Not found",
+                "user" => $user,
+                "categories" => $categories,
+                'countProductInCart' => $countProductInCart,
+            ]);
+        }
 
         return view("customer.account.order-detail", [
             'title' => "Order",
