@@ -27,7 +27,7 @@
                     <label for="category" class="mb-0">Category</label>
                 </div>
                 <div class="col-lg-7 col-12">
-                    <select id="brand" name="category[]" multiple="multiple" style="width:100%"
+                    <select id="brand" name="category[]" class="select2" multiple="multiple" style="width:100%"
                         data-placeholder="- - - Select a category - - -">
                         @foreach ($categories as $category)
                             <option

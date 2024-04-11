@@ -35,17 +35,18 @@
                         </li>
                         <li class="has-separator">
 
-                            <a href="/{{ $product->category->slug }}.html">{{ $product->category->name }}</a>
+                            <a
+                                href="/catalogsearch/result?category_id={{ $product->category->id }}">{{ $product->category->name }}</a>
                         </li>
                         <li class="has-separator">
 
                             <a
-                                href="/{{ $product->category->slug }}/{{ $product->brand->slug }}.html">{{ $product->brand->name }}</a>
+                                href="/catalogsearch/result?brand_id={{ $product->brand->id }}">{{ $product->brand->name }}</a>
                         </li>
                         <li class="is-marked">
 
                             <a
-                                href="//{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a>
+                                href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a>
                         </li>
                     </ul>
                 </div>
@@ -187,13 +188,13 @@
                         </div>
                         <div class="u-s-m-b-15">
                             <div class="pd-detail__form" style="display: flex; align-items:center; gap:15px">
-                                <form method="POST" action="/cart">
+                                <form method="POST" action="{{ route('cart.create') }}">
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <input type="hidden" name="action" value="buy">
                                     <button class="btn btn--e-brand-b-2" type="submit">Buy now</button>
                                 </form>
-                                <form method="POST" action="/cart">
+                                <form method="POST" action="{{ route('cart.create') }}">
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <input type="hidden" name="action" value="add">

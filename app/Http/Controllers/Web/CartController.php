@@ -3,25 +3,33 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\Cart;
-use App\Models\Category;
-use App\Models\Order;
-use App\Models\Product;
+use App\Services\OrderService;
+use App\Services\CartService;
+use App\Services\CategoryService;
 
 class CartController extends Controller
 {
+    private OrderService $orderService;
+    private CartService $cartService;
+    private CategoryService $categoryService;
+
+    public function __construct()
+    {
+        $this->orderService = new OrderService();
+        $this->cartService = new CartService();
+        $this->categoryService = new CategoryService();
+    }
+
     public function home()
     {
-        $categories = Category::all();
-        $products = Product::all();
+        $categories = $this->categoryService->findAll();
+        $carts = Auth::user()->carts;
 
         $countProductInCart = 0;
         $totalPrice = 0;
-        $carts = Auth::user()->carts;
         foreach ($carts as $cart) {
             $countProductInCart += $cart->quantity;
             $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price : $cart->product->price) * $cart->quantity);
@@ -30,7 +38,6 @@ class CartController extends Controller
         return view("customer/carts/index", [
             'title' => "Cart",
             'carts' => $carts,
-            'products' => $products,
             "categories" => $categories,
             "countProductInCart" => $countProductInCart,
             "totalPrice" => $totalPrice
@@ -44,60 +51,30 @@ class CartController extends Controller
         ]);
 
         try {
-            $user = Auth::user();
-            $product = Product::find($request->product_id);
-            $cart = Cart::where('user_id', $user->id)->where('product_id', $product->id)->first();
+            $this->cartService->createCart($request->product_id, Auth::user());
 
-
-            if ($product->quantity <= 0 || ($cart && $cart->quantity > $product->quantity)) {
-                return redirect()->back()->with('error', 'Not enough quantity available');
-            }
-
-            if (!$cart) {
-                Cart::create([
-                    'product_id' => $product->id,
-                    'user_id' => $user->id,
-                    'quantity' => 1,
-                ]);
-            } else {
-                $cart->update([
-                    'quantity' => $cart->quantity + 1,
-                ]);
-            }
-
+            session()->flash("success", 'Add product to cart successfully');
             if ($request->action == 'buy') {
-                return redirect("/cart")->with('success', 'Add product to cart successfully');
-            } else {
-                return redirect()->back()->with('success', 'Add product to cart successfully');
+                return redirect()->route("cart.index");
             }
         } catch (\Exception $e) {
-            error_log($e->getMessage());
-            return redirect()->back()->with('error', 'Add product to cart failed');
+            session()->flash('error', $e->getMessage());
         }
+
+        return redirect()->back();
     }
 
     public function handleUpdate(Request $request)
     {
+        $request->validate([
+            'cart_id' => 'required|integer|min:1|exists:carts,id',
+        ]);
+
         try {
-            $cart = Cart::find($request->cart_id);
-
-            if (!$cart) {
-                return redirect()->back()->with('error', 'Cart not found!');
-            }
-
-            if ($request->quantity > $cart->product->quantity) {
-                return redirect()->back()->with('error', 'Not enough quantity available');
-            }
-
-            $cart->update([
-                "quantity" => $request->quantity,
-                "updated_at" => now()
-            ]);
-
+            $this->cartService->updateQuantityCart($request->cart_id, $request->quantity);
             session()->flash("success", "Update quantity successfully");
         } catch (\Exception $e) {
-            error_log($e->getMessage());
-            session()->flash('error', 'Update quantity unsuccessfully!');
+            session()->flash('error', $e->getMessage());
         }
 
         return redirect()->back();
@@ -106,18 +83,10 @@ class CartController extends Controller
     public function handleDelete(Request $request)
     {
         try {
-            $cart = Cart::where(["user_id" => Auth::id(), "id" => $request->cart_id]);
-
-            if (!$cart) {
-                return redirect()->back()->with("error", "Cart not found");
-            }
-
-            $cart->delete();
-
-            session()->flash('success', 'Remove product from cart successfully!');
+            $this->cartService->deleteCart($request->cart_id, Auth::user());
+            session()->flash('success', 'Remove product from cart successfully');
         } catch (\Exception $e) {
-            error_log($e->getMessage());
-            session()->flash('error', 'Remove product from cart unsuccessfully!');
+            session()->flash('error', $e->getMessage());
         }
 
         return redirect()->back();
@@ -128,7 +97,7 @@ class CartController extends Controller
         $user = Auth::user();
         $carts = $user->carts;
         if (!$carts || !count($carts)) {
-            return redirect("/cart");
+            return redirect()->route("cart.index");
         }
 
         $totalPrice = 0;
@@ -138,7 +107,7 @@ class CartController extends Controller
             $totalPrice += (($cart->product->sale_price ?? $cart->product->price) * $cart->quantity);
         }
 
-        $categories = Category::all();
+        $categories = $categories = $this->categoryService->findAll();
 
         return view("customer/carts/checkout", [
             'title' => "Checkout",
@@ -150,61 +119,31 @@ class CartController extends Controller
         ]);
     }
 
-    public function reponsePaymentPage(Request $request)
+    public function success(Request $request)
     {
-        $order = Order::where("code", $request->orderId)->first();
-        if (!$order)
-            return redirect()->back()->with("Order not found");
+        $order = $this->orderService->findOrderByCustomerIdAndOrderId(Auth::id(), $request->orderId);
+        if (!$order) {
+            return redirect()->back()->with("error", "Order not found");
+        }
 
-        if ($order->payment_method != config("constants.payment_method.cod")['value'] && $order->status != config("constants.order_status.canceled")) {
-            switch ($request->resultCode) {
-                case "0":
-                    $order->update([
-                        "payment_status" => config("constants.payment_status.paid"),
-                        "updated_at" => now()
-                    ]);
-                    break;
-                default:
-                    $order->update([
-                        "payment_status" => config("constants.payment_status.canceled"),
-                        "status" => config("constants.order_status.canceled"),
-                        "updated_at" => now()
-                    ]);
-                    break;
+        // Check code payment
+        if ($order->payment_method != config("constants.payment_method.cod")['value'] && $order->status != config("constants.order_status.canceled")['value']) {
+            try {
+                $this->orderService->updatePaymentStatus($order, $request->resultCode);
+            } catch (\Exception $e) {
+                session()->flash("error", $e->getMessage());
             }
         }
 
-        $statusOrderPayment = $order->status == config("constants.order_status.canceled") ? false : true;
+        $statusOrderPayment = $order->status == config("constants.order_status.canceled")['value'] ? false : true;
 
-        $categories = Category::all();
+        $categories = $this->categoryService->findAll();
+
         return view("customer/carts/success", [
             "order" => $order,
             'title' => "Cart",
             "categories" => $categories,
             "statusOrderPayment" => $statusOrderPayment
         ]);
-    }
-
-    function execPostRequest($url, $data)
-    {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt(
-            $ch,
-            CURLOPT_HTTPHEADER,
-            array(
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen($data)
-            )
-        );
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        //execute post
-        $result = curl_exec($ch);
-        //close connection
-        curl_close($ch);
-        return $result;
     }
 }

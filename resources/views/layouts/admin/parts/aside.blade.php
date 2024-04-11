@@ -53,7 +53,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/admin/customers"
+                    <a href="{{ route('admin.customers.home') }}"
                         class="nav-link {{ in_array('Customers', $breadcumbs['titles']) ? 'active' : '' }}">
                         <i class="nav-icon far fas fa-user"></i>
                         <p>
@@ -62,7 +62,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('orders.home') }}"
+                    <a href="{{ route('admin.orders.home') }}"
                         class="nav-link {{ in_array('Orders', $breadcumbs['titles']) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-clipboard-list"></i>
                         <p>

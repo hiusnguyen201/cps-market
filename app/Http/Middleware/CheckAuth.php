@@ -19,7 +19,7 @@ class CheckAuth
     {
         $user = Auth::user();
         if ($user) {
-            if ($user->status == config("constants.user_status.Active")) {
+            if ($user->status == config("constants.user_status.active")['value']) {
                 return $next($request);
             }
         }

@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-lg-2 col-4 mb-3">
                     <select name="limit" id="" class="form-control">
-                        @if (!is_null($limit_page))
+                        @if ($limit_page)
                             @foreach ($limit_page as $limit)
                                 <option {{ request()->limit == $limit ? 'selected' : '' }} value="{{ $limit }}">
                                     {{ $limit }} </option>
@@ -36,10 +36,11 @@
                 <div class="col-lg-3 col-8 mb-3">
                     <select name="status" id="" class="form-control">
                         <option value="">All status</option>
-                        @if (!is_null($user_status))
-                            @foreach ($user_status as $index => $status)
-                                <option {{ request()->status == $index ? 'selected' : '' }} value="{{ $index }}">
-                                    {{ $index }}</option>
+                        @if (config('constants.user_status') && count(config('constants.user_status')))
+                            @foreach (config('constants.user_status') as $status)
+                                <option {{ request()->status == $status['value'] ? 'selected' : '' }}
+                                    value="{{ $status['value'] }}">
+                                    {{ $status['title'] }}</option>
                             @endforeach
                         @endif
                     </select>
@@ -82,7 +83,13 @@
                             <td class="align-middle">{{ $user->email }}</td>
                             <td class="align-middle">{{ $user->phone }}</td>
                             <td class="align-middle">
-                                {{ array_search($user->status, $user_status) }}
+                                @if (config('constants.user_status') && count(config('constants.user_status')))
+                                    @foreach (config('constants.user_status') as $status)
+                                        @if ($user->status == $status['value'])
+                                            <span class="{{ $status['css'] }}">{{ $status['title'] }}</span>
+                                        @endif
+                                    @endforeach
+                                @endif
                             </td>
                             <td class="text-center align-middle">
                                 <a class="btn btn-warning" href="/admin/users/edit/{{ $user->id }}">
@@ -94,7 +101,7 @@
                                 </button>
                             </td>
                         </tr>
-                        <div class="modal " id="modal-delete-{{ $user->id }}" aria-modal="true" role="dialog">
+                        <div class="modal fade" id="modal-delete-{{ $user->id }}" aria-modal="true" role="dialog">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -124,13 +131,15 @@
         </div>
 
         <!-- Paginate -->
-        <div class="d-flex ml-auto">
-            {{ $users->appends(Request::all())->links() }}
-        </div>
+        @if (count($users))
+            <div class="d-flex ml-auto">
+                {{ $users->appends(Request::all())->links() }}
+            </div>
+        @endif
     </div>
 
     <!-- Modal delete -->
-    <div class="modal " id="modal-deleteAll" aria-modal="true" role="dialog">
+    <div class="modal fade" id="modal-deleteAll" aria-modal="true" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

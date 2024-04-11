@@ -51,9 +51,9 @@
                                                     <td>
                                                         <span>
                                                             @if (config('constants.payment_method') && count(config('constants.payment_method')))
-                                                                @foreach (config('constants.payment_method') as $payment_method)
-                                                                    @if ($order->payment_method == $payment_method['value'])
-                                                                        <span>{{ $payment_method['name'] }}</span>
+                                                                @foreach (config('constants.payment_method') as $method)
+                                                                    @if ($order->payment_method == $method['value'])
+                                                                        <span>{{ $method['title'] }}</span>
                                                                     @endif
                                                                 @endforeach
                                                             @endif
@@ -74,13 +74,6 @@
                                 <h2 class="checkout-f__h2" style="margin: 0">CUSTOMER INFORMATION</h2>
                                 <div class="o-summary__section u-s-m-b-30">
                                     <div class="o-summary__box">
-                                        <input hidden type="text" id="wardName" disabled
-                                            data="{{ $order->shipping_address->ward }}">
-                                        <input hidden type="text" id="districtName" disabled
-                                            data="{{ $order->shipping_address->district }}">
-                                        <input hidden id="provinceName" disabled
-                                            data='{{ $order->shipping_address->province }}' type="text">
-
                                         <table class="o-summary__table">
                                             <tbody>
                                                 <tr>
@@ -100,7 +93,14 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Address</td>
-                                                    <td><span
+                                                    <td>
+                                                        <input hidden type="text" id="wardName" disabled
+                                                            data="{{ $order->shipping_address->ward }}">
+                                                        <input hidden type="text" id="districtName" disabled
+                                                            data="{{ $order->shipping_address->district }}">
+                                                        <input hidden id="provinceName" disabled
+                                                            data='{{ $order->shipping_address->province }}' type="text">
+                                                        <span
                                                             id="addressShipping">{{ $order->shipping_address->address }}</span>
                                                     </td>
                                                 </tr>
@@ -152,7 +152,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="/cart" class="btn btn--e-transparent-brand-b-2"
+                            <a href="{{ route('cart.index') }}" class="btn btn--e-transparent-brand-b-2"
                                 style="width: 100%; display:block;text-align:center;line-height:1;"
                                 fdprocessedid="gw2uog">GO BACK</a>
                         </div>

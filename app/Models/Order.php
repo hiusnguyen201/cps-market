@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = "orders";
 
@@ -19,6 +20,7 @@ class Order extends Model
         "total",
         "payment_method",
         "payment_status",
+        "paid_date",
         "status",
         "customer_id",
     ];
@@ -31,6 +33,7 @@ class Order extends Model
         "total" => "integer",
         "payment_method" => "integer",
         "payment_status" => "integer",
+        "paid_date" => "datetime",
         "status" => "integer",
         "customer_id" => "integer",
     ];

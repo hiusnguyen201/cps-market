@@ -26,8 +26,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        "avatar",
         "phone",
+        "status",
         "gender",
         "role_id"
     ];
@@ -70,6 +70,10 @@ class User extends Authenticatable
     public function carts()
     {
         return $this->hasMany(Cart::class);
+    }
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class);
     }
 
     public function password_reset(): HasOne

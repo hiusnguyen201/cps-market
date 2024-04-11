@@ -25,10 +25,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Role::create([
+        $roleCustomer = Role::create([
             "name" => "customer",
         ]);
-        Role::create([
+        $roleAdmin = Role::create([
             "name" => "admin",
         ]);
 
@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
                 "password" => Hash::make("1234"),
                 "phone" => "0912345678",
                 "gender" => 0,
-                "role_id" => 1
+                "role_id" => $roleCustomer->id
             ]);
         }
 
@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
             "password" => Hash::make("1234"),
             "phone" => "0912345678",
             "gender" => 0,
-            "role_id" => 2
+            "role_id" => $roleAdmin->id
         ]);
 
         for ($i = 30; $i < 45; $i++) {
@@ -59,7 +59,7 @@ class DatabaseSeeder extends Seeder
                 "password" => Hash::make("1234"),
                 "phone" => "0912345678",
                 "gender" => 1,
-                "role_id" => 2
+                "role_id" => $roleAdmin->id
             ]);
         }
 
@@ -77,11 +77,14 @@ class DatabaseSeeder extends Seeder
             $brand->categories()->attach($category->id);
         }
 
+        $k = 0;
         for ($i = 0; $i < 5; $i++) {
             for ($j = 0; $j < 30; $j++) {
                 $product = Product::create([
+                    'code' => time() + $k,
                     'name' => "Product " . $i + 1 . $j + 1,
                     'slug' => "Product-" . $i + 1 . $j + 1,
+                    'market_price' => $i + 500,
                     'price' => $i + 5000,
                     "sale_price" => $i + 1000,
                     "quantity" => $i + 10,
@@ -97,23 +100,28 @@ class DatabaseSeeder extends Seeder
                     'product_id' => $product->id
 
                 ]);
+
+                $k++;
             }
         }
 
         for ($i = 0; $i < 30; $i++) {
             $order = Order::create([
-                'code' => Str::random(25),
+                'code' => time() + $i,
                 'quantity' => 2,
                 'sub_total' => 10000,
                 "shipping_fee" => 0,
                 "total" => 10000,
                 "payment_method" => config("constants.payment_method.cod")['value'],
-                "payment_status" => config("constants.payment_status.pending"),
-                "status" => config("constants.order_status.pending"),
+                "payment_status" => config("constants.payment_status.pending")['value'],
+                "status" => config("constants.order_status.pending")['value'],
                 "customer_id" => $i + 1
             ]);
 
             Shipping_Address::create([
+                'customer_name' => "User " . $i,
+                'customer_email' => "user" . $i . "@gmail.com",
+                'customer_phone' => "0912345678",
                 'province' => 1,
                 'district' => 1,
                 'ward' => 7,

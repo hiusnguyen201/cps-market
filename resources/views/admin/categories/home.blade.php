@@ -75,7 +75,7 @@
                                 </button>
                             </td>
                         </tr>
-                        <div class="modal " id="modal-delete-{{ $category->id }}" aria-modal="true" role="dialog">
+                        <div class="modal fade" id="modal-delete-{{ $category->id }}" aria-modal="true" role="dialog">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -105,13 +105,15 @@
         </div>
 
         <!-- Paginate -->
-        <div class="d-flex ml-auto">
-            {{ $categories->appends(Request::all())->links() }}
-        </div>
+        @if (count($categories))
+            <div class="d-flex ml-auto">
+                {{ $categories->appends(Request::all())->links() }}
+            </div>
+        @endif
     </div>
 
     <!-- Modal delete -->
-    <div class="modal " id="modal-deleteAll" aria-modal="true" role="dialog">
+    <div class="modal fade" id="modal-deleteAll" aria-modal="true" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

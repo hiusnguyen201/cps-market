@@ -20,7 +20,8 @@
                             <label for="main-search"></label>
 
                             <input class="input-text input-text--border-radius input-text--style-1" type="text"
-                                id="main-search" placeholder="Search" name="keyword" value="{{ $keyword ?? '' }}">
+                                id="main-search" placeholder="Search" name="keyword"
+                                value="{{ request()->keyword ?? '' }}">
 
                             <button class="btn btn--icon fas fa-search main-search-button" type="submit"></button>
                         </form>
@@ -127,10 +128,11 @@
                                             <div class="mega-menu-wrap">
                                                 <div class="mega-menu-list">
                                                     <ul>
-                                                        @if (count($categories))
+                                                        @if ($categories && count($categories))
                                                             @foreach ($categories as $index => $category)
                                                                 <li class="{{ $index == 0 ? 'js-active' : '' }}">
-                                                                    <a href="/{{ $category->slug }}.html">
+                                                                    <a
+                                                                        href="/catalogsearch/result?category_id={{ $category->id }}">
                                                                         <span>{{ $category->name }}</span></a>
 
                                                                     <span class="js-menu-toggle js-toggle-mark"></span>
@@ -140,7 +142,7 @@
                                                     </ul>
                                                 </div>
 
-                                                @if (count($categories))
+                                                @if ($categories && count($categories))
                                                     @foreach ($categories as $index => $category)
                                                         <div
                                                             class="mega-menu-content {{ $index == 0 ? 'js-active' : '' }}">
@@ -155,7 +157,7 @@
                                                                             @foreach ($category->brands as $brand)
                                                                                 <li>
                                                                                     <a
-                                                                                        href="/{{ $category->slug }}/{{ $brand->slug }}.html">{{ $brand->name }}</a>
+                                                                                        href="/catalogsearch/result?brand_id={{ $category->id }}">{{ $brand->name }}</a>
                                                                                 </li>
                                                                             @endforeach
                                                                         @endif
@@ -313,7 +315,7 @@
                                     </li>
                                     <li class="has-dropdown">
 
-                                        <a class="mini-cart-shop-link" href="/cart"><i
+                                        <a class="mini-cart-shop-link" href="{{ route('cart.index') }}"><i
                                                 class="fas fa-shopping-bag"></i>
 
                                             <span class="total-item-round">{{ $countProductInCart ?? 0 }}</span></a>

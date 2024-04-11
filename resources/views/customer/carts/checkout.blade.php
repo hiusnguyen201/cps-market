@@ -19,10 +19,10 @@
                                     <a href="/">Home</a>
                                 </li>
                                 <li class="has-separator">
-                                    <a href="/cart">Cart</a>
+                                    <a href="{{ route('cart.index') }}">Cart</a>
                                 </li>
                                 <li class="is-marked">
-                                    <a href="/cart/checkout">Checkout</a>
+                                    <a href="{{ route('cart.checkout') }}">Checkout</a>
                                 </li>
                             </ul>
                         </div>
@@ -66,7 +66,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <form action="/cart" method="post">
+                                                    <form action="{{ route('cart.delete') }}" method="post">
                                                         @method('DELETE')
                                                         @csrf
                                                         <input type="hidden" name="cart_id" value="{{ $cart->id }}">
@@ -250,13 +250,13 @@
                                                         <div class="u-s-m-b-20">
                                                             <div class="radio-box">
                                                                 <input
-                                                                    {{ old('payment_method') && old('payment_method') == $method['value'] ? 'checked' : '' }}
+                                                                    {{ old('payment_method') != '' && old('payment_method') == $method['value'] ? 'checked' : '' }}
                                                                     type="radio" name="payment_method"
                                                                     data="{{ $method['redirect'] }}"
                                                                     value="{{ $method['value'] }}">
                                                                 <div class="radio-box__state radio-box__state--primary">
                                                                     <label
-                                                                        class="radio-box__label">{{ $method['name'] }}</label>
+                                                                        class="radio-box__label">{{ $method['title'] }}</label>
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -29,7 +29,6 @@ use App\Http\Controllers\Web\PaymentController;
 */
 
 Route::get('/', [HomeController::class, 'home']);
-Route::get('/{categorySlug}.html', [HomeController::class, 'categories'])->name('categories.show');
 Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
 Route::get('/catalogsearch/result', [HomeController::class, 'search']);
 
@@ -84,7 +83,7 @@ Route::prefix('admin')->group(function () {
     // Products
     Route::prefix('products')->group(function () {
         Route::get('/', [ProductController::class, 'home']);
-        Route::get('/details/{product}', [ProductController::class, 'details']);
+        Route::get('/details/{product}', [ProductController::class, 'details'])->name("admin.products.details");
         Route::get('/create', [ProductController::class, 'create']);
         Route::get('/edit/{product}', [ProductController::class, 'edit']);
         Route::delete('/', [ProductController::class, 'handleDelete']);
@@ -92,22 +91,22 @@ Route::prefix('admin')->group(function () {
 
     // Customers
     Route::prefix('customers')->group(function () {
-        Route::get('/', [CustomerController::class, 'home']);
-        Route::get('/details/{user}', [CustomerController::class, 'details']);
-        Route::get('/create', [CustomerController::class, 'create']);
+        Route::get('/', [CustomerController::class, 'home'])->name("admin.customers.home");
+        Route::get('/details/{user}', [CustomerController::class, 'details'])->name("admin.customers.details");
+        Route::get('/create', [CustomerController::class, 'create'])->name("admin.customers.create");
         Route::post('/create', [CustomerController::class, 'handleCreate']);
-        Route::get('/edit/{user}', [CustomerController::class, 'edit']);
+        Route::get('/edit/{user}', [CustomerController::class, 'edit'])->name("admin.customers.edit");
         Route::patch('/edit/{user}', [CustomerController::class, 'handleUpdate']);
         Route::delete('/', [CustomerController::class, 'handleDelete']);
     });
 
     // Orders
     Route::prefix('orders')->group(function () {
-        Route::get('/', [OrderController::class, 'home'])->name("orders.home");
-        Route::get('/details/{order}', [OrderController::class, 'details'])->name("orders.details");
-        Route::get('/create', [OrderController::class, 'create'])->name("orders.create");
+        Route::get('/', [OrderController::class, 'home'])->name("admin.orders.home");
+        Route::get('/details/{order}', [OrderController::class, 'details'])->name("admin.orders.details");
+        Route::get('/create', [OrderController::class, 'create'])->name("admin.orders.create");
         Route::post('/create', [OrderController::class, 'handleCreate']);
-        Route::get('/edit/{order}', [OrderController::class, 'edit'])->name("orders.edit");
+        Route::get('/edit/{order}', [OrderController::class, 'edit'])->name("admin.orders.edit");
         Route::patch('/edit/{order}', [OrderController::class, 'handleUpdate']);
         Route::delete('/', [OrderController::class, 'handleDelete']);
     });
@@ -131,7 +130,7 @@ Route::prefix('auth')->group(function () {
     Route::post('/reset-password/{token}', [AuthController::class, 'handleChangePassword']);
 
     Route::get('/info-social', [AuthController::class, 'infoSocial']);
-    Route::post('/info-social', [AuthController::class, 'handleUpdateInfoSocial']);
+    Route::post('/info-social', [AuthController::class, 'handleCreateWithAccountSocial']);
 
     Route::get('/{provider}/redirect', [AuthController::class, 'socialLogin']);
     Route::get('/{provider}/callback', [AuthController::class, 'handleSocialLogin']);
@@ -147,13 +146,13 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('cart')->group(function () {
     Route::middleware(['check.auth'])->group(function () {
-        Route::get('/', [CartController::class, 'home']);
-        Route::post('/', [CartController::class, 'handleCreate']);
-        Route::patch('/', [CartController::class, 'handleUpdate']);
-        Route::delete('/', [CartController::class, 'handleDelete']);
+        Route::get('/', [CartController::class, 'home'])->name("cart.index");
+        Route::post('/', [CartController::class, 'handleCreate'])->name("cart.create");
+        Route::patch('/', [CartController::class, 'handleUpdate'])->name("cart.update");
+        Route::delete('/', [CartController::class, 'handleDelete'])->name("cart.delete");
 
-        Route::get('/checkout', [CartController::class, 'checkoutPage']);
-        Route::get('/success', [CartController::class, 'reponsePaymentPage']);
+        Route::get('/checkout', [CartController::class, 'checkoutPage'])->name("cart.checkout");
+        Route::get('/success', [CartController::class, 'success'])->name("cart.success");
     });
 });
 
@@ -168,8 +167,8 @@ Route::prefix('member')->group(function () {
     Route::middleware(['check.auth'])->group(function () {
         Route::get('/', [MemberController::class, 'home']);
 
-        Route::get('/change-password', [MemberController::class, 'change_password']);
-        Route::patch('/change-password', [MemberController::class, 'handleChange_password']);
+        Route::get('/change-password', [MemberController::class, 'changePasswordPage']);
+        Route::patch('/change-password', [MemberController::class, 'handleChangePassword']);
 
         Route::get('/user-info', [MemberController::class, 'user_info']);
         Route::patch('/user-info', [MemberController::class, 'handleUpdate_User_info']);

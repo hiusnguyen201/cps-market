@@ -45,22 +45,47 @@
                     @enderror
                 </div>
             </div>
+
             <div class="mb-3 row align-items-center">
                 <div class="col-lg-3 col-12">
-                    <label for="gender" class="mb-0">Gender</label>
+                    <label for="gender" class="mt-1">Gender</label>
                 </div>
-                <div class="col-lg-8 col-12">
-                    <div class="row align-items-center g-2">
-                        @foreach ($genders as $key => $value)
-                            <div class="mr-2">
-                                <input {{ (old('gender') ?? $user->gender) == $value ? 'checked' : '' }} type="radio"
-                                    name="gender" value="{{ $value }}">
+                <div class="col-lg-7 col-12">
+                    <div class="d-flex align-items-center justify-content-start g-2">
+                        @if (config('constants.genders') && count(config('constants.genders')))
+                            @foreach (config('constants.genders') as $gender)
+                                <div class="mr-2">
+                                    <input
+                                        {{ (old('gender') ?? $user->gender != '') && (old('gender') ?? $user->gender) == $gender['value'] ? 'checked' : '' }}
+                                        type="radio" name="gender" value="{{ $gender['value'] }}">
 
-                                <label class="mb-0">{{ $key }}</label>
-                            </div>
-                        @endforeach
+                                    <label class="mb-0">{{ $gender['title'] }}</label>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                     @error('gender')
+                        <span style="color: red">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+                <div class="col-lg-3 col-12">
+                    <label for="gender" class="mb-0">Status</label>
+                </div>
+                <div class="col-lg-7 col-12">
+                    <div class="d-flex align-items-center justify-content-start g-2">
+                        @if (config('constants.user_status') && count(config('constants.user_status')))
+                            <select name="status" class="form-control">
+                                @foreach (config('constants.user_status') as $status)
+                                    <option {{ $status['value'] == $user->status ? 'selected' : '' }}
+                                        value="{{ $status['value'] }}">{{ $status['title'] }}</option>
+                                @endforeach
+                            </select>
+                        @endif
+                    </div>
+                    @error('status')
                         <span style="color: red">{{ $message }}</span>
                     @enderror
                 </div>

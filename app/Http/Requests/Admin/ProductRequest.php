@@ -30,8 +30,9 @@ class ProductRequest extends FormRequest
         return [
             'name' => 'required|string|min:4|max:150|unique:products,name'
                 . ($request->_method == 'PATCH' ? ',' . $request->id : ''),
-            'sale_price' => "nullable|integer|min:1",
+            'market_price' => "required|integer|min:1",
             'price' => "required|integer|min:1",
+            'sale_price' => "nullable|integer|min:1",
             'quantity' => "required|integer|min:0",
             'description' => "max:3000",
             "category" => 'required|integer|min:1|exists:categories,id',
@@ -65,6 +66,9 @@ class ProductRequest extends FormRequest
             'name.min' => ":attribute must have minimum length is :min",
             'name.max' => ":attribute must have maximum length is :max",
             'name.unique' => ":attribute is existed",
+            'market_price.required' => ":attribute is required",
+            'market_price.integer' => ":attribute is invalid",
+            'market_price.min' => ":attribute is invalid",
             'price.required' => ":attribute is required",
             'price.integer' => ":attribute is invalid",
             'price.min' => ":attribute is invalid",
@@ -108,6 +112,7 @@ class ProductRequest extends FormRequest
     {
         return [
             "name" => "Name",
+            "market_price" => "Market Price",
             "price" => "Price",
             "sale_price" => "Sale price",
             "quantity" => "Quantity",

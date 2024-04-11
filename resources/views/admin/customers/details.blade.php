@@ -25,21 +25,27 @@
                                 </div>
                             </div>
                             <div class="form-group row align-items-center">
-                                <label for="inputExperience" class="col-sm-2 col-form-label">Address:</label>
-                                <div class="col-sm-10">
-                                    {{ $user->address }}
-                                </div>
-                            </div>
-                            <div class="form-group row align-items-center">
                                 <label for="inputExperience" class="col-sm-2 col-form-label">Gender:</label>
                                 <div class="col-sm-10">
-                                    {{ is_null($user->gender) ? '' : array_search($user->gender, $genders) }}
+                                    @if (config('constants.genders') && count(config('constants.genders')))
+                                        @foreach (config('constants.genders') as $gender)
+                                            @if ($gender['value'] == $user->status)
+                                                {{ $gender['title'] }}
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
                             <div class="form-group row align-items-center">
                                 <label for="inputExperience" class="col-sm-2 col-form-label">Status:</label>
                                 <div class="col-sm-10">
-                                    {{ array_search($user->status, $user_status) }}
+                                    @if (config('constants.user_status') && count(config('constants.user_status')))
+                                        @foreach (config('constants.user_status') as $status)
+                                            @if ($user->status == $status['value'])
+                                                <span class="{{ $status['css'] }}">{{ $status['title'] }}</span>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
                             <div class="form-group row align-items-center">
