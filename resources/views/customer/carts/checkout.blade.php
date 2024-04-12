@@ -222,15 +222,15 @@
                                             <table class="o-summary__table">
                                                 <tbody>
                                                     <tr>
-                                                        <td>SHIPPING</td>
-                                                        <td><span>@convertCurrency(config('constants.shipping_fee'))</span>
-                                                        </td>
-
-                                                    </tr>
-                                                    <tr>
                                                         <td>SUBTOTAL</td>
                                                         <td><span>@convertCurrency($totalPrice)</span>
                                                         </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>SHIPPING</td>
+                                                        <td><span>@convertShippingFee(config('constants.shipping_fee'))</span>
+                                                        </td>
+
                                                     </tr>
                                                     <tr>
                                                         <td>GRAND TOTAL</td>

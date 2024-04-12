@@ -3,7 +3,7 @@ const successDiv = $("input[name='message-success']");
 if (successDiv.length) {
     Toastify({
         text: successDiv.val(),
-        duration: 2000,
+        duration: 5000,
         newWindow: true,
         gravity: "top", // `top` or `bottom`
         position: "center", // `left`, `center` or `right`
@@ -19,7 +19,7 @@ const errorDiv = $("input[name='message-error']");
 if (errorDiv.length) {
     Toastify({
         text: errorDiv.val(),
-        duration: 2000,
+        duration: 5000,
         newWindow: true,
         gravity: "top", // `top` or `bottom`
         position: "center", // `left`, `center` or `right`

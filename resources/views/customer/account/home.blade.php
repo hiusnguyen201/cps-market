@@ -63,12 +63,12 @@
                                 <td>{{ date(config('constants.date_format'), strtotime($order->created_at)) }}</td>
                                 <td>
                                     <div class="dash__table-img-wrap">
-                                        @foreach ($order->products[0]->product->images as $image)
+                                        @foreach ($order->orders_products[0]->product->images as $image)
                                             @if ($image->pin == 1)
                                                 <a href="/member/order/{{ $order->id }}">
                                                     <img class="u-img-fluid" style="height: 100%; object-fit: contain;"
                                                         src="{{ asset($image->thumbnail) }}"
-                                                        alt="{{ $order->products[0]->product->name }}">
+                                                        alt="{{ $order->orders_products[0]->product->name }}">
                                                 </a>
                                             @endif
                                         @endforeach

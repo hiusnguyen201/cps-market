@@ -12,12 +12,8 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" href="/admin/settings/password"><i class="fas fa-user-cog"></i></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                <i class="fas fa-expand-arrows-alt"></i>
-            </a>
+            <a class="nav-link" href="/admin/settings/password"><span
+                    class="mr-2">{{ Auth::user()->name ?? '' }}</span><i class="fas fa-user-cog"></i></a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/auth/logout"><i class="fas fa-sign-out-alt"></i></a>

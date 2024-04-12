@@ -53,7 +53,7 @@ class HomeController extends Controller
             'sections9W' => $sections9W,
             'sections9M' => $sections9M,
             'categories' => $categories,
-            'countProductsInCart' => $countProductsInCart,
+            'countProductsInCart' => $countProductsInCart ?? 0,
             'title' => "Home"
         ]);
     }
@@ -73,7 +73,7 @@ class HomeController extends Controller
         return view('customer.products.details', [
             'product' => $product,
             'categories' => $categories,
-            'countProductsInCart' => $countProductsInCart,
+            'countProductsInCart' => $countProductsInCart ?? 0,
             'wishlistCheck' => $wishlistCheck,
             'title' => 'Details Product',
         ]);
@@ -91,11 +91,10 @@ class HomeController extends Controller
 
         return view('customer.search', [
             'title' => 'Search Product',
-            'countProductsInCart' => $countProductsInCart,
+            'countProductsInCart' => $countProductsInCart ?? 0,
             'products' => $products,
             'categories' => $categories,
             'brands' => $brands,
-            'wishlistUser' => Auth::user()->wishlist,
         ]);
     }
 }

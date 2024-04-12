@@ -35,7 +35,7 @@ class CartController extends Controller
             'title' => "Cart",
             'carts' => Auth::user()->carts,
             "categories" => $categories,
-            "countProductsInCart" => $countProductsInCart,
+            "countProductsInCart" => $countProductsInCart ?? 0,
             "totalPrice" => $totalPrice
         ]);
     }
@@ -101,7 +101,7 @@ class CartController extends Controller
         return view("customer/carts/checkout", [
             'title' => "Checkout",
             "categories" => $categories,
-            "countProductsInCart" => $countProductsInCart,
+            "countProductsInCart" => $countProductsInCart ?? 0,
             "totalPrice" => $totalPrice,
         ]);
     }

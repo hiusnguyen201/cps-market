@@ -34,7 +34,7 @@ class WishlistController extends Controller
             'title' => "Wishlist",
             "categories" => $categories,
             'wishlist' => $wishlist,
-            'countProductsInCart' => $countProductsInCart,
+            'countProductsInCart' => $countProductsInCart ?? 0,
         ]);
     }
 

@@ -167,4 +167,12 @@ class ProductService
 
         return $products && count($products) ? $products : [];
     }
+
+    public function calculateTotalExpense()
+    {
+        $total = Product::all()->sum(function ($product) {
+            return $product->quantity * $product->market_price;
+        });
+        return $total ? $total : 0;
+    }
 }
