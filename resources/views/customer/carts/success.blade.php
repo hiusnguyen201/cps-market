@@ -114,8 +114,8 @@
                             <div class="o-summary">
                                 <div class="o-summary__section u-s-m-b-30">
                                     <div class="o-summary__item-wrap gl-scroll">
-                                        @if ($order->products)
-                                            @foreach ($order->products as $order_product)
+                                        @if ($order->orders_products)
+                                            @foreach ($order->orders_products as $order_product)
                                                 <div class="o-card">
                                                     <div class="o-card__flex">
                                                         <div class="o-card__img-wrap">

@@ -188,7 +188,7 @@ class AuthController extends Controller
         try {
             $user = $this->userService->registerCustomer($request);
             Auth::login($user);
-            return redirect("/auth/otp")->with("Registration successful! We've sent a verification code to your email");
+            return redirect("/auth/otp")->with("success", "Registration successfully! We've sent a verification code to your email");
         } catch (\Exception $e) {
             return redirect()->back()->with("error", $e->getMessage());
         }

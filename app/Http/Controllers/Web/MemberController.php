@@ -38,7 +38,7 @@ class MemberController extends Controller
             'title' => "Member",
             "categories" => $categories,
             "recentOrders" => $recentOrders,
-            'countProductsInCart' => $countProductsInCart,
+            'countProductsInCart' => $countProductsInCart ?? 0,
             "countPlacedOrders" => $countPlacedOrders,
             "countCancelOrders" => $countCancelOrders,
             "countWishlist" => $countWishlist
@@ -56,7 +56,7 @@ class MemberController extends Controller
         return view("customer.account.profile", [
             'title' => "My Profile",
             "categories" => $categories,
-            'countProductsInCart' => $countProductsInCart,
+            'countProductsInCart' => $countProductsInCart ?? 0,
             "countPlacedOrders" => $countPlacedOrders,
             "countCancelOrders" => $countCancelOrders,
             "countWishlist" => $countWishlist
@@ -74,7 +74,7 @@ class MemberController extends Controller
         return view("customer.account.edit-profile", [
             'title' => "My Profile",
             "categories" => $categories,
-            'countProductsInCart' => $countProductsInCart,
+            'countProductsInCart' => $countProductsInCart ?? 0,
             "countPlacedOrders" => $countPlacedOrders,
             "countCancelOrders" => $countCancelOrders,
             "countWishlist" => $countWishlist
@@ -104,7 +104,7 @@ class MemberController extends Controller
         return view("customer.account.change-password", [
             'title' => "Change password",
             "categories" => $categories,
-            'countProductsInCart' => $countProductsInCart,
+            'countProductsInCart' => $countProductsInCart ?? 0,
             "countPlacedOrders" => $countPlacedOrders,
             "countCancelOrders" => $countCancelOrders,
             "countWishlist" => $countWishlist
@@ -136,7 +136,7 @@ class MemberController extends Controller
             'title' => "My Orders",
             "categories" => $categories,
             "orders" => $orders,
-            'countProductsInCart' => $countProductsInCart,
+            'countProductsInCart' => $countProductsInCart ?? 0,
             "countPlacedOrders" => $countPlacedOrders,
             "countCancelOrders" => $countCancelOrders,
             "countWishlist" => $countWishlist
@@ -155,7 +155,7 @@ class MemberController extends Controller
             'title' => "Order Details",
             "categories" => $categories,
             "order" => $order,
-            'countProductsInCart' => $countProductsInCart,
+            'countProductsInCart' => $countProductsInCart ?? 0,
             "countPlacedOrders" => $countPlacedOrders,
             "countCancelOrders" => $countCancelOrders,
             "countWishlist" => $countWishlist

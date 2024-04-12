@@ -177,7 +177,7 @@
                             <div class="col-6 text-right shippingFeeInput">
                                 <input type="hidden" id="shippingFeeInput"
                                     value="{{ config('constants.shipping_fee') }}">
-                                @convertCurrency(config('constants.shipping_fee'))
+                                @convertShippingFee(config('constants.shipping_fee'))
                             </div>
                         </div>
                         <hr>

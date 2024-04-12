@@ -50,8 +50,6 @@
                             <label for="" class="form-label mb-0">
                                 Products:
                             </label>
-                            <button type="button" class="btn btn-primary ml-3" data-toggle="modal"
-                                data-target="#modal-searchProduct">Add Product</button>
                         </div>
                         <div class="col-12">
                             <div class="table-responsive">
@@ -76,8 +74,8 @@
                             <div class="table-responsive">
                                 <table id="cartOrder" class="table table-bordered">
                                     <tbody>
-                                        @if ($order->products && count($order->products))
-                                            @foreach ($order->products as $order_product)
+                                        @if ($order->orders_products && count($order->orders_products))
+                                            @foreach ($order->orders_products as $order_product)
                                                 <tr data-product='{{ $order_product->product->id }}'>
                                                     <td class='align-middle'>
                                                         <div class='row'>
@@ -236,7 +234,7 @@
                                 Subtotal
                             </div>
                             <div class="col-6 text-right">
-                                <input type="hidden" id="subtotalPriceInput" value="0">
+                                <input type="hidden" id="subtotalPriceInput" value="{{ $order->sub_total }}">
                                 <span>@convertCurrency($order->sub_total)</span>
                             </div>
                         </div>
@@ -247,7 +245,7 @@
                             <div class="col-6 text-right shippingFeeInput">
                                 <input type="hidden" id="shippingFeeInput"
                                     value="{{ config('constants.shipping_fee') }}">
-                                <span>@convertCurrency($order->shipping_fee)</span>
+                                <span>@convertShippingFee($order->shipping_fee)</span>
                             </div>
                         </div>
                         <hr>
@@ -256,7 +254,7 @@
                                 Total
                             </div>
                             <div class="col-6 text-right totalPriceInput">
-                                <input type="hidden" id="totalPriceInput" value="0">
+                                <input type="hidden" id="totalPriceInput" value="{{ $order->total }}">
                                 <span>@convertCurrency($order->total)</span>
                             </div>
                         </div>
@@ -273,26 +271,4 @@
             </div>
         </div>
     </form>
-
-
-    <div class="modal fade" id="modal-searchProduct" aria-modal="true" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Product</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="text" class="form-control" name="code" placeholder="Code...">
-                    <span class="error-message" style="color: red"></span>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" id="searchProduct-btn" class="btn btn-primary">Search</button>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection

@@ -48,18 +48,18 @@
                             <div class="manage-o__description">
                                 <div class="description__container">
                                     <div class="description__img-wrap">
-                                        @foreach ($order->products[0]->product->images as $image)
+                                        @foreach ($order->orders_products[0]->product->images as $image)
                                             @if ($image->pin == 1)
                                                 <img class="u-img-fluid" style="height: 100%; object-fit: contain;"
                                                     src="{{ asset($image->thumbnail) }}"
-                                                    alt="{{ $order->products[0]->product->name }}">
+                                                    alt="{{ $order->orders_products[0]->product->name }}">
                                             @endif
                                         @endforeach
 
                                     </div>
 
                                     <div class="description-title">
-                                        @foreach ($order->products as $product)
+                                        @foreach ($order->orders_products as $product)
                                             {{ $product->product->name }}
                                             @if (!$loop->last)
                                                 ,
