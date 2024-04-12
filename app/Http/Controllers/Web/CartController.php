@@ -47,7 +47,8 @@ class CartController extends Controller
         ]);
 
         try {
-            $this->cartService->createCart($request->product_id, Auth::user());
+                $this->cartService->createCart($request->product_id, Auth::user());
+
 
             session()->flash("success", 'Add product to cart successfully');
             if ($request->action == 'buy') {

@@ -145,6 +145,10 @@ class MemberController extends Controller
 
     public function orderDetailsPage(Order $order)
     {
+        if($order->customer_id != Auth::id()) {
+            return abort(404);
+        }
+
         $categories = $this->categoryService->findAll();
         [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
         $countPlacedOrders = $this->userService->countPlacedOrders(Auth::id());

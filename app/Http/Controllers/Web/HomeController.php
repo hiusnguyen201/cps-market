@@ -92,9 +92,10 @@ class HomeController extends Controller
         return view('customer.search', [
             'title' => 'Search Product',
             'countProductsInCart' => $countProductsInCart ?? 0,
-            'products' => $products,
+            'products' => $products->paginate($request->per_page ?? 8),
             'categories' => $categories,
             'brands' => $brands,
+            'countProducts' => $products->count()
         ]);
     }
 }

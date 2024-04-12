@@ -18,7 +18,6 @@ class CartService
                 throw new \InvalidArgumentException('Not enough quantity available');
             }
 
-            $cart = null;
             if (!$cart) {
                 $cart = Cart::create([
                     'product_id' => $product->id,

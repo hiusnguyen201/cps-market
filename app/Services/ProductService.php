@@ -65,8 +65,6 @@ class ProductService
                 break;
         }
 
-        $products = $products->paginate($request->per_page ?? 8);
-
         return $products;
     }
 

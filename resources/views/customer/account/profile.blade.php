@@ -23,8 +23,6 @@
 
                     <span class="dash__text">{{ Auth::user()->email }}</span>
                     <div class="dash__link dash__link--secondary">
-
-                        <a href="#">Change</a>
                     </div>
                 </div>
                 <div class="col-lg-4 u-s-m-b-30">
@@ -32,8 +30,6 @@
 
                     <span class="dash__text">{{ Auth::user()->phone }}</span>
                     <div class="dash__link dash__link--secondary">
-
-                        <a href="#">Add</a>
                     </div>
                 </div>
                 <div class="col-lg-4 u-s-m-b-30">

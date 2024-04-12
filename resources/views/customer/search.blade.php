@@ -136,7 +136,7 @@
                 <div class="col-lg-9 col-md-12">
                     <div class="shop-p__meta-wrap u-s-m-b-60">
 
-                        <span class="shop-p__meta-text-1">FOUND {{ count($products) ?? 0 }} RESULTS</span>
+                        <span class="shop-p__meta-text-1">FOUND {{ $countProducts ?? 0 }} RESULTS</span>
 
                     </div>
                     <div class="shop-p">
