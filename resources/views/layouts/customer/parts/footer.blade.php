@@ -7,43 +7,43 @@
                             <div class="outer-footer__content u-s-m-b-40">
 
                                 <span class="outer-footer__content-title">Contact Us</span>
-                                <div class="outer-footer__text-wrap"><i class="fas fa-home"></i>
+                                <div class="outer-footer__text-wrap"><i class="fas fa-map-marker-alt"></i>
 
-                                    <span>4247 Ashford Drive Virginia VA-20006 USA</span>
+                                    <span>Vietnam</span>
                                 </div>
                                 <div class="outer-footer__text-wrap"><i class="fas fa-phone-volume"></i>
 
-                                    <span>(+0) 900 901 904</span>
+                                    <span>0383460015</span>
                                 </div>
                                 <div class="outer-footer__text-wrap"><i class="far fa-envelope"></i>
 
-                                    <span>contact@domain.com</span>
+                                    <span>hiusnguyen201@gmail.com</span>
                                 </div>
                                 <div class="outer-footer__social">
                                     <ul>
                                         <li>
 
-                                            <a class="s-fb--color-hover" href="#"><i
+                                            <a class="s-fb--color-hover" href="https://www.facebook.com/"><i
                                                     class="fab fa-facebook-f"></i></a>
                                         </li>
                                         <li>
 
-                                            <a class="s-tw--color-hover" href="#"><i
+                                            <a class="s-tw--color-hover" href="https://www.twitter.com/"><i
                                                     class="fab fa-twitter"></i></a>
                                         </li>
                                         <li>
 
-                                            <a class="s-youtube--color-hover" href="#"><i
+                                            <a class="s-youtube--color-hover" href="https://www.youtube.com/"><i
                                                     class="fab fa-youtube"></i></a>
                                         </li>
                                         <li>
 
-                                            <a class="s-insta--color-hover" href="#"><i
+                                            <a class="s-insta--color-hover" href="https://www.instagram.com/"><i
                                                     class="fab fa-instagram"></i></a>
                                         </li>
                                         <li>
 
-                                            <a class="s-gplus--color-hover" href="#"><i
+                                            <a class="s-gplus--color-hover" href="https://www.google.com/"><i
                                                     class="fab fa-google-plus-g"></i></a>
                                         </li>
                                     </ul>
@@ -64,19 +64,19 @@
                                                 </li>
                                                 <li>
 
-                                                    <a href="dashboard.html">Account</a>
+                                                    <a href="/member">Account</a>
                                                 </li>
                                                 <li>
 
-                                                    <a href="shop-side-version-2.html">Manufacturer</a>
+                                                    <a href="/">Manufacturer</a>
                                                 </li>
                                                 <li>
 
-                                                    <a href="dash-payment-option.html">Finance</a>
+                                                    <a href="/">Finance</a>
                                                 </li>
                                                 <li>
 
-                                                    <a href="shop-side-version-2.html">Shop</a>
+                                                    <a href="/">Shop</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -90,23 +90,23 @@
                                             <ul>
                                                 <li>
 
-                                                    <a href="about.html">About us</a>
+                                                    <a href="/">About us</a>
                                                 </li>
                                                 <li>
 
-                                                    <a href="contact.html">Contact Us</a>
+                                                    <a href="/">Contact Us</a>
                                                 </li>
                                                 <li>
 
-                                                    <a href="index.html">Sitemap</a>
+                                                    <a href="/">Sitemap</a>
                                                 </li>
                                                 <li>
 
-                                                    <a href="dash-my-order.html">Delivery</a>
+                                                    <a href="/">Delivery</a>
                                                 </li>
                                                 <li>
 
-                                                    <a href="shop-side-version-2.html">Store</a>
+                                                    <a href="/">Store</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -145,7 +145,7 @@
                                             placeholder="Enter your Email">
 
                                         <button class="btn btn--e-brand newsletter__btn"
-                                            type="submit">SUBSCRIBE</button>
+                                            type="button">SUBSCRIBE</button>
                                     </div>
 
                                     <span class="newsletter__text">Subscribe to the mailing list to receive updates on
@@ -165,7 +165,7 @@
 
                                     <span>Copyright © 2018</span>
 
-                                    <a href="index.html">Reshop</a>
+                                    <a href="/">Reshop</a>
 
                                     <span>All Right Reserved</span>
                                 </div>

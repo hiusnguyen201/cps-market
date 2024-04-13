@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Wishlist;
+use App\Models\Product;
 
 class WishlistService
 {
@@ -47,11 +48,16 @@ class WishlistService
         }
     }
 
-    public function add($request, $userId)
+    public function add($productId, $userId)
     {
         try {
+            $product = Product::find($productId);
+            if (!$product) {
+                throw new \InvalidArgumentException("Product is not found");
+            }
+
             $wishlist = Wishlist::create([
-                'product_id' => $request->product_id,
+                'product_id' => $productId,
                 'user_id' => $userId,
             ]);
 

@@ -81,7 +81,6 @@
                                             </div>
                                         @endforeach
                                     @endif
-
                                 </div>
                             </div>
                         </div>
@@ -130,6 +129,13 @@
                         </div>
                         <div class="u-s-m-b-15">
                             <div class="pd-detail__inline">
+                                @php
+                                    $wishlistCheck = $wishlist
+                                        ->filter(function ($item) use ($product) {
+                                            return $item->product_id == $product->id;
+                                        })
+                                        ->first();
+                                @endphp
                                 @if ($wishlistCheck)
                                     <form action="/wishlist" method="post">
                                         @csrf
@@ -166,23 +172,28 @@
                             <ul class="pd-social-list">
                                 <li>
 
-                                    <a class="s-fb--color-hover" href="#"><i class="fab fa-facebook-f"></i></a>
+                                    <a class="s-fb--color-hover" href="https://www.facebook.com/"><i
+                                            class="fab fa-facebook-f"></i></a>
                                 </li>
                                 <li>
 
-                                    <a class="s-tw--color-hover" href="#"><i class="fab fa-twitter"></i></a>
+                                    <a class="s-tw--color-hover" href="https://twitter.com/"><i
+                                            class="fab fa-twitter"></i></a>
                                 </li>
                                 <li>
 
-                                    <a class="s-insta--color-hover" href="#"><i class="fab fa-instagram"></i></a>
+                                    <a class="s-insta--color-hover" href="https://www.instagram.com/"><i
+                                            class="fab fa-instagram"></i></a>
                                 </li>
                                 <li>
 
-                                    <a class="s-wa--color-hover" href="#"><i class="fab fa-whatsapp"></i></a>
+                                    <a class="s-wa--color-hover" href="https://www.whatsapp.com/"><i
+                                            class="fab fa-whatsapp"></i></a>
                                 </li>
                                 <li>
 
-                                    <a class="s-gplus--color-hover" href="#"><i class="fab fa-google-plus-g"></i></a>
+                                    <a class="s-gplus--color-hover" href="https://www.google.com/"><i
+                                            class="fab fa-google-plus-g"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -240,41 +251,13 @@
                                 <li class="nav-item">
                                     <a class="nav-link active" data-toggle="tab" href="#pd-desc">DESCRIPTION</a>
                                 </li>
-                                <li class="nav-item">
-
-                                    <a class="nav-link" data-toggle="tab" href="#pd-tag">TAGS</a>
-                                </li>
-                                <li class="nav-item">
-
-                                    <a class="nav-link" id="view-review" data-toggle="tab" href="#pd-rev">REVIEWS
-
-                                        <span>(23)</span></a>
-                                </li>
                             </ul>
                         </div>
                         <div class="tab-content">
-
-                            <!--====== Tab 1 ======-->
                             <div class="tab-pane  fade show active" id="pd-desc">
                                 <div class="pd-tab__desc">
                                     <div class="u-s-m-b-15">
                                         <p>{{ $product->description }}</p>
-                                    </div>
-                                    <div class="u-s-m-b-30">
-                                        <ul>
-                                            <li><i class="fas fa-check u-s-m-r-8"></i>
-
-                                                <span>Buyer Protection.</span>
-                                            </li>
-                                            <li><i class="fas fa-check u-s-m-r-8"></i>
-
-                                                <span>Full Refund if you don't receive your order.</span>
-                                            </li>
-                                            <li><i class="fas fa-check u-s-m-r-8"></i>
-
-                                                <span>Returns accepted if product not as described.</span>
-                                            </li>
-                                        </ul>
                                     </div>
                                     <div class="u-s-m-b-15">
                                         <h4>PRODUCT INFORMATION</h4>
@@ -283,443 +266,17 @@
                                         <div class="pd-table gl-scroll">
                                             <table>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>Main Material</td>
-                                                        <td>Cotton</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Color</td>
-                                                        <td>Green, Blue, Red</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Sleeves</td>
-                                                        <td>Long Sleeve</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Top Fit</td>
-                                                        <td>Regular</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Print</td>
-                                                        <td>Not Printed</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Neck</td>
-                                                        <td>Round Neck</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Pieces Count</td>
-                                                        <td>1 Piece</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Occasion</td>
-                                                        <td>Casual</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Shipping Weight (kg)</td>
-                                                        <td>0.5</td>
-                                                    </tr>
+                                                    @if ($product->products_attributes && count($product->products_attributes))
+                                                        @foreach ($product->products_attributes as $product_attribute)
+                                                            <tr>
+                                                                <td>{{ $product_attribute->attribute->key }}</td>
+                                                                <td>{{ $product_attribute->value }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--====== End - Tab 1 ======-->
-
-
-                            <!--====== Tab 2 ======-->
-                            <div class="tab-pane" id="pd-tag">
-                                <div class="pd-tab__tag">
-                                    <h2 class="u-s-m-b-15">ADD YOUR TAGS</h2>
-                                    <div class="u-s-m-b-15">
-                                        <form>
-
-                                            <input class="input-text input-text--primary-style" type="text">
-
-                                            <button class="btn btn--e-brand-b-2" type="submit">ADD TAGS</button>
-                                        </form>
-                                    </div>
-
-                                    <span class="gl-text">Use spaces to separate tags. Use single quotes (') for
-                                        phrases.</span>
-                                </div>
-                            </div>
-                            <!--====== End - Tab 2 ======-->
-
-
-                            <!--====== Tab 3 ======-->
-                            <div class="tab-pane" id="pd-rev">
-                                <div class="pd-tab__rev">
-                                    <div class="u-s-m-b-30">
-                                        <div class="pd-tab__rev-score">
-                                            <div class="u-s-m-b-8">
-                                                <h2>23 Reviews - 4.6 (Overall)</h2>
-                                            </div>
-                                            <div class="gl-rating-style-2 u-s-m-b-8"><i class="fas fa-star"></i><i
-                                                    class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                    class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
-                                            <div class="u-s-m-b-8">
-                                                <h4>We want to hear from you!</h4>
-                                            </div>
-
-                                            <span class="gl-text">Tell us what you think about this item</span>
-                                        </div>
-                                    </div>
-                                    <div class="u-s-m-b-30">
-                                        <form class="pd-tab__rev-f1">
-                                            <div class="rev-f1__group">
-                                                <div class="u-s-m-b-15">
-                                                    <h2>23 Review(s) for Man Ruched Floral Applique Tee</h2>
-                                                </div>
-                                                <div class="u-s-m-b-15">
-
-                                                    <label for="sort-review"></label><select
-                                                        class="select-box select-box--primary-style" id="sort-review">
-                                                        <option selected>Sort by: Best Rating</option>
-                                                        <option>Sort by: Worst Rating</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="rev-f1__review">
-                                                <div class="review-o u-s-m-b-15">
-                                                    <div class="review-o__info u-s-m-b-8">
-
-                                                        <span class="review-o__name">John Doe</span>
-
-                                                        <span class="review-o__date">27 Feb 2018 10:57:43</span>
-                                                    </div>
-                                                    <div class="review-o__rating gl-rating-style u-s-m-b-8"><i
-                                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                            class="far fa-star"></i>
-
-                                                        <span>(4)</span>
-                                                    </div>
-                                                    <p class="review-o__text">Lorem Ipsum is simply dummy text of the
-                                                        printing and typesetting industry. Lorem Ipsum has been the
-                                                        industry's standard dummy text ever since the 1500s, when an
-                                                        unknown printer took a galley of type and scrambled it to make a
-                                                        type specimen book.</p>
-                                                </div>
-                                                <div class="review-o u-s-m-b-15">
-                                                    <div class="review-o__info u-s-m-b-8">
-
-                                                        <span class="review-o__name">John Doe</span>
-
-                                                        <span class="review-o__date">27 Feb 2018 10:57:43</span>
-                                                    </div>
-                                                    <div class="review-o__rating gl-rating-style u-s-m-b-8"><i
-                                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                            class="far fa-star"></i>
-
-                                                        <span>(4)</span>
-                                                    </div>
-                                                    <p class="review-o__text">Lorem Ipsum is simply dummy text of the
-                                                        printing and typesetting industry. Lorem Ipsum has been the
-                                                        industry's standard dummy text ever since the 1500s, when an
-                                                        unknown printer took a galley of type and scrambled it to make a
-                                                        type specimen book.</p>
-                                                </div>
-                                                <div class="review-o u-s-m-b-15">
-                                                    <div class="review-o__info u-s-m-b-8">
-
-                                                        <span class="review-o__name">John Doe</span>
-
-                                                        <span class="review-o__date">27 Feb 2018 10:57:43</span>
-                                                    </div>
-                                                    <div class="review-o__rating gl-rating-style u-s-m-b-8"><i
-                                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                            class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                            class="far fa-star"></i>
-
-                                                        <span>(4)</span>
-                                                    </div>
-                                                    <p class="review-o__text">Lorem Ipsum is simply dummy text of the
-                                                        printing and typesetting industry. Lorem Ipsum has been the
-                                                        industry's standard dummy text ever since the 1500s, when an
-                                                        unknown printer took a galley of type and scrambled it to make a
-                                                        type specimen book.</p>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="u-s-m-b-30">
-                                        <form class="pd-tab__rev-f2">
-                                            <h2 class="u-s-m-b-15">Add a Review</h2>
-
-                                            <span class="gl-text u-s-m-b-15">Your email address will not be published.
-                                                Required fields are marked *</span>
-                                            <div class="u-s-m-b-30">
-                                                <div class="rev-f2__table-wrap gl-scroll">
-                                                    <table class="rev-f2__table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>
-                                                                    <div class="gl-rating-style-2"><i
-                                                                            class="fas fa-star"></i>
-
-                                                                        <span>(1)</span>
-                                                                    </div>
-                                                                </th>
-                                                                <th>
-                                                                    <div class="gl-rating-style-2"><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star-half-alt"></i>
-
-                                                                        <span>(1.5)</span>
-                                                                    </div>
-                                                                </th>
-                                                                <th>
-                                                                    <div class="gl-rating-style-2"><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star"></i>
-
-                                                                        <span>(2)</span>
-                                                                    </div>
-                                                                </th>
-                                                                <th>
-                                                                    <div class="gl-rating-style-2"><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star-half-alt"></i>
-
-                                                                        <span>(2.5)</span>
-                                                                    </div>
-                                                                </th>
-                                                                <th>
-                                                                    <div class="gl-rating-style-2"><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star"></i>
-
-                                                                        <span>(3)</span>
-                                                                    </div>
-                                                                </th>
-                                                                <th>
-                                                                    <div class="gl-rating-style-2"><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star-half-alt"></i>
-
-                                                                        <span>(3.5)</span>
-                                                                    </div>
-                                                                </th>
-                                                                <th>
-                                                                    <div class="gl-rating-style-2"><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star"></i>
-
-                                                                        <span>(4)</span>
-                                                                    </div>
-                                                                </th>
-                                                                <th>
-                                                                    <div class="gl-rating-style-2"><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star-half-alt"></i>
-
-                                                                        <span>(4.5)</span>
-                                                                    </div>
-                                                                </th>
-                                                                <th>
-                                                                    <div class="gl-rating-style-2"><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star"></i><i
-                                                                            class="fas fa-star"></i>
-
-                                                                        <span>(5)</span>
-                                                                    </div>
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-
-                                                                    <!--====== Radio Box ======-->
-                                                                    <div class="radio-box">
-
-                                                                        <input type="radio" id="star-1"
-                                                                            name="rating">
-                                                                        <div
-                                                                            class="radio-box__state radio-box__state--primary">
-
-                                                                            <label class="radio-box__label"
-                                                                                for="star-1"></label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--====== End - Radio Box ======-->
-                                                                </td>
-                                                                <td>
-
-                                                                    <!--====== Radio Box ======-->
-                                                                    <div class="radio-box">
-
-                                                                        <input type="radio" id="star-1.5"
-                                                                            name="rating">
-                                                                        <div
-                                                                            class="radio-box__state radio-box__state--primary">
-
-                                                                            <label class="radio-box__label"
-                                                                                for="star-1.5"></label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--====== End - Radio Box ======-->
-                                                                </td>
-                                                                <td>
-
-                                                                    <!--====== Radio Box ======-->
-                                                                    <div class="radio-box">
-
-                                                                        <input type="radio" id="star-2"
-                                                                            name="rating">
-                                                                        <div
-                                                                            class="radio-box__state radio-box__state--primary">
-
-                                                                            <label class="radio-box__label"
-                                                                                for="star-2"></label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--====== End - Radio Box ======-->
-                                                                </td>
-                                                                <td>
-
-                                                                    <!--====== Radio Box ======-->
-                                                                    <div class="radio-box">
-
-                                                                        <input type="radio" id="star-2.5"
-                                                                            name="rating">
-                                                                        <div
-                                                                            class="radio-box__state radio-box__state--primary">
-
-                                                                            <label class="radio-box__label"
-                                                                                for="star-2.5"></label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--====== End - Radio Box ======-->
-                                                                </td>
-                                                                <td>
-
-                                                                    <!--====== Radio Box ======-->
-                                                                    <div class="radio-box">
-
-                                                                        <input type="radio" id="star-3"
-                                                                            name="rating">
-                                                                        <div
-                                                                            class="radio-box__state radio-box__state--primary">
-
-                                                                            <label class="radio-box__label"
-                                                                                for="star-3"></label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--====== End - Radio Box ======-->
-                                                                </td>
-                                                                <td>
-
-                                                                    <!--====== Radio Box ======-->
-                                                                    <div class="radio-box">
-
-                                                                        <input type="radio" id="star-3.5"
-                                                                            name="rating">
-                                                                        <div
-                                                                            class="radio-box__state radio-box__state--primary">
-
-                                                                            <label class="radio-box__label"
-                                                                                for="star-3.5"></label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--====== End - Radio Box ======-->
-                                                                </td>
-                                                                <td>
-
-                                                                    <!--====== Radio Box ======-->
-                                                                    <div class="radio-box">
-
-                                                                        <input type="radio" id="star-4"
-                                                                            name="rating">
-                                                                        <div
-                                                                            class="radio-box__state radio-box__state--primary">
-
-                                                                            <label class="radio-box__label"
-                                                                                for="star-4"></label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--====== End - Radio Box ======-->
-                                                                </td>
-                                                                <td>
-
-                                                                    <!--====== Radio Box ======-->
-                                                                    <div class="radio-box">
-
-                                                                        <input type="radio" id="star-4.5"
-                                                                            name="rating">
-                                                                        <div
-                                                                            class="radio-box__state radio-box__state--primary">
-
-                                                                            <label class="radio-box__label"
-                                                                                for="star-4.5"></label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--====== End - Radio Box ======-->
-                                                                </td>
-                                                                <td>
-
-                                                                    <!--====== Radio Box ======-->
-                                                                    <div class="radio-box">
-
-                                                                        <input type="radio" id="star-5"
-                                                                            name="rating">
-                                                                        <div
-                                                                            class="radio-box__state radio-box__state--primary">
-
-                                                                            <label class="radio-box__label"
-                                                                                for="star-5"></label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--====== End - Radio Box ======-->
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="rev-f2__group">
-                                                <div class="u-s-m-b-15">
-
-                                                    <label class="gl-label" for="reviewer-text">YOUR REVIEW *</label>
-                                                    <textarea class="text-area text-area--primary-style" id="reviewer-text"></textarea>
-                                                </div>
-                                                <div>
-                                                    <p class="u-s-m-b-30">
-
-                                                        <label class="gl-label" for="reviewer-name">NAME *</label>
-
-                                                        <input class="input-text input-text--primary-style" type="text"
-                                                            id="reviewer-name">
-                                                    </p>
-                                                    <p class="u-s-m-b-30">
-
-                                                        <label class="gl-label" for="reviewer-email">EMAIL *</label>
-
-                                                        <input class="input-text input-text--primary-style" type="text"
-                                                            id="reviewer-email">
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div>
-
-                                                <button class="btn btn--e-brand-shadow" type="submit">SUBMIT</button>
-                                            </div>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -738,9 +295,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section__text-wrap">
-                            <h1 class="section__heading u-c-secondary u-s-m-b-12">CUSTOMER ALSO VIEWED</h1>
-
-                            <span class="section__span u-c-grey">PRODUCTS THAT CUSTOMER VIEWED</span>
+                            <h1 class="section__heading u-c-secondary u-s-m-b-12">SIMILAR PRODUCT</h1>
                         </div>
                     </div>
                 </div>
@@ -754,342 +309,102 @@
             <div class="container">
                 <div class="slider-fouc">
                     <div class="owl-carousel product-slider" data-item="4">
-                        <div class="u-s-m-b-30">
-                            <div class="product-o product-o--hover-on">
-                                <div class="product-o__wrap">
+                        @if ($similarProducts && count($similarProducts))
+                            @foreach ($similarProducts as $product)
+                                <div class="u-s-m-b-30">
+                                    <div class="product-o product-o--hover-on">
+                                        <div class="product-o__wrap">
 
-                                    <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
+                                            <a class="aspect aspect--bg-grey aspect--square u-d-block"
+                                                href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">
+                                                @foreach ($product->images as $image)
+                                                    @if ($image->pin)
+                                                        <img class="aspect__img" src="{{ asset($image->thumbnail) }}"
+                                                            alt="{{ $product->name }}">
+                                                    @endif
+                                                @endforeach
+                                            </a>
+                                            <div class="product-o__action-wrap">
+                                                <ul class="product-o__action-list">
+                                                    <li>
+                                                        <a href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html"
+                                                            data-tooltip="tooltip" data-placement="top"
+                                                            title="Quick View"><i class="fas fa-search-plus"></i></a>
+                                                    </li>
+                                                    <li>
+                                                        <a onclick="this.nextElementSibling.submit()" data-modal="modal"
+                                                            data-modal-id="#add-to-cart" data-tooltip="tooltip"
+                                                            data-placement="top" title="Add to Cart"><i
+                                                                class="fas fa-plus-circle"></i></a>
+                                                        <form hidden method="POST" action="{{ route('cart.create') }}">
+                                                            @csrf
+                                                            <input type="hidden" name="product_id"
+                                                                value="{{ $product->id }}">
+                                                            <input type="hidden" name="action" value="add">
+                                                        </form>
+                                                    </li>
+                                                    <li>
+                                                        @php
+                                                            $similarProductCheck = $wishlist
+                                                                ->filter(function ($item) use ($product) {
+                                                                    return $item->product_id == $product->id;
+                                                                })
+                                                                ->first();
+                                                        @endphp
+                                                        @if ($similarProductCheck)
+                                                            <a onclick="this.nextElementSibling.submit()"
+                                                                data-tooltip="tooltip" data-placement="top"
+                                                                title="Add to Wishlist"><i style="color: red;"
+                                                                    class="fas
+                                                                    fa-heart"></i></a>
+                                                            <form hidden action="/wishlist" method="post">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <input type="hidden" name="wishlist_id"
+                                                                    value="{{ $similarProductCheck->id }}">
+                                                            </form>
+                                                        @else
+                                                            <a onclick="this.nextElementSibling.submit()"
+                                                                data-tooltip="tooltip" data-placement="top"
+                                                                title="Add to Wishlist"><i class="fas fa-heart"></i></a>
+                                                            <form hidden action="/wishlist" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="product_id"
+                                                                    value="{{ $product->id }}">
+                                                            </form>
+                                                        @endif
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
 
-                                        <img class="aspect__img" src="images/product/electronic/product1.jpg"
-                                            alt=""></a>
-                                    <div class="product-o__action-wrap">
-                                        <ul class="product-o__action-list">
-                                            <li>
+                                        <span class="product-o__category">
 
-                                                <a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip"
-                                                    data-placement="top" title="Quick View"><i
-                                                        class="fas fa-search-plus"></i></a>
-                                            </li>
-                                            <li>
+                                            <a
+                                                href="/catalogsearch/result?brand_id={{ $product->brand->id }}">{{ $product->brand->name }}</a></span>
 
-                                                <a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip"
-                                                    data-placement="top" title="Add to Cart"><i
-                                                        class="fas fa-plus-circle"></i></a>
-                                            </li>
-                                            <li>
+                                        <span class="product-o__name">
 
-                                                <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                    title="Add to Wishlist"><i class="fas fa-heart"></i></a>
-                                            </li>
-                                            <li>
+                                            <a
+                                                href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a></span>
+                                        <div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i
+                                                class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                                class="fas fa-star"></i><i class="fas fa-star"></i>
 
-                                                <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                    title="Email me When the price drops"><i
-                                                        class="fas fa-envelope"></i></a>
-                                            </li>
-                                        </ul>
+                                            <span class="product-o__review">(20)</span>
+                                        </div>
+
+                                        <span class="product-o__price" style="color: #ff4500">@convertCurrency($product->sale_price ?? $product->price)
+
+                                            @if ($product->sale_price)
+                                                <span class="product-o__discount">@convertCurrency($product->price)
+                                                </span>
+                                            @endif
+                                        </span>
                                     </div>
                                 </div>
-
-                                <span class="product-o__category">
-
-                                    <a href="shop-side-version-2.html">Electronics</a></span>
-
-                                <span class="product-o__name">
-
-                                    <a href="product-detail.html">Beats Bomb Wireless Headphone</a></span>
-                                <div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i
-                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                        class="fas fa-star"></i>
-
-                                    <span class="product-o__review">(20)</span>
-                                </div>
-
-                                <span class="product-o__price">$125.00
-
-                                    <span class="product-o__discount">$160.00</span></span>
-                            </div>
-                        </div>
-                        <div class="u-s-m-b-30">
-                            <div class="product-o product-o--hover-on">
-                                <div class="product-o__wrap">
-
-                                    <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
-
-                                        <img class="aspect__img" src="images/product/electronic/product2.jpg"
-                                            alt=""></a>
-                                    <div class="product-o__action-wrap">
-                                        <ul class="product-o__action-list">
-                                            <li>
-
-                                                <a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip"
-                                                    data-placement="top" title="Quick View"><i
-                                                        class="fas fa-search-plus"></i></a>
-                                            </li>
-                                            <li>
-
-                                                <a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip"
-                                                    data-placement="top" title="Add to Cart"><i
-                                                        class="fas fa-plus-circle"></i></a>
-                                            </li>
-                                            <li>
-
-                                                <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                    title="Add to Wishlist"><i class="fas fa-heart"></i></a>
-                                            </li>
-                                            <li>
-
-                                                <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                    title="Email me When the price drops"><i
-                                                        class="fas fa-envelope"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <span class="product-o__category">
-
-                                    <a href="shop-side-version-2.html">Electronics</a></span>
-
-                                <span class="product-o__name">
-
-                                    <a href="product-detail.html">Red Wireless Headphone</a></span>
-                                <div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i
-                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                        class="fas fa-star"></i>
-
-                                    <span class="product-o__review">(20)</span>
-                                </div>
-
-                                <span class="product-o__price">$125.00
-
-                                    <span class="product-o__discount">$160.00</span></span>
-                            </div>
-                        </div>
-                        <div class="u-s-m-b-30">
-                            <div class="product-o product-o--hover-on">
-                                <div class="product-o__wrap">
-
-                                    <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
-
-                                        <img class="aspect__img" src="images/product/electronic/product3.jpg"
-                                            alt=""></a>
-                                    <div class="product-o__action-wrap">
-                                        <ul class="product-o__action-list">
-                                            <li>
-
-                                                <a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip"
-                                                    data-placement="top" title="Quick View"><i
-                                                        class="fas fa-search-plus"></i></a>
-                                            </li>
-                                            <li>
-
-                                                <a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip"
-                                                    data-placement="top" title="Add to Cart"><i
-                                                        class="fas fa-plus-circle"></i></a>
-                                            </li>
-                                            <li>
-
-                                                <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                    title="Add to Wishlist"><i class="fas fa-heart"></i></a>
-                                            </li>
-                                            <li>
-
-                                                <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                    title="Email me When the price drops"><i
-                                                        class="fas fa-envelope"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <span class="product-o__category">
-
-                                    <a href="shop-side-version-2.html">Electronics</a></span>
-
-                                <span class="product-o__name">
-
-                                    <a href="product-detail.html">Yellow Wireless Headphone</a></span>
-                                <div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i
-                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                        class="fas fa-star"></i>
-
-                                    <span class="product-o__review">(20)</span>
-                                </div>
-
-                                <span class="product-o__price">$125.00
-
-                                    <span class="product-o__discount">$160.00</span></span>
-                            </div>
-                        </div>
-                        <div class="u-s-m-b-30">
-                            <div class="product-o product-o--hover-on">
-                                <div class="product-o__wrap">
-
-                                    <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
-
-                                        <img class="aspect__img" src="images/product/electronic/product23.jpg"
-                                            alt=""></a>
-                                    <div class="product-o__action-wrap">
-                                        <ul class="product-o__action-list">
-                                            <li>
-
-                                                <a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip"
-                                                    data-placement="top" title="Quick View"><i
-                                                        class="fas fa-search-plus"></i></a>
-                                            </li>
-                                            <li>
-
-                                                <a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip"
-                                                    data-placement="top" title="Add to Cart"><i
-                                                        class="fas fa-plus-circle"></i></a>
-                                            </li>
-                                            <li>
-
-                                                <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                    title="Add to Wishlist"><i class="fas fa-heart"></i></a>
-                                            </li>
-                                            <li>
-
-                                                <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                    title="Email me When the price drops"><i
-                                                        class="fas fa-envelope"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <span class="product-o__category">
-
-                                    <a href="shop-side-version-2.html">Electronics</a></span>
-
-                                <span class="product-o__name">
-
-                                    <a href="product-detail.html">Razor Gear Ultra Slim 8GB Ram</a></span>
-                                <div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i
-                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                        class="fas fa-star"></i>
-
-                                    <span class="product-o__review">(20)</span>
-                                </div>
-
-                                <span class="product-o__price">$125.00
-
-                                    <span class="product-o__discount">$160.00</span></span>
-                            </div>
-                        </div>
-                        <div class="u-s-m-b-30">
-                            <div class="product-o product-o--hover-on">
-                                <div class="product-o__wrap">
-
-                                    <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
-
-                                        <img class="aspect__img" src="images/product/electronic/product26.jpg"
-                                            alt=""></a>
-                                    <div class="product-o__action-wrap">
-                                        <ul class="product-o__action-list">
-                                            <li>
-
-                                                <a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip"
-                                                    data-placement="top" title="Quick View"><i
-                                                        class="fas fa-search-plus"></i></a>
-                                            </li>
-                                            <li>
-
-                                                <a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip"
-                                                    data-placement="top" title="Add to Cart"><i
-                                                        class="fas fa-plus-circle"></i></a>
-                                            </li>
-                                            <li>
-
-                                                <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                    title="Add to Wishlist"><i class="fas fa-heart"></i></a>
-                                            </li>
-                                            <li>
-
-                                                <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                    title="Email me When the price drops"><i
-                                                        class="fas fa-envelope"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <span class="product-o__category">
-
-                                    <a href="shop-side-version-2.html">Electronics</a></span>
-
-                                <span class="product-o__name">
-
-                                    <a href="product-detail.html">Razor Gear Ultra Slim 12GB Ram</a></span>
-                                <div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i
-                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                        class="fas fa-star"></i>
-
-                                    <span class="product-o__review">(20)</span>
-                                </div>
-
-                                <span class="product-o__price">$125.00
-
-                                    <span class="product-o__discount">$160.00</span></span>
-                            </div>
-                        </div>
-                        <div class="u-s-m-b-30">
-                            <div class="product-o product-o--hover-on">
-                                <div class="product-o__wrap">
-
-                                    <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
-
-                                        <img class="aspect__img" src="images/product/electronic/product30.jpg"
-                                            alt=""></a>
-                                    <div class="product-o__action-wrap">
-                                        <ul class="product-o__action-list">
-                                            <li>
-
-                                                <a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip"
-                                                    data-placement="top" title="Quick View"><i
-                                                        class="fas fa-search-plus"></i></a>
-                                            </li>
-                                            <li>
-
-                                                <a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip"
-                                                    data-placement="top" title="Add to Cart"><i
-                                                        class="fas fa-plus-circle"></i></a>
-                                            </li>
-                                            <li>
-
-                                                <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                    title="Add to Wishlist"><i class="fas fa-heart"></i></a>
-                                            </li>
-                                            <li>
-
-                                                <a href="signin.html" data-tooltip="tooltip" data-placement="top"
-                                                    title="Email me When the price drops"><i
-                                                        class="fas fa-envelope"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <span class="product-o__category">
-
-                                    <a href="shop-side-version-2.html">Electronics</a></span>
-
-                                <span class="product-o__name">
-
-                                    <a href="product-detail.html">Razor Gear Ultra Slim 16GB Ram</a></span>
-                                <div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i
-                                        class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                        class="fas fa-star"></i>
-
-                                    <span class="product-o__review">(20)</span>
-                                </div>
-
-                                <span class="product-o__price">$125.00
-
-                                    <span class="product-o__discount">$160.00</span></span>
-                            </div>
-                        </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>

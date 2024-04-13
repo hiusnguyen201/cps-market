@@ -62,20 +62,21 @@ class HomeController extends Controller
     {
         $product = $this->productService->findOneBySlug($productSlug);
 
-        $wishlistCheck = null;
         if (Auth::user()) {
-            $wishlistCheck = $this->wishlistService->findOneByProductIdAndCustomerId($product->id, Auth::id());
+            $wishlist = $this->wishlistService->findAllByCustomerId(Auth::id());
             [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
         }
 
         $categories = $this->categoryService->findAll();
+        $similarProducts = $this->productService->getSimilarProductsWithLimit($product->brand_id, 6);
 
         return view('customer.products.details', [
             'product' => $product,
             'categories' => $categories,
             'countProductsInCart' => $countProductsInCart ?? 0,
-            'wishlistCheck' => $wishlistCheck,
+            'wishlist' => $wishlist ?? [],
             'title' => 'Details Product',
+            'similarProducts' => $similarProducts
         ]);
     }
 

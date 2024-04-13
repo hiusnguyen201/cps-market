@@ -26,14 +26,15 @@ class DashboardController extends Controller
         $newCustomers = $this->userService->countNewCustomers();
         $totalExpense = $this->productService->calculateTotalExpense();
         $totalIncome = $this->orderService->calculateTotalIncome();
-
+        $dataRevenueInYear = $this->orderService->calculateRevenueInYear(date("Y"));
         return view("admin.dashboard.home", [
             'breadcumbs' => ['titles' => ['Dashboard']],
             'title' => 'Dashboard',
             'newOrders' => $newOrders,
             'newCustomers' => $newCustomers,
             'totalExpense' => $totalExpense,
-            'totalIncome' => $totalIncome
+            'totalIncome' => $totalIncome,
+            'dataRevenueInYear' => json_encode($dataRevenueInYear),
         ]);
     }
 }

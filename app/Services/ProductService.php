@@ -173,4 +173,10 @@ class ProductService
         });
         return $total ? $total : 0;
     }
+
+    public function getSimilarProductsWithLimit($brandId, $limit)
+    {
+        $product = Product::where("brand_id", $brandId)->inRandomOrder()->limit($limit)->get();
+        return $product && count($product) ? $product : [];
+    }
 }

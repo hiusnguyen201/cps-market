@@ -80,19 +80,14 @@
                             <li class="nav-item">
                                 <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="tab-content p-0">
                         <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
-                            <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
-                        </div>
-                        <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                            <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+                            <canvas id="revenue-chart-canvas" data="{{ $dataRevenueInYear }}" height="300"
+                                style="height: 300px;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -372,9 +367,6 @@
                     </h3>
                     <!-- card tools -->
                     <div class="card-tools">
-                        <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
-                            <i class="far fa-calendar-alt"></i>
-                        </button>
                         <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse"
                             title="Collapse">
                             <i class="fas fa-minus"></i>
@@ -384,27 +376,6 @@
                 </div>
                 <div class="card-body">
                     <div id="world-map" style="height: 250px; width: 100%;"></div>
-                </div>
-                <!-- /.card-body-->
-                <div class="card-footer bg-transparent">
-                    <div class="row">
-                        <div class="col-4 text-center">
-                            <div id="sparkline-1"></div>
-                            <div class="text-white">Visitors</div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-4 text-center">
-                            <div id="sparkline-2"></div>
-                            <div class="text-white">Online</div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-4 text-center">
-                            <div id="sparkline-3"></div>
-                            <div class="text-white">Sales</div>
-                        </div>
-                        <!-- ./col -->
-                    </div>
-                    <!-- /.row -->
                 </div>
             </div>
             <!-- /.card -->
@@ -507,19 +478,13 @@
     <!-- /.row (main row) -->
 @endsection
 
-<!-- jQuery UI 1.11.4 -->
-<script defer src="{{ asset('adminlte/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script defer>
-    $.widget.bridge('uibutton', $.ui.button)
-</script>
 <!-- ChartJS -->
 <script defer src="{{ asset('adminlte/plugins/chart.js/Chart.min.js') }}"></script>
 <!-- Sparkline -->
 <script defer src="{{ asset('adminlte/plugins/sparklines/sparkline.js') }}"></script>
 <!-- JQVMap -->
 <script defer src="{{ asset('adminlte/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
-<script defer src="{{ asset('adminlte/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
+<script defer src="{{ asset('adminlte/plugins/jqvmap/maps/continents/jquery.vmap.asia.js') }}"></script>
 <!-- jQuery Knob Chart -->
 <script defer src="{{ asset('adminlte/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
 <!-- daterangepicker -->
