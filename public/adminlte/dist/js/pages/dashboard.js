@@ -143,7 +143,7 @@ $(function () {
         .getContext("2d");
     // $('#revenue-chart').get(0).getContext('2d');
 
-    const data = document
+    const dataRevenue = document
         .getElementById("revenue-chart-canvas")
         .getAttribute("data");
 
@@ -171,7 +171,7 @@ $(function () {
                 pointStrokeColor: "rgba(60,141,188,1)",
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(60,141,188,1)",
-                data: JSON.parse(data),
+                data: JSON.parse(dataRevenue),
             },
         ],
     };
@@ -241,18 +241,23 @@ $(function () {
     var salesGraphChartCanvas = $("#line-chart").get(0).getContext("2d");
     // $('#revenue-chart').get(0).getContext('2d');
 
+    const dataSales = document
+        .getElementById("line-chart")
+        .getAttribute("data");
+
     var salesGraphChartData = {
         labels: [
-            "2011 Q1",
-            "2011 Q2",
-            "2011 Q3",
-            "2011 Q4",
-            "2012 Q1",
-            "2012 Q2",
-            "2012 Q3",
-            "2012 Q4",
-            "2013 Q1",
-            "2013 Q2",
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "September",
+            "October",
+            "November",
+            "December",
         ],
         datasets: [
             {
@@ -266,10 +271,7 @@ $(function () {
                 pointHoverRadius: 7,
                 pointColor: "#efefef",
                 pointBackgroundColor: "#efefef",
-                data: [
-                    2666, 2778, 4912, 3767, 6810, 5670, 4820, 15073, 10687,
-                    8432,
-                ],
+                data: JSON.parse(dataSales),
             },
         ],
     };
@@ -296,7 +298,7 @@ $(function () {
             yAxes: [
                 {
                     ticks: {
-                        stepSize: 5000,
+                        stepSize: 5,
                         fontColor: "#efefef",
                     },
                     gridLines: {

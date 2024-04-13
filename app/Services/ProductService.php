@@ -123,16 +123,6 @@ class ProductService
         return $product ? $product : null;
     }
 
-    public function findAllWithLimitBestSoldInDay($limit)
-    {
-        $products = Product::whereDate('updated_at', today())
-            ->orderBy('sold', 'desc')
-            ->limit($limit)
-            ->get();
-
-        return $products && count($products) ? $products : [];
-    }
-
     public function findAllWithLimitBestSoldInWeek($limit)
     {
         $products = Product::whereDate('updated_at', today())
@@ -148,7 +138,16 @@ class ProductService
         $products = Product::whereYear('updated_at', now()->year)
             ->whereMonth('updated_at', now()->month)
             ->orderBy('sold', 'desc')
-            ->limit(3)
+            ->limit($limit)
+            ->get();
+
+        return $products && count($products) ? $products : [];
+    }
+    public function findAllWithLimitBestSoldInYear($limit)
+    {
+        $products = Product::whereYear('updated_at', now()->year)
+            ->orderBy('sold', 'desc')
+            ->limit($limit)
             ->get();
 
         return $products && count($products) ? $products : [];
@@ -179,4 +178,5 @@ class ProductService
         $product = Product::where("brand_id", $brandId)->inRandomOrder()->limit($limit)->get();
         return $product && count($product) ? $product : [];
     }
+
 }

@@ -321,4 +321,18 @@ class OrderService
         }
         return $revenueInMonths;
     }
+
+    public function countOrdersCompletedInYear($year)
+    {
+        $counts = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $count = Order::where(function ($query) use ($year, $i) {
+                $query->where("status", config("constants.order_status.completed.value"));
+                $query->whereYear('created_at', $year);
+                $query->whereMonth('created_at', $i);
+            })->count();
+            array_push($counts, $count);
+        }
+        return $counts;
+    }
 }

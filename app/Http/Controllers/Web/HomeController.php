@@ -39,7 +39,7 @@ class HomeController extends Controller
             array_push($sections, $products);
         }
 
-        $sections9D = $this->productService->findAllWithLimitBestSoldInDay(3);
+        $sections9Y = $this->productService->findAllWithLimitBestSoldInYear(3);
         $sections9W = $this->productService->findAllWithLimitBestSoldInWeek(3);
         $sections9M = $this->productService->findAllWithLimitBestSoldInMonth(3);
 
@@ -49,7 +49,7 @@ class HomeController extends Controller
 
         return view("customer/home", [
             'sections' => $sections,
-            'sections9D' => $sections9D,
+            'sections9Y' => $sections9Y,
             'sections9W' => $sections9W,
             'sections9M' => $sections9M,
             'categories' => $categories,
