@@ -11,6 +11,9 @@ class CartService
     {
         try {
             $product = Product::find($product_id);
+            if (!$product) {
+                throw new \InvalidArgumentException("Product is not found");
+            }
 
             $cart = Cart::where('user_id', $customer->id)->where('product_id', $product->id)->first();
 
@@ -18,7 +21,6 @@ class CartService
                 throw new \InvalidArgumentException('Not enough quantity available');
             }
 
-            $cart = null;
             if (!$cart) {
                 $cart = Cart::create([
                     'product_id' => $product->id,
@@ -47,6 +49,9 @@ class CartService
     {
         try {
             $cart = Cart::find($cart_id);
+            if (!$cart) {
+                throw new \InvalidArgumentException("Cart is not found");
+            }
 
             if ($quantity > $cart->product->quantity) {
                 throw new \InvalidArgumentException('Not enough quantity available');

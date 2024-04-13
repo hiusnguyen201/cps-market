@@ -50,8 +50,8 @@ class PaymentController extends Controller
 
         $orderInfo = "Thanh toán qua MoMo";
         $orderId = time() . "";
-        $redirectUrl = env("APP_URL") . route("cart.success");
-        $ipnUrl = env("APP_URL") . route("cart.success");
+        $redirectUrl = route("cart.success");
+        $ipnUrl = route("cart.success");
         $extraData = "";
         $requestId = time() . "";
         $requestType = "captureWallet";

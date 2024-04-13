@@ -29,7 +29,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:4|max:150|unique:products,name'
-                . ($request->_method == 'PATCH' ? ',' . $request->id : ''),
+                . (strtolower($request->_method) == 'patch' ? ',' . $request->id : ''),
             'market_price' => "required|integer|min:1",
             'price' => "required|integer|min:1",
             'sale_price' => "nullable|integer|min:1",

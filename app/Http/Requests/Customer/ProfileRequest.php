@@ -26,10 +26,9 @@ class ProfileRequest extends FormRequest
     public function rules(Request $request)
     {
         $genderValues = array_column(config("constants.genders"), 'value');
-
         return [
             'name' => 'required|string|max:100',
-            'email' => 'required|email|max:150|unique:users,email' . ($request->_method == 'PATCH' ? ',' . $request->id : ''),
+            'email' => 'required|email|max:150|unique:users,email' . strtolower($request->_method) == 'patch' ? ',' . $request->id : '',
             'phone' => ['required', 'string', 'min:10', 'max:15', 'regex:/^(84|0[3|5|7|8|9])+([0-9]{8})\b/'],
             'gender' => ['nullable', 'integer', Rule::in($genderValues)],
             "address" => "nullable|string|max:150"

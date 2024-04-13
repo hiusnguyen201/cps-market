@@ -40,12 +40,8 @@ class WishlistController extends Controller
 
     public function handleCreate(Request $request)
     {
-        $request->validate([
-            'product_id' => 'required|integer|min:1|exists:products,id',
-        ]);
-
         try {
-            $this->wishlistService->add($request, Auth::id());
+            $this->wishlistService->add($request->product_id, Auth::id());
             session()->flash('success', 'Add product to wishlist successfully');
         } catch (\Exception $e) {
             session()->flash('error', $e->getMessage());

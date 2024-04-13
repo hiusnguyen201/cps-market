@@ -26,6 +26,12 @@ class DashboardController extends Controller
         $newCustomers = $this->userService->countNewCustomers();
         $totalExpense = $this->productService->calculateTotalExpense();
         $totalIncome = $this->orderService->calculateTotalIncome();
+        $dataRevenueInYear = $this->orderService->calculateRevenueInYear(date("Y"));
+
+        $bestSalesWeekly = $this->productService->findAllWithLimitBestSoldInWeek(4);
+        $bestSalesMonthly = $this->productService->findAllWithLimitBestSoldInMonth(4);
+        $bestSalesYearly = $this->productService->findAllWithLimitBestSoldInYear(4);
+        $totalOrdersCompleted = $this->orderService->countOrdersCompletedInYear(date("Y"));
 
         return view("admin.dashboard.home", [
             'breadcumbs' => ['titles' => ['Dashboard']],
@@ -33,7 +39,12 @@ class DashboardController extends Controller
             'newOrders' => $newOrders,
             'newCustomers' => $newCustomers,
             'totalExpense' => $totalExpense,
-            'totalIncome' => $totalIncome
+            'totalIncome' => $totalIncome,
+            'dataRevenueInYear' => json_encode($dataRevenueInYear),
+            'bestSalesWeekly' => $bestSalesWeekly,
+            'bestSalesMonthly' => $bestSalesMonthly,
+            'bestSalesYearly' => $bestSalesYearly,
+            'totalOrdersCompleted' => json_encode($totalOrdersCompleted),
         ]);
     }
 }

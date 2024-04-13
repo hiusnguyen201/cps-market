@@ -224,6 +224,10 @@ class OrderService
                 Order_Product::find($order_product->id)->update([
                     "quantity" => $request->quantity[$index],
                 ]);
+
+                $order_product->product->update([
+                    "quantity" => $order_product->product->quantity + $order_product->quantity - $request->quantity[$index]
+                ]);
             }
 
             $order->update([
@@ -302,5 +306,33 @@ class OrderService
     {
         $total = Order::where("status", config("constants.order_status.completed.value"))->sum("total");
         return $total ? $total : 0;
+    }
+
+    public function calculateRevenueInYear($year)
+    {
+        $revenueInMonths = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $total = Order::where(function ($query) use ($year, $i) {
+                $query->where("status", config("constants.order_status.completed.value"));
+                $query->whereYear('created_at', $year);
+                $query->whereMonth('created_at', $i);
+            })->sum('total');
+            array_push($revenueInMonths, $total);
+        }
+        return $revenueInMonths;
+    }
+
+    public function countOrdersCompletedInYear($year)
+    {
+        $counts = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $count = Order::where(function ($query) use ($year, $i) {
+                $query->where("status", config("constants.order_status.completed.value"));
+                $query->whereYear('created_at', $year);
+                $query->whereMonth('created_at', $i);
+            })->count();
+            array_push($counts, $count);
+        }
+        return $counts;
     }
 }

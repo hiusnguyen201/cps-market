@@ -41,6 +41,10 @@
 
     <!-- jQuery -->
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('adminlte/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script defer>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
@@ -82,6 +86,7 @@
     <script src="{{ asset('custom/js/vietnamlocalselector.js') }}"></script>
 
     <script src="{{ asset('custom/js/selectMultiFile.js') }}"></script>
+    <script src="{{ asset('custom/js/dashboard.js') }}"></script>
     <!-- Custom UI -->
     <script defer src="{{ asset('custom/js/ui.js') }}"></script>
 </body>

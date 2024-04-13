@@ -80,6 +80,7 @@
                                 @enderror
                             </div>
                         </div>
+                        <input type="hidden" name="id" value="{{ Auth::id() }}">
                         <button class="btn btn--e-brand-b-2" type="submit" style="width:100%"
                             fdprocessedid="rd0deq">SAVE</button>
                     </form>

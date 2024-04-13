@@ -24,8 +24,8 @@
     <div class="row">
         <div class="col-lg-3 col-6">
             <div class="small-box bg-info">
-                <div class="inner py-4 px-3">
-                    <h3 style="font-size: 1.6rem">{{ $newOrders }}</h3>
+                <div class="inner pt-4 pb-3 px-2">
+                    <h3 style="font-size: 1.4rem">{{ $newOrders }}</h3>
                     <p>New Orders</p>
                 </div>
                 <div class="icon">
@@ -35,8 +35,8 @@
         </div>
         <div class="col-lg-3 col-6">
             <div class="small-box bg-success">
-                <div class="inner py-4 px-3">
-                    <h3 style="font-size: 1.6rem">@convertCurrency($totalIncome)</h3>
+                <div class="inner pt-4 pb-3 px-2">
+                    <h3 style="font-size: 1.4rem">@convertCurrency($totalIncome)</h3>
                     <p>Total Income</p>
                 </div>
                 <div class="icon">
@@ -46,8 +46,8 @@
         </div>
         <div class="col-lg-3 col-6">
             <div class="small-box bg-danger">
-                <div class="inner py-4 px-3">
-                    <h3 style="font-size: 1.6rem">@convertCurrency($totalExpense)</h3>
+                <div class="inner pt-4 pb-3 px-2">
+                    <h3 style="font-size: 1.4rem">@convertCurrency($totalExpense)</h3>
                     <p>Total Expense</p>
                 </div>
                 <div class="icon">
@@ -57,9 +57,9 @@
         </div>
         <div class="col-lg-3 col-6">
             <div class="small-box bg-warning">
-                <div class="inner py-4 px-3">
-                    <h3 style="font-size: 1.6rem">{{ $newCustomers }}</h3>
-                    <p>Customer Registrations</p>
+                <div class="inner pt-4 pb-3 px-2">
+                    <h3 style="font-size: 1.4rem">{{ $newCustomers }}</h3>
+                    <p>New Customers</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
@@ -80,175 +80,233 @@
                             <li class="nav-item">
                                 <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="tab-content p-0">
                         <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
-                            <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
-                        </div>
-                        <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                            <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+                            <canvas id="revenue-chart-canvas" data="{{ $dataRevenueInYear }}" height="300"
+                                style="height: 300px;"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- TO DO List -->
+            <!-- Top Sale -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="ion ion-clipboard mr-1"></i>
-                        To Do List
+                    <h3 class="card-title mb-3">
+                        <i class="fas fa-cubes mr-1"></i>
+                        Top Selling Products
                     </h3>
-
-                    <div class="card-tools">
-                        <ul class="pagination pagination-sm">
-                            <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
+                    <div class="card-tools mt-2">
+                        <ul class="nav nav-pills ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#topselling-yearly" data-toggle="tab">Yearly</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#topselling-monthly" data-toggle="tab">Monthly</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#topselling-weekly" data-toggle="tab">Weekly</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
-                    <ul class="todo-list" data-widget="todo-list">
-                        <li>
-                            <!-- drag handle -->
-                            <span class="handle">
-                                <i class="fas fa-ellipsis-v"></i>
-                                <i class="fas fa-ellipsis-v"></i>
-                            </span>
-                            <!-- checkbox -->
-                            <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo1" id="todoCheck1">
-                                <label for="todoCheck1"></label>
+                    <div class="tab-content p-0">
+                        <div class="chart tab-pane active" id="topselling-yearly"
+                            style="position: relative; min-height: 300px;">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Products</th>
+                                            <th>Category</th>
+                                            <th>Price</th>
+                                            <th>Sold</th>
+                                            <th>Profit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if ($bestSalesYearly && count($bestSalesYearly))
+                                            @foreach ($bestSalesYearly as $product)
+                                                <tr style="font-size: 14px">
+                                                    <td class="align-middle">
+                                                        <div class="row align-items-center">
+                                                            <a href="/admin/products/details/{{ $product->id }}"
+                                                                class="mx-1">
+                                                                @foreach ($product->images as $image)
+                                                                    @if ($image->pin)
+                                                                        <img style="width:40px; height:50px"
+                                                                            src="{{ asset($image->thumbnail) }}"
+                                                                            class="float-left table-img" alt="">
+                                                                    @endif
+                                                                @endforeach
+                                                            </a>
+                                                            <a href="/admin/products/details/{{ $product->id }}"
+                                                                class="mx-1">{{ $product->name }}</a>
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <a
+                                                            href="/admin/categories/details/{{ $product->category_id }}">{{ $product->category->name }}</a>
+                                                    </td>
+                                                    <td class="align-middle">@convertCurrency($product->sale_price ?? $product->price)</td>
+                                                    <td class="align-middle">{{ $product->sold }}</td>
+                                                    <td class="align-middle">
+                                                        @php
+                                                            $profit = 0;
+                                                            foreach ($product->orders_products as $order_product) {
+                                                                $profit +=
+                                                                    $order_product->quantity *
+                                                                    ($order_product->price -
+                                                                        $order_product->market_price);
+                                                            }
+                                                        @endphp
+                                                        @convertCurrency($profit)
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                    </tbody>
+                                </table>
                             </div>
-                            <!-- todo text -->
-                            <span class="text">Design a nice theme</span>
-                            <!-- Emphasis label -->
-                            <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
-                            <!-- General tools such as edit or delete-->
-                            <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
+                        </div>
+                        <div class="chart tab-pane" id="topselling-monthly"
+                            style="position: relative; min-height: 300px;">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Products</th>
+                                            <th>Category</th>
+                                            <th>Price</th>
+                                            <th>Sold</th>
+                                            <th>Profit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if ($bestSalesMonthly && count($bestSalesMonthly))
+                                            @foreach ($bestSalesMonthly as $product)
+                                                <tr style="font-size: 14px">
+                                                    <td class="align-middle">
+                                                        <div class="row align-items-center">
+                                                            <a href="/admin/products/details/{{ $product->id }}"
+                                                                class="mx-1">
+                                                                @foreach ($product->images as $image)
+                                                                    @if ($image->pin)
+                                                                        <img style="width:40px; height:50px"
+                                                                            src="{{ asset($image->thumbnail) }}"
+                                                                            class="float-left table-img" alt="">
+                                                                    @endif
+                                                                @endforeach
+                                                            </a>
+                                                            <a href="/admin/products/details/{{ $product->id }}"
+                                                                class="mx-1">{{ $product->name }}</a>
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <a
+                                                            href="/admin/categories/details/{{ $product->category_id }}">{{ $product->category->name }}</a>
+                                                    </td>
+                                                    <td class="align-middle">@convertCurrency($product->sale_price ?? $product->price)</td>
+                                                    <td class="align-middle">{{ $product->sold }}</td>
+                                                    <td class="align-middle">
+                                                        @php
+                                                            $profit = 0;
+                                                            foreach ($product->orders_products as $order_product) {
+                                                                $profit +=
+                                                                    $order_product->quantity *
+                                                                    ($order_product->price -
+                                                                        $order_product->market_price);
+                                                            }
+                                                        @endphp
+                                                        @convertCurrency($profit)
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                    </tbody>
+                                </table>
                             </div>
-                        </li>
-                        <li>
-                            <span class="handle">
-                                <i class="fas fa-ellipsis-v"></i>
-                                <i class="fas fa-ellipsis-v"></i>
-                            </span>
-                            <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo2" id="todoCheck2" checked>
-                                <label for="todoCheck2"></label>
+                        </div>
+                        <div class="chart tab-pane" id="topselling-weekly"
+                            style="position: relative; min-height: 300px;">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Products</th>
+                                            <th>Category</th>
+                                            <th>Price</th>
+                                            <th>Sold</th>
+                                            <th>Profit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if ($bestSalesWeekly && count($bestSalesWeekly))
+                                            @foreach ($bestSalesWeekly as $product)
+                                                <tr style="font-size: 14px">
+                                                    <td class="align-middle">
+                                                        <div class="row align-items-center">
+                                                            <a href="/admin/products/details/{{ $product->id }}"
+                                                                class="mx-1">
+                                                                @foreach ($product->images as $image)
+                                                                    @if ($image->pin)
+                                                                        <img style="width:40px; height:50px"
+                                                                            src="{{ asset($image->thumbnail) }}"
+                                                                            class="float-left table-img" alt="">
+                                                                    @endif
+                                                                @endforeach
+                                                            </a>
+                                                            <a href="/admin/products/details/{{ $product->id }}"
+                                                                class="mx-1">{{ $product->name }}</a>
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <a
+                                                            href="/admin/categories/details/{{ $product->category_id }}">{{ $product->category->name }}</a>
+                                                    </td>
+                                                    <td class="align-middle">@convertCurrency($product->sale_price ?? $product->price)</td>
+                                                    <td class="align-middle">{{ $product->sold }}</td>
+                                                    <td class="align-middle">
+                                                        @php
+                                                            $profit = 0;
+                                                            foreach ($product->orders_products as $order_product) {
+                                                                $profit +=
+                                                                    $order_product->quantity *
+                                                                    ($order_product->price -
+                                                                        $order_product->market_price);
+                                                            }
+                                                        @endphp
+                                                        @convertCurrency($profit)
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                    </tbody>
+                                </table>
                             </div>
-                            <span class="text">Make the theme responsive</span>
-                            <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small>
-                            <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="handle">
-                                <i class="fas fa-ellipsis-v"></i>
-                                <i class="fas fa-ellipsis-v"></i>
-                            </span>
-                            <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo3" id="todoCheck3">
-                                <label for="todoCheck3"></label>
-                            </div>
-                            <span class="text">Let theme shine like a star</span>
-                            <small class="badge badge-warning"><i class="far fa-clock"></i> 1 day</small>
-                            <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="handle">
-                                <i class="fas fa-ellipsis-v"></i>
-                                <i class="fas fa-ellipsis-v"></i>
-                            </span>
-                            <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo4" id="todoCheck4">
-                                <label for="todoCheck4"></label>
-                            </div>
-                            <span class="text">Let theme shine like a star</span>
-                            <small class="badge badge-success"><i class="far fa-clock"></i> 3 days</small>
-                            <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="handle">
-                                <i class="fas fa-ellipsis-v"></i>
-                                <i class="fas fa-ellipsis-v"></i>
-                            </span>
-                            <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo5" id="todoCheck5">
-                                <label for="todoCheck5"></label>
-                            </div>
-                            <span class="text">Check your messages and notifications</span>
-                            <small class="badge badge-primary"><i class="far fa-clock"></i> 1 week</small>
-                            <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="handle">
-                                <i class="fas fa-ellipsis-v"></i>
-                                <i class="fas fa-ellipsis-v"></i>
-                            </span>
-                            <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo6" id="todoCheck6">
-                                <label for="todoCheck6"></label>
-                            </div>
-                            <span class="text">Let theme shine like a star</span>
-                            <small class="badge badge-secondary"><i class="far fa-clock"></i> 1 month</small>
-                            <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer clearfix">
-                    <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add
-                        item</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- /.card -->
+
+            <!-- TO DO List -->
             <div class="card">
                 <div class="card-header ui-sortable-handle" style="cursor: move;">
                     <h3 class="card-title">
                         <i class="ion ion-clipboard mr-1"></i>
                         To Do List
                     </h3>
-
-                    <div class="card-tools">
-                        <ul class="pagination pagination-sm">
-                            <li class="page-item"><a href="#" class="page-link">«</a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item"><a href="#" class="page-link">»</a></li>
-                        </ul>
-                    </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <ul class="todo-list ui-sortable" data-widget="todo-list">
+                    <ul id="todo-list" class="todo-list ui-sortable" data-widget="todo-list"
+                        style="overflow: auto; height:274px">
                         <li>
                             <!-- drag handle -->
                             <span class="handle ui-sortable-handle">
@@ -257,7 +315,7 @@
                             </span>
                             <!-- checkbox -->
                             <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo1" id="todoCheck1">
+                                <input type="checkbox" value="" name="todo2" id="todoCheck1">
                                 <label for="todoCheck1"></label>
                             </div>
                             <!-- todo text -->
@@ -354,10 +412,12 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer clearfix">
-                    <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add
+                    <button id="add-todo-btn" type="button" class="btn btn-primary float-right"><i
+                            class="fas fa-plus"></i> Add
                         item</button>
                 </div>
             </div>
+            <!-- /.card -->
         </section>
         <!-- /.Left col -->
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
@@ -372,9 +432,6 @@
                     </h3>
                     <!-- card tools -->
                     <div class="card-tools">
-                        <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
-                            <i class="far fa-calendar-alt"></i>
-                        </button>
                         <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse"
                             title="Collapse">
                             <i class="fas fa-minus"></i>
@@ -384,27 +441,6 @@
                 </div>
                 <div class="card-body">
                     <div id="world-map" style="height: 250px; width: 100%;"></div>
-                </div>
-                <!-- /.card-body-->
-                <div class="card-footer bg-transparent">
-                    <div class="row">
-                        <div class="col-4 text-center">
-                            <div id="sparkline-1"></div>
-                            <div class="text-white">Visitors</div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-4 text-center">
-                            <div id="sparkline-2"></div>
-                            <div class="text-white">Online</div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-4 text-center">
-                            <div id="sparkline-3"></div>
-                            <div class="text-white">Sales</div>
-                        </div>
-                        <!-- ./col -->
-                    </div>
-                    <!-- /.row -->
                 </div>
             </div>
             <!-- /.card -->
@@ -427,37 +463,9 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <canvas class="chart" id="line-chart"
+                    <canvas class="chart" id="line-chart" data="{{ $totalOrdersCompleted }}"
                         style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                 </div>
-                <!-- /.card-body -->
-                <div class="card-footer bg-transparent">
-                    <div class="row">
-                        <div class="col-4 text-center">
-                            <input type="text" style="width: 25px" class="knob" data-readonly="true"
-                                value="20" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-                            <div class="text-white">Mail-Orders</div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-4 text-center">
-                            <input type="text" style="width: 25px" class="knob" data-readonly="true"
-                                value="50" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-                            <div class="text-white">Online</div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-4 text-center">
-                            <input type="text" style="width: 25px" class="knob" data-readonly="true"
-                                value="30" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-                            <div class="text-white">In-Store</div>
-                        </div>
-                        <!-- ./col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.card-footer -->
             </div>
             <!-- /.card -->
 
@@ -472,7 +480,7 @@
                     <!-- tools card -->
                     <div class="card-tools">
                         <!-- button with a dropdown -->
-                        <div class="btn-group">
+                        {{-- <div class="btn-group">
                             <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"
                                 data-offset="-52">
                                 <i class="fas fa-bars"></i>
@@ -483,7 +491,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item">View calendar</a>
                             </div>
-                        </div>
+                        </div> --}}
                         <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>
                         </button>
@@ -507,19 +515,13 @@
     <!-- /.row (main row) -->
 @endsection
 
-<!-- jQuery UI 1.11.4 -->
-<script defer src="{{ asset('adminlte/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script defer>
-    $.widget.bridge('uibutton', $.ui.button)
-</script>
 <!-- ChartJS -->
 <script defer src="{{ asset('adminlte/plugins/chart.js/Chart.min.js') }}"></script>
 <!-- Sparkline -->
 <script defer src="{{ asset('adminlte/plugins/sparklines/sparkline.js') }}"></script>
 <!-- JQVMap -->
 <script defer src="{{ asset('adminlte/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
-<script defer src="{{ asset('adminlte/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
+<script defer src="{{ asset('adminlte/plugins/jqvmap/maps/continents/jquery.vmap.asia.js') }}"></script>
 <!-- jQuery Knob Chart -->
 <script defer src="{{ asset('adminlte/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
 <!-- daterangepicker -->

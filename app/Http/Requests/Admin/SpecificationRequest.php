@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class SpecificationRequest extends FormRequest
 {
@@ -25,7 +26,14 @@ class SpecificationRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'name' => 'required|string|max:150|unique:specifications,name' . ($request->_method == 'PATCH' ? ',' . $request->specification_id : ''),
+            'name' => [
+                'required',
+                'string',
+                'max:150',
+                Rule::unique("specifications")->where(function ($query) use ($request) {
+                    return $query->where("name", $request->name)->where("category_id", $request->category_id)->where("id", "!=", $request->specification_id);
+                })
+            ],
             'attributes' => 'nullable|array',
             'attributes.*' => 'nullable|string|max:150',
             'category_id' => 'required|integer|min:1|exists:categories,id',

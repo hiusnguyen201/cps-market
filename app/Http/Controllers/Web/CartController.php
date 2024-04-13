@@ -42,10 +42,6 @@ class CartController extends Controller
 
     public function handleCreate(Request $request)
     {
-        $request->validate([
-            'product_id' => 'required|integer|min:1|exists:products,id',
-        ]);
-
         try {
             $this->cartService->createCart($request->product_id, Auth::user());
 
@@ -62,10 +58,6 @@ class CartController extends Controller
 
     public function handleUpdate(Request $request)
     {
-        $request->validate([
-            'cart_id' => 'required|integer|min:1|exists:carts,id',
-        ]);
-
         try {
             $this->cartService->updateQuantityCart($request->cart_id, $request->quantity);
             session()->flash("success", "Update quantity successfully");
