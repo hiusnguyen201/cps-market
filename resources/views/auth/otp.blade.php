@@ -36,7 +36,7 @@
                                     </div>
                                     <div class="u-s-m-b-30">
                                         <button class="btn btn--e-transparent-brand-b-2" style="width: 100%"
-                                            type="submit">LOGIN</button>
+                                            type="submit">SUBMIT</button>
                                     </div>
 
                                     @csrf

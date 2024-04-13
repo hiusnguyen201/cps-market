@@ -29,7 +29,11 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrapFour();
 
         Blade::directive('convertCurrency', function ($money) {
-            return "<?php echo $money? number_format($money, 0, ',', '.') . ' ₫' : 'Free'; ?>";
+            return "<?php echo number_format($money, 0, ',', '.') . '₫' ?>";
+        });
+
+        Blade::directive('convertShippingFee', function ($money) {
+            return "<?php echo $money? number_format($money, 0, ',', '.') . '₫' : 'Free'?>";
         });
     }
 }

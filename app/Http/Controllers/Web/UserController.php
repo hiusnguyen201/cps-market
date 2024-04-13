@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\Admin\UserRequest;
-use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Services\RoleService;
 use App\Services\UserService;
+
 use App\Models\User;
 
 class UserController extends Controller
@@ -78,7 +78,8 @@ class UserController extends Controller
                 'titles' => ['Users', 'Edit'],
                 'title_links' => ["/admin/users"]
             ],
-            'title' => 'Edit User'
+            'title' => 'Edit User',
+            'user' => $user
         ]);
     }
 

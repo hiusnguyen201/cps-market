@@ -29,7 +29,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:4|max:150|unique:products,name'
-                . ($request->_method == 'PATCH' ? ',' . $request->id : ''),
+                . (strtolower($request->_method) == 'patch' ? ',' . $request->id : ''),
             'market_price' => "required|integer|min:1",
             'price' => "required|integer|min:1",
             'sale_price' => "nullable|integer|min:1",
@@ -41,14 +41,14 @@ class ProductRequest extends FormRequest
                 'required',
                 'image',
                 'mimes:jpeg,png',
-                'mimetypes:image/jpeg,image/png',
+                'mimetypes:image/jpeg,image/png,image/jpg',
                 'max:10000',
             ],
             "product_images" => "array|max:7",
             "product_images.*" => [
                 'image',
-                'mimes:jpeg,png',
-                'mimetypes:image/jpeg,image/png',
+                'mimes:jpeg,png,jpg',
+                'mimetypes:image/jpeg,image/png,image/jpg',
                 'max:10000',
             ],
             "attribute_ids" => "array",

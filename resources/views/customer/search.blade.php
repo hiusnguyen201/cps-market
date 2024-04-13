@@ -136,7 +136,7 @@
                 <div class="col-lg-9 col-md-12">
                     <div class="shop-p__meta-wrap u-s-m-b-60">
 
-                        <span class="shop-p__meta-text-1">FOUND {{ count($products) ?? 0 }} RESULTS</span>
+                        <span class="shop-p__meta-text-1">FOUND {{ $countProducts ?? 0 }} RESULTS</span>
 
                     </div>
                     <div class="shop-p">
@@ -257,11 +257,16 @@
                                                         </div>
                                                         <div class="product-m__wishlist">
                                                             @php
-                                                                $wishlist = $wishlistUser
-                                                                    ->filter(function ($item) use ($product) {
-                                                                        return $item->product_id == $product->id;
-                                                                    })
-                                                                    ->first();
+                                                                $wishlist = null;
+                                                                if (Auth::user()) {
+                                                                    $wishlist = Auth::user()
+                                                                        ->wishlist->filter(function ($item) use (
+                                                                            $product,
+                                                                        ) {
+                                                                            return $item->product_id == $product->id;
+                                                                        })
+                                                                        ->first();
+                                                                }
                                                             @endphp
                                                             @if ($wishlist)
                                                                 <form action="/wishlist" method="post">
@@ -299,9 +304,7 @@
                             </div>
                         </div>
                         <div class="u-s-p-y-60">
-                            <!--====== Pagination ======-->
                             {{ $products->onEachSide(2)->appends(Request::all())->links() }}
-                            <!--====== End - Pagination ======-->
                         </div>
                     </div>
                 </div>

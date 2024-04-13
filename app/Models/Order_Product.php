@@ -15,6 +15,7 @@ class Order_Product extends Model
         'product_id',
         'order_id',
         "quantity",
+        "market_price",
         "price",
     ];
 
@@ -23,6 +24,7 @@ class Order_Product extends Model
         "order_id" => "integer",
         "quantity" => "integer",
         "price" => "integer",
+        "market_price" => "integer",
     ];
 
     public function order()

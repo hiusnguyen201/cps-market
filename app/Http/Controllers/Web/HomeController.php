@@ -39,7 +39,7 @@ class HomeController extends Controller
             array_push($sections, $products);
         }
 
-        $sections9D = $this->productService->findAllWithLimitBestSoldInDay(3);
+        $sections9Y = $this->productService->findAllWithLimitBestSoldInYear(3);
         $sections9W = $this->productService->findAllWithLimitBestSoldInWeek(3);
         $sections9M = $this->productService->findAllWithLimitBestSoldInMonth(3);
 
@@ -49,11 +49,11 @@ class HomeController extends Controller
 
         return view("customer/home", [
             'sections' => $sections,
-            'sections9D' => $sections9D,
+            'sections9Y' => $sections9Y,
             'sections9W' => $sections9W,
             'sections9M' => $sections9M,
             'categories' => $categories,
-            'countProductsInCart' => $countProductsInCart,
+            'countProductsInCart' => $countProductsInCart ?? 0,
             'title' => "Home"
         ]);
     }
@@ -62,20 +62,21 @@ class HomeController extends Controller
     {
         $product = $this->productService->findOneBySlug($productSlug);
 
-        $wishlistCheck = null;
         if (Auth::user()) {
-            $wishlistCheck = $this->wishlistService->findOneByProductIdAndCustomerId($product->id, Auth::id());
+            $wishlist = $this->wishlistService->findAllByCustomerId(Auth::id());
             [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
         }
 
         $categories = $this->categoryService->findAll();
+        $similarProducts = $this->productService->getSimilarProductsWithLimit($product->brand_id, 6);
 
         return view('customer.products.details', [
             'product' => $product,
             'categories' => $categories,
-            'countProductsInCart' => $countProductsInCart,
-            'wishlistCheck' => $wishlistCheck,
+            'countProductsInCart' => $countProductsInCart ?? 0,
+            'wishlist' => $wishlist ?? [],
             'title' => 'Details Product',
+            'similarProducts' => $similarProducts
         ]);
     }
 
@@ -91,11 +92,11 @@ class HomeController extends Controller
 
         return view('customer.search', [
             'title' => 'Search Product',
-            'countProductsInCart' => $countProductsInCart,
-            'products' => $products,
+            'countProductsInCart' => $countProductsInCart ?? 0,
+            'products' => $products->paginate($request->per_page ?? 8),
             'categories' => $categories,
             'brands' => $brands,
-            'wishlistUser' => Auth::user()->wishlist,
+            'countProducts' => $products->count()
         ]);
     }
 }

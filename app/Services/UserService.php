@@ -223,6 +223,7 @@ class UserService
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
+                'password' => Str::random(16),
                 'role_id' => $role->id,
             ]);
 
@@ -469,5 +470,15 @@ class UserService
         })->get();
 
         return $orders && count($orders) ? $orders : [];
+    }
+
+    public function countNewCustomers() {
+        $count = User::where(function ($query) {
+            $query->whereDate("created_at", today());
+        })->whereHas("role", function ($query) {
+            $query->where("name", "customer");
+        })->count();
+
+        return $count ? $count : 0;
     }
 }

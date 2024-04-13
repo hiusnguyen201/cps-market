@@ -16,14 +16,14 @@ return new class extends Migration {
             $table->id();
             $table->string('name', 100);
             $table->string('email', 150)->unique();
-            $table->string('password', 200)->nullable();
+            $table->string('password', 200);
             $table->string('phone', 15);
             $table->string('address', 150)->nullable();
             $table->tinyInteger('status')->default(config("constants.user_status.inactive")['value']);
             $table->tinyInteger('gender')->nullable();
             $table->unsignedBigInteger('role_id');
             $table->timestamp('email_verified_at')->nullable();
-            $table->rememberToken(); // login token
+            $table->rememberToken();
             $table->foreign('role_id')->references('id')->on('roles');
             $table->timestamps();
             $table->timestamp("deleted_at")->nullable();

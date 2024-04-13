@@ -113,8 +113,8 @@
                     <div class="table-responsive">
                         <table class="table talbe-bordered">
                             <tbody>
-                                @if ($order->products && count($order->products))
-                                    @foreach ($order->products as $order_product)
+                                @if ($order->orders_products && count($order->orders_products))
+                                    @foreach ($order->orders_products as $order_product)
                                         <tr>
                                             <td class="align-middle">
                                                 <div

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CheckAdmin
+class CheckCustomer
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,11 @@ class CheckAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->role->name == "customer") {
+        if (!Auth::user()) {
+            return $next($request);
+        }
+
+        if (Auth::user()->role->name == "admin") {
             return redirect()->back();
         }
 

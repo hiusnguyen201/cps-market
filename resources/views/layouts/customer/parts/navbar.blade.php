@@ -9,10 +9,12 @@
                         <!--====== Main Logo ======-->
 
                         <a class="main-logo" href="/">
-                            THIS IS LOGO
+                            <div class="row" style="align-items:center;color: #ff4500">
+                                <span class="u-s-m-r-6" style="font-weight: 600">CpsMarket</span>
+                                <i class="fab fa-stripe-s" style="outline: 2px solid #ff4500;padding: 3px 2px"></i>
+                            </div>
                         </a>
                         <!--====== End - Main Logo ======-->
-
 
                         <!--====== Search Form ======-->
                         <form class="main-form" style="min-width: 120px" method="get" action="/catalogsearch/result">
@@ -250,37 +252,6 @@
                                 <ul class="ah-list ah-list--design2 ah-list--link-color-secondary">
                                     <li>
                                         <a href="/catalogsearch/result">NEW ARRIVALS</a>
-                                    </li>
-                                    <li class="has-dropdown">
-
-                                        <a>BLOG<i class="fas fa-angle-down u-s-m-l-6"></i></a>
-
-                                        <!--====== Dropdown ======-->
-
-                                        <span class="js-menu-toggle"></span>
-                                        <ul style="width:200px">
-                                            <li>
-
-                                                <a href="blog-left-sidebar.html">Blog Left Sidebar</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="blog-right-sidebar.html">Blog Right Sidebar</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="blog-sidebar-none.html">Blog Sidebar None</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="blog-masonry.html">Blog Masonry</a>
-                                            </li>
-                                            <li>
-
-                                                <a href="blog-detail.html">Blog Details</a>
-                                            </li>
-                                        </ul>
-                                        <!--====== End - Dropdown ======-->
                                     </li>
                                 </ul>
                                 <!--====== End - List ======-->

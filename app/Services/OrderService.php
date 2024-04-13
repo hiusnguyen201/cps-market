@@ -66,6 +66,7 @@ class OrderService
                     "product_id" => $cart->product->id,
                     "order_id" => $order->id,
                     "quantity" => $cart->quantity,
+                    "market_price" => $cart->product->market_price,
                     "price" => $cart->product->sale_price ?? $cart->product->price,
                 ]);
 
@@ -120,7 +121,7 @@ class OrderService
                         "updated_at" => now()
                     ]);
 
-                    foreach ($order->products as $order_product) {
+                    foreach ($order->orders_products as $order_product) {
                         $order_product->product->update([
                             "quantity" => $order_product->product->quantity + $order_product->quantity
                         ]);
@@ -175,6 +176,7 @@ class OrderService
                     "product_id" => $product->id,
                     "order_id" => $order->id,
                     "quantity" => +$request->quantity[$index],
+                    "market_price" => $product->market_price,
                     "price" => $product->sale_price ?? $product->price,
                 ]);
 
@@ -212,18 +214,22 @@ class OrderService
     {
         $totalPrice = 0;
         $countProductsInCart = 0;
-        $products = [];
-        $existingProductIds = [];
-
-        foreach ($request->product_id as $index => $product_id) {
-            $result = $this->productService->findOneById($product_id);
-            array_push($products, $result);
-            $countProductsInCart += +$request->quantity[$index];
-            $totalPrice += (($result->sale_price ?? $result->price) * +$request->quantity[$index]);
-        }
 
         DB::beginTransaction();
         try {
+            foreach ($order->orders_products as $index => $order_product) {
+                $countProductsInCart += +$request->quantity[$index];
+                $totalPrice += $order_product->price * +$request->quantity[$index];
+
+                Order_Product::find($order_product->id)->update([
+                    "quantity" => $request->quantity[$index],
+                ]);
+
+                $order_product->product->update([
+                    "quantity" => $order_product->product->quantity + $order_product->quantity - $request->quantity[$index]
+                ]);
+            }
+
             $order->update([
                 'quantity' => $countProductsInCart,
                 'sub_total' => $totalPrice,
@@ -245,33 +251,6 @@ class OrderService
                 "address" => $request->address,
                 "note" => $request->note,
             ]);
-
-            foreach ($order->products as $order_product) {
-                $existingProductIds[$order_product->product->id] = $order_product->quantity;
-
-                if (!in_array($order_product->product_id, $request->product_id)) {
-                    $order_product->product->update([
-                        "quantity" => $order_product->product->quantity + $order_product->quantity,
-                    ]);
-                }
-
-                $order_product->delete();
-            }
-
-            foreach ($products as $index => $product) {
-                $newQuantity = +$request->quantity[$index];
-
-                $product->update([
-                    "quantity" => array_key_exists($product->id, $existingProductIds) ? $product->quantity - $newQuantity + $existingProductIds[$product->id] : $product->quantity - $newQuantity
-                ]);
-
-                Order_Product::create([
-                    "product_id" => $product->id,
-                    "order_id" => $order->id,
-                    "quantity" => $newQuantity,
-                    "price" => $product->sale_price ?? $product->price,
-                ]);
-            }
 
             DB::commit();
             return $order;
@@ -312,5 +291,48 @@ class OrderService
                 throw new \Exception($e->getMessage());
             }
         }
+    }
+
+    public function countNewOrders()
+    {
+        $count = Order::where(function ($query) {
+            $query->whereDate("created_at", today());
+        })->count();
+
+        return $count ? $count : 0;
+    }
+
+    public function calculateTotalIncome()
+    {
+        $total = Order::where("status", config("constants.order_status.completed.value"))->sum("total");
+        return $total ? $total : 0;
+    }
+
+    public function calculateRevenueInYear($year)
+    {
+        $revenueInMonths = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $total = Order::where(function ($query) use ($year, $i) {
+                $query->where("status", config("constants.order_status.completed.value"));
+                $query->whereYear('created_at', $year);
+                $query->whereMonth('created_at', $i);
+            })->sum('total');
+            array_push($revenueInMonths, $total);
+        }
+        return $revenueInMonths;
+    }
+
+    public function countOrdersCompletedInYear($year)
+    {
+        $counts = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $count = Order::where(function ($query) use ($year, $i) {
+                $query->where("status", config("constants.order_status.completed.value"));
+                $query->whereYear('created_at', $year);
+                $query->whereMonth('created_at', $i);
+            })->count();
+            array_push($counts, $count);
+        }
+        return $counts;
     }
 }

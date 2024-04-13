@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Brand;
+use App\Models\Order_Product;
 use App\Models\Product_Images;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -84,9 +85,9 @@ class DatabaseSeeder extends Seeder
                     'code' => time() + $k,
                     'name' => "Product " . $i + 1 . $j + 1,
                     'slug' => "Product-" . $i + 1 . $j + 1,
-                    'market_price' => $i + 500,
-                    'price' => $i + 5000,
-                    "sale_price" => $i + 1000,
+                    'market_price' => 2000,
+                    'price' => 5000,
+                    "sale_price" => 4000,
                     "quantity" => $i + 10,
                     "sold" => $i + 10,
                     "description" => "descrip " . $i,
@@ -108,14 +109,22 @@ class DatabaseSeeder extends Seeder
         for ($i = 0; $i < 30; $i++) {
             $order = Order::create([
                 'code' => time() + $i,
-                'quantity' => 2,
+                'quantity' => 1,
                 'sub_total' => 10000,
                 "shipping_fee" => 0,
                 "total" => 10000,
-                "payment_method" => config("constants.payment_method.cod")['value'],
-                "payment_status" => config("constants.payment_status.pending")['value'],
-                "status" => config("constants.order_status.pending")['value'],
+                "payment_method" => rand(0, 1),
+                "payment_status" => rand(0, 2),
+                "status" => rand(0, 3),
                 "customer_id" => $i + 1
+            ]);
+
+            Order_Product::create([
+                "order_id" => $order->id,
+                "product_id" => rand(1, 30),
+                "quantity" => 1,
+                "market_price" => 2000,
+                "price" => 3500,
             ]);
 
             Shipping_Address::create([

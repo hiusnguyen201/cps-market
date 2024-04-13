@@ -2,25 +2,22 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" role="button"><i class="fas fa-bars"></i></a>
+            <a class="nav-link d-flex align-items-center" data-widget="pushmenu" role="button"><i
+                    class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="/admin" class="nav-link">Home</a>
+            <a href="/admin" class="nav-link d-flex align-items-center">Home</a>
         </li>
     </ul>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" href="/admin/settings/password"><i class="fas fa-user-cog"></i></a>
+            <a class="nav-link d-flex align-items-center" href="/admin/settings/password"><span
+                    class="mr-2">{{ Auth::user()->name ?? '' }}</span><i class="fas fa-user-cog"></i></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                <i class="fas fa-expand-arrows-alt"></i>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/auth/logout"><i class="fas fa-sign-out-alt"></i></a>
+            <a class="nav-link d-flex align-items-center" href="/auth/logout"><i class="fas fa-sign-out-alt"></i></a>
         </li>
     </ul>
 </nav>
