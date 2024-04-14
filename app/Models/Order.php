@@ -40,9 +40,9 @@ class Order extends Model
 
     public function customer()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
-
+    
     public function shipping_address()
     {
         return $this->hasOne(Shipping_Address::class);
