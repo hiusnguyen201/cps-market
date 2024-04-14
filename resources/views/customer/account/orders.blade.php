@@ -18,7 +18,7 @@
 
                     <label class="u-s-m-r-8" for="my-order-sort">Show:</label><select
                         class="select-box select-box--primary-style" id="my-order-sort">
-                        <option value="5" {{ request()->time_sort == 5 ? 'selected' : '' }}>Last 5 orders</option>
+                        <option value="5" {{ request()->time_sort == 5 ? 'selected' : '' }}>Last 5 days</option>
                         <option value="15" {{ request()->time_sort == 15 ? 'selected' : '' }}>Last 15 days</option>
                         <option value="30" {{ request()->time_sort == 30 ? 'selected' : '' }}>Last 30 days</option>
                         <option value="180" {{ request()->time_sort == 180 ? 'selected' : '' }}>Last 6 months</option>
@@ -69,34 +69,34 @@
 
                                 </div>
                                 <div class="description__info-wrap">
-                                    @if ($order->status == 0)
+                                    @if ($order->status == config('constants.order_status.pending.value'))
                                         <div>
                                             <span class="manage-o__badge badge--processing">Pending</span>
                                         </div>
                                     @endif
 
-                                    @if ($order->status == 1)
+                                    @if ($order->status == config('constants.order_status.confirmed.value'))
                                         <div>
 
                                             <span class="manage-o__badge badge--processing">Confirmed</span>
                                         </div>
                                     @endif
 
-                                    @if ($order->status == 2)
+                                    @if ($order->status == config('constants.order_status.shipping.value'))
                                         <div>
 
                                             <span class="manage-o__badge badge--shipped">Shipping</span>
                                         </div>
                                     @endif
 
-                                    @if ($order->status == 3)
+                                    @if ($order->status == config('constants.order_status.completed.value'))
                                         <div>
 
                                             <span class="manage-o__badge badge--delivered">Completed</span>
                                         </div>
                                     @endif
 
-                                    @if ($order->status == 4)
+                                    @if ($order->status == config('constants.order_status.canceled.value'))
                                         <div>
 
                                             <span class="manage-o__badge badge--canceled">Canceled</span>
@@ -120,6 +120,9 @@
                         </div>
                     @endforeach
                 @endif
+            </div>
+            <div class="u-s-p-y-60">
+                {{ $orders->onEachSide(2)->appends(Request::all())->links() }}
             </div>
         </div>
     </div>

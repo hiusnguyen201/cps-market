@@ -58,7 +58,7 @@
                 <label>Specifications:</label>
                 <div class="row align-items-center">
                     <div class="col-sm-3 col-12 mb-3">
-                        <a href="/admin/categories/{{ $category->id }}/specifications/add"
+                        <a href="/admin/categories/details/{{ $category->id }}/specifications/add"
                             class="btn btn-success w-100 py-2">Add</a>
                     </div>
                     <div class="col-sm-3 col-12 mb-3">
@@ -107,7 +107,7 @@
 
                                             <td class="text-center align-middle">
                                                 <a class="btn btn-warning"
-                                                    href="/admin/categories/{{ $category->id }}/specifications/edit/{{ $specification->id }}">
+                                                    href="/admin/categories/details/{{ $category->id }}/specifications/edit/{{ $specification->id }}">
                                                     <i class="fas fa-pen"></i>
                                                 </a>
                                                 <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
@@ -133,7 +133,8 @@
                                                     <div class="modal-footer justify-content-between">
                                                         <button type="button" class="btn btn-default"
                                                             data-dismiss="modal">Close</button>
-                                                        <form action="/admin/categories/{{ $category->id }}/specifications"
+                                                        <form
+                                                            action="/admin/categories/details/{{ $category->id }}/specifications"
                                                             method="POST">
                                                             <input type="hidden" name="id"
                                                                 value="{{ $specification->id }}">
@@ -171,7 +172,7 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <form class="form-delete-all" action="/admin/categories/{{ $category->id }}/specifications"
+                    <form class="form-delete-all" action="/admin/categories/details/{{ $category->id }}/specifications"
                         method="POST">
                         <button class="btn btn-primary btn-deleteAll" type="submit">Submit</button>
                         <input type="hidden" name="_method" value="delete">

@@ -22,8 +22,8 @@
             <div class="row">
                 <div class="col-lg-2 col-4 mb-3">
                     <select name="limit" class="form-control">
-                        @if (!is_null($limit_page))
-                            @foreach ($limit_page as $limit)
+                        @if (config('constants.limit_page') && count(config('constants.limit_page')))
+                            @foreach (config('constants.limit_page') as $limit)
                                 <option {{ request()->limit == $limit ? 'selected' : '' }} value="{{ $limit }}">
                                     {{ $limit }}
                                 </option>
@@ -62,7 +62,7 @@
                         @foreach ($brands as $brand)
                             <tr>
                                 <td class="align-middle">
-                                    <input type="checkbox" class="form-check-input" id="selectAll" name="id"
+                                    <input type="checkbox" class="form-check-input" name="id"
                                         value="{{ $brand->id }}">
                                 </td>
 

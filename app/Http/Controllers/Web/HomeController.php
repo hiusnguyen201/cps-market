@@ -61,7 +61,11 @@ class HomeController extends Controller
     public function details($categorySlug, $brandSlug, $productSlug)
     {
         $product = $this->productService->findOneBySlug($productSlug);
+        if(!$product) {
+            return \abort(404);
+        }
 
+        $wishlist = null;
         if (Auth::user()) {
             $wishlist = $this->wishlistService->findAllByCustomerId(Auth::id());
             [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
@@ -74,7 +78,7 @@ class HomeController extends Controller
             'product' => $product,
             'categories' => $categories,
             'countProductsInCart' => $countProductsInCart ?? 0,
-            'wishlist' => $wishlist ?? [],
+            'wishlist' => $wishlist,
             'title' => 'Details Product',
             'similarProducts' => $similarProducts
         ]);

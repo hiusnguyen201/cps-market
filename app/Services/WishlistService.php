@@ -39,7 +39,6 @@ class WishlistService
 
             return true;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception("Remove product from wishlist failed");
             } else {
@@ -63,7 +62,6 @@ class WishlistService
 
             return $wishlist;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception("Add product to wishlist failed");
             } else {

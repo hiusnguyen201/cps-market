@@ -18,6 +18,8 @@ use App\Models\Order;
 use App\Models\User_Otp;
 use App\Models\Password_Reset;
 
+use Illuminate\Support\Facades\Auth;
+
 class UserService
 {
     // Search and Paginate
@@ -28,13 +30,13 @@ class UserService
             $query->orWhere('email', 'like', '%' . $request->keyword . '%');
         })->whereHas('role', function ($query) use ($roleName) {
             $query->where('name', '=', $roleName);
-        });
+        })->orderBy('created_at', 'desc');
 
-        if ($request->status) {
-            $users = $users->where('status', $request->status);
+        if($request->status && $request->status != "all") {
+            $users = $users->where("status", $request->status);
         }
 
-        $users = $users->orderBy('created_at', 'desc')->paginate($request->limit ?? 10);
+        $users = $users->paginate($request->limit ?? 10);
 
         return $users && count($users) ? $users : [];
     }
@@ -73,7 +75,6 @@ class UserService
 
             return $user;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 if ($role->name == 'admin') {
                     throw new \Exception("Create user failed");
@@ -95,7 +96,6 @@ class UserService
 
             return $user;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 if ($user->role->name == 'admin') {
                     throw new \Exception("Edit user failed");
@@ -113,6 +113,10 @@ class UserService
         $position = null;
         try {
             foreach ($userIds as $index => $userId) {
+                if($userId == Auth::id()) {
+                    throw new \InvalidArgumentException('Cannot delete this user ' . $index + 1);
+                }
+
                 $user = User::find($userId);
 
                 if (!$user) {
@@ -132,7 +136,6 @@ class UserService
 
             return true;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 if ($roleName == 'admin') {
                     throw new \Exception("Delete user failed in position " . $position + 1);
@@ -154,7 +157,6 @@ class UserService
 
             return $user;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception('Edit information failed');
             } else {
@@ -179,7 +181,6 @@ class UserService
 
             return $user;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception('Change password failed');
             } else {
@@ -191,13 +192,19 @@ class UserService
     public function registerCustomer($request)
     {
         try {
-            $role = Role::where("name", 'customer')->first();
+            $roleCustomer = Role::where("name", 'customer')->first();
+            if(!$roleCustomer) {
+                $roleCustomer = Role::create([
+                    "name" => "customer"
+                ]);
+            }
 
             $user = User::create([
                 'name' => $request->name,
                 'phone' => $request->phone,
                 'email' => $request->email,
-                'role_id' => $role->id,
+                'status' => config("constants.user_status.inactive.value"),
+                'role_id' => $roleCustomer->id,
                 'password' => Hash::make($request->password),
             ]);
 
@@ -205,7 +212,6 @@ class UserService
 
             return $user;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception("Register failed");
             } else {
@@ -238,7 +244,6 @@ class UserService
             DB::commit();
             return $user;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             DB::rollBack();
             if ($e->getCode() != 0) {
                 throw new \Exception("Register with account social failed");
@@ -259,7 +264,6 @@ class UserService
 
             return $socialAccount;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception("Add account social to customer failed");
             } else {
@@ -306,7 +310,6 @@ class UserService
 
             return true;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception("Verify Otp failed");
             } else {
@@ -335,7 +338,6 @@ class UserService
 
             return;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception("Send otp to email failed");
             } else {
@@ -366,7 +368,6 @@ class UserService
 
             return;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception("Send link reset password to email failed");
             } else {
@@ -400,7 +401,6 @@ class UserService
 
             return true;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception("Verify token failed");
             } else {
@@ -467,8 +467,9 @@ class UserService
                     $query->orderBy('created_at', 'desc')->limit(5);
                     break;
             }
-        })->get();
+        });
 
+        $orders = $orders->paginate(5);
         return $orders && count($orders) ? $orders : [];
     }
 

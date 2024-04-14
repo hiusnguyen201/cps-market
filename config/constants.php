@@ -2,15 +2,15 @@
 
 $GENDERS = [
     'male' => [
-        "value" => 0,
+        "value" => 1,
         "title" => "Male",
     ],
     'female' => [
-        "value" => 1,
+        "value" => 2,
         "title" => "Female",
     ],
     'Other' => [
-        "value" => 2,
+        "value" => 3,
         "title" => "Other",
     ],
 ];
@@ -18,17 +18,17 @@ $GENDERS = [
 
 $USER_STATUS = [
     "inactive" => [
-        "value" => 0,
+        "value" => 1,
         "title" => "Inactive",
         "css" => "btn btn-info"
     ],
     "active" => [
-        "value" => 1,
+        "value" => 2,
         "title" => "Active",
         "css" => "btn btn-success"
     ],
     "locked" => [
-        "value" => 2,
+        "value" => 3,
         "title" => "Locked",
         "css" => "btn btn-danger"
     ],
@@ -45,12 +45,12 @@ $DATE_FORMAT = "d/m/Y H:i:s";
 
 $PAYMENT_METHOD = [
     "cod" => [
-        "value" => 0,
+        "value" => 1,
         "title" => "Cash on Delivery",
         "redirect" => "/payment/cod"
     ],
     "momo" => [
-        "value" => 1,
+        "value" => 2,
         "title" => "Momo Wallet",
         "redirect" => "/payment/momo"
     ],
@@ -58,17 +58,17 @@ $PAYMENT_METHOD = [
 
 $PAYMENT_STATUS = [
     "pending" => [
-        "value" => 0,
+        "value" => 1,
         "title" => "Pending",
         "css" => "btn btn-info"
     ],
     "paid" => [
-        "value" => 1,
+        "value" => 2,
         "title" => "Paid",
         "css" => "btn btn-success"
     ],
     "canceled" => [
-        "value" => 2,
+        "value" => 3,
         "title" => "Canceled",
         "css" => "btn btn-danger"
     ]
@@ -76,27 +76,27 @@ $PAYMENT_STATUS = [
 
 $ORDER_STATUS = [
     "pending" => [
-        "value" => 0,
+        "value" => 1,
         "title" => "Pending",
         "css" => "btn btn-info"
     ],
     "confirmed" => [
-        "value" => 1,
+        "value" => 2,
         "title" => "Confirmed",
         "css" => "btn btn-primary"
     ],
     "shipping" => [
-        "value" => 2,
+        "value" => 3,
         "title" => "Shipping",
         "css" => "btn btn-warning"
     ],
     "completed" => [
-        "value" => 3,
+        "value" => 4,
         "title" => "Completed",
         "css" => "btn btn-success"
     ],
     "canceled" => [
-        "value" => 4,
+        "value" => 5,
         "title" => "Canceled",
         "css" => "btn btn-danger"
     ],

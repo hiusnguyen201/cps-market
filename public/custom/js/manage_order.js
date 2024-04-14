@@ -1,9 +1,9 @@
-$('#my-order-sort').change(function () {
+$("#my-order-sort").change(function () {
     orders_Filter();
 });
 
 function orders_Filter() {
-    let time_sort = $('#my-order-sort').val();
+    let time_sort = $("#my-order-sort").val();
 
     let searchParams = new URLSearchParams(window.location.search);
 
@@ -11,9 +11,8 @@ function orders_Filter() {
         searchParams.set(key, value);
     });
 
-    searchParams.set('time_sort', time_sort);
+    searchParams.set("time_sort", time_sort);
 
-
-    let newUrl = window.location.pathname + '?' + searchParams.toString();
+    let newUrl = window.location.pathname + "?" + searchParams.toString();
     window.location.href = newUrl;
 }

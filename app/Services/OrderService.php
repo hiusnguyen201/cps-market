@@ -93,7 +93,6 @@ class OrderService
             return $order;
         } catch (\Exception $e) {
             DB::rollBack();
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception("Create order failed");
             } else {
@@ -134,7 +133,6 @@ class OrderService
             return $order;
         } catch (\Exception $e) {
             DB::rollBack();
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception("Update payment status failed");
             } else {
@@ -201,7 +199,6 @@ class OrderService
             return $order;
         } catch (\Exception $e) {
             DB::rollBack();
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception("Create order failed");
             } else {
@@ -256,7 +253,6 @@ class OrderService
             return $order;
         } catch (\Exception $e) {
             DB::rollBack();
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception("Create order failed");
             } else {
@@ -284,7 +280,6 @@ class OrderService
 
             return true;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception('Delete order failed in position ' . $position + 1);
             } else {

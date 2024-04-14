@@ -33,7 +33,6 @@ class ProductController extends Controller
         return view('admin.products.home', [
             'products' => $products,
             "categories" => $categories,
-            'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Products']],
             'title' => 'Manage Products'
         ]);

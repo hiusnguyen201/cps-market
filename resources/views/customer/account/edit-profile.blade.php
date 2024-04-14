@@ -54,11 +54,11 @@
                             <div class="u-s-m-b-30">
                                 <label class="gl-label" for="gender">GENDER</label>
                                 <select class="select-box select-box--primary-style u-w-100" id="gender" name="gender">
-                                    <option>Select</option>
+                                    <option selected>Select</option>
                                     @if (config('constants.genders') && count(config('constants.genders')))
                                         @foreach (config('constants.genders') as $gender)
                                             <option
-                                                {{ (old('gender') ?? Auth::user()->gender) == $gender['value'] ? 'selected' : '' }}
+                                                {{ (old('gender') ?? (Auth::user()->gender ?? '')) == $gender['value'] ? 'selected' : '' }}
                                                 value="{{ $gender['value'] }}">
                                                 {{ $gender['title'] }}</option>
                                         @endforeach

@@ -34,7 +34,6 @@ class SpecificationService
             return $specification;
         } catch (\Exception $e) {
             DB::rollBack();
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception("Add specification to category failed");
             } else {
@@ -71,7 +70,6 @@ class SpecificationService
             return $specification;
         } catch (\Exception $e) {
             DB::rollBack();
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception('Edit specification failed');
             } else {
@@ -104,7 +102,6 @@ class SpecificationService
 
             return true;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception("Delete specification failed in position " . $position + 1);
             } else {

@@ -130,7 +130,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="section__text-wrap">
-                                <h1 class="section__heading u-c-secondary u-s-m-b-12">MOST OUTSTANDING
+                                <h1 class="section__heading u-c-secondary u-s-m-b-12">NEWEST
                                     {{ strtoupper($categories[$index]->name) }}
                                 </h1>
                             </div>
@@ -207,7 +207,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
                     <div class="column-product">
-                        <span class="column-product__title u-c-secondary u-s-m-b-25">WEEKLY
+                        <span class="column-product__title u-c-secondary u-s-m-b-25">BEST WEEKLY
                             PRODUCTS</span>
                         <ul class="column-product__list">
                             @foreach ($sections9W as $product)
@@ -250,7 +250,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
                     <div class="column-product">
 
-                        <span class="column-product__title u-c-secondary u-s-m-b-25">MONTHLY
+                        <span class="column-product__title u-c-secondary u-s-m-b-25">BEST MONTHLY
                             PRODUCTS</span>
                         <ul class="column-product__list">
                             @foreach ($sections9M as $product)
@@ -291,7 +291,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
                     <div class="column-product">
-                        <span class="column-product__title u-c-secondary u-s-m-b-25">YEARLY
+                        <span class="column-product__title u-c-secondary u-s-m-b-25">BEST YEARLY
                             PRODUCTS</span>
                         <ul class="column-product__list">
                             @foreach ($sections9Y as $product)

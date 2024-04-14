@@ -35,7 +35,6 @@ class CategoryService
 
             return $category;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception('Create category failed');
             } else {
@@ -55,7 +54,6 @@ class CategoryService
 
             return $status;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception('Edit category failed');
             } else {

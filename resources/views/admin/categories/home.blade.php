@@ -22,8 +22,8 @@
             <div class="row">
                 <div class="col-lg-2 col-4 mb-3">
                     <select name="limit" id="" class="form-control">
-                        @if (!is_null($limit_page))
-                            @foreach ($limit_page as $limit)
+                        @if (config('constants.limit_page') && count(config('constants.limit_page')))
+                            @foreach (config('constants.limit_page') as $limit)
                                 <option {{ request()->limit == $limit ? 'selected' : '' }} value="{{ $limit }}">
                                     {{ $limit }} </option>
                             @endforeach

@@ -74,7 +74,8 @@
                             </div>
                             <div class="table-responsive">
                                 <table id="cartOrder" class="table table-bordered">
-                                    <tbody></tbody>
+                                    <tbody>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

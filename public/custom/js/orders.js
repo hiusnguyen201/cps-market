@@ -99,9 +99,7 @@ function appendProduct(product) {
             </div>
         </td>
         <td width='30%' class='align-middle'>
-            <input type="number" class="form-control" min="1" max="${
-                product.quantity
-            }" name="quantity[]" value="1" placeholder="Quantity...">        
+            <input type="number" class="form-control" min="1" name="quantity[]" value="1" placeholder="Quantity...">        
             <input type="hidden" class="form-control" name="priceProduct" value="${
                 product.sale_price ?? product.price
             }">        
@@ -129,6 +127,49 @@ $("#searchProduct-btn").click(() => {
         type: "GET",
         success: (data) => {
             const { product } = data;
+            if (!product.quantity) {
+                Toastify({
+                    text: "Product is out of stock",
+                    duration: 5000,
+                    newWindow: true,
+                    gravity: "top",
+                    position: "center",
+                    stopOnFocus: true,
+                    style: {
+                        background: "#F05F57",
+                    },
+                    close: true,
+                }).showToast();
+
+                return;
+            }
+
+            const trElement = document.querySelector(
+                `tr[data-product='${product.id}']`
+            );
+            if (trElement) {
+                const value = trElement.querySelector(
+                    "input[name='quantity[]']"
+                ).value;
+
+                if (+value > product.quantity) {
+                    Toastify({
+                        text: "Product is out of stock",
+                        duration: 5000,
+                        newWindow: true,
+                        gravity: "top",
+                        position: "center",
+                        stopOnFocus: true,
+                        style: {
+                            background: "#F05F57",
+                        },
+                        close: true,
+                    }).showToast();
+
+                    return;
+                }
+            }
+
             span.html("");
             input.val("");
             appendProduct(product);

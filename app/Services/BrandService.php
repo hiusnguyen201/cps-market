@@ -37,7 +37,6 @@ class BrandService
 
             return $brand;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception('Create brand failed');
             } else {
@@ -60,7 +59,6 @@ class BrandService
 
             return $status;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception('Edit brand failed');
             } else {

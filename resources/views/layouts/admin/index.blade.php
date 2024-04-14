@@ -86,7 +86,6 @@
     <script src="{{ asset('custom/js/vietnamlocalselector.js') }}"></script>
 
     <script src="{{ asset('custom/js/selectMultiFile.js') }}"></script>
-    <script src="{{ asset('custom/js/dashboard.js') }}"></script>
     <!-- Custom UI -->
     <script defer src="{{ asset('custom/js/ui.js') }}"></script>
 </body>

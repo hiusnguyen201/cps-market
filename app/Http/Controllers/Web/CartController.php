@@ -53,6 +53,7 @@ class CartController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
+
         return redirect()->back();
     }
 

@@ -130,11 +130,14 @@
                         <div class="u-s-m-b-15">
                             <div class="pd-detail__inline">
                                 @php
-                                    $wishlistCheck = $wishlist
-                                        ->filter(function ($item) use ($product) {
-                                            return $item->product_id == $product->id;
-                                        })
-                                        ->first();
+                                    $wishlistCheck = null;
+                                    if ($wishlist) {
+                                        $wishlistCheck = $wishlist
+                                            ->filter(function ($item) use ($product) {
+                                                return $item->product_id == $product->id;
+                                            })
+                                            ->first();
+                                    }
                                 @endphp
                                 @if ($wishlistCheck)
                                     <form action="/wishlist" method="post">
@@ -345,11 +348,14 @@
                                                     </li>
                                                     <li>
                                                         @php
-                                                            $similarProductCheck = $wishlist
-                                                                ->filter(function ($item) use ($product) {
-                                                                    return $item->product_id == $product->id;
-                                                                })
-                                                                ->first();
+                                                            $similarProductCheck = null;
+                                                            if ($wishlist) {
+                                                                $similarProductCheck = $wishlist
+                                                                    ->filter(function ($item) use ($product) {
+                                                                        return $item->product_id == $product->id;
+                                                                    })
+                                                                    ->first();
+                                                            }
                                                         @endphp
                                                         @if ($similarProductCheck)
                                                             <a onclick="this.nextElementSibling.submit()"

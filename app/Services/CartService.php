@@ -36,7 +36,6 @@ class CartService
 
             return $cart;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception('Add product to cart failed');
             } else {
@@ -64,7 +63,6 @@ class CartService
 
             return $cart;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception("Update quantity failed");
             } else {
@@ -86,7 +84,6 @@ class CartService
 
             return true;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception('Remove product from cart failed');
             } else {

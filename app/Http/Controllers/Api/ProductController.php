@@ -98,7 +98,6 @@ class ProductController extends Controller
                 'data' => $product,
             ], 200);
         } catch (\Exception $err) {
-            error_log($err->getMessage());
             DB::rollBack();
             return response()->json([
                 'message' => 'Error',
@@ -180,7 +179,6 @@ class ProductController extends Controller
                 'data' => $product,
             ], 200);
         } catch (\Exception $err) {
-            error_log($err->getMessage());
             DB::rollBack();
             return response()->json([
                 'message' => 'Error',

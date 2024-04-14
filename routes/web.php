@@ -67,7 +67,7 @@ Route::prefix('admin')->group(function () {
             Route::delete('/', [CategoryController::class, 'handleDelete']);
 
             // Specifications
-            Route::prefix('{category}/specifications')->group(function () {
+            Route::prefix('/details/{category}/specifications')->group(function () {
                 Route::get('/add', [SpecificationController::class, 'add']);
                 Route::post('/add', [SpecificationController::class, 'handleAdd']);
                 Route::get('/edit/{specification}', [SpecificationController::class, 'edit']);
@@ -118,15 +118,18 @@ Route::prefix('admin')->group(function () {
 // Auth
 Route::prefix('auth')->group(function () {
     Route::middleware('check.guest')->group(function () {
+        Route::get('/login', [AuthController::class, 'localLogin']);
+        Route::post('/login', [AuthController::class, 'handleLocalLogin']);
+
         Route::prefix('otp')->group(function () {
             Route::get('/', [AuthController::class, 'otp']);
             Route::post('/', [AuthController::class, 'handleVerifyOtp']);
             Route::get('/resend', [AuthController::class, 'handleResendOtp']);
         });
 
-        Route::get('/login', [AuthController::class, 'localLogin']);
-        Route::post('/login', [AuthController::class, 'handleLocalLogin']);
-
+        Route::get('/register', [AuthController::class, 'register']);
+        Route::post('/register', [AuthController::class, 'handleRegister']);
+        
         Route::get('/forget-password', [AuthController::class, 'forgetPasswordForm']);
         Route::post('/forget-password', [AuthController::class, 'handleForgetPassword']);
         Route::get('/reset-password/{token}', [AuthController::class, 'changePasswordForm']);
@@ -137,9 +140,6 @@ Route::prefix('auth')->group(function () {
 
         Route::get('/{provider}/redirect', [AuthController::class, 'socialLogin']);
         Route::get('/{provider}/callback', [AuthController::class, 'handleSocialLogin']);
-
-        Route::get('/register', [AuthController::class, 'register']);
-        Route::post('/register', [AuthController::class, 'handleRegister']);
     });
 
     Route::middleware('check.auth')->group(function () {
@@ -147,10 +147,10 @@ Route::prefix('auth')->group(function () {
     });
 });
 
-Route::middleware('check.customer')->group(function () {
+Route::middleware(['check.customer'])->group(function () {
     Route::get('/', [HomeController::class, 'home']);
-    Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
     Route::get('/catalogsearch/result', [HomeController::class, 'search']);
+    Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
 
     Route::middleware(['check.auth'])->group(function () {
         Route::prefix('cart')->group(function () {
@@ -162,9 +162,10 @@ Route::middleware('check.customer')->group(function () {
             Route::get('/success', [CartController::class, 'success'])->name("cart.success");
         });
 
-        Route::prefix('payment')->group(function () {
-            Route::post('/cod', [PaymentController::class, 'handleCodPayment']);
-            Route::post('/momo', [PaymentController::class, 'handleMomoPayment']);
+        Route::prefix('wishlist')->group(function () {
+            Route::get('/', [WishlistController::class, 'home']);
+            Route::post('/', [WishlistController::class, 'handleCreate']);
+            Route::delete('/', [WishlistController::class, 'handleDelete']);
         });
 
         Route::prefix('member')->group(function () {
@@ -181,10 +182,9 @@ Route::middleware('check.customer')->group(function () {
             Route::patch('/edit-profile', [MemberController::class, 'handleUpdateProfile']);
         });
 
-        Route::prefix('wishlist')->group(function () {
-            Route::get('/', [WishlistController::class, 'home']);
-            Route::post('/', [WishlistController::class, 'handleCreate']);
-            Route::delete('/', [WishlistController::class, 'handleDelete']);
+        Route::prefix('payment')->group(function () {
+            Route::post('/cod', [PaymentController::class, 'handleCodPayment']);
+            Route::post('/momo', [PaymentController::class, 'handleMomoPayment']);
         });
     });
 });

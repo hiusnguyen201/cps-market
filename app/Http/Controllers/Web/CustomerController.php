@@ -29,8 +29,6 @@ class CustomerController extends Controller
 
         return view('admin.customers.home', [
             'users' => $users,
-            compact('users'),
-            'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Customers']],
             'title' => 'Manage Customers'
         ]);
@@ -99,6 +97,7 @@ class CustomerController extends Controller
         try {
             $userIds = is_array($request->id) ? $request->id : [$request->id];
             $this->userService->deleteUsers($userIds, "customer");
+            session()->flash('success', 'Delete customer successfully');
         } catch (\Exception $e) {
             session()->flash('error', $e->getMessage());
         }

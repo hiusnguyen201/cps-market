@@ -22,8 +22,8 @@
             <div class="row">
                 <div class="col-lg-2 col-4 mb-3">
                     <select name="limit" id="" class="form-control">
-                        @if ($limit_page)
-                            @foreach ($limit_page as $limit)
+                        @if (config('constants.limit_page') && count(config('constants.limit_page')))
+                            @foreach (config('constants.limit_page') as $limit)
                                 <option {{ request()->limit == $limit ? 'selected' : '' }} value="{{ $limit }}">
                                     {{ $limit }} </option>
                             @endforeach
@@ -35,10 +35,10 @@
 
                 <div class="col-lg-3 col-8 mb-3">
                     <select name="status" id="" class="form-control">
-                        <option value="">All status</option>
+                        <option selected value="all">All status</option>
                         @if (config('constants.user_status') && count(config('constants.user_status')))
                             @foreach (config('constants.user_status') as $status)
-                                <option {{ request()->status == $status['value'] ? 'selected' : '' }}
+                                <option {{ (old('status') ?? request()->status) == $status['value'] ? 'selected' : '' }}
                                     value="{{ $status['value'] }}">
                                     {{ $status['title'] }}</option>
                             @endforeach
@@ -77,8 +77,10 @@
                         @foreach ($users as $user)
                             <tr>
                                 <td class="align-middle">
-                                    <input type="checkbox" class="form-check-input" name="id"
-                                        value="{{ $user->id }}">
+                                    @if (Auth::id() != $user->id)
+                                        <input type="checkbox" class="form-check-input" name="id"
+                                            value="{{ $user->id }}">
+                                    @endif
                                 </td>
                                 <td class="align-middle"><a
                                         href="/admin/users/details/{{ $user->id }}">{{ $user->name }}</a></td>
@@ -94,40 +96,47 @@
                                     @endif
                                 </td>
                                 <td class="text-center align-middle">
-                                    <a class="btn btn-warning" href="/admin/users/edit/{{ $user->id }}">
-                                        <i class="fas fa-pen"></i>
-                                    </a>
-                                    <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
-                                        data-target="#modal-delete-{{ $user->id }}">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
+                                    @if (Auth::id() != $user->id)
+                                        <a class="btn btn-warning" href="/admin/users/edit/{{ $user->id }}">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
+                                            data-target="#modal-delete-{{ $user->id }}">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    @endif
                                 </td>
                             </tr>
-                            <div class="modal fade" id="modal-delete-{{ $user->id }}" aria-modal="true" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Warning!</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Are you really want delete?</p>
-                                        </div>
-                                        <div class="modal-footer justify-content-between">
-                                            <button type="button" class="btn btn-default"
-                                                data-dismiss="modal">Close</button>
-                                            <form action="" method="POST">
-                                                <input type="hidden" name="id" value="{{ $user->id }}">
-                                                <button class="btn btn-primary" type="submit">Submit</button>
-                                                <input type="hidden" name="_method" value="delete">
-                                                @csrf
-                                            </form>
+
+                            @if (Auth::id() != $user->id)
+                                <div class="modal fade" id="modal-delete-{{ $user->id }}" aria-modal="true"
+                                    role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Warning!</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you really want delete?</p>
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">Close</button>
+                                                <form action="" method="POST">
+                                                    <input type="hidden" name="id" value="{{ $user->id }}">
+                                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                                    <input type="hidden" name="_method" value="delete">
+                                                    @csrf
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         @endforeach
                     @endif
                 </tbody>

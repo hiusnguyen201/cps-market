@@ -95,7 +95,6 @@ class ProductService
 
             return true;
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             if ($e->getCode() != 0) {
                 throw new \Exception('Delete product failed in position ' . $position + 1);
             } else {

@@ -31,7 +31,6 @@ class UserController extends Controller
 
         return view('admin.users.home', [
             'users' => $users,
-            'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Users']],
             'title' => 'Manage Users'
         ]);
@@ -100,7 +99,7 @@ class UserController extends Controller
         try {
             $userIds = is_array($request->id) ? $request->id : [$request->id];
             $this->userService->deleteUsers($userIds, "admin");
-            session()->flash('success', 'Delete user was successful!');
+            session()->flash('success', 'Delete user successfully');
         } catch (\Exception $e) {
             session()->flash('error', $e->getMessage());
         }

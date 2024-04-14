@@ -32,7 +32,6 @@ class BrandController extends Controller
         return view('admin.brands.home', [
             'brands' => $brands,
             'categories' => $categories,
-            'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Brands']],
             'title' => 'Manage Brands'
         ]);
@@ -74,7 +73,7 @@ class BrandController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/brands/create");
     }
 
     public function edit(Brand $brand)
@@ -104,7 +103,7 @@ class BrandController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/brands/edit/" . $brand->id);
     }
 
     public function handleDelete(Request $request)
@@ -117,6 +116,6 @@ class BrandController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/brands");
     }
 }

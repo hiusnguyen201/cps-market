@@ -69,7 +69,6 @@ class MemberController extends Controller
         $countPlacedOrders = $this->userService->countPlacedOrders(Auth::id());
         $countCancelOrders = $this->userService->countCancelOrders(Auth::id());
         $countWishlist = count(Auth::user()->wishlist);
-
         $categories = $this->categoryService->findAll();
         return view("customer.account.edit-profile", [
             'title' => "My Profile",

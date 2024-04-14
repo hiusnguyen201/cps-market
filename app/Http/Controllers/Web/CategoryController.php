@@ -28,10 +28,8 @@ class CategoryController extends Controller
 
         return view('admin.categories.home', [
             'categories' => $categories,
-            'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Categories']],
             'title' => 'Manage Categories',
-            compact('categories')
         ]);
     }
 

@@ -63,6 +63,8 @@ const handleChangeFile = (e) => {
     img.hidden = false;
     setTimeout(() => {
         parent.classList.replace("input-file_block", "input-file_uploaded");
+        parent.querySelector("i").hidden = true;
+        parent.querySelector("span").hidden = true;
     }, 100);
     e.target.disabled = true;
 
@@ -71,6 +73,8 @@ const handleChangeFile = (e) => {
         if (!e.target.multiple) {
             clearInputFileForm(e.target, img);
             e.target.disabled = false;
+            parent.querySelector("i").hidden = false;
+            parent.querySelector("span").hidden = false;
             return;
         }
 

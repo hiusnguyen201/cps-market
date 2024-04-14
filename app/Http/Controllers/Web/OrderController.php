@@ -30,7 +30,6 @@ class OrderController extends Controller
         }
 
         return view('admin.orders.home', [
-            'limit_page' => config('constants.limit_page'),
             'breadcumbs' => ['titles' => ['Orders']],
             'title' => 'Manage Orders',
             "orders" => $orders,

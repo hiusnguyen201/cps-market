@@ -5,10 +5,12 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
+use App\Models\Category;
+
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Role>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Specification>
  */
-class RoleFactory extends Factory
+class SpecificationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,6 +21,7 @@ class RoleFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'category_id' => Category::factory(),
         ];
     }
 }

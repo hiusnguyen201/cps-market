@@ -45,12 +45,11 @@ class AuthController extends Controller
             ])
         ) {
             session()->flash('error', 'Email or password is incorrect');
-            return redirect()->back();
+            return redirect("/auth/login");
         }
 
         $user = Auth::user();
         if ($user->status == config("constants.user_status.active.value")) {
-            Auth::login($user, true);
             return $user->role->name == "admin" ? redirect("/admin") : redirect("/member");
         }
 
@@ -58,7 +57,7 @@ class AuthController extends Controller
             $this->userService->sendOtpToEmail(Auth::user());
             return redirect("/auth/otp")->with("success", "We've sent a verification code to your email");
         } catch (\Exception $e) {
-            return redirect()->back()->with("error", $e->getMessage());
+            return redirect("/auth/login")->with("error", $e->getMessage());
         }
     }
 
@@ -78,10 +77,9 @@ class AuthController extends Controller
         try {
             $this->userService->verifyOtp($request->otp, $user);
         } catch (\Exception $e) {
-            return redirect()->back()->with("error", $e->getMessage());
+            return redirect("/auth/otp")->with("error", $e->getMessage());
         }
 
-        Auth::login($user, true);
         if ($user->role->name === 'customer') {
             return redirect("/member");
         } else {
@@ -98,7 +96,7 @@ class AuthController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/auth/otp");
     }
 
     public function logout()
@@ -132,10 +130,10 @@ class AuthController extends Controller
             $userSocial = session()->get('userSocial');
             $user = $this->userService->createCustomerWithAccountSocial($request, $userSocial);
             session()->forget('userSocial');
-            Auth::login($user);
+            Auth::login($user, true);
             return redirect("/auth/otp")->with('success', "We've sent a verification code to your email");
         } catch (\Exception $e) {
-            return redirect()->back()->with("error", $e->getMessage());
+            return redirect("/auth/info-social")->with("error", $e->getMessage());
         }
     }
 
@@ -164,12 +162,11 @@ class AuthController extends Controller
             return redirect("/auth/login")->with('error', $e->getMessage());
         }
 
+        Auth::login($user, true);
         if ($user->status == config("constants.user_status.inactive")['value']) {
             $this->userService->sendOtpToEmail($user);
-            Auth::login($user);
             return redirect("/auth/otp")->with('success', "We've sent a verification code to your email");
         } else {
-            Auth::login($user, true);
             return redirect("/member");
         }
     }
@@ -187,10 +184,10 @@ class AuthController extends Controller
     {
         try {
             $user = $this->userService->registerCustomer($request);
-            Auth::login($user);
+            Auth::login($user, true);
             return redirect("/auth/otp")->with("success", "Registration successfully! We've sent a verification code to your email");
         } catch (\Exception $e) {
-            return redirect()->back()->with("error", $e->getMessage());
+            return redirect("/auth/register")->with("error", $e->getMessage());
         }
     }
 
@@ -213,7 +210,7 @@ class AuthController extends Controller
             session()->flash("error", $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/auth/forget-password");
     }
 
     public function changePasswordForm($token)
@@ -238,7 +235,7 @@ class AuthController extends Controller
         try {
             $passwordReset = $this->userService->findOnePasswordResetByToken($token);
             if (!$passwordReset) {
-                return redirect()->back()->with("error", "Invalid link or link has expired. Please try again!");
+                return redirect("/auth/forget-password/" . $token)->with("error", "Invalid link or link has expired. Please try again!");
             }
 
             $this->userService->changePassword($passwordReset->user, $request->password);
@@ -246,7 +243,7 @@ class AuthController extends Controller
 
             return redirect('/auth/login')->with('success', 'Reset password successfully');
         } catch (\Exception $e) {
-            return redirect()->back()->with("error", $e->getMessage());
+            return redirect("/auth/change-password/" . $token)->with("error", $e->getMessage());
         }
     }
 

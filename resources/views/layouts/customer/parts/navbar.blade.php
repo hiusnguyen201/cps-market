@@ -150,7 +150,7 @@
                                                             class="mega-menu-content {{ $index == 0 ? 'js-active' : '' }}">
 
                                                             <div class="row" style="height: 100%">
-                                                                <div class="col-lg-4">
+                                                                <div class="col-lg-6">
                                                                     <ul>
                                                                         <li class="mega-list-title">
                                                                             <span>BRANDS</span>
@@ -165,60 +165,40 @@
                                                                         @endif
                                                                     </ul>
                                                                 </div>
-                                                                <div class="col-lg-4">
+                                                                <div class="col-lg-6">
                                                                     <ul>
                                                                         <li class="mega-list-title">
                                                                             <span>PRICES</span>
                                                                         </li>
                                                                         <li>
-
-                                                                            <a href="shop-side-version-2.html">TV
-                                                                                Boxes</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a href="shop-side-version-2.html">TC
-                                                                                Receiver
-                                                                                &amp; Accessories</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a href="shop-side-version-2.html">Display
-                                                                                Dongle</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a href="shop-side-version-2.html">Home
-                                                                                Theater
-                                                                                System</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div class="col-lg-4">
-                                                                    <ul>
-                                                                        <li class="mega-list-title">
-                                                                            <span>HOT</span>
-                                                                        </li>
-                                                                        <li>
-
                                                                             <a
-                                                                                href="shop-side-version-2.html">Earphones</a>
+                                                                                href="/catalogsearch/result?category_id={{ $category->id }}&price_min=0&price_max=100000">@convertCurrency(0)
+                                                                                -
+                                                                                @convertCurrency(100000)</a>
                                                                         </li>
                                                                         <li>
-
-                                                                            <a href="shop-side-version-2.html">Mp3
-                                                                                Players</a>
-                                                                        </li>
-                                                                        <li>
-
-                                                                            <a href="shop-side-version-2.html">Speakers
-                                                                                &amp;
-                                                                                Radios</a>
-                                                                        </li>
-                                                                        <li>
-
                                                                             <a
-                                                                                href="shop-side-version-2.html">Microphones</a>
+                                                                                href="/catalogsearch/result?category_id={{ $category->id }}&price_min=100000&price_max=200000">@convertCurrency(100000)
+                                                                                -
+                                                                                @convertCurrency(200000)</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a
+                                                                                href="/catalogsearch/result?category_id={{ $category->id }}&price_min=200000&price_max=300000">@convertCurrency(200000)
+                                                                                -
+                                                                                @convertCurrency(300000)</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a
+                                                                                href="/catalogsearch/result?category_id={{ $category->id }}&price_min=300000&price_max=400000">@convertCurrency(300000)
+                                                                                -
+                                                                                @convertCurrency(400000)</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a
+                                                                                href="/catalogsearch/result?category_id={{ $category->id }}&price_min=400000&price_max=500000">@convertCurrency(400000)
+                                                                                -
+                                                                                @convertCurrency(500000)</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>

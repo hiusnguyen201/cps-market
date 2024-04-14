@@ -5,10 +5,13 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
+use App\Models\User;
+use App\Models\Product;
+
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Role>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Wishlist>
  */
-class RoleFactory extends Factory
+class WishlistFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +21,8 @@ class RoleFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->name(),
+            'product_id' => Product::factory(),
+            'user_id' => User::factory(),
         ];
     }
 }
