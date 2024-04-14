@@ -49,7 +49,7 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
-        if ($user->status == config("constants.user_status.active")['value']) {
+        if ($user->status == config("constants.user_status.active.value")) {
             Auth::login($user, true);
             return $user->role->name == "admin" ? redirect("/admin") : redirect("/member");
         }

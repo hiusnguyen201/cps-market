@@ -472,7 +472,8 @@ class UserService
         return $orders && count($orders) ? $orders : [];
     }
 
-    public function countNewCustomers() {
+    public function countNewCustomers()
+    {
         $count = User::where(function ($query) {
             $query->whereDate("created_at", today());
         })->whereHas("role", function ($query) {
