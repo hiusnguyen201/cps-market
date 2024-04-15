@@ -37,6 +37,7 @@ class OrderService
     public function findOrderByCustomerIdAndOrderId($customerId, $orderId)
     {
         $order = Order::where(["code" => $orderId, "customer_id" => $customerId])->first();
+        
         return $order ? $order : null;
     }
 
@@ -62,17 +63,19 @@ class OrderService
             ]);
 
             foreach ($customer->carts as $cart) {
-                Order_Product::create([
-                    "product_id" => $cart->product->id,
-                    "order_id" => $order->id,
-                    "quantity" => $cart->quantity,
-                    "market_price" => $cart->product->market_price,
-                    "price" => $cart->product->sale_price ?? $cart->product->price,
-                ]);
+                if($cart->product) {
+                    Order_Product::create([
+                        "product_id" => $cart->product->id,
+                        "order_id" => $order->id,
+                        "quantity" => $cart->quantity,
+                        "market_price" => $cart->product->market_price,
+                        "price" => $cart->product->sale_price ?? $cart->product->price,
+                    ]);
 
-                $cart->product->update([
-                    "quantity" => $cart->product->quantity - $cart->quantity
-                ]);
+                    $cart->product->update([
+                        "quantity" => $cart->product->quantity - $cart->quantity
+                    ]);
+                }
             }
 
             Shipping_Address::create([

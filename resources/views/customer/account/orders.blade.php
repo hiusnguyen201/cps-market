@@ -121,9 +121,11 @@
                     @endforeach
                 @endif
             </div>
-            <div class="u-s-p-y-60">
-                {{ $orders->onEachSide(2)->appends(Request::all())->links() }}
-            </div>
+            @if ($orders && count($orders))
+                <div class="u-s-p-y-60">
+                    {{ $orders->onEachSide(2)->appends(Request::all())->links() }}
+                </div>
+            @endif
         </div>
     </div>
 @endsection

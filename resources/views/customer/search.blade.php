@@ -303,9 +303,11 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="u-s-p-y-60">
-                            {{ $products->onEachSide(2)->appends(Request::all())->links() }}
-                        </div>
+                        @if ($products && count($products))
+                            <div class="u-s-p-y-60">
+                                {{ $products->onEachSide(2)->appends(Request::all())->links() }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -42,40 +42,43 @@
                                     <div class="o-summary__item-wrap gl-scroll">
                                         @if (Auth::user()->carts && count(Auth::user()->carts))
                                             @foreach (Auth::user()->carts as $cart)
-                                                <div class="o-card">
-                                                    <div class="o-card__flex">
-                                                        <div class="o-card__img-wrap">
-                                                            @foreach ($cart->product->images as $image)
-                                                                @if ($image->pin == 1)
+                                                @if ($cart->product)
+                                                    <div class="o-card">
+                                                        <div class="o-card__flex">
+                                                            <div class="o-card__img-wrap">
+                                                                @foreach ($cart->product->images as $image)
+                                                                    @if ($image->pin == 1)
+                                                                        <a
+                                                                            href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html"><img
+                                                                                class="u-img-fluid"
+                                                                                style="height: 100%; object-fit: contain;"
+                                                                                src="{{ asset($image->thumbnail) }}"
+                                                                                alt="{{ $cart->product->name }}"></a>
+                                                                    @endif
+                                                                @endforeach
+                                                            </div>
+                                                            <div class="o-card__info-wrap">
+                                                                <span class="o-card__name">
                                                                     <a
-                                                                        href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html"><img
-                                                                            class="u-img-fluid"
-                                                                            style="height: 100%; object-fit: contain;"
-                                                                            src="{{ asset($image->thumbnail) }}"
-                                                                            alt="{{ $cart->product->name }}"></a>
-                                                                @endif
-                                                            @endforeach
+                                                                        href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html">{{ $cart->product->name }}</a></span>
+                                                                <span class="o-card__quantity">Quantity x
+                                                                    {{ $cart->quantity }}</span>
+                                                                <span class="o-card__price">@convertCurrency($cart->product->sale_price ?? $cart->product->price)</span>
+                                                            </div>
                                                         </div>
-                                                        <div class="o-card__info-wrap">
-                                                            <span class="o-card__name">
-                                                                <a
-                                                                    href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html">{{ $cart->product->name }}</a></span>
-                                                            <span class="o-card__quantity">Quantity x
-                                                                {{ $cart->quantity }}</span>
-                                                            <span class="o-card__price">@convertCurrency($cart->product->sale_price ?? $cart->product->price)</span>
-                                                        </div>
-                                                    </div>
 
-                                                    <form action="{{ route('cart.delete') }}" method="post">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <input type="hidden" name="cart_id" value="{{ $cart->id }}">
-                                                        <button type="submit"
-                                                            style="background: transparent; border:none; cursor: pointer;">
-                                                            <i class="o-card__del far fa-trash-alt"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
+                                                        <form action="{{ route('cart.delete') }}" method="post">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <input type="hidden" name="cart_id"
+                                                                value="{{ $cart->id }}">
+                                                            <button type="submit"
+                                                                style="background: transparent; border:none; cursor: pointer;">
+                                                                <i class="o-card__del far fa-trash-alt"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                @endif
                                             @endforeach
                                         @endif
                                     </div>

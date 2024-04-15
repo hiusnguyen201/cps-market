@@ -131,6 +131,7 @@ class MemberController extends Controller
         $countWishlist = count(Auth::user()->wishlist);
 
         $orders = $this->userService->showOrdersWithFilterInCustomer(Auth::id(), $request->time_sort);
+
         return view("customer.account.orders", [
             'title' => "My Orders",
             "categories" => $categories,

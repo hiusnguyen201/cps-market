@@ -440,8 +440,10 @@ class UserService
         $countProductsInCart = 0;
         $totalPrice = 0;
         foreach ($user->carts as $cart) {
-            $countProductsInCart += $cart->quantity;
-            $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price : $cart->product->price) * $cart->quantity);
+            if($cart->product) {
+                $countProductsInCart += $cart->quantity;
+                $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price : $cart->product->price) * $cart->quantity);
+            }
         }
 
         return [$countProductsInCart, $totalPrice];
