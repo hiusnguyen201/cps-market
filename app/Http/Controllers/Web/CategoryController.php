@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\admin\CategoryRequest;
+use App\Http\Requests\Admin\CategoryRequest;
 use App\Services\CategoryService;
 
 use App\Models\Category;

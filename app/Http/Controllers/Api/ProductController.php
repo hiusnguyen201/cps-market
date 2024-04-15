@@ -58,7 +58,7 @@ class ProductController extends Controller
             ]);
 
             $encrypted_id = Crypt::encryptString($product->id);
-            $promotion_image_path = $encrypted_id . "/" . $request->file('promotion_image')->hashName();
+            $promotion_image_path =  $request->file('promotion_image')->hashName();
             $request->file('promotion_image')->storeAs('public', $promotion_image_path);
             Product_Images::create([
                 'thumbnail' => "storage/" . $promotion_image_path,
@@ -69,7 +69,7 @@ class ProductController extends Controller
             $product_images = $request->file('product_images');
             if ($product_images && count($product_images) > 0) {
                 foreach ($product_images as $image) {
-                    $product_image_path = $encrypted_id . "/" . $image->hashName();
+                    $product_image_path =  $image->hashName();
                     $image->storeAs('public', $product_image_path);
                     Product_Images::create([
                         'thumbnail' => "storage/" . $product_image_path,
@@ -124,12 +124,13 @@ class ProductController extends Controller
                 'updated_at' => now()
             ]);
 
-            // Delete folder images of product
-            foreach ($product->images as $image) {
-                $folder_path = explode("/", $image->thumbnail)[0];
-                if (Storage::directoryExists("public/" . $folder_path)) {
-                    Storage::deleteDirectory("public/" . $folder_path);
-                    break;
+            
+            if($product->images && count($product->images)) {
+                foreach ($product->images as $image) {
+                    $path = explode("/", $image->thumbnail)[1];
+                    if(Storage::exists("public/" . $path)) {
+                        Storage::delete("public/" . $path);
+                    }
                 }
             }
 
@@ -139,8 +140,7 @@ class ProductController extends Controller
             Product_Attribute::where("product_id", $product->id)->delete();
 
             // Create product images
-            $encrypted_id = Crypt::encryptString($product->id);
-            $promotion_image_path = $encrypted_id . "/" . $request->file('promotion_image')->hashName();
+            $promotion_image_path =  $request->file('promotion_image')->hashName();
             $request->file('promotion_image')->storeAs('public', $promotion_image_path);
             Product_Images::create([
                 'thumbnail' => "storage/" . $promotion_image_path,
@@ -151,7 +151,7 @@ class ProductController extends Controller
             $product_images = $request->file('product_images');
             if ($product_images && count($product_images) > 0) {
                 foreach ($product_images as $image) {
-                    $product_image_path = $encrypted_id . "/" . $image->hashName();
+                    $product_image_path =  $image->hashName();
                     $image->storeAs('public', $product_image_path);
                     Product_Images::create([
                         'thumbnail' => "storage/" . $product_image_path,
@@ -181,8 +181,7 @@ class ProductController extends Controller
         } catch (\Exception $err) {
             DB::rollBack();
             return response()->json([
-                'message' => 'Error',
-                'error' => "Edit product failed",
+                'message' => 'Edit product failed',
             ], 500);
         }
     }

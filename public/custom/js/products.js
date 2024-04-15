@@ -150,6 +150,7 @@ formElement.find("button[type='submit']").click((e) => {
         },
         error: (err) => {
             const { errors, message } = err?.responseJSON;
+
             if (err.status == 422) {
                 printAllMessage(
                     $("input#product, select#product, textarea#product"),
