@@ -34,7 +34,7 @@ class MemberController extends Controller
         $countWishlist = count(Auth::user()->wishlist);
 
         $categories = $this->categoryService->findAll();
-        return view("customer.account.home", [
+        return view("customer.member.home", [
             'title' => "Member",
             "categories" => $categories,
             "recentOrders" => $recentOrders,
@@ -53,7 +53,7 @@ class MemberController extends Controller
         $countWishlist = count(Auth::user()->wishlist);
 
         $categories = $this->categoryService->findAll();
-        return view("customer.account.profile", [
+        return view("customer.member.profile", [
             'title' => "My Profile",
             "categories" => $categories,
             'countProductsInCart' => $countProductsInCart ?? 0,
@@ -70,7 +70,7 @@ class MemberController extends Controller
         $countCancelOrders = $this->userService->countCancelOrders(Auth::id());
         $countWishlist = count(Auth::user()->wishlist);
         $categories = $this->categoryService->findAll();
-        return view("customer.account.edit-profile", [
+        return view("customer.member.edit-profile", [
             'title' => "My Profile",
             "categories" => $categories,
             'countProductsInCart' => $countProductsInCart ?? 0,
@@ -100,7 +100,7 @@ class MemberController extends Controller
         $countWishlist = count(Auth::user()->wishlist);
 
         $categories = $this->categoryService->findAll();
-        return view("customer.account.change-password", [
+        return view("customer.member.change-password", [
             'title' => "Change password",
             "categories" => $categories,
             'countProductsInCart' => $countProductsInCart ?? 0,
@@ -132,7 +132,7 @@ class MemberController extends Controller
 
         $orders = $this->userService->showOrdersWithFilterInCustomer(Auth::id(), $request->time_sort);
 
-        return view("customer.account.orders", [
+        return view("customer.member.orders", [
             'title' => "My Orders",
             "categories" => $categories,
             "orders" => $orders,
@@ -155,7 +155,7 @@ class MemberController extends Controller
         $countCancelOrders = $this->userService->countCancelOrders(Auth::id());
         $countWishlist = count(Auth::user()->wishlist);
 
-        return view("customer.account.order-details", [
+        return view("customer.member.order-details", [
             'title' => "Order Details",
             "categories" => $categories,
             "order" => $order,
