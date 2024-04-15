@@ -1817,7 +1817,7 @@ input::-ms-clear {
 
 .product-bs__name {
     display: block;
-    height: 35px;
+    height: 42px;
     width: 100%;
     overflow: hidden !important;
     text-overflow: ellipsis;

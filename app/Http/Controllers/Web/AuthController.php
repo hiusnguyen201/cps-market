@@ -51,7 +51,7 @@ class AuthController extends Controller
         $user = Auth::user();
         if ($user->status == config("constants.user_status.active.value")) {
             session()->flash("success", "Login successfully");
-            return $user->role->name == "admin" ? redirect("/admin") : redirect("/member");
+            return redirect("/member");
         }
 
         try {

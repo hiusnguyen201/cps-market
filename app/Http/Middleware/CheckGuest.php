@@ -21,8 +21,7 @@ class CheckGuest
         $user = Auth::user();
         if ($user) {
             if ($user->status == config("constants.user_status.active")['value']) {
-                $role = Role::where("name", "customer")->first();
-                return $role ? redirect("/") : redirect("/admin");
+                return $user->role->name == 'customer' ? redirect("/member") : redirect("/admin");
             }
         }
 
