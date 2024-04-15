@@ -36,7 +36,7 @@ class OrderRequest extends FormRequest
             'quantity.*' => 'required|integer|min:1',
             "province" => "required|integer",
             "district" => "required|integer",
-            "ward" => "required|integer",
+            "ward" => "nullable|integer",
             "address" => "required|string|max:100",
             "note" => "nullable|string|max:100",
             "payment_method" => [
@@ -81,7 +81,6 @@ class OrderRequest extends FormRequest
             'province.integer' => ':attribute is invalid',
             'district.required' => ':attribute is required',
             'district.integer' => ':attribute is invalid',
-            'ward.required' => ':attribute is required',
             'ward.integer' => ':attribute is invalid',
             'address.required' => ':attribute is required',
             'address.string' => ':attribute is invalid',

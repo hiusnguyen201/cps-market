@@ -12,7 +12,7 @@ use App\Jobs\SendOtp;
 use App\Jobs\SendPassResetLink;
 
 use App\Models\User;
-use App\Models\Account_Social;
+use App\Models\Social_Accounts;
 use App\Models\Role;
 use App\Models\Order;
 use App\Models\User_Otp;
@@ -239,7 +239,7 @@ class UserService
                 'role_id' => $role->id,
             ]);
 
-            Account_Social::create([
+            Social_Accounts::create([
                 "user_id" => $user->id,
                 "provider" => $accountSocialInfo['providerName'],
                 "provider_user_id" => $accountSocialInfo['id']
@@ -262,7 +262,7 @@ class UserService
     public function addAccountSocialToCustomer($user, $accountSocialInfo, $provider)
     {
         try {
-            $socialAccount = Account_Social::create([
+            $socialAccount = Social_Accounts::create([
                 "user_id" => $user->id,
                 "provider" => $provider,
                 "provider_user_id" => $accountSocialInfo['id']

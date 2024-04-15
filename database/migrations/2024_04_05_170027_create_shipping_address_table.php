@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string("customer_phone", 15);
             $table->integer("province");
             $table->integer("district");
-            $table->integer("ward");
+            $table->integer("ward")->nullable();
             $table->string("address", 100);
             $table->string("note", 100)->nullable();
             $table->unsignedBigInteger("order_id");
