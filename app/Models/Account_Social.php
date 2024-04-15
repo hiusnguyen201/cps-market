@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Social_Account extends Model
+class Account_Social extends Model
 {
     use HasFactory;
 
-    protected $table = 'social_accounts';
+    protected $table = 'account_socials';
 
     protected $fillable = [
         'user_id', 'provider_user_id', 'provider',

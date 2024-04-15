@@ -50,6 +50,7 @@ class AuthController extends Controller
 
         $user = Auth::user();
         if ($user->status == config("constants.user_status.active.value")) {
+            session()->flash("success", "Login successfully");
             return $user->role->name == "admin" ? redirect("/admin") : redirect("/member");
         }
 
@@ -80,6 +81,7 @@ class AuthController extends Controller
             return redirect("/auth/otp")->with("error", $e->getMessage());
         }
 
+        session()->flash("success", "Login successfully");
         if ($user->role->name === 'customer') {
             return redirect("/member");
         } else {
@@ -151,7 +153,7 @@ class AuthController extends Controller
 
         $user = $this->userService->findOneByEmail($accountSocialInfo['email']);
         if (!$user) {
-            $accountSocialInfo->provider = $accountSocialInfo;
+            $accountSocialInfo['providerName'] = $provider;
             session()->put('userSocial', $accountSocialInfo);
             return redirect("/auth/info-social");
         }
@@ -167,6 +169,7 @@ class AuthController extends Controller
             $this->userService->sendOtpToEmail($user);
             return redirect("/auth/otp")->with('success', "We've sent a verification code to your email");
         } else {
+            session()->flash("success", "Login successfully");
             return redirect("/member");
         }
     }

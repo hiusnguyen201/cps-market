@@ -1,3 +1,10 @@
+@if (session('success'))
+    <input hidden type="text" name="message-success" value="{{ session('success') }}">
+@endif
+@if (session('error'))
+    <input hidden type="text" name="message-error" value="{{ session('error') }}">
+@endif
+
 @extends('layouts.customer.account')
 
 @section('content_acc')
