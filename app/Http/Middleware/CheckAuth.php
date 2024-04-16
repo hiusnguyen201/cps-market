@@ -18,12 +18,15 @@ class CheckAuth
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::user();
-        if ($user) {
-            if ($user->status == config("constants.user_status.active")['value']) {
-                return $next($request);
-            }
+        
+        if (!$user) {
+            return redirect("/auth/login");
         }
 
-        return redirect("/auth/login");
+        if($user->status == config("constants.user_status.inactive.value")) {
+            return redirect("/auth/otp");
+        }
+
+        return $next($request);
     }
 }

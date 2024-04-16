@@ -147,44 +147,42 @@ Route::prefix('auth')->group(function () {
     });
 });
 
-Route::middleware(['check.customer'])->group(function () {
-    Route::get('/', [HomeController::class, 'home']);
-    Route::get('/catalogsearch/result', [HomeController::class, 'search']);
-    Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
+Route::get('/', [HomeController::class, 'home']);
+Route::get('/catalogsearch/result', [HomeController::class, 'search']);
+Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
 
-    Route::middleware(['check.auth'])->group(function () {
-        Route::prefix('cart')->group(function () {
-            Route::get('/', [CartController::class, 'home'])->name("cart.index");
-            Route::post('/', [CartController::class, 'handleCreate'])->name("cart.create");
-            Route::patch('/', [CartController::class, 'handleUpdate'])->name("cart.update");
-            Route::delete('/', [CartController::class, 'handleDelete'])->name("cart.delete");
-            Route::get('/checkout', [CartController::class, 'checkoutPage'])->name("cart.checkout");
-            Route::get('/success', [CartController::class, 'success'])->name("cart.success");
-        });
+Route::middleware(['check.auth', 'check.customer'])->group(function () {
+    Route::prefix('cart')->group(function () {
+        Route::get('/', [CartController::class, 'home'])->name("cart.index");
+        Route::post('/', [CartController::class, 'handleCreate'])->name("cart.create");
+        Route::patch('/', [CartController::class, 'handleUpdate'])->name("cart.update");
+        Route::delete('/', [CartController::class, 'handleDelete'])->name("cart.delete");
+        Route::get('/checkout', [CartController::class, 'checkoutPage'])->name("cart.checkout");
+        Route::get('/success', [CartController::class, 'success'])->name("cart.success");
+    });
 
-        Route::prefix('wishlist')->group(function () {
-            Route::get('/', [WishlistController::class, 'home']);
-            Route::post('/', [WishlistController::class, 'handleCreate']);
-            Route::delete('/', [WishlistController::class, 'handleDelete']);
-        });
+    Route::prefix('wishlist')->group(function () {
+        Route::get('/', [WishlistController::class, 'home']);
+        Route::post('/', [WishlistController::class, 'handleCreate']);
+        Route::delete('/', [WishlistController::class, 'handleDelete']);
+    });
 
-        Route::prefix('member')->group(function () {
-            Route::get('/', [MemberController::class, 'home']);
-            Route::get('/orders', [MemberController::class, 'orders']);
-            Route::get('/orders/{order}', [MemberController::class, 'orderDetailsPage']);
+    Route::prefix('member')->group(function () {
+        Route::get('/', [MemberController::class, 'home']);
+        Route::get('/orders', [MemberController::class, 'orders']);
+        Route::get('/orders/{order}', [MemberController::class, 'orderDetailsPage']);
 
-            Route::get('/change-password', [MemberController::class, 'changePasswordPage']);
-            Route::patch('/change-password', [MemberController::class, 'handleChangePassword']);
+        Route::get('/change-password', [MemberController::class, 'changePasswordPage']);
+        Route::patch('/change-password', [MemberController::class, 'handleChangePassword']);
 
-            Route::get('/profile', [MemberController::class, 'profilePage']);
+        Route::get('/profile', [MemberController::class, 'profilePage']);
 
-            Route::get('/edit-profile', [MemberController::class, 'editProfilePage']);
-            Route::patch('/edit-profile', [MemberController::class, 'handleUpdateProfile']);
-        });
+        Route::get('/edit-profile', [MemberController::class, 'editProfilePage']);
+        Route::patch('/edit-profile', [MemberController::class, 'handleUpdateProfile']);
+    }); 
 
-        Route::prefix('payment')->group(function () {
-            Route::post('/cod', [PaymentController::class, 'handleCodPayment']);
-            Route::post('/momo', [PaymentController::class, 'handleMomoPayment']);
-        });
+    Route::prefix('payment')->group(function () {
+        Route::post('/cod', [PaymentController::class, 'handleCodPayment']);
+        Route::post('/momo', [PaymentController::class, 'handleMomoPayment']);
     });
 });

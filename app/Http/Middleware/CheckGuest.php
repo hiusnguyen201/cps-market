@@ -19,8 +19,11 @@ class CheckGuest
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::user();
+        
         if ($user) {
-            if ($user->status == config("constants.user_status.active")['value']) {
+            if($user->status == config("constants.user_status.inactive.value")) {
+                 return redirect("/auth/otp");
+            } else {
                 return $user->role->name == 'customer' ? redirect("/member") : redirect("/admin");
             }
         }
