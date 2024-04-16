@@ -17,7 +17,9 @@ class CheckCustomer
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->role->name == "admin") {
+        $user = Auth::user();
+
+        if ($user->role->name == "admin") {
             return redirect()->back();
         }
 

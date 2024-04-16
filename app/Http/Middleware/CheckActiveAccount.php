@@ -5,9 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Role;
 
-class CheckGuest
+class CheckActiveAccount
 {
     /**
      * Handle an incoming request.
@@ -20,8 +19,8 @@ class CheckGuest
     {
         $user = Auth::user();
 
-        if ($user) {
-            return redirect()->back();
+        if ($user->status == config("constants.user_status.inactive.value")) {
+            return redirect("/auth/otp");
         }
 
         return $next($request);

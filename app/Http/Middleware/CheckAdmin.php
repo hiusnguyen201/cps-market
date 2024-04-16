@@ -17,7 +17,9 @@ class CheckAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->role->name == "customer") {
+        $user = Auth::user();
+
+        if ($user->role->name == "customer") {
             return redirect()->back();
         }
 

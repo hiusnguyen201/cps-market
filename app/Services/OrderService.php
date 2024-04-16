@@ -27,6 +27,9 @@ class OrderService
     {
         $orders = Order::where(function ($query) use ($request) {
             $query->orWhere('code', 'like', '%' . $request->keyword . '%');
+            if($request->status) {
+                $query->where("status", $request->status);
+            }
         });
 
         $orders = $orders->orderBy('created_at', 'desc')->paginate($request->limit ?? 10);
