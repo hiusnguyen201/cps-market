@@ -54,7 +54,7 @@
                             <div class="u-s-m-b-30">
                                 <label class="gl-label" for="gender">GENDER</label>
                                 <select class="select-box select-box--primary-style u-w-100" id="gender" name="gender">
-                                    <option selected>Select</option>
+                                    <option selected value="">Select</option>
                                     @if (config('constants.genders') && count(config('constants.genders')))
                                         @foreach (config('constants.genders') as $gender)
                                             <option

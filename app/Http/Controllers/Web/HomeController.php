@@ -35,6 +35,7 @@ class HomeController extends Controller
         $categories = $this->categoryService->findAll();
 
         for ($i = 0; $i < count($categories); $i++) {
+            if ($i > 5) break;
             $products = $this->productService->findAllWithLimitByCategoryName(10, $categories[$i]->name);
             array_push($sections, $products);
         }
@@ -43,7 +44,9 @@ class HomeController extends Controller
         $sections9W = $this->productService->findAllWithLimitBestSoldInWeek(3);
         $sections9M = $this->productService->findAllWithLimitBestSoldInMonth(3);
 
+        $wishlist = null;
         if (Auth::user()) {
+            $wishlist = $this->wishlistService->findAllByCustomerId(Auth::id());
             [$countProductsInCart] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
         }
 
@@ -53,6 +56,7 @@ class HomeController extends Controller
             'sections9W' => $sections9W,
             'sections9M' => $sections9M,
             'categories' => $categories,
+            'wishlist' => $wishlist,
             'countProductsInCart' => $countProductsInCart ?? 0,
             'title' => "Home"
         ]);
@@ -61,7 +65,7 @@ class HomeController extends Controller
     public function details($categorySlug, $brandSlug, $productSlug)
     {
         $product = $this->productService->findOneBySlug($productSlug);
-        if(!$product) {
+        if (!$product) {
             return \abort(404);
         }
 
