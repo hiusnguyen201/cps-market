@@ -1,6 +1,5 @@
 on: push
 name: 🚀 Deploy website on push
-branchs: [main]
 jobs:
   web-deploy:
     name: 🎉 Deploy
