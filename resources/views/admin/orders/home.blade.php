@@ -34,6 +34,22 @@
                     </select>
                 </div>
 
+                <div class="col-lg-2 col-4 mb-3">
+                    <select name="status" id="" class="form-control">
+                        <option selected value="">All status</option>
+                        @if (config('constants.order_status') && count(config('constants.order_status')))
+                            @foreach (config('constants.order_status') as $status)
+                                <option {{ request()->status == $status['value'] ? 'selected' : '' }}
+                                    value="{{ $status['value'] }}">
+                                    {{ $status['title'] }}
+                                </option>
+                            @endforeach
+                        @else
+                            <option selected value="10">10</option>
+                        @endif
+                    </select>
+                </div>
+
                 <div class="col-lg-4 col-12 mb-3 ml-auto">
                     <div class="form-group d-flex mb-0">
                         <input class="form-control" name="keyword" id="" placeholder="Search by code"
