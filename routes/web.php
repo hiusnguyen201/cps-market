@@ -150,7 +150,7 @@ Route::prefix('auth')->group(function () {
 Route::get('/', [HomeController::class, 'home']);
 Route::get('/catalogsearch/result', [HomeController::class, 'search']);
 Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
-//
+
 Route::middleware(['check.auth', 'check.customer'])->group(function () {
     Route::prefix('cart')->group(function () {
         Route::get('/', [CartController::class, 'home'])->name("cart.index");
