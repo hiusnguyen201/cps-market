@@ -1,31 +1,44 @@
 name: main
 
 on:
-  # Cho phép chạy bằng tay từ giao diện Github
+  push:
+    branches: [main]
   workflow_dispatch:
-  # Lên lịch chạy hàng ngày vào lúc 00:00 UTC
-  schedule:
-  - cron: "0 0 * * *"
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-      # Khởi tạo môi trường NodeJS
-      with:
-        node-version: 12.16.1
-    - run: npm ci
-    - name: Generate quote
-      # Chạy script để gọi API lấy quote sau đó sửa file README.md
-      run: npm run generate
-    - name: Update README.md
-      # Push file README.md đã được thay đổi lên github
-      run: |
-        git config --global user.email "john@example.com"
-        git config --global user.name "example"
-        git add .
-        git commit -m "Updated README.md" || echo "No changes to commit"
-        git push
+      - name: Checkout repository
+        uses: actions/checkout@main
+      - name: Install dependencies
+        run: npm ci
+      - name: Build dependencies
+        run: npm run build
+      - name: Archive production artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: dist
+          path: dist
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest  
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@main
+      - name: Download artifact
+        uses: actions/download-artifact@main
+        with: 
+          name: dist
+          path: dist
+      - name: Sync files to hosting
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+      
