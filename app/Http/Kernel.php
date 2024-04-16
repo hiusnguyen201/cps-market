@@ -67,5 +67,8 @@ class Kernel extends HttpKernel
         'check.auth' => \App\Http\Middleware\CheckAuth::class,
         'check.admin' => \App\Http\Middleware\CheckAdmin::class,
         'check.customer' => \App\Http\Middleware\CheckCustomer::class,
+        'check.notadmin' => \App\Http\Middleware\CheckNotAdmin::class,
+        'check.active_account' => \App\Http\Middleware\CheckActiveAccount::class,
+        'check.inactive_account' => \App\Http\Middleware\CheckInactiveAccount::class
     ];
 }

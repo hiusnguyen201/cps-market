@@ -5,9 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Role;
 
-class CheckGuest
+class CheckNotAdmin
 {
     /**
      * Handle an incoming request.
@@ -20,7 +19,7 @@ class CheckGuest
     {
         $user = Auth::user();
 
-        if ($user) {
+        if ($user && $user->role->name == 'admin') {
             return redirect()->back();
         }
 

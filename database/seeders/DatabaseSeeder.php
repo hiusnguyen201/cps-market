@@ -39,8 +39,99 @@ class DatabaseSeeder extends Seeder
             "password" => Hash::make("admin123"),
             "phone" => "0912345678",
             "gender" => 0,
-            'status' => 1,
+            'status' => 2,
             "role_id" => $roleAdmin->id
         ]);
+
+        for($i = 2; $i < 62;$i++) {
+            User::create([
+                'name' => 'User' . $i,
+                'email' => 'User' . $i .'@gmail.com',
+                "password" => Hash::make("1234567"),
+                "phone" => "0912345678",
+                'status' => rand(1, 3),
+                "role_id" => $roleCustomer->id
+            ]);
+        }
+
+        for($i = 63; $i < 83;$i++) {
+            User::create([
+                'name' => 'User' . $i,
+                'email' => 'User' . $i .'@gmail.com',
+                "password" => Hash::make("1234567"),
+                "phone" => "0912345678",
+                'status' => rand(1, 3),
+                "role_id" => $roleAdmin->id
+            ]);
+        }
+
+        for($i = 0; $i < 10; $i++) {
+            Category::create([
+                "name" => "Category" . $i,
+                "slug" => Str::slug("Category" . $i)
+            ]);
+        }
+
+        for($i = 0; $i < 30; $i++) {
+            $brand = Brand::create([
+                "name" => "Brand" . $i,
+                "slug" => Str::slug("Brand" . $i)
+            ]);
+
+            $brand->categories()->attach(rand(1, 10));
+        }
+
+        for($i = 0; $i < 30; $i++) {
+            $product = Product::create([
+                "code" => time() + $i,
+                "slug" => Str::slug("Product" . $i),
+                "name" => Str::slug("Product" . $i),
+                "market_price" => 1000,
+                "price" => 5000,
+                "quantity" => 25,
+                "sold" => rand(0, 100),
+                "brand_id" => rand(1, 30),
+                "category_id" => rand(1, 10)
+            ]);
+
+            Product_Images::create([
+                "thumbnail" => "images/Phone.jpg",
+                "product_id" => $product->id,
+                "pin" => 1
+            ]);
+        }
+        
+        for($i = 0; $i < 30; $i++) {
+            $order = Order::create([
+                "code" => time() + $i,
+                "quantity" => 1,
+                "total" => 5000,
+                "sub_total" => 5000,
+                "shipping_fee" => 0,
+                "payment_method" => rand(1, 2),
+                "payment_status" => rand(1, 2),
+                "status" => rand(1, 5),
+                "customer_id" => rand(1, 30),
+            ]);
+
+            Order_Product::create([
+                "product_id" => rand(1, 30),
+                "order_id" => $order->id,
+                "quantity" => 1,
+                "market_price" => 1000,
+                "price" => 5000
+            ]);
+
+            Shipping_Address::create([
+                "customer_name" => "user",
+                "customer_email" => "user@gmail.com",
+                "customer_phone" => "0912345678",
+                "province" => 1,
+                "district" => 57,
+                "ward" => 328,
+                "address" => "address",
+                "order_id" => $order->id
+            ]);
+        }
     }
 }

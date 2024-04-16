@@ -31,7 +31,7 @@ use App\Http\Controllers\Web\SettingController;
 
 // Admin
 Route::prefix('admin')->group(function () {
-    Route::middleware(['check.auth', 'check.admin'])->group(function () {
+    Route::middleware(['check.auth', 'check.admin', 'check.active_account'])->group(function () {
         Route::get('/', [DashboardController::class, 'home']);
 
         // Users
@@ -117,19 +117,19 @@ Route::prefix('admin')->group(function () {
 
 // Auth
 Route::prefix('auth')->group(function () {
+    Route::prefix('otp')->middleware("check.inactive_account")->group(function () {
+        Route::get('/', [AuthController::class, 'otp']);
+        Route::post('/', [AuthController::class, 'handleVerifyOtp']);
+        Route::get('/resend', [AuthController::class, 'handleResendOtp']);
+    });
+
     Route::middleware('check.guest')->group(function () {
         Route::get('/login', [AuthController::class, 'localLogin']);
         Route::post('/login', [AuthController::class, 'handleLocalLogin']);
 
-        Route::prefix('otp')->group(function () {
-            Route::get('/', [AuthController::class, 'otp']);
-            Route::post('/', [AuthController::class, 'handleVerifyOtp']);
-            Route::get('/resend', [AuthController::class, 'handleResendOtp']);
-        });
-
         Route::get('/register', [AuthController::class, 'register']);
         Route::post('/register', [AuthController::class, 'handleRegister']);
-        
+
         Route::get('/forget-password', [AuthController::class, 'forgetPasswordForm']);
         Route::post('/forget-password', [AuthController::class, 'handleForgetPassword']);
         Route::get('/reset-password/{token}', [AuthController::class, 'changePasswordForm']);
@@ -147,11 +147,13 @@ Route::prefix('auth')->group(function () {
     });
 });
 
-Route::get('/', [HomeController::class, 'home']);
-Route::get('/catalogsearch/result', [HomeController::class, 'search']);
-Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
+Route::middleware('check.notadmin')->group(function () {
+    Route::get('/', [HomeController::class, 'home']);
+    Route::get('/catalogsearch/result', [HomeController::class, 'search']);
+    Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
+});
 
-Route::middleware(['check.auth', 'check.customer'])->group(function () {
+Route::middleware(['check.auth', "check.customer", 'check.active_account'])->group(function () {
     Route::prefix('cart')->group(function () {
         Route::get('/', [CartController::class, 'home'])->name("cart.index");
         Route::post('/', [CartController::class, 'handleCreate'])->name("cart.create");
@@ -179,7 +181,7 @@ Route::middleware(['check.auth', 'check.customer'])->group(function () {
 
         Route::get('/edit-profile', [MemberController::class, 'editProfilePage']);
         Route::patch('/edit-profile', [MemberController::class, 'handleUpdateProfile']);
-    }); 
+    });
 
     Route::prefix('payment')->group(function () {
         Route::post('/cod', [PaymentController::class, 'handleCodPayment']);

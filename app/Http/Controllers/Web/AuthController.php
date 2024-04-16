@@ -51,7 +51,7 @@ class AuthController extends Controller
         $user = Auth::user();
         if ($user->status == config("constants.user_status.active.value")) {
             session()->flash("success", "Login successfully");
-            return redirect("/member");
+            return $user->role->name == 'customer' ? redirect("/member") : redirect("/admin");
         }
 
         try {
@@ -81,6 +81,7 @@ class AuthController extends Controller
             return redirect("/auth/otp")->with("error", $e->getMessage());
         }
 
+        Auth::login($user, true);
         session()->flash("success", "Login successfully");
         if ($user->role->name === 'customer') {
             return redirect("/member");
@@ -165,7 +166,7 @@ class AuthController extends Controller
         }
 
         Auth::login($user, true);
-        if ($user->status == config("constants.user_status.inactive")['value']) {
+        if ($user->status == config("constants.user_status.inactive.value")) {
             $this->userService->sendOtpToEmail($user);
             return redirect("/auth/otp")->with('success', "We've sent a verification code to your email");
         } else {
@@ -249,5 +250,4 @@ class AuthController extends Controller
             return redirect("/auth/change-password/" . $token)->with("error", $e->getMessage());
         }
     }
-
 }

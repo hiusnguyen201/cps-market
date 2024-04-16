@@ -34,7 +34,7 @@
                     </select>
                 </div>
 
-                <div class="col-lg-2 col-4 mb-3">
+                <div class="col-lg-3 col-8 mb-3">
                     <select name="status" id="" class="form-control">
                         <option selected value="">All status</option>
                         @if (config('constants.order_status') && count(config('constants.order_status')))
