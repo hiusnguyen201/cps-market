@@ -41,7 +41,7 @@
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
                                                 <td><a class=""
-                                                        href="/admin/categories/{{ $category->id }}">{{ $category->name }}</a>
+                                                        href="/admin/categories/details/{{ $category->id }}">{{ $category->name }}</a>
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -317,7 +317,6 @@
                                 <div class="u-s-m-b-30">
                                     <div class="product-o product-o--hover-on">
                                         <div class="product-o__wrap">
-
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block"
                                                 href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">
                                                 @foreach ($product->images as $image)

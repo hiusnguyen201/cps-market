@@ -1059,7 +1059,9 @@ body {
 .countdown--style-section .countdown__content {
     margin: 18px 20px 20px 0;
     padding: 8px 22px;
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.1),
+        0 2px 6px 2px rgba(60, 64, 67, 0.15);
+
     background-color: rgba(255, 255, 255, 0.98);
 }
 .countdown--style-section .countdown__value {
@@ -1243,8 +1245,11 @@ input::-ms-clear {
 
 /* Product Component */
 .product-o {
-    padding: 20px;
+    padding: 15px;
+    border-radius: 15px;
     background-color: #ffffff;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.1),
+        0 2px 6px 2px rgba(60, 64, 67, 0.15);
 }
 
 .product-o--hover-off {
@@ -1279,6 +1284,9 @@ input::-ms-clear {
 }
 
 .product-o__wrap {
+    margin: 10px auto 5px;
+    width: 160px;
+    height: 160px;
     position: relative;
 }
 .product-o__wrap:before {
@@ -1325,7 +1333,9 @@ input::-ms-clear {
     transition: all 0.3s ease 0.1s;
 }
 .product-o__action-list > li > a {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 35px;
     text-align: center;
     border-radius: 50%;
@@ -1337,7 +1347,7 @@ input::-ms-clear {
     transition: all 0.3s ease 0s;
 }
 .product-o__action-list > li > a:hover {
-    background-color: #333333;
+    background-color: #ff4500;
     color: #ffffff;
 }
 
@@ -1409,7 +1419,8 @@ input::-ms-clear {
     transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55),
         -webkit-transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.1),
+        0 2px 6px 2px rgba(60, 64, 67, 0.15);
 }
 .x-product .row {
     -ms-flex-align: center;
@@ -1443,7 +1454,8 @@ input::-ms-clear {
 .product-l {
     display: -ms-flexbox;
     display: flex;
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.1),
+        0 2px 6px 2px rgba(60, 64, 67, 0.15);
 }
 .product-l__img-wrap {
     margin-right: 20px;
@@ -1495,7 +1507,8 @@ input::-ms-clear {
 
 .product-o2 {
     background-color: #ffffff;
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.1),
+        0 2px 6px 2px rgba(60, 64, 67, 0.15);
 }
 .product-o2__wrap {
     position: relative;
@@ -1667,7 +1680,9 @@ input::-ms-clear {
     line-height: 35px;
     background-color: #ffffff;
     color: #ff4500;
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.1),
+        0 2px 6px 2px rgba(60, 64, 67, 0.15);
+
     font-size: 12px;
     transition: all 0.3s ease 0s;
 }
@@ -1749,7 +1764,9 @@ input::-ms-clear {
     margin: 5px;
     border-radius: 15px;
     background-color: #ffffff;
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.1),
+        0 2px 6px 2px rgba(60, 64, 67, 0.15);
+
     transition: -webkit-transform 0.7s ease-in-out;
     transition: transform 0.7s ease-in-out;
     transition: transform 0.7s ease-in-out, -webkit-transform 0.7s ease-in-out;
@@ -1759,7 +1776,9 @@ input::-ms-clear {
     min-height: 250px;
 }
 .product-bs__wrap {
+    margin: 0 auto;
     position: relative;
+    width: 160px;
     margin-bottom: 4px;
 }
 .product-bs__action-wrap {
@@ -1804,7 +1823,9 @@ input::-ms-clear {
     transition: all 0.3s ease 0s;
 }
 .product-bs__action-list > li > a:hover {
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.1),
+        0 2px 6px 2px rgba(60, 64, 67, 0.15);
+
     background-color: #ff4500;
     color: #ffffff;
 }
@@ -1817,7 +1838,6 @@ input::-ms-clear {
 
 .product-bs__name {
     display: block;
-    height: 42px;
     width: 100%;
     overflow: hidden !important;
     text-overflow: ellipsis;
@@ -1825,6 +1845,16 @@ input::-ms-clear {
     font-size: 14px;
     font-weight: 600;
     transition: color 0.5s;
+}
+
+.product-bs__name > a {
+    font-size: inherit;
+    color: inherit;
+    transition: 0.3s;
+}
+
+.product-bs__name > a:hover {
+    color: #ff4500;
 }
 
 .product-bs__rating {
@@ -4247,7 +4277,9 @@ input::-ms-clear {
 .dash__w-icon {
     width: 45px;
     height: 45px;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     line-height: 45px;
     border-radius: 50%;
     font-size: 14px;

@@ -157,7 +157,7 @@ class ProductService
         $products = Product::whereHas('category', function ($query) use ($categoryName) {
             $query->where('name', $categoryName);
         })
-            ->orderBy('created_at', 'desc')
+            ->orderBy('sold', 'desc')
             ->limit($limit)
             ->get();
 
@@ -177,5 +177,4 @@ class ProductService
         $product = Product::where("brand_id", $brandId)->inRandomOrder()->limit($limit)->get();
         return $product && count($product) ? $product : [];
     }
-
 }
