@@ -59,14 +59,13 @@ class UserController extends Controller
     public function handleCreate(UserRequest $request)
     {
         try {
-            $role = $this->roleService->findRoleByName("admin");
-            $this->userService->createUserWithRole($request, $role);
+            $this->userService->createUserWithRole($request, "admin");
             session()->flash('success', 'Create user successfully');
         } catch (\Exception $e) {
             session()->flash("error", $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/users/create");
     }
 
 
@@ -91,7 +90,7 @@ class UserController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/users/edit/" . $user->id);
     }
 
     public function handleDelete(Request $request)
@@ -104,6 +103,6 @@ class UserController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/users");
     }
 }

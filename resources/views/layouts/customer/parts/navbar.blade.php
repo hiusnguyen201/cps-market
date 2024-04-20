@@ -91,6 +91,18 @@
 
                                         <a href="mailto:hiusnguyen201@gmail.com"><i class="far fa-envelope"></i></a>
                                     </li>
+                                    <li>
+                                        <ul class="gtranslate_wrapper" style="width:120px">
+                                        </ul>
+                                        <script>
+                                            window.gtranslateSettings = {
+                                                "default_language": "en",
+                                                "languages": ["en", "vi"],
+                                                "wrapper_selector": ".gtranslate_wrapper"
+                                            }
+                                        </script>
+                                        <script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer></script>
+                                    </li>
                                 </ul>
                                 <!--====== End - List ======-->
                             </div>

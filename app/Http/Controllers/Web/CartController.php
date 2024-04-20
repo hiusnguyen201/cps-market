@@ -66,7 +66,7 @@ class CartController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/cart");
     }
 
     public function handleDelete(Request $request)
@@ -78,7 +78,7 @@ class CartController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/cart");
     }
 
     public function checkoutPage()

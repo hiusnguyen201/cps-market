@@ -57,14 +57,13 @@ class CustomerController extends Controller
     public function handleCreate(UserRequest $request)
     {
         try {
-            $role = $this->roleService->findRoleByName("customer");
-            $this->userService->createUserWithRole($request, $role);
+            $this->userService->createUserWithRole($request, "customer");
             session()->flash('success', 'Create customer was successful!');
         } catch (\Exception $e) {
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/customers/create");
     }
 
 
@@ -89,7 +88,7 @@ class CustomerController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/customers/edit/" . $user->id);
     }
 
     public function handleDelete(Request $request)
@@ -102,6 +101,6 @@ class CustomerController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/customers");
     }
 }

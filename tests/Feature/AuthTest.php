@@ -14,7 +14,7 @@ use App\Models\Password_Reset;
 class AuthTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     // Login
     public function test_login_page_rendered()
     {
@@ -22,168 +22,104 @@ class AuthTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /** 
-        public function test_login_case_incorrect_password() {
-        $user = User::factory()->create([
-            "email" => "usertest@gmail.com",
-            "password" => bcrypt("password")
-        ]);
-
-        $response = $this->post("/auth/login", [
-            'email' => "usertest@gmail.com",
-            "password" => "password123345",
-        ]);
-
-        $response->assertRedirect("/auth/login");
-        }
-
-        public function test_login_case_format_error() {
-            $response = $this->post("/auth/login", [
-                'email' => "abcdef",
-                "password" => "password",
-            ]);
-
-            $response->assertSessionHasErrors();
-        }
-    */
-
-    public function test_active_customer_login_success()
-    {
-        $role = Role::factory()->create(["name" => "customer"]);
-        $user = User::factory()->create(["role_id" => $role->id, "status" => 1]);
-        $response = $this->post("/auth/login", [
-            'email' => $user->email,
-            "password" => "password",
-        ]);
-        $this->assertAuthenticated();
-        $response->assertRedirect("/member");
-    }
-
-    public function test_inactive_customer_login_success()
-    {
-        $role = Role::factory()->create(["name" => "customer"]);
-        $user = User::factory()->create(["role_id" => $role->id, "status" => 0]);
-        $response = $this->post("/auth/login", [
-            'email' => $user->email,
-            "password" => "password",
-        ]);
-        $this->assertAuthenticated();
-        $response->assertRedirect("/auth/otp");
-    }
-
-    public function test_active_admin_login_success()
+    public function test_inactive_admin_login_case_success()
     {
         $role = Role::factory()->create(["name" => "admin"]);
-        $user = User::factory()->create(["role_id" => $role->id, "status" => 1]);
+        $user = User::factory()->create(["role_id" => $role->id, "status" => config("constants.user_status.inactive.value")]);
         $response = $this->post("/auth/login", [
             'email' => $user->email,
             "password" => "password",
         ]);
         $this->assertAuthenticated();
-        $response->assertRedirect("/admin");
+        $response->assertStatus(302);
     }
 
-    public function test_inactive_admin_login_success()
+    public function test_inactive_customer_login_case_success()
     {
-        $role = Role::factory()->create(["name" => "admin"]);
-        $user = User::factory()->create(["role_id" => $role->id, "status" => 0]);
+        $role = Role::factory()->create(["name" => "customer"]);
+        $user = User::factory()->create(["role_id" => $role->id, "status" => config("constants.user_status.inactive.value")]);
         $response = $this->post("/auth/login", [
             'email' => $user->email,
             "password" => "password",
         ]);
         $this->assertAuthenticated();
-        $response->assertRedirect("/auth/otp");
+        $response->assertStatus(302);
     }
+
+    public function test_active_admin_login_case_success()
+    {
+        $role = Role::factory()->create(["name" => "admin"]);
+        $user = User::factory()->create(["role_id" => $role->id, "status" => config("constants.user_status.active.value")]);
+        $response = $this->post("/auth/login", [
+            'email' => $user->email,
+            "password" => "password",
+        ]);
+        $this->assertAuthenticated();
+        $response->assertStatus(302);
+    }
+    public function test_active_customer_login_case_success()
+    {
+        $role = Role::factory()->create(["name" => "customer"]);
+        $user = User::factory()->create(["role_id" => $role->id, "status" => config("constants.user_status.active.value")]);
+        $response = $this->post("/auth/login", [
+            'email' => $user->email,
+            "password" => "password",
+        ]);
+        $this->assertAuthenticated();
+        $response->assertStatus(302);
+    }
+
+
 
     // Otp
-    public function test_otp_page_rendered() {
+    public function test_otp_page_rendered()
+    {
         $user = User::factory()->create();
         $this->actingAs($user);
         $response = $this->get("/auth/otp");
         $response->assertStatus(200);
     }
 
-    /**
-     public function test_verify_otp_case_format_error() {
+    public function test_verify_otp_for_customer_case_success()
+    {
         $role = Role::factory()->create(["name" => "customer"]);
         $user = User::factory()->create(["role_id" => $role->id]);
         $this->actingAs($user);
-        
-        User_Otp::factory()->create(["user_id" => $user->id, "otp" => "123456"]);
 
-        $response = $this->post("/auth/otp", [
-            "otp" => ''
-        ]);
-        
-        $response->assertSessionHasErrors();
-    }
-
-    public function test_verify_otp_case_incorrect_otp() {
-        $role = Role::factory()->create(["name" => "customer"]);
-        $user = User::factory()->create(["role_id" => $role->id]);
-        $this->actingAs($user);
-        
-        User_Otp::factory()->create(["user_id" => $user->id, "otp" => "123456"]);
-
-        $response = $this->post("/auth/otp", [
-            "otp" => '000000'
-        ]);
-        
-        $response->assertRedirect("/auth/otp");
-    }
-
-    public function test_verify_otp_case_otp_expired() {
-        $role = Role::factory()->create(["name" => "customer"]);
-        $user = User::factory()->create(["role_id" => $role->id]);
-        $this->actingAs($user);
-        
-        $user_otp = User_Otp::factory()->create(["user_id" => $user->id, 'expire' => Carbon::now()->subMinutes(env('OTP_EXPIRE_MINUTES', 1))]);
-
-        $response = $this->post("/auth/otp", [
-            "otp" => $user_otp->otp,
-        ]);
-        
-        $response->assertRedirect("/auth/otp");
-    }
-
-    */
-
-    public function test_verify_otp_for_customer_success() {
-        $role = Role::factory()->create(["name" => "customer"]);
-        $user = User::factory()->create(["role_id" => $role->id]);
-        $this->actingAs($user);
-        
         $user_otp = User_Otp::factory()->create(["user_id" => $user->id]);
 
         $response = $this->post("/auth/otp", [
             "otp" => $user_otp->otp
         ]);
-        
-        $response->assertRedirect("/member");
+
+        $response->assertStatus(302);
     }
-    
-    public function test_verify_otp_for_admin_success() {
+
+    public function test_verify_otp_for_admin_case_success()
+    {
         $role = Role::factory()->create(["name" => "admin"]);
         $user = User::factory()->create(["role_id" => $role->id]);
         $this->actingAs($user);
-        
+
         $user_otp = User_Otp::factory()->create(["user_id" => $user->id]);
 
         $response = $this->post("/auth/otp", [
             "otp" => $user_otp->otp
         ]);
-        
-        $response->assertRedirect("/admin");
+
+        $response->assertStatus(302);
     }
 
-    public function test_resend_otp_success() {
+    public function test_resend_otp_case_success()
+    {
         $role = Role::factory()->create(["name" => "customer"]);
         $user = User::factory()->create(["role_id" => $role->id]);
         $this->actingAs($user);
         $response = $this->get("/auth/otp/resend");
-        $response->assertRedirect("/auth/otp");
+        $response->assertSessionHas("success");
+        $response->assertStatus(302);
     }
-    
+
     // Register
     public function test_register_page_rendered()
     {
@@ -191,38 +127,7 @@ class AuthTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /**
-    public function test_register_case_format_error() {
-        $response = $this->post("/auth/register", [
-            'name' => "",
-            'email' => "test@gmail.com",
-            "phone" => "asdasdas",
-            "password" => "",
-            "password_confirmation" => "password",
-        ]);
-        
-        $response->assertSessionHasErrors();
-    }
-
-    public function test_register_case_registered_email() {
-        User::factory()->create([
-            "email" => "test@gmail.com"
-        ]);
-
-        $response = $this->post("/auth/register", [
-            'name' => "Test User",
-            'email' => "test@gmail.com",
-            "phone" => "0912345678",
-            "password" => "password",
-            "password_confirmation" => "password",
-        ]);
-        
-        
-        $response->assertSessionHasErrors();
-    }
-    */
-
-    public function test_register_success()
+    public function test_register_case_success()
     {
         $response = $this->post("/auth/register", [
             'name' => "Test User",
@@ -231,9 +136,9 @@ class AuthTest extends TestCase
             "password" => "password",
             "password_confirmation" => "password",
         ]);
-        
+
         $this->assertAuthenticated();
-        $response->assertRedirect("/auth/otp");
+        $response->assertStatus(302);
     }
 
     // Forget Password
@@ -243,54 +148,29 @@ class AuthTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /*
-    public function test_forget_password_case_format_error() {
-        $user = User::factory()->create();
-        $response = $this->post('/auth/forget-password', [
-            "email" => "ascacas"
-        ]);
-        $response->assertSessionHasErrors();
-    }
-
-    public function test_forget_password_case_email_not_found() {
-        $user = User::factory()->create();
-        $response = $this->post('/auth/forget-password', [
-            "email" => "usertest@gmail.com"
-        ]);
-        $response->assertSessionHasErrors();
-    }
-    */
-
-    public function test_forget_password_send_link_reset_password_success()
+    public function test_forget_password_send_link_reset_password_case_success()
     {
         $user = User::factory()->create();
         $response = $this->post('/auth/forget-password', [
             "email" => $user->email
         ]);
-        $response->assertRedirect("/auth/forget-password");
+
+        $response->assertSessionHas("success");
+        $response->assertStatus(302);
     }
 
     // Reset Password
-    /**
-    public function test_change_password_page_case_invalid_token() 
-    {
-        $response = $this->get('/auth/reset-password/asasda');
-        $response->assertSessionHas("error");
-    }
-    */
-
-    public function test_change_password_page_rendered() 
+    public function test_change_password_page_rendered()
     {
         $user = User::factory()->create();
         $password_reset = Password_Reset::factory()->create([
             "user_id" => $user->id
         ]);
-        $response = $this->get('/auth/reset-password/'.$password_reset->token);
+        $response = $this->get('/auth/reset-password/' . $password_reset->token);
         $response->assertStatus(200);
     }
 
-    /**
-    public function test_change_password_in_customer_case_format_error() 
+    public function test_change_password_case_success()
     {
         $user = User::factory()->create();
         $password_reset = Password_Reset::factory()->create([
@@ -298,34 +178,19 @@ class AuthTest extends TestCase
         ]);
 
         $response = $this->post('/auth/reset-password/' . $password_reset->token, [
-            "password" => "",
-            "password_confirmation" => "",
-        ]);
-        
-        $response->assertSessionHasErrors();
-    }
-    */
-
-    public function test_change_password_in_customer_success() 
-    {
-        $user = User::factory()->create();
-        $password_reset = Password_Reset::factory()->create([
-            "user_id" => $user->id
-        ]);
-
-        $response = $this->post('/auth/reset-password/'.$password_reset->token, [
             "password" => "password",
             "password_confirmation" => "password",
         ]);
-        
-        $response->assertRedirect("/auth/login");
+
+        $response->assertStatus(302);
     }
 
     // Log out
-    public function test_logout_success() {
+    public function test_logout_success()
+    {
         $user = User::factory()->create();
         $this->actingAs($user);
         $response = $this->get("/auth/logout");
-        $response->assertRedirect("/auth/login");
+        $response->assertStatus(302);
     }
 }

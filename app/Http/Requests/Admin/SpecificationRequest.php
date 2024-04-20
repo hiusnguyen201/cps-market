@@ -31,7 +31,11 @@ class SpecificationRequest extends FormRequest
                 'string',
                 'max:150',
                 Rule::unique("specifications")->where(function ($query) use ($request) {
-                    return $query->where("name", $request->name)->where("category_id", $request->category_id)->where("id", "!=", $request->specification_id);
+                    $query->where("name", $request->name);
+                    $query->where("category_id", $request->category_id);
+                    if ($request->specification_id) {
+                        $query->where("id", "!=", $request->specification_id);
+                    }
                 })
             ],
             'attributes' => 'nullable|array',

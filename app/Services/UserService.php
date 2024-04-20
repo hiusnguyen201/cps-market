@@ -32,7 +32,7 @@ class UserService
             $query->where('name', '=', $roleName);
         })->orderBy('created_at', 'desc');
 
-        if($request->status && $request->status != "all") {
+        if ($request->status && $request->status != "all") {
             $users = $users->where("status", $request->status);
         }
 
@@ -55,9 +55,16 @@ class UserService
         return $user ? $user : [];
     }
 
-    public function createUserWithRole($request, $role)
+    public function createUserWithRole($request, $roleName)
     {
         try {
+            $role = Role::where("name", $roleName)->first();
+            if (!$role) {
+                $role = Role::create([
+                    "name" => $roleName
+                ]);
+            }
+
             $password = Str::random(16);
             $user = User::create([
                 'name' => $request->name,
@@ -113,7 +120,7 @@ class UserService
         $position = null;
         try {
             foreach ($userIds as $index => $userId) {
-                if($userId == Auth::id()) {
+                if ($userId == Auth::id()) {
                     throw new \InvalidArgumentException('Cannot delete this user ' . $index + 1);
                 }
 
@@ -193,7 +200,7 @@ class UserService
     {
         try {
             $roleCustomer = Role::where("name", 'customer')->first();
-            if(!$roleCustomer) {
+            if (!$roleCustomer) {
                 $roleCustomer = Role::create([
                     "name" => "customer"
                 ]);
@@ -225,7 +232,7 @@ class UserService
         DB::beginTransaction();
         try {
             $role = Role::where("name", 'customer')->first();
-            if(!$role) {
+            if (!$role) {
                 $role = Role::create([
                     "name" => 'customer'
                 ]);
@@ -446,7 +453,7 @@ class UserService
         $countProductsInCart = 0;
         $totalPrice = 0;
         foreach ($user->carts as $cart) {
-            if($cart->product) {
+            if ($cart->product) {
                 $countProductsInCart += $cart->quantity;
                 $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price : $cart->product->price) * $cart->quantity);
             }

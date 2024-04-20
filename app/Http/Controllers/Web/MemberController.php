@@ -89,7 +89,7 @@ class MemberController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/member/edit-profile");
     }
 
     public function changePasswordPage()
@@ -119,7 +119,7 @@ class MemberController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/member/change-password");
     }
 
     public function orders(Request $request)
@@ -145,7 +145,7 @@ class MemberController extends Controller
 
     public function orderDetailsPage(Order $order)
     {
-        if($order->customer_id != Auth::id()) {
+        if ($order->customer_id != Auth::id()) {
             return abort(404);
         }
 

@@ -90,6 +90,6 @@ class ProductController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/products");
     }
 }

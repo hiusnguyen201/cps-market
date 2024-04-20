@@ -59,7 +59,7 @@ class CategoryController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/categories/create");
     }
 
 
@@ -80,7 +80,7 @@ class CategoryController extends Controller
         } catch (\Exception $e) {
             session()->flash('error', $e->getMessage());
         }
-        return redirect()->back();
+        return redirect("/admin/categories/edit/" .  $category->id);
     }
 
     public function handleDelete(Request $request)
@@ -93,6 +93,6 @@ class CategoryController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/categories");
     }
 }
