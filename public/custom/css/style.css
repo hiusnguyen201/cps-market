@@ -316,3 +316,17 @@ input[type="range"]::-moz-range-thumb {
 .manage-o__description {
     margin-bottom: 15px;
 }
+
+.translate_block li {
+    display: block;
+    padding: 8px 20px;
+    color: #333333;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.gt_selector {
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+}

@@ -68,7 +68,7 @@ class OrderController extends Controller
             session()->flash("error", $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/orders/create");
     }
     public function edit(Order $order)
     {
@@ -91,10 +91,11 @@ class OrderController extends Controller
             $this->orderService->updateOrderInAdmin($request, $customer, $order);
             session()->flash("success", "Edit order successfully");
         } catch (\Exception $e) {
+            error_log($e->getMessage());
             session()->flash("error", $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/orders/edit/" . $order->id);
     }
 
     public function handleDelete(Request $request)
@@ -107,6 +108,6 @@ class OrderController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/orders");
     }
 }

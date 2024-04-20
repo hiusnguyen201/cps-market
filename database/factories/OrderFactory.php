@@ -26,10 +26,10 @@ class OrderFactory extends Factory
             'sub_total' => 1000,
             'shipping_fee' => 0,
             'total' => 1000,
-            'payment_method' => 0,
-            'payment_status' => 0,
-            'status' => 0,
-            'customer_id' => User::factory()
+            'payment_method' => config("constants.payment_method.cod.value"),
+            'payment_status' => config("constants.payment_status.canceled.value"),
+            'status' => config("constants.order_status.canceled.value"),
+            'customer_id' => User::factory(),
         ];
     }
 }

@@ -1837,10 +1837,12 @@ input::-ms-clear {
 }
 
 .product-bs__name {
-    display: block;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    height: 42px;
     width: 100%;
-    overflow: hidden !important;
-    text-overflow: ellipsis;
     color: #333333;
     font-size: 14px;
     font-weight: 600;

@@ -30,7 +30,7 @@ class SpecificationController extends Controller
         ]);
     }
 
-    public function handleAdd(SpecificationRequest $request)
+    public function handleAdd(Category $category, SpecificationRequest $request)
     {
         try {
             $this->specificationService->addSpecificationToCategory($request, $request->category_id);
@@ -39,7 +39,7 @@ class SpecificationController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/categories/details/" . $category->id . "/specifications/add");
     }
 
     public function edit(Category $category, Specification $specification)
@@ -52,7 +52,7 @@ class SpecificationController extends Controller
         ]);
     }
 
-    public function handleUpdate(SpecificationRequest $request)
+    public function handleUpdate(Category $category, SpecificationRequest $request)
     {
         try {
             $this->specificationService->updateSpecification($request, $request->specification_id);
@@ -60,10 +60,10 @@ class SpecificationController extends Controller
         } catch (\Exception $e) {
             session()->flash('error', $e->getMessage());
         }
-        return redirect()->back();
+        return redirect("/admin/categories/details/" . $category->id . "/specifications/edit/" . $request->specification_id);
     }
 
-    public function handleDelete(Request $request)
+    public function handleDelete(Category $category, Request $request)
     {
         try {
             $this->specificationService->removeSpecificationFromCategory($request->id);
@@ -72,6 +72,6 @@ class SpecificationController extends Controller
             session()->flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+        return redirect("/admin/categories/details/" . $category->id);
     }
 }
