@@ -27,7 +27,7 @@ class OrderService
     {
         $orders = Order::where(function ($query) use ($request) {
             $query->orWhere('code', 'like', '%' . $request->keyword . '%');
-            if($request->status) {
+            if ($request->status) {
                 $query->where("status", $request->status);
             }
         });
@@ -40,7 +40,7 @@ class OrderService
     public function findOrderByCustomerIdAndOrderId($customerId, $orderId)
     {
         $order = Order::where(["code" => $orderId, "customer_id" => $customerId])->first();
-        
+
         return $order ? $order : null;
     }
 
@@ -66,7 +66,7 @@ class OrderService
             ]);
 
             foreach ($customer->carts as $cart) {
-                if($cart->product) {
+                if ($cart->product) {
                     Order_Product::create([
                         "product_id" => $cart->product->id,
                         "order_id" => $order->id,
@@ -111,16 +111,18 @@ class OrderService
     {
         DB::beginTransaction();
         try {
+            $status = false;
+
             switch ($resultCode) {
                 case "0":
-                    $order->update([
+                    $status = $order->update([
                         "payment_status" => config("constants.payment_status.paid")['value'],
                         "updated_at" => now(),
                         "paid_date" => now(),
                     ]);
                     break;
                 default:
-                    $order->update([
+                    $status = $order->update([
                         "payment_status" => config("constants.payment_status.canceled")['value'],
                         "status" => config("constants.order_status.canceled")['value'],
                         "updated_at" => now()
@@ -136,7 +138,7 @@ class OrderService
 
             DB::commit();
 
-            return $order;
+            return $status;
         } catch (\Exception $e) {
             DB::rollBack();
             if ($e->getCode() != 0) {
@@ -233,7 +235,7 @@ class OrderService
                 ]);
             }
 
-            $order->update([
+            $status = $order->update([
                 'quantity' => $countProductsInCart,
                 'sub_total' => $totalPrice,
                 'shipping_fee' => config("constants.shipping_fee"),
@@ -256,7 +258,7 @@ class OrderService
             ]);
 
             DB::commit();
-            return $order;
+            return $status;
         } catch (\Exception $e) {
             DB::rollBack();
             if ($e->getCode() != 0) {

@@ -6,19 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\Admin\UserRequest;
-use App\Services\RoleService;
 use App\Services\UserService;
 
 use App\Models\User;
 
 class UserController extends Controller
 {
-    private RoleService $roleService;
     private UserService $userService;
 
     public function __construct()
     {
-        $this->roleService = new RoleService();
         $this->userService = new UserService();
     }
 

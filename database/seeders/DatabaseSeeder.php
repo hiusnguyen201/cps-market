@@ -43,10 +43,10 @@ class DatabaseSeeder extends Seeder
             "role_id" => $roleAdmin->id
         ]);
 
-        for($i = 2; $i < 62;$i++) {
+        for ($i = 2; $i < 62; $i++) {
             User::create([
                 'name' => 'User' . $i,
-                'email' => 'User' . $i .'@gmail.com',
+                'email' => 'User' . $i . '@gmail.com',
                 "password" => Hash::make("1234567"),
                 "phone" => "0912345678",
                 'status' => rand(1, 3),
@@ -54,10 +54,10 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        for($i = 63; $i < 83;$i++) {
+        for ($i = 63; $i < 83; $i++) {
             User::create([
                 'name' => 'User' . $i,
-                'email' => 'User' . $i .'@gmail.com',
+                'email' => 'User' . $i . '@gmail.com',
                 "password" => Hash::make("1234567"),
                 "phone" => "0912345678",
                 'status' => rand(1, 3),
@@ -65,14 +65,14 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        for($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             Category::create([
                 "name" => "Category" . $i,
                 "slug" => Str::slug("Category" . $i)
             ]);
         }
 
-        for($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             $brand = Brand::create([
                 "name" => "Brand" . $i,
                 "slug" => Str::slug("Brand" . $i)
@@ -81,11 +81,11 @@ class DatabaseSeeder extends Seeder
             $brand->categories()->attach(rand(1, 10));
         }
 
-        for($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < 200; $i++) {
             $product = Product::create([
                 "code" => time() + $i,
                 "slug" => Str::slug("Product" . $i),
-                "name" => Str::slug("Product" . $i),
+                "name" => Str::slug(Str::random(6) . " " . Str::random(6) . " " . Str::random(6) . " " . Str::random(6) . " " . Str::random(6) . " " . Str::random(6) . " " . Str::random(6) . " " . Str::random(6) . " " . $i),
                 "market_price" => 1000,
                 "price" => 5000,
                 "quantity" => 25,
@@ -100,8 +100,8 @@ class DatabaseSeeder extends Seeder
                 "pin" => 1
             ]);
         }
-        
-        for($i = 0; $i < 30; $i++) {
+
+        for ($i = 0; $i < 30; $i++) {
             $order = Order::create([
                 "code" => time() + $i,
                 "quantity" => 1,

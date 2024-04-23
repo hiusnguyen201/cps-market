@@ -20,7 +20,7 @@ class Password_Reset extends Model
     protected $casts = [
         'user_id' => "integer",
         'token' => "string",
-        "expire" => "date"
+        "expire" => "datetime"
     ];
 
     public function user()

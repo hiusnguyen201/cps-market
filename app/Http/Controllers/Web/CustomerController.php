@@ -7,18 +7,15 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Admin\UserRequest;
 
 use App\Services\UserService;
-use App\Services\RoleService;
 
 use App\Models\User;
 
 class CustomerController extends Controller
 {
     private UserService $userService;
-    private RoleService $roleService;
     public function __construct()
     {
         $this->userService = new UserService();
-        $this->roleService = new RoleService();
     }
     public function home(Request $request)
     {

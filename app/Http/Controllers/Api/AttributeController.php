@@ -9,7 +9,8 @@ use App\Models\Specification;
 
 class AttributeController extends Controller
 {
-    public function findAllAttributeByCategory(Category $category) {
+    public function findAllAttributeByCategory(Category $category)
+    {
         try {
             $brands = $category->brands()->get();
             $specifications = Specification::with('attributes')->where("category_id", $category->id)->get();

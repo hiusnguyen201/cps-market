@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
+
+use App\Models\Product;
 use App\Models\Attribute;
 
 class ProductService

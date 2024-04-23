@@ -298,7 +298,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section__text-wrap">
-                            <h1 class="section__heading u-c-secondary u-s-m-b-12">SIMILAR PRODUCTS</h1>
+                            <h1 class="section__heading u-c-secondary u-s-m-b-12">SIMILAR BRAND PRODUCTS</h1>
                         </div>
                     </div>
                 </div>
@@ -310,109 +310,58 @@
         <!--====== Section Content ======-->
         <div class="section__content">
             <div class="container">
-                <div class="slider-fouc">
-                    <div class="owl-carousel product-slider" data-item="4">
-                        @if ($similarProducts && count($similarProducts))
-                            @foreach ($similarProducts as $product)
-                                <div class="u-s-m-b-30">
-                                    <div class="product-o product-o--hover-on">
-                                        <div class="product-o__wrap">
-                                            <a class="aspect aspect--bg-grey aspect--square u-d-block"
-                                                href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">
-                                                @foreach ($product->images as $image)
-                                                    @if ($image->pin)
-                                                        <img class="aspect__img" src="{{ asset($image->thumbnail) }}"
-                                                            alt="{{ $product->name }}">
-                                                    @endif
-                                                @endforeach
-                                            </a>
-                                            <div class="product-o__action-wrap">
-                                                <ul class="product-o__action-list">
-                                                    <li>
-                                                        <a href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html"
-                                                            data-tooltip="tooltip" data-placement="top"
-                                                            title="Quick View"><i class="fas fa-search-plus"></i></a>
-                                                    </li>
-                                                    <li>
-                                                        <a onclick="this.nextElementSibling.submit()" data-modal="modal"
-                                                            data-modal-id="#add-to-cart" data-tooltip="tooltip"
-                                                            data-placement="top" title="Add to Cart"><i
-                                                                class="fas fa-plus-circle"></i></a>
-                                                        <form hidden method="POST" action="{{ route('cart.create') }}">
-                                                            @csrf
-                                                            <input type="hidden" name="product_id"
-                                                                value="{{ $product->id }}">
-                                                            <input type="hidden" name="action" value="add">
-                                                        </form>
-                                                    </li>
-                                                    <li>
-                                                        @php
-                                                            $similarProductCheck = null;
-                                                            if ($wishlist) {
-                                                                $similarProductCheck = $wishlist
-                                                                    ->filter(function ($item) use ($product) {
-                                                                        return $item->product_id == $product->id;
-                                                                    })
-                                                                    ->first();
-                                                            }
-                                                        @endphp
-                                                        @if ($similarProductCheck)
-                                                            <a onclick="this.nextElementSibling.submit()"
-                                                                data-tooltip="tooltip" data-placement="top"
-                                                                title="Add to Wishlist"><i style="color: red;"
-                                                                    class="fas
-                                                                    fa-heart"></i></a>
-                                                            <form hidden action="/wishlist" method="post">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <input type="hidden" name="wishlist_id"
-                                                                    value="{{ $similarProductCheck->id }}">
-                                                            </form>
-                                                        @else
-                                                            <a onclick="this.nextElementSibling.submit()"
-                                                                data-tooltip="tooltip" data-placement="top"
-                                                                title="Add to Wishlist"><i class="fas fa-heart"></i></a>
-                                                            <form hidden action="/wishlist" method="post">
-                                                                @csrf
-                                                                <input type="hidden" name="product_id"
-                                                                    value="{{ $product->id }}">
-                                                            </form>
+                <div class="swiper">
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-wrapper">
+                        @foreach ($similarProducts as $product)
+                            <div class="swiper-slide">
+                                @if ($product->sale_price && $product->price - $product->sale_price > 0)
+                                    <span class="product-bs__discount-label">
+                                        <span class="product-bs__discount-percent">SALE
+                                            {{ round((($product->price - $product->sale_price) * 100) / $product->price, 0) }}%</span>
+                                    </span>
+                                @endif
+                                <div class="product-bs">
+                                    <a
+                                        href='/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html'>
+
+                                        <div class="product-bs__container">
+                                            <div class="product-bs__wrap">
+                                                <div class="aspect aspect--bg-grey aspect--square u-d-block">
+                                                    @foreach ($product->images as $image)
+                                                        @if ($image->pin == 1)
+                                                            <img src="{{ asset($image->thumbnail) }}" class="aspect__img"
+                                                                alt="">
                                                         @endif
-                                                    </li>
-                                                </ul>
+                                                    @endforeach
+                                                </div>
                                             </div>
+
+                                            <span class="product-bs__category">{{ $product->category->name }}</span>
+                                            <span class="product-bs__name">{{ $product->name }}</span>
+                                            <div class="product-bs__rating gl-rating-style">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="far fa-star"></i>
+                                                <span class="product-bs__review">(23)</span>
+                                            </div>
+
+                                            <span class="product-bs__price">@convertCurrency($product->sale_price ?? $product->price)
+                                                @if ($product->sale_price)
+                                                    <span class="product-bs__discount">@convertCurrency($product->price)</span>
+                                                @endif
+                                            </span>
+
                                         </div>
-
-                                        <span class="product-o__category">
-
-                                            <a
-                                                href="/catalogsearch/result?brand_id={{ $product->brand->id }}">{{ $product->brand->name }}</a></span>
-
-                                        <span class="product-o__name">
-
-                                            <a
-                                                href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a></span>
-                                        <div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i
-                                                class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                                class="fas fa-star"></i><i class="fas fa-star"></i>
-
-                                            <span class="product-o__review">(20)</span>
-                                        </div>
-
-                                        <span class="product-o__price" style="color: #ff4500">@convertCurrency($product->sale_price ?? $product->price)
-
-                                            @if ($product->sale_price)
-                                                <span class="product-o__discount">@convertCurrency($product->price)
-                                                </span>
-                                            @endif
-                                        </span>
-                                    </div>
+                                    </a>
                                 </div>
-                            @endforeach
-                        @endif
+                            </div>
+                        @endforeach
                     </div>
+                    <div class="swiper-button-next"></div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection

@@ -99,9 +99,9 @@ class UserService
         try {
             $request->request->add(['updated_at' => now()]);
             $user->fill($request->input());
-            $user->save();
+            $status = $user->save();
 
-            return $user;
+            return $status;
         } catch (\Exception $e) {
             if ($e->getCode() != 0) {
                 if ($user->role->name == 'admin') {
@@ -160,9 +160,9 @@ class UserService
         try {
             $request->request->add(['updated_at' => now()]);
             $user->fill($request->input());
-            $user->save();
+            $status = $user->save();
 
-            return $user;
+            return $status;
         } catch (\Exception $e) {
             if ($e->getCode() != 0) {
                 throw new \Exception('Edit information failed');
@@ -181,12 +181,12 @@ class UserService
                 }
             }
 
-            $user->update([
+            $status = $user->update([
                 'password' => Hash::make($newPassword),
                 'updated_at' => now()
             ]);
 
-            return $user;
+            return $status;
         } catch (\Exception $e) {
             if ($e->getCode() != 0) {
                 throw new \Exception('Change password failed');

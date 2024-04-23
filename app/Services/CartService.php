@@ -56,12 +56,12 @@ class CartService
                 throw new \InvalidArgumentException('Not enough quantity available');
             }
 
-            $cart = $cart->update([
+            $status = $cart->update([
                 "quantity" => $quantity,
                 "updated_at" => now()
             ]);
 
-            return $cart;
+            return $status;
         } catch (\Exception $e) {
             if ($e->getCode() != 0) {
                 throw new \Exception("Update quantity failed");
