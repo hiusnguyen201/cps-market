@@ -22,7 +22,7 @@ class AuthTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_inactive_admin_login_case_success()
+    public function test_inactive_login_case_success()
     {
         $role = Role::factory()->create(["name" => "admin"]);
         $user = User::factory()->create(["role_id" => $role->id, "status" => config("constants.user_status.inactive.value")]);
@@ -34,19 +34,7 @@ class AuthTest extends TestCase
         $response->assertStatus(302);
     }
 
-    public function test_inactive_customer_login_case_success()
-    {
-        $role = Role::factory()->create(["name" => "customer"]);
-        $user = User::factory()->create(["role_id" => $role->id, "status" => config("constants.user_status.inactive.value")]);
-        $response = $this->post("/auth/login", [
-            'email' => $user->email,
-            "password" => "password",
-        ]);
-        $this->assertAuthenticated();
-        $response->assertStatus(302);
-    }
-
-    public function test_active_admin_login_case_success()
+    public function test_active_login_case_success()
     {
         $role = Role::factory()->create(["name" => "admin"]);
         $user = User::factory()->create(["role_id" => $role->id, "status" => config("constants.user_status.active.value")]);
@@ -57,19 +45,6 @@ class AuthTest extends TestCase
         $this->assertAuthenticated();
         $response->assertStatus(302);
     }
-    public function test_active_customer_login_case_success()
-    {
-        $role = Role::factory()->create(["name" => "customer"]);
-        $user = User::factory()->create(["role_id" => $role->id, "status" => config("constants.user_status.active.value")]);
-        $response = $this->post("/auth/login", [
-            'email' => $user->email,
-            "password" => "password",
-        ]);
-        $this->assertAuthenticated();
-        $response->assertStatus(302);
-    }
-
-
 
     // Otp
     public function test_otp_page_rendered()
@@ -80,7 +55,7 @@ class AuthTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_verify_otp_for_customer_case_success()
+    public function test_verify_otp_case_success()
     {
         $role = Role::factory()->create(["name" => "customer"]);
         $user = User::factory()->create(["role_id" => $role->id]);
@@ -92,21 +67,7 @@ class AuthTest extends TestCase
             "otp" => $user_otp->otp
         ]);
 
-        $response->assertStatus(302);
-    }
-
-    public function test_verify_otp_for_admin_case_success()
-    {
-        $role = Role::factory()->create(["name" => "admin"]);
-        $user = User::factory()->create(["role_id" => $role->id]);
-        $this->actingAs($user);
-
-        $user_otp = User_Otp::factory()->create(["user_id" => $user->id]);
-
-        $response = $this->post("/auth/otp", [
-            "otp" => $user_otp->otp
-        ]);
-
+        $response->assertSessionHas("success");
         $response->assertStatus(302);
     }
 

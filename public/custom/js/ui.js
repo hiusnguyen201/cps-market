@@ -32,3 +32,12 @@ if (
         formPaymentInfo.querySelector("input[name='payment_method']:checked")
     );
 }
+
+if (btnPlaceOrder) {
+    console.log(btnPlaceOrder);
+    btnPlaceOrder.addEventListener("click", (e) => {
+        formPaymentInfo.action = formPaymentInfo
+            .querySelector("input[name='payment_method']:checked")
+            .getAttribute("data");
+    });
+}
