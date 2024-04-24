@@ -30,6 +30,7 @@ class AuthController extends Controller
     public function localLogin()
     {
         $categories = $this->categoryService->findAll();
+
         return view('auth.login', [
             'title' => 'Login',
             'categories' => $categories

@@ -311,7 +311,6 @@
         <div class="section__content">
             <div class="container">
                 <div class="swiper">
-                    <div class="swiper-button-prev"></div>
                     <div class="swiper-wrapper">
                         @foreach ($similarProducts as $product)
                             <div class="swiper-slide">
@@ -360,6 +359,7 @@
                             </div>
                         @endforeach
                     </div>
+                    <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
                 </div>
             </div>
