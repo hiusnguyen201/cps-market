@@ -681,6 +681,10 @@
             return;
         }
 
+        if (window.location.href.contains("/auth/login")) {
+            return;
+        }
+
         const cartRequest = [
             $(`form[action='${window.location.origin}/cart']`),
             $(`a[href='${window.location.origin}/cart']`),

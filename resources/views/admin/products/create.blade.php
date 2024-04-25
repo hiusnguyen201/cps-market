@@ -156,7 +156,7 @@
             @method('POST')
 
             <div class="col-lg-6 col-12 mb-3 back-btn"><a class="btn btn-danger w-100 py-2"
-                    href="{{ url()->previous() }}">Back</a>
+                    href="/admin/products">Back</a>
             </div>
             <div class="col-lg-6 col-12 mb-3 keepon-btn"><button type="submit"
                     class="btn btn-success w-100 py-2">Create</button>

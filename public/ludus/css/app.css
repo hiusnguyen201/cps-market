@@ -2344,7 +2344,6 @@ input::-ms-clear {
 }
 
 #newsletter-modal .modal-body {
-    padding: 0;
     background-color: #fff;
     border-radius: 15px;
     display: flex;
