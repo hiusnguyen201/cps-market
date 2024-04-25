@@ -260,11 +260,17 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <div class="d-grid">
+                        <div class="row actions-block">
                             @csrf
                             @method('PATCH')
                             <input type="hidden" name="id" value="{{ $order->id }}">
-                            <button type="submit" class="btn btn-success w-100 py-2">Save</button>
+
+                            <div class="col-lg-6 col-12 mb-3 back-btn"><a class="btn btn-danger w-100 py-2"
+                                    href="/admin/orders">Back</a>
+                            </div>
+                            <div class="col-lg-6 col-12 mb-3 keepon-btn"><button type="submit"
+                                    class="btn btn-success w-100 py-2">Save</button>
+                            </div>
                         </div>
                     </div>
                 </div>

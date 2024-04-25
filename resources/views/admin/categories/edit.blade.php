@@ -22,11 +22,17 @@
                 </div>
             </div>
 
-            <div class="d-grid">
+            <div class="row actions-block">
                 @csrf
                 @method('PATCH')
                 <input type="hidden" name="id" value="{{ $category->id }}">
-                <button type="submit" class="btn btn-success py-2 w-100">Save</button>
+
+                <div class="col-lg-6 col-12 mb-3 back-btn"><a class="btn btn-danger w-100 py-2"
+                        href="/admin/categories">Back</a>
+                </div>
+                <div class="col-lg-6 col-12 mb-3 keepon-btn"><button type="submit"
+                        class="btn btn-success py-2 w-100">Save</button>
+                </div>
             </div>
         </form>
     </div>
