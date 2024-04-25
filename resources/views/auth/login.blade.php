@@ -51,7 +51,7 @@
 
                                     <div class="u-s-m-b-30">
 
-                                        <button class="btn btn--e-transparent-brand-b-2" style="width: 100%"
+                                        <button class="btn btn--e-brand-b-2" style="width: 100%"
                                             type="submit">LOGIN</button>
                                     </div>
 

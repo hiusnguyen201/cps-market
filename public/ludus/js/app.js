@@ -677,7 +677,62 @@
                     keyboard: false,
                     show: true,
                 });
-            }, 5000);
+            }, 50);
+            return;
+        }
+
+        const cartRequest = [
+            $(`form[action='${window.location.origin}/cart']`),
+            $(`a[href='${window.location.origin}/cart']`),
+        ];
+        if (cartRequest && cartRequest.length) {
+            cartRequest.forEach((element) => {
+                element.click((e) => {
+                    e.preventDefault();
+                    $("body").append(`
+                    <div class="modal fade new-l" id="newsletter-modal" style="padding: 0px">
+                        <div class="modal-dialog modal-dialog-centered" style="margin: auto;">
+                            <div class="modal-content modal--shadow">
+                                <button class="btn new-l__dismiss fas fa-times" type="button" data-dismiss="modal"></button>
+                                <div class="modal-body">
+                                    <div class="new-l__section u-s-m-y-20">
+                                        <div class="u-s-m-b-16 new-l--center">
+                                            <h3 class="new-l__h3" style="color:#ff4500">Member</h3>
+                                        </div>
+                                        <div class="u-s-m-b-24 new-l--center">
+                                            <p class="new-l__p1"
+                                                style="font-size: 15px;font-weight: 700;line-height: 20px;padding: 1px;color: #4a4a4a">
+                                                Please log in to your Member account to make payments more easily.
+                                            </p>
+                                        </div>
+                                        <div class="row u-s-m-x-0 l-f-o" style="border: none">
+                                            <div class="col-6 u-s-p-x-12">
+                                                <a href="/auth/register" style="display: block"
+                                                    class="btn btn--e-transparent-brand-b-2">Sign
+                                                    up</a>
+                                            </div>
+                                            <div class="col-6 u-s-p-x-12">
+                                                <a href="/auth/login" style="display: block" class="btn btn--e-brand-b-2">Sign
+                                                    in</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `);
+
+                    setTimeout(function () {
+                        // Manually opens a modal
+                        $("#newsletter-modal").modal({
+                            backdrop: "static",
+                            keyboard: false,
+                            show: true,
+                        });
+                    }, 50);
+                });
+            });
         }
     };
 

@@ -60,8 +60,45 @@
             </div>
         </form>
 
+        <table id="dataTable" name='products' class="display mb-3" style="width:100%">
+            <thead>
+                <tr>
+                    <th width='1%'></th>
+                    <th>Name</th>
+                    <th width="1%">
+                        <input type="checkbox" class="form-check-input" id="selectAll">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if ($products && count($products))
+                    @foreach ($products as $product)
+                        @php
+                            $imgSrc = null;
+                            foreach ($product->images as $image) {
+                                if ($image->pin) {
+                                    $imgSrc = asset($image->thumbnail);
+                                }
+                            }
+                        @endphp
+                        <tr data-row='{{ $product->id }}' data-child-name="Image|Code|Category|Price|Quantity|Sold"
+                            data-child-value="<img src='{{ $imgSrc }}' class='table-img d-block' alt='{{ $product->name }}'>|{{ $product->code }}|<a
+                                        href='/admin/categories/details/{{ $product->category->id }}'>{{ $product->category->name }}</a>|@convertCurrency($product->sale_price ?? $product->price)|{{ $product->quantity > 0 ? $product->quantity : 'Out of stock' }}|{{ $product->sold }}">
+                            <td></td>
+                            <td><a class="product-name"
+                                    href="/admin/products/details/{{ $product->id }}">{{ $product->name }}</a></td>
+                            <td>
+                                <input type="checkbox" class="form-check-input" style="margin-top: 10px" name="id"
+                                    value="{{ $product->id }}">
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+
         <div class="table-responsive mb-3">
-            <table class="home-table table table-hover">
+            <table id="normalTable" class="home-table table table-hover">
                 <thead>
                     <tr>
                         <th width='1%'>
@@ -72,7 +109,7 @@
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Sold</th>
-                        <th width='1%'>Operation</th>
+                        <th width='1%'>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,20 +122,20 @@
                                 </td>
                                 <td class="align-middle">
                                     <div class="row align-items-center">
-                                        <a href="/admin/products/details/{{ $product->id }}" class="mx-1">
-                                            @foreach ($product->images as $image)
-                                                @if ($image->pin)
-                                                    <img src="{{ asset($image->thumbnail) }}" class="float-left table-img"
-                                                        alt="">
-                                                @endif
-                                            @endforeach
-                                        </a>
-                                        <div class="row">
-                                            <div class="col-12"><a href="/admin/products/details/{{ $product->id }}"
-                                                    class="mx-1">{{ $product->name }}</a></div>
-                                            <div class="col-12">
-                                                {{ $product->code }}
-                                            </div>
+                                        <div class="col-lg-3">
+                                            <a href="/admin/products/details/{{ $product->id }}" class="mx-1">
+                                                @foreach ($product->images as $image)
+                                                    @if ($image->pin)
+                                                        <img src="{{ asset($image->thumbnail) }}"
+                                                            class="float-left table-img" alt="{{ $product->name }}">
+                                                    @endif
+                                                @endforeach
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <a href="/admin/products/details/{{ $product->id }}"
+                                                class="product-name">{{ $product->name }}</a>
+                                            <span class="d-block">Code: {{ $product->code }}</span>
                                         </div>
                                     </div>
                                 </td>
@@ -130,7 +167,8 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title">Warning!</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
                                         </div>

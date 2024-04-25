@@ -151,11 +151,11 @@ Route::middleware('check.notadmin')->group(function () {
     Route::get('/', [HomeController::class, 'home']);
     Route::get('/catalogsearch/result', [HomeController::class, 'search']);
     Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
+    Route::get('/cart', [CartController::class, 'home'])->name("cart.index");
 });
 
 Route::middleware(['check.auth', "check.customer", 'check.active_account'])->group(function () {
     Route::prefix('cart')->group(function () {
-        Route::get('/', [CartController::class, 'home'])->name("cart.index");
         Route::post('/', [CartController::class, 'handleCreate'])->name("cart.create");
         Route::patch('/', [CartController::class, 'handleUpdate'])->name("cart.update");
         Route::delete('/', [CartController::class, 'handleDelete'])->name("cart.delete");

@@ -55,8 +55,45 @@
             </div>
         </form>
 
+        <table id="dataTable" name='customers' class="display mb-3" style="width:100%">
+            <thead>
+                <tr>
+                    <th width='1%'></th>
+                    <th>Name</th>
+                    <th width="1%">
+                        <input type="checkbox" class="form-check-input" id="selectAll">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if ($users && count($users))
+                    @foreach ($users as $user)
+                        @php
+                            $userStatus = null;
+                            if (config('constants.user_status') && count(config('constants.user_status'))) {
+                                foreach (config('constants.user_status') as $status) {
+                                    if ($user->status == $status['value']) {
+                                        $userStatus = $status;
+                                    }
+                                }
+                            }
+                        @endphp
+                        <tr data-row='{{ $user->id }}' data-child-name="Email|Phone|Status"
+                            data-child-value="{{ $user->email }}|{{ $user->phone }}|<span class='{{ $userStatus['css'] }}'>{{ $userStatus['title'] }}</span>">
+                            <td></td>
+                            <td><a href="/admin/customers/details/{{ $user->id }}">{{ $user->name }}</a></td>
+                            <td>
+                                <input type="checkbox" class="form-check-input" style="margin-top: 10px" name="id"
+                                    value="{{ $user->id }}">
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+
         <div class="table-responsive mb-3">
-            <table class="home-table table table-hover">
+            <table id="normalTable" class="home-table table table-hover">
                 <thead>
                     <tr>
                         <th width="1%">
@@ -66,7 +103,7 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Status</th>
-                        <th width="1%">Operation</th>
+                        <th width="1%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,12 +111,13 @@
                         @foreach ($users as $user)
                             <tr>
                                 <td class="align-middle">
-                                    <input type="checkbox" class="form-check-input" name="id"
-                                        value="{{ $user->id }}">
+                                    @if (Auth::id() != $user->id)
+                                        <input type="checkbox" class="form-check-input" name="id"
+                                            value="{{ $user->id }}">
+                                    @endif
                                 </td>
                                 <td class="align-middle"><a
-                                        href="{{ route('admin.customers.details', [$user->id]) }}">{{ $user->name }}</a>
-                                </td>
+                                        href="/admin/users/details/{{ $user->id }}">{{ $user->name }}</a></td>
                                 <td class="align-middle">{{ $user->email }}</td>
                                 <td class="align-middle">{{ $user->phone }}</td>
                                 <td class="align-middle">
@@ -92,46 +130,52 @@
                                     @endif
                                 </td>
                                 <td class="text-center align-middle">
-                                    <a class="btn btn-warning" href="{{ route('admin.customers.edit', [$user->id]) }}">
-                                        <i class="fas fa-pen"></i>
-                                    </a>
-                                    <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
-                                        data-target="#modal-delete-{{ $user->id }}">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
+                                    @if (Auth::id() != $user->id)
+                                        <a class="btn btn-warning" href="/admin/users/edit/{{ $user->id }}">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-danger mt-2" data-toggle="modal"
+                                            data-target="#modal-delete-{{ $user->id }}">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    @endif
                                 </td>
                             </tr>
-                            <div class="modal fade" id="modal-delete-{{ $user->id }}" aria-modal="true" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Warning!</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Are you really want delete?</p>
-                                        </div>
-                                        <div class="modal-footer justify-content-between">
-                                            <button type="button" class="btn btn-default"
-                                                data-dismiss="modal">Close</button>
-                                            <form action="" method="POST">
-                                                <input type="hidden" name="id" value="{{ $user->id }}">
-                                                <button class="btn btn-primary" type="submit">Submit</button>
-                                                <input type="hidden" name="_method" value="delete">
-                                                @csrf
-                                            </form>
+
+                            @if (Auth::id() != $user->id)
+                                <div class="modal fade" id="modal-delete-{{ $user->id }}" aria-modal="true"
+                                    role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Warning!</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you really want delete?</p>
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">Close</button>
+                                                <form action="" method="POST">
+                                                    <input type="hidden" name="id" value="{{ $user->id }}">
+                                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                                    <input type="hidden" name="_method" value="delete">
+                                                    @csrf
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         @endforeach
                     @endif
                 </tbody>
             </table>
         </div>
-
         <!-- Paginate -->
         @if (count($users))
             <div class="d-flex ml-auto">

@@ -29,14 +29,16 @@ class CartController extends Controller
     {
         $categories = $this->categoryService->findAll();
 
-        [$countProductsInCart, $totalPrice] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
+        if (Auth::user()) {
+            [$countProductsInCart, $totalPrice] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
+        }
 
         return view("customer/carts/index", [
             'title' => "Cart",
-            'carts' => Auth::user()->carts,
+            'carts' => Auth::user() ? Auth::user()->carts : [],
             "categories" => $categories,
             "countProductsInCart" => $countProductsInCart ?? 0,
-            "totalPrice" => $totalPrice
+            "totalPrice" => $totalPrice ?? 0
         ]);
     }
 

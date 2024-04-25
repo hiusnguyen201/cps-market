@@ -13,8 +13,6 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Role;
 use App\Models\User;
-use App\Models\Wishlist;
-use App\Models\Cart;
 use App\Models\Specification;
 use App\Models\Order;
 use App\Models\Shipping_Address;

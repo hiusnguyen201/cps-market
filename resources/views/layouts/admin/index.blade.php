@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>{{ $title }} - {{ env('APP_NAME') }}</title>
-
+    <link rel="icon" href="{{ asset('images/Logo Icon.png') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
-
+    <link href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css" rel="stylesheet">
     <!-- select 2 -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
@@ -53,6 +53,7 @@
     <script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
     <!-- Toast js -->
     <script src="{{ asset('toastjs/toastify.js') }}"></script>
+    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
 
     <script>
         $("#selectAll").on("click", function() {
@@ -73,7 +74,97 @@
 
         $("select#brand[name='category[]']").select2();
 
-        $('.select2').select2()
+        $('.select2').select2();
+
+        var table = $('#dataTable').DataTable({
+            info: false,
+            ordering: false,
+            paging: false,
+            searching: false,
+            responsive: true,
+            columns: [{
+                    className: 'dt-control',
+                    orderable: false,
+                    data: null,
+                    defaultContent: ''
+                },
+                {
+                    data: ''
+                },
+                {
+                    data: 'name'
+                },
+            ],
+        });
+
+        if ($('#dataTable')) {
+            function isJsonString(str) {
+                try {
+                    JSON.parse(str);
+                } catch (e) {
+                    return false;
+                }
+                return true;
+            }
+
+            function format(rowId, name, value) {
+                var names = name.split("|");
+                var values = value.split("|");
+                var html = "";
+                names.forEach((name, index) => {
+                    html += `<div class='mb-3'><label>${name}:</label> ` +
+                        `<br /> ${values[index]}` +
+                        '</div>'
+                });
+
+                html += `
+                <div class='mb-3'>
+                    <label>Action:</label><br/>
+                    <a class="btn btn-warning mr-1" href="/admin/${$('#dataTable').attr("name")}/edit/${rowId}">
+                        <i class="fas fa-pen"></i>
+                    </a>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete-${rowId}">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            `;
+
+                return html;
+            }
+
+            $('#dataTable tbody').on('click', 'td.dt-control', function() {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                } else {
+                    // Open this row
+                    row.child(format(tr.attr('data-row'), tr.attr('data-child-name'), tr.attr(
+                            'data-child-value')))
+                        .show();
+                }
+            });
+        }
+
+        if ($(document).width() <= 1024) {
+            $("#normalTable").hide();
+            $("#dataTable").show();
+        } else {
+            $("#dataTable").hide();
+            $("#normalTable").show();
+        }
+
+        $(window).resize(function() {
+            if ($(document).width() <= 1024) {
+                $("#normalTable").hide();
+                $("#dataTable").show();
+            } else {
+                $("#dataTable").hide();
+                $("#normalTable").show();
+            }
+        });
     </script>
 
     <script src="{{ asset('custom/js/message.js') }}"></script>

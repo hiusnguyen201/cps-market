@@ -24,46 +24,54 @@
     <div class="row">
         <div class="col-lg-3 col-6">
             <div class="small-box bg-info">
-                <div class="inner pt-4 pb-3 px-2">
-                    <h3 style="font-size: 1.4rem">{{ $newOrders }}</h3>
-                    <p>New Orders</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-bag"></i>
-                </div>
+                <a href="/admin/orders">
+                    <div class="inner pt-4 pb-3 px-2">
+                        <h3 style="font-size: 1.4rem">{{ $newOrders }}</h3>
+                        <p>New Orders</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                </a>
             </div>
         </div>
         <div class="col-lg-3 col-6">
             <div class="small-box bg-success">
-                <div class="inner pt-4 pb-3 px-2">
-                    <h3 style="font-size: 1.4rem">@convertCurrency($totalIncome)</h3>
-                    <p>Total Income</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
-                </div>
+                <a href="/admin/products">
+                    <div class="inner pt-4 pb-3 px-2">
+                        <h3 style="font-size: 1.4rem">@convertCurrency($totalIncome)</h3>
+                        <p>Total Income</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                </a>
             </div>
         </div>
         <div class="col-lg-3 col-6">
             <div class="small-box bg-danger">
-                <div class="inner pt-4 pb-3 px-2">
-                    <h3 style="font-size: 1.4rem">@convertCurrency($totalExpense)</h3>
-                    <p>Total Expense</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                </div>
+                <a href="/admin/products">
+                    <div class="inner pt-4 pb-3 px-2">
+                        <h3 style="font-size: 1.4rem">@convertCurrency($totalExpense)</h3>
+                        <p>Total Expense</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                </a>
             </div>
         </div>
         <div class="col-lg-3 col-6">
             <div class="small-box bg-warning">
-                <div class="inner pt-4 pb-3 px-2">
-                    <h3 style="font-size: 1.4rem">{{ $newCustomers }}</h3>
-                    <p>New Customers</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-person-add"></i>
-                </div>
+                <a href="/admin/customers">
+                    <div class="inner pt-4 pb-3 px-2">
+                        <h3 style="font-size: 1.4rem">{{ $newCustomers }}</h3>
+                        <p>New Customers</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -296,7 +304,7 @@
             <!-- /.card -->
 
             <!-- TO DO List -->
-            <div class="card">
+            <div hidden class="card">
                 <div class="card-header ui-sortable-handle" style="cursor: move;">
                     <h3 class="card-title">
                         <i class="ion ion-clipboard mr-1"></i>

@@ -215,7 +215,7 @@
                                                     @endforeach
 
                                                     <div class="product-m__add-cart">
-                                                        <form method="POST" action="/cart">
+                                                        <form method="POST" action="{{ route('cart.create') }}">
                                                             @csrf
                                                             <input type="hidden" name="product_id"
                                                                 value="{{ $product->id }}">
@@ -231,11 +231,11 @@
                                                         <a
                                                             href="/catalogsearch/result?brand_id={{ $product->brand->id }}">{{ $product->brand->name }}</a>
                                                     </div>
-                                                    <div class="product-m__name">
+                                                    <div class="product-m__name u-s-m-b-10">
                                                         <a
                                                             href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a>
                                                     </div>
-                                                    <div class="product-m__rating gl-rating-style"><i
+                                                    <div hidden class="product-m__rating gl-rating-style"><i
                                                             class="fas fa-star"></i><i class="fas fa-star"></i><i
                                                             class="fas fa-star-half-alt"></i><i class="far fa-star"></i><i
                                                             class="far fa-star"></i>

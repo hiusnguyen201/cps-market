@@ -6,7 +6,7 @@
     <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{{ $title }} - {{ env('APP_NAME') }}</title>
-
+    <link rel="icon" href="{{ asset('images/Logo Icon.png') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
 
@@ -31,22 +31,21 @@
 </head>
 
 <body class="config">
-    <div id="app">
-        @php
-            setlocale(LC_MONETARY, 'vi_VN');
-        @endphp
-        <!--====== Main Header ======-->
-        @include('layouts.customer.parts.navbar')
+    @php
+        setlocale(LC_MONETARY, 'vi_VN');
+    @endphp
 
-        <!--====== App Content ======-->
-        <div class="app-content">
-            @yield('content')
-        </div>
-        <!--====== End - App Content ======-->
+    <!--====== Main Header ======-->
+    @include('layouts.customer.parts.navbar')
 
-        <!--====== Main Footer ======-->
-        @include('layouts.customer.parts.footer')
+    <!--====== App Content ======-->
+    <div class="app-content">
+        @yield('content')
     </div>
+    <!--====== End - App Content ======-->
+
+    <!--====== Main Footer ======-->
+    @include('layouts.customer.parts.footer')
 
     <!--====== Vendor Js ======-->
     <script src="{{ asset('ludus/js/vendor.js') }}"></script>

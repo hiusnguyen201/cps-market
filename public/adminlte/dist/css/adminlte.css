@@ -6001,6 +6001,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 
 .modal-open {
   overflow: hidden;
+  padding: 0;
 }
 
 .modal-open .modal {
@@ -6023,7 +6024,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 .modal-dialog {
   position: relative;
   width: auto;
-  margin: 0.5rem;
+  padding: 0.5rem;
   pointer-events: none;
 }
 
@@ -6125,7 +6126,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1040;
+  z-index: 999998;
   width: 100vw;
   height: 100vh;
   background-color: #000;

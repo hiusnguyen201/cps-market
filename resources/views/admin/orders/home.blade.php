@@ -62,8 +62,46 @@
             </div>
         </form>
 
+        <table id="dataTable" name='orders' class="display mb-3" style="width:100%">
+            <thead>
+                <tr>
+                    <th width='1%'></th>
+                    <th>Code</th>
+                    <th width="1%">
+                        <input type="checkbox" class="form-check-input" id="selectAll">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if ($orders && count($orders))
+                    @foreach ($orders as $order)
+                        @php
+                            $orderStatus = null;
+                            if (config('constants.order_status') && count(config('constants.order_status'))) {
+                                foreach (config('constants.order_status') as $status) {
+                                    if ($order->status == $status['value']) {
+                                        $orderStatus = $status;
+                                    }
+                                }
+                            }
+                        @endphp
+                        <tr data-row='{{ $order->id }}' data-child-name="Date|Customer|Quantity|Price|Status"
+                            data-child-value="{{ date(config('constants.date_format'), strtotime($order->created_at)) }}|<a
+                                        href='/admin/customers/details/{{ $order->customer->id }}'>{{ $order->customer->name }}</a>|{{ $order->quantity }}|@convertCurrency($order->total)|<span class='{{ $orderStatus['css'] }}'>{{ $orderStatus['title'] }}</span>">
+                            <td></td>
+                            <td><a href="/admin/orders/details/{{ $order->id }}">{{ $order->code }}</a></td>
+                            <td>
+                                <input type="checkbox" class="form-check-input" style="margin-top: 10px" name="id"
+                                    value="{{ $order->id }}">
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+
         <div class="table-responsive mb-3">
-            <table class="home-table table table-hover">
+            <table id="normalTable" class="home-table table table-hover">
                 <thead>
                     <tr>
                         <th width='1%'>
@@ -75,7 +113,7 @@
                         <th>Quantity</th>
                         <th>Price</th>
                         <th>Status</th>
-                        <th width='1%'>Operation</th>
+                        <th width='1%'>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,7 +130,7 @@
                                 <td class="align-middle">
                                     {{ date(config('constants.date_format'), strtotime($order->created_at)) }}</td>
                                 <td class="align-middle"><a
-                                        href="{{ route('admin.customers.details', [$order->customer->id]) }}">{{ $order->customer->name }}</a>
+                                        href="/admin/customers/details/{{ $order->customer->id }}">{{ $order->customer->name }}</a>
                                 </td>
                                 <td class="align-middle">{{ $order->quantity }}</td>
                                 <td class="align-middle">@convertCurrency($order->total)</td>

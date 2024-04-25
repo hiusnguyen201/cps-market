@@ -40,8 +40,8 @@
                                     </div>
 
                                     <div class="u-s-m-b-30">
-                                        <button class="btn btn--e-transparent-brand-b-2" style="width: 100%"
-                                            type="submit">Reset Password</button>
+                                        <button class="btn btn--e-brand-b-2" style="width: 100%" type="submit">Reset
+                                            Password</button>
                                     </div>
                                 </form>
                             </div>

@@ -54,7 +54,7 @@
                             <input type="checkbox" class="form-check-input" id="selectAll">
                         </th>
                         <th>Name</th>
-                        <th width='1%'>Operation</th>
+                        <th width='1%'>Action</th>
                     </tr>
                 </thead>
                 <tbody>

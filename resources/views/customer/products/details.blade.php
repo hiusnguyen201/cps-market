@@ -108,7 +108,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="u-s-m-b-15">
+                        <div hidden class="u-s-m-b-15">
                             <div class="pd-detail__rating gl-rating-style"><i class="fas fa-star"></i><i
                                     class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
                                     class="fas fa-star-half-alt"></i>
@@ -161,7 +161,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="u-s-m-b-15">
+                        <div hidden class="u-s-m-b-15">
                             <div class="pd-detail__inline">
 
                                 <span class="pd-detail__click-wrap"><i class="far fa-envelope u-s-m-r-6"></i>
@@ -337,8 +337,8 @@
                                             </div>
 
                                             <span class="product-bs__category">{{ $product->category->name }}</span>
-                                            <span class="product-bs__name">{{ $product->name }}</span>
-                                            <div class="product-bs__rating gl-rating-style">
+                                            <span class="product-bs__name u-s-m-b-10">{{ $product->name }}</span>
+                                            <div hidden class="product-bs__rating gl-rating-style">
                                                 <i class="fas fa-star"></i>
                                                 <i class="fas fa-star"></i>
                                                 <i class="fas fa-star"></i>

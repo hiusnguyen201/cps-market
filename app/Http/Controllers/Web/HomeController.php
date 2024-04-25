@@ -31,6 +31,10 @@ class HomeController extends Controller
 
     public function home()
     {
+        if (Auth::user() && Auth::user()->status = config("constants.user_status.inactive")) {
+            return redirect("/auth/otp");
+        }
+
         $sections = [];
         $categories = $this->categoryService->findAll();
 
@@ -64,6 +68,10 @@ class HomeController extends Controller
 
     public function details($categorySlug, $brandSlug, $productSlug)
     {
+        if (Auth::user() && Auth::user()->status = config("constants.user_status.inactive")) {
+            return redirect("/auth/otp");
+        }
+
         $product = $this->productService->findOneBySlug($productSlug);
         if (!$product) {
             return \abort(404);
@@ -90,6 +98,10 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
+        if (Auth::user() && Auth::user()->status = config("constants.user_status.inactive")) {
+            return redirect("/auth/otp");
+        }
+
         $categories = $this->categoryService->findAll();
         $brands = $this->brandService->findAll();
         $products = $this->productService->searchProductWithFilterInCustomer($request);

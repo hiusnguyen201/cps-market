@@ -20,7 +20,6 @@ class CustomerTest extends TestCase
 {
     use RefreshDatabase;
 
-    // Login
     public function test_home_page_rendered()
     {
         $response = $this->get('/');

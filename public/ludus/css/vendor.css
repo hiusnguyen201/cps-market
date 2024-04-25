@@ -5281,11 +5281,16 @@ template {
 }
 .modal-open {
     overflow: hidden;
+    padding: 0px !important;
 }
 .modal-open .modal {
     overflow-x: hidden;
-    overflow-y: auto;
 }
+
+#newsletter-modal {
+    padding: 0px !important;
+}
+
 .modal {
     position: fixed;
     top: 0;
@@ -5300,7 +5305,7 @@ template {
 .modal-dialog {
     position: relative;
     width: auto;
-    margin: 0.5rem;
+    padding: 0.5rem;
     pointer-events: none;
 }
 .modal.fade .modal-dialog {
@@ -5341,7 +5346,7 @@ template {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1040;
+    z-index: 999998;
     width: 100vw;
     height: 100vh;
     background-color: #000;

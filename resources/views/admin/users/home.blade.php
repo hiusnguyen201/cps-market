@@ -58,8 +58,45 @@
             </div>
         </form>
 
+        <table id="dataTable" name='users' class="display mb-3" style="width:100%">
+            <thead>
+                <tr>
+                    <th width='1%'></th>
+                    <th>Name</th>
+                    <th width="1%">
+                        <input type="checkbox" class="form-check-input" id="selectAll">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if ($users && count($users))
+                    @foreach ($users as $user)
+                        @php
+                            $userStatus = null;
+                            if (config('constants.user_status') && count(config('constants.user_status'))) {
+                                foreach (config('constants.user_status') as $status) {
+                                    if ($user->status == $status['value']) {
+                                        $userStatus = $status;
+                                    }
+                                }
+                            }
+                        @endphp
+                        <tr data-row='{{ $user->id }}' data-child-name="Email|Phone|Status"
+                            data-child-value="{{ $user->email }}|{{ $user->phone }}|<span class='{{ $userStatus['css'] }}'>{{ $userStatus['title'] }}</span>">
+                            <td></td>
+                            <td><a href="/admin/users/details/{{ $user->id }}">{{ $user->name }}</a></td>
+                            <td>
+                                <input type="checkbox" class="form-check-input" style="margin-top: 10px" name="id"
+                                    value="{{ $user->id }}">
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+
         <div class="table-responsive mb-3">
-            <table class="home-table table table-hover">
+            <table id="normalTable" class="home-table table table-hover">
                 <thead>
                     <tr>
                         <th width="1%">
@@ -69,7 +106,7 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Status</th>
-                        <th width="1%">Operation</th>
+                        <th width="1%">Action</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -5,6 +5,7 @@
 @if (session('error'))
     <input hidden type="text" name="message-error" value="{{ session('error') }}">
 @endif
+
 @section('content')
     <div class="s-skeleton s-skeleton--h-640 s-skeleton--bg-grey">
         <div class="owl-carousel primary-style-3" id="hero-slider">
@@ -14,18 +15,6 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="slider-content slider-content--animation">
-
-                                    <span class="content-span-1 u-c-white">Update Your Fashion</span>
-
-                                    <span class="content-span-2 u-c-white">10% Discount on Outwear</span>
-
-                                    <span class="content-span-3 u-c-white">Find outwear on best prices</span>
-
-                                    <span class="content-span-4 u-c-white">Starting At
-
-                                        <span class="u-c-brand">$100.00</span></span>
-
-                                    <a class="shop-now-link btn--e-brand" href="/catalogsearch/result">SHOP NOW</a>
                                 </div>
                             </div>
                         </div>
@@ -38,18 +27,6 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="slider-content slider-content--animation">
-
-                                    <span class="content-span-1 u-c-white">Open Your Eyes</span>
-
-                                    <span class="content-span-2 u-c-white">10% Off On Intimates</span>
-
-                                    <span class="content-span-3 u-c-white">Find intimates on best prices</span>
-
-                                    <span class="content-span-4 u-c-white">Starting At
-
-                                        <span class="u-c-brand">$100.00</span></span>
-
-                                    <a class="shop-now-link btn--e-brand" href="/catalogsearch/result">SHOP NOW</a>
                                 </div>
                             </div>
                         </div>
@@ -62,18 +39,6 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="slider-content slider-content--animation">
-
-                                    <span class="content-span-1 u-c-white">Find Top Brands</span>
-
-                                    <span class="content-span-2 u-c-white">10% Off On Outwear</span>
-
-                                    <span class="content-span-3 u-c-white">Find outwear on best prices</span>
-
-                                    <span class="content-span-4 u-c-white">Starting At
-
-                                        <span class="u-c-brand">$100.00</span></span>
-
-                                    <a class="shop-now-link btn--e-brand" href="/catalogsearch/result">SHOP NOW</a>
                                 </div>
                             </div>
                         </div>
@@ -172,10 +137,9 @@
                                                         </div>
                                                     </div>
 
-                                                    <span
-                                                        class="product-bs__category">{{ $product->category->name }}</span>
-                                                    <span class="product-bs__name">{{ $product->name }}</span>
-                                                    <div class="product-bs__rating gl-rating-style">
+                                                    <span class="product-bs__category">{{ $product->category->name }}</span>
+                                                    <span class="product-bs__name u-s-m-b-10">{{ $product->name }}</span>
+                                                    <div hidden class="product-bs__rating gl-rating-style">
                                                         <i class="fas fa-star"></i>
                                                         <i class="fas fa-star"></i>
                                                         <i class="fas fa-star"></i>
@@ -205,133 +169,133 @@
     @endforeach
 
 
-    <section class="">
-        <div class="section__content u-s-p-y-60">
-            <section class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
-                        <div class="column-product">
-                            <span class="column-product__title u-c-secondary u-s-m-b-25">BEST WEEKLY
-                                PRODUCTS</span>
-                            <ul class="column-product__list">
-                                @foreach ($sections9W as $product)
-                                    <li class="column-product__item">
-                                        <div class="product-l">
-                                            <div class="product-l__img-wrap">
-                                                <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                    href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">
+    <div class="section__content u-s-p-y-60">
+        <section class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
+                    <div class="column-product">
+                        <span class="column-product__title u-c-secondary u-s-m-b-25">BEST WEEKLY
+                            PRODUCTS</span>
+                        <ul class="column-product__list">
+                            @foreach ($sections9W as $product)
+                                <li class="column-product__item">
+                                    <div class="product-l">
+                                        <div class="product-l__img-wrap">
+                                            <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
+                                                href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">
 
-                                                    @foreach ($product->images as $image)
-                                                        @if ($image->pin == 1)
-                                                            <img src="{{ asset($image->thumbnail) }}" class="aspect__img"
-                                                                alt="">
-                                                        @endif
-                                                    @endforeach
-                                                </a>
-                                            </div>
-                                            <div class="product-l__info-wrap">
-                                                <span class="product-l__category"><a
-                                                        href="/catalogsearch/result?category_id={{ $product->category->id }}">{{ $product->category->name }}</a>
-                                                </span>
-
-                                                <span class="product-l__name">
-
-                                                    <a
-                                                        href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a></span>
-
-                                                <span class="product-l__price">@convertCurrency($product->sale_price ?? $product->price)
-                                                    @if ($product->sale_price)
-                                                        <span class="product-bs__discount">@convertCurrency($product->price)</span>
+                                                @foreach ($product->images as $image)
+                                                    @if ($image->pin == 1)
+                                                        <img src="{{ asset($image->thumbnail) }}" class="aspect__img"
+                                                            alt="">
                                                     @endif
-                                                </span>
-                                            </div>
+                                                @endforeach
+                                            </a>
                                         </div>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
-                        <div class="column-product">
+                                        <div class="product-l__info-wrap">
+                                            <span class="product-l__category"><a
+                                                    href="/catalogsearch/result?category_id={{ $product->category->id }}">{{ $product->category->name }}</a>
+                                            </span>
 
-                            <span class="column-product__title u-c-secondary u-s-m-b-25">BEST MONTHLY
-                                PRODUCTS</span>
-                            <ul class="column-product__list">
-                                @foreach ($sections9M as $product)
-                                    <li class="column-product__item">
-                                        <div class="product-l">
-                                            <div class="product-l__img-wrap">
+                                            <span class="product-l__name">
 
-                                                <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                    href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">
+                                                <a
+                                                    href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a></span>
 
-                                                    @foreach ($product->images as $image)
-                                                        @if ($image->pin == 1)
-                                                            <img src="{{ asset($image->thumbnail) }}" class="aspect__img"
-                                                                alt="">
-                                                        @endif
-                                                    @endforeach
-                                                </a>
-                                            </div>
-                                            <div class="product-l__info-wrap">
-                                                <span class="product-l__category"><a
-                                                        href="/catalogsearch/result?category_id={{ $product->category->id }}">{{ $product->category->name }}</a>
-                                                </span>
-                                                <span class="product-l__name">
-                                                    <a
-                                                        href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a></span>
-                                                <span class="product-l__price">@convertCurrency($product->sale_price ?? $product->price)
-                                                    @if ($product->sale_price)
-                                                        <span class="product-bs__discount">@convertCurrency($product->price)</span>
-                                                    @endif
-                                                </span>
-                                            </div>
+                                            <span class="product-l__price">@convertCurrency($product->sale_price ?? $product->price)
+                                                @if ($product->sale_price)
+                                                    <span class="product-bs__discount">@convertCurrency($product->price)</span>
+                                                @endif
+                                            </span>
                                         </div>
-                                    </li>
-                                @endforeach
-
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
-                        <div class="column-product">
-                            <span class="column-product__title u-c-secondary u-s-m-b-25">BEST YEARLY
-                                PRODUCTS</span>
-                            <ul class="column-product__list">
-                                @foreach ($sections9Y as $product)
-                                    <li class="column-product__item">
-                                        <div class="product-l">
-                                            <div class="product-l__img-wrap">
-                                                <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                    href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">
-                                                    @foreach ($product->images as $image)
-                                                        @if ($image->pin == 1)
-                                                            <img src="{{ asset($image->thumbnail) }}" class="aspect__img"
-                                                                alt="">
-                                                        @endif
-                                                    @endforeach
-                                                </a>
-                                            </div>
-                                            <div class="product-l__info-wrap">
-                                                <span class="product-l__category">
-                                                    <a
-                                                        href="/catalogsearch/result?category_id={{ $product->category->id }}">{{ $product->category->name }}</a></span>
-                                                <span class="product-l__name">
-                                                    <a
-                                                        href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a>
-                                                </span>
-                                                <span class="product-l__price">@convertCurrency($product->sale_price ?? $product->price)
-                                                    @if ($product->sale_price)
-                                                        <span class="product-bs__discount">@convertCurrency($product->price)</span>
-                                                    @endif
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
-            </section>
-        @endsection
+                <div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
+                    <div class="column-product">
+
+                        <span class="column-product__title u-c-secondary u-s-m-b-25">BEST MONTHLY
+                            PRODUCTS</span>
+                        <ul class="column-product__list">
+                            @foreach ($sections9M as $product)
+                                <li class="column-product__item">
+                                    <div class="product-l">
+                                        <div class="product-l__img-wrap">
+
+                                            <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
+                                                href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">
+
+                                                @foreach ($product->images as $image)
+                                                    @if ($image->pin == 1)
+                                                        <img src="{{ asset($image->thumbnail) }}" class="aspect__img"
+                                                            alt="">
+                                                    @endif
+                                                @endforeach
+                                            </a>
+                                        </div>
+                                        <div class="product-l__info-wrap">
+                                            <span class="product-l__category"><a
+                                                    href="/catalogsearch/result?category_id={{ $product->category->id }}">{{ $product->category->name }}</a>
+                                            </span>
+                                            <span class="product-l__name">
+                                                <a
+                                                    href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a></span>
+                                            <span class="product-l__price">@convertCurrency($product->sale_price ?? $product->price)
+                                                @if ($product->sale_price)
+                                                    <span class="product-bs__discount">@convertCurrency($product->price)</span>
+                                                @endif
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 u-s-m-b-30">
+                    <div class="column-product">
+                        <span class="column-product__title u-c-secondary u-s-m-b-25">BEST YEARLY
+                            PRODUCTS</span>
+                        <ul class="column-product__list">
+                            @foreach ($sections9Y as $product)
+                                <li class="column-product__item">
+                                    <div class="product-l">
+                                        <div class="product-l__img-wrap">
+                                            <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
+                                                href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">
+                                                @foreach ($product->images as $image)
+                                                    @if ($image->pin == 1)
+                                                        <img src="{{ asset($image->thumbnail) }}" class="aspect__img"
+                                                            alt="">
+                                                    @endif
+                                                @endforeach
+                                            </a>
+                                        </div>
+                                        <div class="product-l__info-wrap">
+                                            <span class="product-l__category">
+                                                <a
+                                                    href="/catalogsearch/result?category_id={{ $product->category->id }}">{{ $product->category->name }}</a></span>
+                                            <span class="product-l__name">
+                                                <a
+                                                    href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a>
+                                            </span>
+                                            <span class="product-l__price">@convertCurrency($product->sale_price ?? $product->price)
+                                                @if ($product->sale_price)
+                                                    <span class="product-bs__discount">@convertCurrency($product->price)</span>
+                                                @endif
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+@endsection

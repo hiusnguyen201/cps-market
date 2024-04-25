@@ -77,7 +77,7 @@
                                     </th>
                                     <th width='25%'>Name</th>
                                     <th>Attribute</th>
-                                    <th width='1%'>Operation</th>
+                                    <th width='1%'>Action</th>
                                 </tr>
                             </thead>
                             <tbody>

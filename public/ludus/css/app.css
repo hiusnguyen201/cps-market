@@ -706,6 +706,12 @@ body {
     margin-right: 0;
 }
 
+@media (max-width: 324px) {
+    .primary-nav {
+        gap: 10px !important;
+    }
+}
+
 @media (max-width: 575px) {
     .gl-inline {
         display: block;
@@ -1240,7 +1246,7 @@ input::-ms-clear {
     position: absolute;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 /* Product Component */
@@ -2334,11 +2340,19 @@ input::-ms-clear {
 
 #newsletter-modal .modal-dialog {
     width: 100%;
-    max-width: 800px;
+    max-width: 350px;
 }
 
 #newsletter-modal .modal-body {
     padding: 0;
+    background-color: #fff;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 350px;
+    padding: 15px;
+    text-align: center;
 }
 
 #newsletter-modal .new-l__dismiss {
@@ -2484,8 +2498,9 @@ input::-ms-clear {
     position: relative;
     height: 80px;
     width: 100%;
+    gap: 30px;
     -ms-flex-pack: justify;
-    justify-content: space-between;
+    justify-content: center;
     -ms-flex-align: center;
     align-items: center;
 }
@@ -7005,6 +7020,15 @@ input::-ms-clear {
     .menu-init .fa-angle-down:before {
         content: none;
     }
+
+    .mega-block {
+        display: none !important;
+    }
+
+    .mega-menu {
+        display: block !important;
+    }
+
     .menu-init.js-open .ah-lg-mode {
         left: 0;
         transition: all 0.4s ease-in-out;
@@ -7029,6 +7053,9 @@ input::-ms-clear {
         background-color: #ffffff;
         z-index: 20000;
         overflow-y: auto;
+    }
+    .main-logo {
+        display: none;
     }
     .ah-close {
         color: #333333;

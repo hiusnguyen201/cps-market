@@ -37,6 +37,14 @@
     border: 1px solid #ccc;
 }
 
+.product-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
 .home-table td {
     border: 0;
 }

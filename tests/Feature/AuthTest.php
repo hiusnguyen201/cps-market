@@ -22,10 +22,10 @@ class AuthTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_inactive_login_case_success()
+    public function test_active_login_case_success_with_role_admin()
     {
         $role = Role::factory()->create(["name" => "admin"]);
-        $user = User::factory()->create(["role_id" => $role->id, "status" => config("constants.user_status.inactive.value")]);
+        $user = User::factory()->create(["role_id" => $role->id, "status" => config("constants.user_status.active.value")]);
         $response = $this->post("/auth/login", [
             'email' => $user->email,
             "password" => "password",
@@ -34,9 +34,9 @@ class AuthTest extends TestCase
         $response->assertStatus(302);
     }
 
-    public function test_active_login_case_success()
+    public function test_active_login_case_success_with_role_customer()
     {
-        $role = Role::factory()->create(["name" => "admin"]);
+        $role = Role::factory()->create(["name" => "customer"]);
         $user = User::factory()->create(["role_id" => $role->id, "status" => config("constants.user_status.active.value")]);
         $response = $this->post("/auth/login", [
             'email' => $user->email,

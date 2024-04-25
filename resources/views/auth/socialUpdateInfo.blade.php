@@ -57,7 +57,7 @@
 
                                     <div class="gl-inline">
                                         <div class="u-s-m-b-30">
-                                            <button class="btn btn--e-transparent-brand-b-2" style="width: 100%"
+                                            <button class="btn btn--e-brand-b-2" style="width: 100%"
                                                 type="submit">Confirm</button>
                                         </div>
                                     </div>
@@ -69,6 +69,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 @endsection

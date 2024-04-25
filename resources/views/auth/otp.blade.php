@@ -14,11 +14,10 @@
                     <div class="col-lg-6 col-md-8">
                         <div class="l-f-o">
                             <div class="l-f-o__pad-box">
-                                <div class="section__text-wrap u-s-m-b-30">
-                                    <h1 class="section__heading u-c-secondary">VERIFY OTP</h1>
-                                </div>
-
                                 <form class="l-f-o__form" method="POST">
+                                    <div class="section__text-wrap u-s-m-b-30">
+                                        <h1 class="section__heading u-c-secondary">VERIFY OTP</h1>
+                                    </div>
                                     <div class="u-s-m-b-30">
                                         <label class="gl-label" for="otp">OTP *</label>
                                         <input class="input-text input-text--primary-style" type="text" id="otp"
@@ -35,10 +34,13 @@
                                         </div>
                                     </div>
                                     <div class="u-s-m-b-30">
-                                        <button class="btn btn--e-transparent-brand-b-2" style="width: 100%"
+                                        <button class="btn btn--e-brand-b-2" style="width: 100%"
                                             type="submit">SUBMIT</button>
                                     </div>
-
+                                    <div class="u-s-m-b-30">
+                                        <a href="/auth/logout" style="display: block; text-align:center"
+                                            class="btn btn--e-transparent-brand-b-2">LOGOUT</a>
+                                    </div>
                                     @csrf
                                 </form>
                             </div>
