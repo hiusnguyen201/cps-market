@@ -72,7 +72,7 @@
                                     <div class="dash__table-img-wrap">
                                         @foreach ($order->orders_products[0]->product->images as $image)
                                             @if ($image->pin == 1)
-                                                <a href="/member/order/{{ $order->id }}">
+                                                <a href="/member/orders/{{ $order->id }}">
                                                     <img class="u-img-fluid" style="height: 100%; object-fit: contain;"
                                                         src="{{ asset($image->thumbnail) }}"
                                                         alt="{{ $order->orders_products[0]->product->name }}">

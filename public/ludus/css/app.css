@@ -8039,6 +8039,9 @@ input::-ms-clear {
 --------------------------------------------------------------*/
 /* ScrollUp Custom */
 #topScroll {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     right: 24px;
     bottom: 60px;
     width: 50px;
