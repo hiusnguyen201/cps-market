@@ -61,6 +61,20 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
+                                                    <td>Payment Status</td>
+                                                    <td>
+                                                        <span>
+                                                            @if (config('constants.payment_status') && count(config('constants.payment_status')))
+                                                                @foreach (config('constants.payment_status') as $method)
+                                                                    @if ($order->payment_status == $method['value'])
+                                                                        <span>{{ $method['title'] }}</span>
+                                                                    @endif
+                                                                @endforeach
+                                                            @endif
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
                                                     <td>Grand Total</td>
                                                     <td><span>@convertCurrency($order->total)</span>
                                                     </td>
