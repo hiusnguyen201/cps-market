@@ -677,7 +677,7 @@
                     keyboard: false,
                     show: true,
                 });
-            }, 50);
+            }, 1);
             return;
         }
 
