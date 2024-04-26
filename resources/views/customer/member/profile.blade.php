@@ -37,7 +37,7 @@
                     <span class="dash__text">
                         @if (config('constants.genders') && count(config('constants.genders')))
                             @foreach (config('constants.genders') as $gender)
-                                @if (Auth::user()->id == $gender['value'])
+                                @if (Auth::user()->gender == $gender['value'])
                                     {{ $gender['title'] }}
                                 @endif
                             @endforeach
