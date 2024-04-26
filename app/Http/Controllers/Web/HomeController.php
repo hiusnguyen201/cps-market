@@ -31,7 +31,7 @@ class HomeController extends Controller
 
     public function home()
     {
-        if (Auth::user() && Auth::user()->status = config("constants.user_status.inactive")) {
+        if (Auth::user() && Auth::user()->status == config("constants.user_status.inactive")) {
             return redirect("/auth/otp");
         }
 
@@ -68,7 +68,7 @@ class HomeController extends Controller
 
     public function details($categorySlug, $brandSlug, $productSlug)
     {
-        if (Auth::user() && Auth::user()->status = config("constants.user_status.inactive")) {
+        if (Auth::user() && Auth::user()->status == config("constants.user_status.inactive")) {
             return redirect("/auth/otp");
         }
 
@@ -98,7 +98,7 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
-        if (Auth::user() && Auth::user()->status = config("constants.user_status.inactive")) {
+        if (Auth::user() && Auth::user()->status == config("constants.user_status.inactive")) {
             return redirect("/auth/otp");
         }
 
