@@ -67,7 +67,7 @@
                                                                                     @foreach ($category->brands as $brand)
                                                                                         <li>
                                                                                             <a
-                                                                                                href="/catalogsearch/result?brand_id={{ $category->id }}">{{ $brand->name }}</a>
+                                                                                                href="/catalogsearch/result?brand_id={{ $brand->id }}">{{ $brand->name }}</a>
                                                                                         </li>
                                                                                     @endforeach
                                                                                 @endif
