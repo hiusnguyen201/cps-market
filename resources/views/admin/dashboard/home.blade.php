@@ -22,7 +22,7 @@
 @extends('layouts.admin.index')
 @section('content')
     <div class="row">
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-3 col-sm-6 col-12">
             <div class="small-box bg-info">
                 <a href="/admin/orders">
                     <div class="inner pt-4 pb-3 px-2">
@@ -35,7 +35,7 @@
                 </a>
             </div>
         </div>
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-3 col-sm-6 col-12">
             <div class="small-box bg-success">
                 <a href="/admin/products">
                     <div class="inner pt-4 pb-3 px-2">
@@ -48,7 +48,7 @@
                 </a>
             </div>
         </div>
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-3 col-sm-6 col-12">
             <div class="small-box bg-danger">
                 <a href="/admin/products">
                     <div class="inner pt-4 pb-3 px-2">
@@ -61,7 +61,7 @@
                 </a>
             </div>
         </div>
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-3 col-sm-6 col-12">
             <div class="small-box bg-warning">
                 <a href="/admin/customers">
                     <div class="inner pt-4 pb-3 px-2">
