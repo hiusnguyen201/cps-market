@@ -15,7 +15,7 @@
         <input type="hidden" name="cart_id">
     </form>
 
-    @if (count($carts))
+    @if ($carts && count($carts) > 0)
         <div class="u-s-p-y-60">
             <div class="u-s-p-b-60">
                 <div class="section__content">
@@ -55,7 +55,85 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="table-responsive mb-3">
-                                <table class="table-p">
+                                <table id="dataTable" class="table-p">
+                                    <tbody>
+                                        @foreach ($carts as $cart)
+                                            @if ($cart->product)
+                                                <tr data-cart-id="{{ $cart->id }}">
+                                                    <td>
+                                                        <div class="row u-s-m-b-10">
+                                                            <div class="col-3">
+                                                                <div class="table-p__img-wrap"
+                                                                    style="width: 80px;height:80px">
+                                                                    @foreach ($cart->product->images as $image)
+                                                                        @if ($image->pin == 1)
+                                                                            <a
+                                                                                href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html"><img
+                                                                                    class="u-img-fluid"
+                                                                                    style="height: 100%; object-fit: cover; min-width: 80px"
+                                                                                    src="{{ asset($image->thumbnail) }}"
+                                                                                    alt="{{ $cart->product->name }}"></a>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-9">
+                                                                <div class="table-p__info u-s-m-b-10">
+                                                                    <span class="table-p__name product-name">
+                                                                        <a
+                                                                            href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html">{{ $cart->product->name }}</a></span>
+                                                                    <span class="table-p__category">
+                                                                        <a
+                                                                            href="/catalogsearch/result?category_id={{ $cart->product->category->id }}">{{ $cart->product->category->name }}</a></span>
+                                                                </div>
+
+                                                                <p class="table-p__info">
+                                                                    <span class="table-p__price"
+                                                                        style="color: #ff4500;font-size: 16px; text-align:start">@convertCurrency($cart->product->sale_price ?? $cart->product->price)</span>
+                                                                    @if ($cart->product->sale_price)
+                                                                        <span class="table-p__price"
+                                                                            style="text-decoration:line-through">@convertCurrency($cart->product->price)</span>
+                                                                    @endif
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row" style="align-items: center">
+                                                            <div class="col-8">
+                                                                <div class="input-counter ">
+                                                                    <span class="input-counter__minus fas fa-minus"></span>
+                                                                    <input
+                                                                        class="input-counter__text input-counter--text-primary-style"
+                                                                        type="text" name="quantity"
+                                                                        value="{{ $cart->quantity }}" data-min="1"
+                                                                        data-max="{{ $cart->product->quantity + 1 }}"
+                                                                        data-cart-id="{{ $cart->id }}"
+                                                                        onchange="updateQuantity(this)">
+
+                                                                    <span class="input-counter__plus fas fa-plus"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <form class="text-right" method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <input type="hidden" name="cart_id"
+                                                                        value="{{ $cart->id }}">
+                                                                    <button class="table-p__delete-link" type="submit"
+                                                                        style="border: 0; background: none; cursor: pointer;">
+                                                                        <i class="far fa-trash-alt "></i>
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+
+                                <table id="normalTable" class="table-p">
                                     <tbody>
                                         @foreach ($carts as $cart)
                                             @if ($cart->product)
@@ -76,7 +154,7 @@
                                                             </div>
 
                                                             <div class="table-p__info">
-                                                                <span class="table-p__name">
+                                                                <span class="table-p__name product-name">
                                                                     <a
                                                                         href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html">{{ $cart->product->name }}</a></span>
                                                                 <span class="table-p__category">
@@ -94,9 +172,6 @@
                                                                     style="text-decoration:line-through">@convertCurrency($cart->product->price)</span>
                                                             @endif
                                                         </div>
-                                                    </td>
-                                                    <td class="customtd3">
-
                                                     </td>
                                                     <td>
                                                         <div class="input-counter">

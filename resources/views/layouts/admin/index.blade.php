@@ -180,6 +180,12 @@
                 $("#normalTable").show();
             }
         });
+
+        $('form').submit(function(e) {
+            $('input:disabled').each(function(e) {
+                $(this).removeAttr('disabled');
+            })
+        });
     </script>
 
     <script src="{{ asset('custom/js/message.js') }}"></script>

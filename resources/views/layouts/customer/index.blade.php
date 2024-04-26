@@ -78,6 +78,32 @@
 
     {{-- UI --}}
     <script defer src="{{ asset('custom/js/ui.js') }}"></script>
+
+    <script>
+        $('form').submit(function(e) {
+            $(':disabled').each(function(e) {
+                $(this).removeAttr('disabled');
+            })
+        });
+
+        if ($(document).width() <= 1024) {
+            $("#normalTable").hide();
+            $("#dataTable").show();
+        } else {
+            $("#dataTable").hide();
+            $("#normalTable").show();
+        }
+
+        $(window).resize(function() {
+            if ($(document).width() <= 1024) {
+                $("#normalTable").hide();
+                $("#dataTable").show();
+            } else {
+                $("#dataTable").hide();
+                $("#normalTable").show();
+            }
+        });
+    </script>
 </body>
 
 </html>

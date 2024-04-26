@@ -1784,8 +1784,8 @@ input::-ms-clear {
 .product-bs__wrap {
     margin: 0 auto;
     position: relative;
-    width: 160px;
-    margin-bottom: 4px;
+    max-width: 160px;
+    margin: 0 auto 4px;
 }
 .product-bs__action-wrap {
     width: 100%;
@@ -7181,7 +7181,9 @@ input::-ms-clear {
 .mega-text {
     width: 34px;
     height: 34px;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;

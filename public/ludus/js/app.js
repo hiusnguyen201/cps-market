@@ -681,13 +681,12 @@
             return;
         }
 
-        if (window.location.href.contains("/auth/login")) {
+        if ($(document).find("#auth[href='/member']").length) {
             return;
         }
 
         const cartRequest = [
             $(`form[action='${window.location.origin}/cart']`),
-            $(`a[href='${window.location.origin}/cart']`),
         ];
         if (cartRequest && cartRequest.length) {
             cartRequest.forEach((element) => {

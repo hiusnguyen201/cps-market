@@ -58,7 +58,7 @@
                                                                 @endforeach
                                                             </div>
                                                             <div class="o-card__info-wrap">
-                                                                <span class="o-card__name">
+                                                                <span class="o-card__name product-name">
                                                                     <a
                                                                         href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html">{{ $cart->product->name }}</a></span>
                                                                 <span class="o-card__quantity">Quantity x

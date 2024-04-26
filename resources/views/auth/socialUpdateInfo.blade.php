@@ -47,12 +47,9 @@
 
                                         <label class="gl-label" for="email">E-MAIL *</label>
 
-                                        <input class="input-text input-text--primary-style" type="email" id="email"
-                                            placeholder="Enter E-mail" name="email" value="{{ old('email') ?? $email }}"
-                                            required>
-                                        @error('email')
-                                            <span style="color: red">{{ $message }}</span>
-                                        @enderror
+                                        <input disabled class="input-text input-text--primary-style" type="email"
+                                            id="email" placeholder="Enter E-mail" name="email"
+                                            value="{{ old('email') ?? $email }}">
                                     </div>
 
                                     <div class="gl-inline">

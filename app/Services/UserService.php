@@ -242,7 +242,7 @@ class UserService
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
-                'password' => Str::random(16),
+                'password' => Hash::make(Str::random(16)),
                 'role_id' => $role->id,
             ]);
 
