@@ -338,6 +338,9 @@ input[type="range"]::-moz-range-thumb {
     font-size: 14px;
     cursor: pointer;
 }
+#homeBtnMobile {
+    display: none;
+}
 
 @media screen and (max-width: 1024px) {
     .actions-block > .back-btn {
@@ -347,5 +350,9 @@ input[type="range"]::-moz-range-thumb {
 
     .main-logo {
         display: none;
+    }
+
+    #homeBtnMobile {
+        display: block;
     }
 }

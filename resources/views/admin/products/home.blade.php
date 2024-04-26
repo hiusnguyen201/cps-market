@@ -102,7 +102,7 @@
                 <thead>
                     <tr>
                         <th width='1%'>
-                            <input type="checkbox" class="form-check-input" id="selectAll">
+                            <input type="checkbox" class="form-check-input-lg" id="selectAll-lg">
                         </th>
                         <th>Name</th>
                         <th>Category</th>
@@ -117,7 +117,7 @@
                         @foreach ($products as $product)
                             <tr>
                                 <td class="align-middle">
-                                    <input type="checkbox" class="form-check-input" name="id"
+                                    <input type="checkbox" class="form-check-input-lg" name="id"
                                         value="{{ $product->id }}">
                                 </td>
                                 <td class="align-middle">

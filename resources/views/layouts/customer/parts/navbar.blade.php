@@ -17,8 +17,9 @@
                                     <span class="ah-close" style="text-align: end">✕ Close</span>
                                     <ul class="ah-list">
                                         <li class="has-dropdown">
-                                            <span class="mega-text d-block"><a style="color: #ffffff" href="/"><i
-                                                        class="fas fa-home"></i></a></span>
+                                            <span id="homeBtnMobile" class="mega-text">
+                                                <a style="color: #ffffff" href="/"><i class="fas fa-home"></i></a>
+                                            </span>
                                             <span class="mega-block mega-text"><i class="fas fa-bars"></i></span>
                                             <span class="mega-block js-menu-toggle js-toggle-mark"></span>
                                             <div class="mega-menu" style="display: block">

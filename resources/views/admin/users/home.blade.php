@@ -86,8 +86,10 @@
                             <td></td>
                             <td><a href="/admin/users/details/{{ $user->id }}">{{ $user->name }}</a></td>
                             <td>
-                                <input type="checkbox" class="form-check-input" style="margin-top: 10px" name="id"
-                                    value="{{ $user->id }}">
+                                @if (Auth::id() != $user->id)
+                                    <input type="checkbox" class="form-check-input" style="margin-top: 10px" name="id"
+                                        value="{{ $user->id }}">
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -100,7 +102,7 @@
                 <thead>
                     <tr>
                         <th width="1%">
-                            <input type="checkbox" class="form-check-input" id="selectAll">
+                            <input type="checkbox" class="form-check-input-lg" id="selectAll-lg">
                         </th>
                         <th>Name</th>
                         <th>Email</th>
@@ -115,7 +117,7 @@
                             <tr>
                                 <td class="align-middle">
                                     @if (Auth::id() != $user->id)
-                                        <input type="checkbox" class="form-check-input" name="id"
+                                        <input type="checkbox" class="form-check-input-lg" name="id"
                                             value="{{ $user->id }}">
                                     @endif
                                 </td>

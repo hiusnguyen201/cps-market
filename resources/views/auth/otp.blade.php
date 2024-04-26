@@ -33,13 +33,13 @@
                                                 OTP</a>
                                         </div>
                                     </div>
-                                    <div class="u-s-m-b-30">
+                                    <div class="u-s-m-b-15">
                                         <button class="btn btn--e-brand-b-2" style="width: 100%"
                                             type="submit">SUBMIT</button>
                                     </div>
-                                    <div class="u-s-m-b-30">
+                                    <div class="u-s-m-b-15">
                                         <a href="/auth/logout" style="display: block; text-align:center"
-                                            class="btn btn--e-transparent-brand-b-2">LOGOUT</a>
+                                            class="btn btn--e-transparent-brand-b-2">Back</a>
                                     </div>
                                     @csrf
                                 </form>

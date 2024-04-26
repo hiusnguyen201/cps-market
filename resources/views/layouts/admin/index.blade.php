@@ -64,8 +64,23 @@
             }
         });
 
+        $("#selectAll-lg").on("click", function() {
+            if ($(this).is(":checked")) {
+                $(".form-check-input-lg").prop("checked", true);
+            } else {
+                $(".form-check-input-lg").prop("checked", false);
+            }
+        });
+
         $("form.form-delete-all").submit((event) => {
-            const formCheckboxChecked = $("input.form-check-input:checked:not(#selectAll)");
+            var formCheckboxChecked = null;
+
+            if ($(document).width() <= 1024) {
+                formCheckboxChecked = $("input.form-check-input:checked:not(#selectAll)");
+            } else {
+                formCheckboxChecked = $("input.form-check-input-lg:checked:not(#selectAll-lg)");
+            }
+
             for (var i = 0; i < formCheckboxChecked.length; i++) {
                 $("form.form-delete-all").append(
                     `<input type="hidden" name="id[${i}]" value="${formCheckboxChecked[i].value}">`)

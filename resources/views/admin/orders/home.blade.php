@@ -105,7 +105,7 @@
                 <thead>
                     <tr>
                         <th width='1%'>
-                            <input type="checkbox" class="form-check-input" id="selectAll">
+                            <input type="checkbox" class="form-check-input-lg" id="selectAll-lg">
                         </th>
                         <th>Code</th>
                         <th>Date</th>
@@ -121,7 +121,7 @@
                         @foreach ($orders as $order)
                             <tr>
                                 <td class="align-middle">
-                                    <input type="checkbox" class="form-check-input" name="id"
+                                    <input type="checkbox" class="form-check-input-lg" name="id"
                                         value="{{ $order->id }}">
                                 </td>
                                 <td class="align-middle"><a

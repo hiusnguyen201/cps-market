@@ -164,7 +164,6 @@ Route::middleware(['check.auth', "check.customer", 'check.active_account'])->gro
     });
 
     Route::prefix('wishlist')->group(function () {
-        Route::get('/', [WishlistController::class, 'home']);
         Route::post('/', [WishlistController::class, 'handleCreate']);
         Route::delete('/', [WishlistController::class, 'handleDelete']);
     });

@@ -13,16 +13,19 @@ use App\Models\Order;
 
 use App\Services\CategoryService;
 use App\Services\UserService;
+use App\Services\WishlistService;
 
 class MemberController extends Controller
 {
     private CategoryService $categoryService;
     private UserService $userService;
+    private WishlistService $wishlistService;
 
     public function __construct()
     {
         $this->categoryService = new CategoryService();
         $this->userService = new UserService();
+        $this->wishlistService = new WishlistService();
     }
 
     public function home()
@@ -32,6 +35,7 @@ class MemberController extends Controller
         $countPlacedOrders = $this->userService->countPlacedOrders(Auth::id());
         $countCancelOrders = $this->userService->countCancelOrders(Auth::id());
         $countWishlist = count(Auth::user()->wishlist);
+        $wishlist = $this->wishlistService->findAllByCustomerId(Auth::id());
 
         $categories = $this->categoryService->findAll();
         return view("customer.member.home", [
@@ -41,7 +45,8 @@ class MemberController extends Controller
             'countProductsInCart' => $countProductsInCart ?? 0,
             "countPlacedOrders" => $countPlacedOrders,
             "countCancelOrders" => $countCancelOrders,
-            "countWishlist" => $countWishlist
+            "countWishlist" => $countWishlist,
+            "wishlist" => $wishlist
         ]);
     }
 
