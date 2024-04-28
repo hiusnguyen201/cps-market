@@ -17,6 +17,7 @@ class CartController extends Controller
     private CartService $cartService;
     private CategoryService $categoryService;
     private UserService $userService;
+
     public function __construct()
     {
         $this->orderService = new OrderService();
@@ -30,6 +31,10 @@ class CartController extends Controller
         $categories = $this->categoryService->findAll();
 
         if (Auth::user()) {
+            if (Auth::user()->status == config("constants.user_status.inactive.value")) {
+                return redirect("/auth/otp");
+            }
+
             [$countProductsInCart, $totalPrice] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
         }
 
@@ -49,7 +54,7 @@ class CartController extends Controller
 
             session()->flash("success", 'Add product to cart successfully');
             if ($request->action == 'buy') {
-                return redirect()->route("cart.index");
+                return redirect("/cart");
             }
         } catch (\Exception $e) {
             session()->flash('error', $e->getMessage());
@@ -86,7 +91,7 @@ class CartController extends Controller
     public function checkoutPage()
     {
         if (!Auth::user()->carts || !count(Auth::user()->carts)) {
-            return redirect()->route("cart.index");
+            return redirect("/cart");
         }
 
         [$countProductsInCart, $totalPrice] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());

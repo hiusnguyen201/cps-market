@@ -105,7 +105,7 @@
                     </div>
                 </div>
                 @foreach ($order->orders_products as $order_product)
-                    <div class="manage-o__description">
+                    <div class="manage-o__description" style="gap: 20px">
                         <div class="description__container">
                             <div class="description__img-wrap">
                                 @foreach ($order_product->product->images as $image)
@@ -120,7 +120,7 @@
                                 @endforeach
                             </div>
 
-                            <div class="description-title"><a
+                            <div class="description-title" style="max-width: 350px"><a class="product-name"
                                     href="/{{ $order_product->product->category->slug }}/{{ $order_product->product->brand->slug }}/{{ $order_product->product->slug }}.html">{{ $order_product->product->name }}</a>
                             </div>
                         </div>

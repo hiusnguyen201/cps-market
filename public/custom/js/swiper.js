@@ -37,10 +37,13 @@ const swiper2 = new Swiper(".swiper-member", {
     breakpoints: {
         0: {
             slidesPerView: 1,
+        },
+        420: {
+            slidesPerView: 2,
             spaceBetween: 10,
         },
         600: {
-            slidesPerView: 3,
+            slidesPerView: 2,
             spaceBetween: 10,
         },
         800: {
@@ -48,7 +51,7 @@ const swiper2 = new Swiper(".swiper-member", {
             spaceBetween: 10,
         },
         1025: {
-            slidesPerView: 4,
+            slidesPerView: 3,
             spaceBetween: 10,
         },
         1281: {

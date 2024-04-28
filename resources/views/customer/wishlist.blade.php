@@ -53,14 +53,17 @@
                                 @foreach ($wishlist as $item)
                                     <div class="w-r u-s-m-b-30">
                                         <div class="w-r__container">
-                                            <div class="w-r__wrap-1">
+                                            <div class="w-r__wrap-1" style="max-width: 550px">
                                                 <div class="w-r__img-wrap">
 
                                                     @foreach ($item->product->images as $image)
                                                         @if ($image->pin == 1)
-                                                            <img class="u-img-fluid"
-                                                                style="height: 100%; object-fit: contain;"
-                                                                src="{{ asset($image->thumbnail) }}" alt="">
+                                                            <a
+                                                                href="/{{ $item->product->category->slug }}/{{ $item->product->brand->slug }}/{{ $item->product->slug }}.html">
+                                                                <img class="u-img-fluid"
+                                                                    style="height: 100%; object-fit: contain;"
+                                                                    src="{{ asset($image->thumbnail) }}" alt="">
+                                                            </a>
                                                         @endif
                                                     @endforeach
                                                 </div>
@@ -68,7 +71,7 @@
 
                                                     <span class="w-r__name">
 
-                                                        <a
+                                                        <a class="product-name"
                                                             href="/{{ $item->product->category->slug }}/{{ $item->product->brand->slug }}/{{ $item->product->slug }}.html">{{ $item->product->name }}</a></span>
 
                                                     <span class="w-r__category">
@@ -86,8 +89,8 @@
                                             </div>
                                             <div class="w-r__wrap-2">
 
-                                                <form method="POST" action="{{ route('cart.create') }}"
-                                                    class="w-r__link btn--e-brand-b-2" style="padding: 0;">
+                                                <form method="POST" action="/cart" class="w-r__link btn--e-brand-b-2"
+                                                    style="padding: 0;">
                                                     @csrf
                                                     <input type="hidden" name="product_id"
                                                         value="{{ $item->product->id }}">
@@ -95,9 +98,6 @@
                                                     <button id="wishlist" class="btn btn--e-brand-b-2 wishlist"
                                                         type="submit">ADD TO CART</button>
                                                 </form>
-
-                                                <a class="w-r__link btn--e-transparent-platinum-b-2"
-                                                    href="/{{ $item->product->category->slug }}/{{ $item->product->brand->slug }}/{{ $item->product->slug }}.html">VIEW</a>
 
                                                 <form action="" method="post"
                                                     class="w-r__link btn--e-transparent-platinum-b-2" style="padding: 0;">

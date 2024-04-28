@@ -25,6 +25,7 @@ const activeCards = (cardArr) => {
 const cardArr = [$("#specification"), $("#sales")];
 
 const selectFormCategory = $("select#product[name='category']");
+
 selectFormCategory.change(async (e) => {
     const selectedOption = selectFormCategory.find("option:selected");
     const selectFormBrand = $("select#product[name='brand']");

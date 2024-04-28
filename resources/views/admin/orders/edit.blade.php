@@ -15,14 +15,7 @@
                         <div class="col-sm-6 col-12 mb-3">
                             <label for="" class="form-label">Customer:</label>
                             <select disabled class="form-control select2" name="customer_id" style="width: 100%;">
-                                <option selected disabled value="">Select customer</option>
-                                @if ($customers && count($customers))
-                                    @foreach ($customers as $customer)
-                                        <option
-                                            {{ old('customer_id') ?? $order->customer->id == $customer->id ? 'selected' : '' }}
-                                            value="{{ $customer->id }}">{{ $customer->email }}</option>
-                                    @endforeach
-                                @endif
+                                <option selected value="{{ $order->customer->id }}">{{ $order->customer->email }}</option>
                             </select>
                             @error('customer_id')
                                 <span class="d-block" style="color: red">{{ $message }}</span>

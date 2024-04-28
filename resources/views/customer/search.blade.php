@@ -215,7 +215,7 @@
                                                     @endforeach
 
                                                     <div class="product-m__add-cart">
-                                                        <form method="POST" action="{{ route('cart.create') }}">
+                                                        <form method="POST" action="/cart">
                                                             @csrf
                                                             <input type="hidden" name="product_id"
                                                                 value="{{ $product->id }}">

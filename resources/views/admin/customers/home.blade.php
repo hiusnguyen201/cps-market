@@ -9,10 +9,10 @@
 @section('content')
     <div class="card py-3 px-3">
         <div class="row">
-            <div class="col-lg-3 col-12 mb-3">
+            <div class="col-lg-3 col-sm-6 col-12 mb-3">
                 <a href="{{ route('admin.customers.create') }}" class="btn btn-success w-100 py-2">Create</a>
             </div>
-            <div class="col-lg-3 col-12 mb-3">
+            <div class="col-lg-3 col-sm-6 col-12 mb-3">
                 <button class="btn btn-danger w-100 py-2" data-toggle="modal" data-target="#modal-deleteAll">Delete
                     All</button>
             </div>
@@ -117,7 +117,7 @@
                                     @endif
                                 </td>
                                 <td class="align-middle"><a
-                                        href="/admin/users/details/{{ $user->id }}">{{ $user->name }}</a></td>
+                                        href="/admin/customers/details/{{ $user->id }}">{{ $user->name }}</a></td>
                                 <td class="align-middle">{{ $user->email }}</td>
                                 <td class="align-middle">{{ $user->phone }}</td>
                                 <td class="align-middle">
@@ -131,7 +131,7 @@
                                 </td>
                                 <td class="text-center align-middle">
                                     @if (Auth::id() != $user->id)
-                                        <a class="btn btn-warning" href="/admin/users/edit/{{ $user->id }}">
+                                        <a class="btn btn-warning" href="/admin/customers/edit/{{ $user->id }}">
                                             <i class="fas fa-pen"></i>
                                         </a>
                                         <button type="button" class="btn btn-danger mt-2" data-toggle="modal"

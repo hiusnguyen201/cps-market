@@ -38,8 +38,8 @@ class ProductService
     {
         $products = Product::where(function ($query) use ($request) {
             $query->where('name', 'like', '%' . $request->keyword . '%');
-            $query->where('price', '>=', $request->price_min ?? 0);
-            $query->where('price', '<=', $request->price_max ?? 100000000);
+            $query->whereRaw("IFNULL(sale_price, price) >= ?", [$request->price_min ?? 0]);
+            $query->whereRaw("IFNULL(sale_price, price) <= ?", [$request->price_max ?? 100000000]);
             if ($request->category_id) {
                 $query->where('category_id', $request->category_id);
             }
@@ -54,11 +54,11 @@ class ProductService
                 break;
 
             case 'lowest_price':
-                $products = $products->orderBy('price', "asc");
+                $products = $products->orderByRaw('IFNULL(sale_price, price) ASC');
                 break;
 
             case 'highest_price':
-                $products = $products->orderBy('price', "desc");
+                $products = $products->orderByRaw('IFNULL(sale_price, price) DESC');
                 break;
 
             default:

@@ -185,6 +185,10 @@
             $('input:disabled').each(function(e) {
                 $(this).removeAttr('disabled');
             })
+
+            $('select:disabled').each(function(e) {
+                $(this).removeAttr('disabled');
+            })
         });
     </script>
 

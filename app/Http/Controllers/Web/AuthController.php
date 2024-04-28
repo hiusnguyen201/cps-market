@@ -148,31 +148,41 @@ class AuthController extends Controller
 
     public function handleSocialLogin($provider)
     {
-        $accountSocialInfo = Socialite::driver($provider)->stateless()->user();
-        if (!$accountSocialInfo) {
-            return redirect()->back();
-        }
-
-        $user = $this->userService->findOneByEmail($accountSocialInfo['email']);
-        if (!$user) {
-            $accountSocialInfo['providerName'] = $provider;
-            session()->put('userSocial', $accountSocialInfo);
-            return redirect("/auth/info-social");
-        }
-
         try {
-            $this->userService->addAccountSocialToCustomer($user, $accountSocialInfo, $provider);
-        } catch (\Exception $e) {
-            return redirect("/auth/login")->with('error', $e->getMessage());
-        }
+            $accountSocialInfo = Socialite::driver($provider)->stateless()->user();
+            if (!$accountSocialInfo) {
+                return redirect()->back();
+            }
 
-        Auth::login($user, true);
-        if ($user->status == config("constants.user_status.inactive.value")) {
-            $this->userService->sendOtpToEmail($user);
-            return redirect("/auth/otp")->with('success', "We've sent a verification code to your email");
-        } else {
-            session()->flash("success", "Login successfully");
-            return redirect("/member");
+            $user = $this->userService->findOneByEmail($accountSocialInfo['email']);
+            if (!$user) {
+                $accountSocialInfo['providerName'] = $provider;
+                session()->put('userSocial', $accountSocialInfo);
+                return redirect("/auth/info-social");
+            }
+
+            $exist_social = $user->social_accounts->filter(function ($item) use ($accountSocialInfo) {
+                return $item['provider_user_id'] == $accountSocialInfo['id'];
+            });
+
+            if (!count($exist_social)) {
+                try {
+                    $this->userService->addAccountSocialToCustomer($user, $accountSocialInfo, $provider);
+                } catch (\Exception $e) {
+                    return redirect("/auth/login")->with('error', $e->getMessage());
+                }
+            }
+
+            Auth::login($user, true);
+            if ($user->status == config("constants.user_status.inactive.value")) {
+                $this->userService->sendOtpToEmail($user);
+                return redirect("/auth/otp")->with('success', "We've sent a verification code to your email");
+            } else {
+                session()->flash("success", "Login successfully");
+                return redirect("/member");
+            }
+        } catch (\Exception $e) {
+            return redirect("/auth/login")->with("error", "Login with " . $provider . " failed");
         }
     }
 

@@ -65,7 +65,7 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $attributes = $this->productService->findAllAttributesByCategoryId($product->categoryId);
+        $attributes = $this->productService->findAllAttributesByCategoryId($product->category_id);
         $categories = $this->categoryService->findAll();
 
         return view('admin.products.edit', [

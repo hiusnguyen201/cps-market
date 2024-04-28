@@ -60,7 +60,7 @@
                                             <ul>
                                                 <li>
 
-                                                    <a href="{{ route('cart.index') }}">Cart</a>
+                                                    <a href="/cart">Cart</a>
                                                 </li>
                                                 <li>
 

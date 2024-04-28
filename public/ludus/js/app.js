@@ -686,11 +686,17 @@
         }
 
         const cartRequest = [
-            $(`form[action='${window.location.origin}/cart']`),
+            $(`form[action='/cart']`),
+            $(`form[action='/wishlist']`),
+            $(`a[href='/cart']`),
         ];
         if (cartRequest && cartRequest.length) {
             cartRequest.forEach((element) => {
                 element.click((e) => {
+                    if (window.location.href.includes("/auth/login")) {
+                        return;
+                    }
+
                     e.preventDefault();
                     $("body").append(`
                     <div class="modal fade new-l" id="newsletter-modal" style="padding: 0px">
@@ -733,7 +739,7 @@
                             keyboard: false,
                             show: true,
                         });
-                    }, 50);
+                    }, 1);
                 });
             });
         }

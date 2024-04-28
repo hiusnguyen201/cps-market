@@ -100,11 +100,6 @@
                 </div>
             </div>
 
-            <div class="d-grid">
-                @csrf
-                <button type="submit" class="btn btn-success w-100 py-2">Create</button>
-            </div>
-
             <div class="row actions-block">
                 @csrf
 

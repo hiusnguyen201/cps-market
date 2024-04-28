@@ -243,7 +243,6 @@ class OrderService
                 'payment_method' => $request->payment_method,
                 'payment_status' => $request->payment_status,
                 'status' => $request->order_status,
-                'customer_id' => $customer->id
             ]);
 
             $order->shipping_address->update([

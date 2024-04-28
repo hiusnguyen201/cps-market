@@ -19,10 +19,10 @@
                                     <a href="/">Home</a>
                                 </li>
                                 <li class="has-separator">
-                                    <a href="{{ route('cart.index') }}">Cart</a>
+                                    <a href="/cart">Cart</a>
                                 </li>
                                 <li class="is-marked">
-                                    <a href="{{ route('cart.checkout') }}">Checkout</a>
+                                    <a href="/cart/checkout">Checkout</a>
                                 </li>
                             </ul>
                         </div>
@@ -67,7 +67,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <form action="{{ route('cart.delete') }}" method="post">
+                                                        <form action="/cart" method="post">
                                                             @method('DELETE')
                                                             @csrf
                                                             <input type="hidden" name="cart_id"

@@ -9,10 +9,10 @@
 @section('content')
     <div class="card py-3 px-3">
         <div class="row">
-            <div class="col-md-12 col-lg-3 mb-3">
+            <div class="col-md-12 col-sm-6 col-lg-3 mb-3">
                 <a href="/admin/categories/create" class="btn btn-success w-100 py-2">Create</a>
             </div>
-            <div class="col-md-12 col-lg-3 mb-3">
+            <div class="col-md-12 col-sm-6 col-lg-3 mb-3">
                 <button class="btn btn-danger w-100 py-2" data-toggle="modal" data-target="#modal-deleteAll">Delete
                     All</button>
             </div>

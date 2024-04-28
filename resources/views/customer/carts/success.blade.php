@@ -166,7 +166,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="{{ route('cart.index') }}" class="btn btn--e-transparent-brand-b-2"
+                            <a href="/cart" class="btn btn--e-transparent-brand-b-2"
                                 style="width: 100%; display:block;text-align:center;line-height:1;"
                                 fdprocessedid="gw2uog">GO BACK</a>
                         </div>

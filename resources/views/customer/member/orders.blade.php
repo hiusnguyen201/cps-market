@@ -45,26 +45,28 @@
                                 </div>
                             </div>
 
-                            <div class="manage-o__description">
+                            <div class="manage-o__description" style="gap: 20px">
                                 <div class="description__container">
                                     <div class="description__img-wrap">
                                         @foreach ($order->orders_products[0]->product->images as $image)
                                             @if ($image->pin == 1)
-                                                <img class="u-img-fluid" style="height: 100%; object-fit: contain;"
-                                                    src="{{ asset($image->thumbnail) }}"
-                                                    alt="{{ $order->orders_products[0]->product->name }}">
+                                                <a
+                                                    href="/{{ $order->orders_products[0]->product->category->slug }}/{{ $order->orders_products[0]->product->brand->slug }}/{{ $order->orders_products[0]->product->slug }}.html">
+                                                    <img class="u-img-fluid" style="height: 100%; object-fit: contain;"
+                                                        src="{{ asset($image->thumbnail) }}"
+                                                        alt="{{ $order->orders_products[0]->product->name }}">
+                                                </a>
                                             @endif
                                         @endforeach
-
                                     </div>
-
                                     <div class="description-title">
-                                        @foreach ($order->orders_products as $product)
-                                            {{ $product->product->name }}
-                                            @if (!$loop->last)
-                                                ,
-                                            @endif
-                                        @endforeach
+                                        <a href="/{{ $order->orders_products[0]->product->category->slug }}/{{ $order->orders_products[0]->product->brand->slug }}/{{ $order->orders_products[0]->product->slug }}.html"
+                                            style="max-width: 350px"
+                                            class="product-name u-s-m-b-5">{{ $order->orders_products[0]->product->name }}</a>
+                                        @if (count($order->orders_products) > 1)
+                                            <span style="color: #838383">+ {{ count($order->orders_products) }}
+                                                items</span>
+                                        @endif
                                     </div>
 
                                 </div>

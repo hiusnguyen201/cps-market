@@ -8,7 +8,7 @@
         <input hidden type="text" name="message-error" value="{{ session('error') }}">
     @endif
 
-    <form id="updateCart" method="post" action="{{ route('cart.update') }}">
+    <form id="updateCart" method="post" action="/cart">
         @csrf
         @method('PATCH')
         <input type="hidden" name="quantity">
@@ -27,7 +27,7 @@
                                         <a href="/">Home</a>
                                     </li>
                                     <li class="is-marked">
-                                        <a href="{{ route('cart.index') }}">Cart</a>
+                                        <a href="/cart">Cart</a>
                                     </li>
                                 </ul>
                             </div>
@@ -89,11 +89,12 @@
 
                                                                 <p class="table-p__info">
                                                                     <span class="table-p__price"
-                                                                        style="color: #ff4500;font-size: 16px; text-align:start">@convertCurrency($cart->product->sale_price ?? $cart->product->price)</span>
-                                                                    @if ($cart->product->sale_price)
-                                                                        <span class="table-p__price"
-                                                                            style="text-decoration:line-through">@convertCurrency($cart->product->price)</span>
-                                                                    @endif
+                                                                        style="color: #ff4500;font-size: 16px; text-align:start">@convertCurrency($cart->product->sale_price ?? $cart->product->price)&nbsp;&nbsp;
+                                                                        @if ($cart->product->sale_price)
+                                                                            <span class="table-p__price"
+                                                                                style="text-decoration:line-through; display:inline-block">@convertCurrency($cart->product->price)</span>
+                                                                        @endif
+                                                                    </span>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -232,8 +233,7 @@
                                                 </table>
                                             </div>
                                             <div>
-                                                <a style="display: block; text-align:center"
-                                                    href="{{ route('cart.checkout') }}"
+                                                <a style="display: block; text-align:center" href="/cart/checkout   "
                                                     class="btn btn--e-brand-b-2">PROCEED TO
                                                     CHECKOUT</a>
                                             </div>

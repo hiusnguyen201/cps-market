@@ -57,11 +57,11 @@
 
                 <label>Specifications:</label>
                 <div class="row align-items-center">
-                    <div class="col-sm-3 col-12 mb-3">
+                    <div class="col-sm-3 col-sm-6 col-12 mb-3">
                         <a href="/admin/categories/details/{{ $category->id }}/specifications/add"
                             class="btn btn-success w-100 py-2">Add</a>
                     </div>
-                    <div class="col-sm-3 col-12 mb-3">
+                    <div class="col-sm-3 col-sm-6 col-12 mb-3">
                         <button class="btn btn-danger w-100 py-2" data-toggle="modal" data-target="#modal-deleteAll">Delete
                             All</button>
                     </div>

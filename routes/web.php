@@ -151,15 +151,15 @@ Route::middleware('check.notadmin')->group(function () {
     Route::get('/', [HomeController::class, 'home']);
     Route::get('/catalogsearch/result', [HomeController::class, 'search']);
     Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
-    Route::get('/cart', [CartController::class, 'home'])->name("cart.index");
+    Route::get('/cart', [CartController::class, 'home']);
 });
 
 Route::middleware(['check.auth', "check.customer", 'check.active_account'])->group(function () {
     Route::prefix('cart')->group(function () {
-        Route::post('/', [CartController::class, 'handleCreate'])->name("cart.create");
-        Route::patch('/', [CartController::class, 'handleUpdate'])->name("cart.update");
-        Route::delete('/', [CartController::class, 'handleDelete'])->name("cart.delete");
-        Route::get('/checkout', [CartController::class, 'checkoutPage'])->name("cart.checkout");
+        Route::post('/', [CartController::class, 'handleCreate']);
+        Route::patch('/', [CartController::class, 'handleUpdate']);
+        Route::delete('/', [CartController::class, 'handleDelete']);
+        Route::get('/checkout', [CartController::class, 'checkoutPage']);
         Route::get('/success', [CartController::class, 'success'])->name("cart.success");
     });
 

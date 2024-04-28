@@ -67,7 +67,7 @@
                                                                                     @foreach ($category->brands as $brand)
                                                                                         <li>
                                                                                             <a
-                                                                                                href="/catalogsearch/result?brand_id={{ $brand->id }}">{{ $brand->name }}</a>
+                                                                                                href="/catalogsearch/result?category_id={{ $category->id }}&brand_id={{ $brand->id }}">{{ $brand->name }}</a>
                                                                                         </li>
                                                                                     @endforeach
                                                                                 @endif
@@ -80,33 +80,33 @@
                                                                                 </li>
                                                                                 <li>
                                                                                     <a
-                                                                                        href="/catalogsearch/result?category_id={{ $category->id }}&price_min=0&price_max=100000">@convertCurrency(0)
+                                                                                        href="/catalogsearch/result?category_id={{ $category->id }}&price_min=0&price_max=1000000">@convertCurrency(0)
                                                                                         -
-                                                                                        @convertCurrency(100000)</a>
+                                                                                        @convertCurrency(1000000)</a>
                                                                                 </li>
                                                                                 <li>
                                                                                     <a
-                                                                                        href="/catalogsearch/result?category_id={{ $category->id }}&price_min=100000&price_max=200000">@convertCurrency(100000)
+                                                                                        href="/catalogsearch/result?category_id={{ $category->id }}&price_min=1000000&price_max=2000000">@convertCurrency(1000000)
                                                                                         -
-                                                                                        @convertCurrency(200000)</a>
+                                                                                        @convertCurrency(2000000)</a>
                                                                                 </li>
                                                                                 <li>
                                                                                     <a
-                                                                                        href="/catalogsearch/result?category_id={{ $category->id }}&price_min=200000&price_max=300000">@convertCurrency(200000)
+                                                                                        href="/catalogsearch/result?category_id={{ $category->id }}&price_min=2000000&price_max=3000000">@convertCurrency(2000000)
                                                                                         -
-                                                                                        @convertCurrency(300000)</a>
+                                                                                        @convertCurrency(3000000)</a>
                                                                                 </li>
                                                                                 <li>
                                                                                     <a
-                                                                                        href="/catalogsearch/result?category_id={{ $category->id }}&price_min=300000&price_max=400000">@convertCurrency(300000)
+                                                                                        href="/catalogsearch/result?category_id={{ $category->id }}&price_min=3000000&price_max=4000000">@convertCurrency(3000000)
                                                                                         -
-                                                                                        @convertCurrency(400000)</a>
+                                                                                        @convertCurrency(4000000)</a>
                                                                                 </li>
                                                                                 <li>
                                                                                     <a
-                                                                                        href="/catalogsearch/result?category_id={{ $category->id }}&price_min=400000&price_max=500000">@convertCurrency(400000)
+                                                                                        href="/catalogsearch/result?category_id={{ $category->id }}&price_min=4000000&price_max=5000000">@convertCurrency(4000000)
                                                                                         -
-                                                                                        @convertCurrency(500000)</a>
+                                                                                        @convertCurrency(5000000)</a>
                                                                                 </li>
                                                                             </ul>
                                                                         </div>
@@ -180,7 +180,7 @@
                                                     class="far fa-envelope"></i></a>
                                         </li>
                                         <li data-tooltip="tooltip" data-placement="left">
-                                            <a class="mini-cart-shop-link" href="{{ route('cart.index') }}"><i
+                                            <a class="mini-cart-shop-link" href="/cart"><i
                                                     class="fas fa-shopping-bag"></i>
                                                 <span
                                                     class="total-item-round">{{ $countProductsInCart ?? 0 }}</span></a>
