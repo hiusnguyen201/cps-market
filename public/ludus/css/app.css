@@ -1227,7 +1227,7 @@ input::-ms-clear {
 }
 
 .aspect--bg-grey {
-    background-color: #f5f5f5;
+    background-color: transparent;
 }
 
 .aspect--bg-grey-fb {

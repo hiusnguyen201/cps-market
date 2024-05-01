@@ -190,6 +190,8 @@
         @endif
     </div>
 
+    <input type="hidden" name="authId" value="{{ Auth::id() }}">
+
     <!-- Modal delete -->
     <div class="modal fade" id="modal-deleteAll" aria-modal="true" role="dialog">
         <div class="modal-dialog">

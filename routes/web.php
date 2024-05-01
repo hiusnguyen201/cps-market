@@ -150,7 +150,7 @@ Route::prefix('auth')->group(function () {
 Route::middleware('check.notadmin')->group(function () {
     Route::get('/', [HomeController::class, 'home']);
     Route::get('/catalogsearch/result', [HomeController::class, 'search']);
-    Route::get('/{categorySlug}/{brandSlug}/{productSlug}.html', [HomeController::class, 'details']);
+    Route::get('/{productSlug}.html', [HomeController::class, 'details']);
     Route::get('/cart', [CartController::class, 'home']);
 });
 

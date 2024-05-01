@@ -34,11 +34,9 @@ class CustomerTest extends TestCase
 
     public function test_details_product_page_rendered()
     {
-        $category = Category::factory()->create();
-        $brand = Brand::factory()->create();
         $product = Product::factory()->create();
 
-        $response = $this->get('/' . $category->slug . "/" . $brand->slug . "/" . $product->slug . ".html");
+        $response = $this->get("/" . $product->slug . ".html");
         $response->assertStatus(200);
     }
 

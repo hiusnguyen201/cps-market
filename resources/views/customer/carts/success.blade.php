@@ -135,8 +135,7 @@
                                                         <div class="o-card__img-wrap">
                                                             @foreach ($order_product->product->images as $image)
                                                                 @if ($image->pin == 1)
-                                                                    <a
-                                                                        href="/{{ $order_product->product->category->slug }}/{{ $order_product->product->brand->slug }}/{{ $order_product->product->slug }}.html"><img
+                                                                    <a href="/{{ $order_product->product->slug }}.html"><img
                                                                             class="u-img-fluid"
                                                                             style="height: 100%; object-fit: contain;"
                                                                             src="{{ asset($image->thumbnail) }}"
@@ -147,7 +146,7 @@
                                                         <div class="o-card__info-wrap">
                                                             <span class="o-card__name product-name">
                                                                 <a
-                                                                    href="/{{ $order_product->product->category->slug }}/{{ $order_product->product->brand->slug }}/{{ $order_product->product->slug }}.html">{{ $order_product->product->name }}</a></span>
+                                                                    href="/{{ $order_product->product->slug }}.html">{{ $order_product->product->name }}</a></span>
                                                             <span class="product-bs__price">@convertCurrency($order_product->product->sale_price ?? $order_product->product->price)
                                                                 @if ($order_product->product->sale_price)
                                                                     <span

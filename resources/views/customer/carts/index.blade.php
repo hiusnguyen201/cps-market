@@ -64,11 +64,10 @@
                                                         <div class="row u-s-m-b-10">
                                                             <div class="col-3">
                                                                 <div class="table-p__img-wrap"
-                                                                    style="width: 80px;height:80px">
+                                                                    style="width: 80px;height:80px;">
                                                                     @foreach ($cart->product->images as $image)
                                                                         @if ($image->pin == 1)
-                                                                            <a
-                                                                                href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html"><img
+                                                                            <a href="/{{ $cart->product->slug }}.html"><img
                                                                                     class="u-img-fluid"
                                                                                     style="height: 100%; object-fit: cover; min-width: 80px"
                                                                                     src="{{ asset($image->thumbnail) }}"
@@ -81,7 +80,7 @@
                                                                 <div class="table-p__info u-s-m-b-10">
                                                                     <span class="table-p__name product-name">
                                                                         <a
-                                                                            href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html">{{ $cart->product->name }}</a></span>
+                                                                            href="/{{ $cart->product->slug }}.html">{{ $cart->product->name }}</a></span>
                                                                     <span class="table-p__category">
                                                                         <a
                                                                             href="/catalogsearch/result?category_id={{ $cart->product->category->id }}">{{ $cart->product->category->name }}</a></span>
@@ -139,13 +138,13 @@
                                         @foreach ($carts as $cart)
                                             @if ($cart->product)
                                                 <tr data-cart-id="{{ $cart->id }}">
-                                                    <td>
+                                                    <td
+                                                        style="{{ $cart->product->deleted_at ? 'opacity: 0.6;pointer-events: none' : '' }}">
                                                         <div class="table-p__box">
                                                             <div class="table-p__img-wrap">
                                                                 @foreach ($cart->product->images as $image)
                                                                     @if ($image->pin == 1)
-                                                                        <a
-                                                                            href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html"><img
+                                                                        <a href="/{{ $cart->product->slug }}.html"><img
                                                                                 class="u-img-fluid"
                                                                                 style="height: 100%; object-fit: contain;"
                                                                                 src="{{ asset($image->thumbnail) }}"
@@ -157,14 +156,15 @@
                                                             <div class="table-p__info">
                                                                 <span class="table-p__name product-name">
                                                                     <a
-                                                                        href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html">{{ $cart->product->name }}</a></span>
+                                                                        href="/{{ $cart->product->slug }}.html">{{ $cart->product->name }}</a></span>
                                                                 <span class="table-p__category">
                                                                     <a
                                                                         href="/catalogsearch/result?category_id={{ $cart->product->category->id }}">{{ $cart->product->category->name }}</a></span>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td>
+                                                    <td
+                                                        style="{{ $cart->product->deleted_at ? 'opacity: 0.6;pointer-events: none' : '' }}">
                                                         <div class="">
                                                             <span class="table-p__price"
                                                                 style="color: #ff4500;font-size: 16px">@convertCurrency($cart->product->sale_price ?? $cart->product->price)</span>
@@ -174,7 +174,8 @@
                                                             @endif
                                                         </div>
                                                     </td>
-                                                    <td>
+                                                    <td
+                                                        style="{{ $cart->product->deleted_at ? 'opacity: 0.6;pointer-events: none' : '' }}">
                                                         <div class="input-counter">
                                                             <span class="input-counter__minus fas fa-minus"></span>
                                                             <input
@@ -190,7 +191,7 @@
 
                                                     </td>
                                                     <td>
-                                                        <form class="text-right" method="POST">
+                                                        <form class="text-center" method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <input type="hidden" name="cart_id"
@@ -200,6 +201,10 @@
                                                                 <i class="far fa-trash-alt "></i>
                                                             </button>
                                                         </form>
+                                                        @if ($cart->product->deleted_at)
+                                                            <span style="color:red; opacity: 1">This product does not
+                                                                exist</span>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endif

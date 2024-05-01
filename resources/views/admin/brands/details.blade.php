@@ -45,12 +45,13 @@
                                                 </td>
                                             </tr>
                                         @endforeach
-
                                     </tbody>
                                 </table>
                             @endif
                         </div>
                     </div>
+
+                    <a href="/admin/brands" class="btn btn-danger py-2 w-100">Back</a>
                 </div>
             </div>
         </div>

@@ -13,6 +13,7 @@ class ProductService
     {
         $products = Product::where(function ($query) use ($request) {
             $query->orWhere('name', 'like', '%' . $request->keyword . '%');
+            $query->orWhere('code', 'like', '%' . $request->keyword . '%');
         });
 
         if ($request->category) {

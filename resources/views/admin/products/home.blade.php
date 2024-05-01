@@ -85,7 +85,7 @@
                             data-child-value="<img src='{{ $imgSrc }}' class='table-img d-block' alt='{{ $product->name }}'>|{{ $product->code }}|<a
                                         href='/admin/categories/details/{{ $product->category->id }}'>{{ $product->category->name }}</a>|@convertCurrency($product->sale_price ?? $product->price)|{{ $product->quantity > 0 ? $product->quantity : 'Out of stock' }}|{{ $product->sold }}">
                             <td></td>
-                            <td><a class="product-name"
+                            <td><a style="color: #007bff" class="product-name"
                                     href="/admin/products/details/{{ $product->id }}">{{ $product->name }}</a></td>
                             <td>
                                 <input type="checkbox" class="form-check-input" style="margin-top: 10px" name="id"
@@ -121,23 +121,21 @@
                                         value="{{ $product->id }}">
                                 </td>
                                 <td class="align-middle">
-                                    <div class="row align-items-center">
-                                        <div class="col-lg-3">
-                                            <a href="/admin/products/details/{{ $product->id }}" class="mx-1">
-                                                @foreach ($product->images as $image)
-                                                    @if ($image->pin)
-                                                        <img src="{{ asset($image->thumbnail) }}"
-                                                            class="float-left table-img" alt="{{ $product->name }}">
-                                                    @endif
-                                                @endforeach
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-9">
-                                            <a href="/admin/products/details/{{ $product->id }}"
+                                    <div class="row align-items-center" style="flex-wrap: nowrap">
+                                        <a href="/admin/products/details/{{ $product->id }}" class="mx-1">
+                                            @foreach ($product->images as $image)
+                                                @if ($image->pin)
+                                                    <img src="{{ asset($image->thumbnail) }}" class="float-left table-img"
+                                                        alt="{{ $product->name }}">
+                                                @endif
+                                            @endforeach
+                                        </a>
+                                        <div class="ml-2" style="max-width: 400px">
+                                            <a style="color: #007bff" href="/admin/products/details/{{ $product->id }}"
                                                 class="product-name">{{ $product->name }}</a>
-                                            <span class="d-block">Code: {{ $product->code }}</span>
                                         </div>
                                     </div>
+                                    <span class="d-block">Code: {{ $product->code }}</span>
                                 </td>
                                 <td class="align-middle">
                                     <a
@@ -162,7 +160,8 @@
                                     </button>
                                 </td>
                             </tr>
-                            <div class="modal fade" id="modal-delete-{{ $product->id }}" aria-modal="true" role="dialog">
+                            <div class="modal fade" id="modal-delete-{{ $product->id }}" aria-modal="true"
+                                role="dialog">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">

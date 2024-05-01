@@ -46,6 +46,11 @@ class OrderService
 
     public function createOrderInCustomer($request, $orderId, $customer)
     {
+        if (!count($customer->carts)) {
+            session()->flash("error", "Your cart is empty");
+            return redirect("/cart");
+        }
+
         DB::beginTransaction();
         try {
             // Tính tổng price và quantity

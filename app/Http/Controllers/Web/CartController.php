@@ -94,6 +94,15 @@ class CartController extends Controller
             return redirect("/cart");
         }
 
+        $invalidProduct = Auth::user()->carts->filter(function ($item) {
+            return $item->product->deleted_at != null;
+        })->first();
+
+        if ($invalidProduct) {
+            session()->flash("error", "Your cart contains products that do not exist");
+            return redirect("/cart");
+        }
+
         [$countProductsInCart, $totalPrice] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
 
         $categories = $categories = $this->categoryService->findAll();

@@ -43,6 +43,15 @@ class PaymentController extends Controller
 
     public function handleMomoPayment(CheckoutRequest $request)
     {
+        $invalidProduct = Auth::user()->carts->filter(function ($item) {
+            return $item->product->deleted_at != null;
+        })->first();
+
+        if ($invalidProduct) {
+            session()->flash("error", "Your cart contains products that do not exist");
+            return redirect("/cart");
+        }
+
         $endpoint = env('MOMO_ENDPOINT', "https://test-payment.momo.vn/v2/gateway/api/create");
         $partnerCode = env('MOMO_PARTNER_CODE', 'MOMOBKUN20180529');
         $accessKey = env('MOMO_ACCESS_KEY', 'klm05TvNBzhg7h7j');
@@ -96,12 +105,21 @@ class PaymentController extends Controller
 
         $jsonResult = json_decode($result, true);
         return redirect($jsonResult['payUrl']);
-
     }
 
     public function handleCodPayment(CheckoutRequest $request)
     {
         $orderId = time() . "";
+
+        $invalidProduct = Auth::user()->carts->filter(function ($item) {
+            return $item->product->deleted_at != null;
+        })->first();
+
+        if ($invalidProduct) {
+            session()->flash("error", "Your cart contains products that do not exist");
+            return redirect("/cart");
+        }
+
         try {
             $this->orderService->createOrderInCustomer($request, $orderId, Auth::user());
             return redirect(route('cart.success') . '?orderId=' . $orderId);

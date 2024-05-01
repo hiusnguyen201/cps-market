@@ -122,8 +122,7 @@
                                             </span>
                                         @endif
                                         <div class="product-bs">
-                                            <a
-                                                href='/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html'>
+                                            <a href='/{{ $product->slug }}.html'>
 
                                                 <div class="product-bs__container">
                                                     <div class="product-bs__wrap">
@@ -182,7 +181,7 @@
                                     <div class="product-l">
                                         <div class="product-l__img-wrap">
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">
+                                                href="/{{ $product->slug }}.html">
 
                                                 @foreach ($product->images as $image)
                                                     @if ($image->pin == 1)
@@ -199,8 +198,7 @@
 
                                             <span class="product-l__name">
 
-                                                <a
-                                                    href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a></span>
+                                                <a href="/{{ $product->slug }}.html">{{ $product->name }}</a></span>
 
                                             <span class="product-l__price">@convertCurrency($product->sale_price ?? $product->price)
                                                 @if ($product->sale_price)
@@ -226,7 +224,7 @@
                                         <div class="product-l__img-wrap">
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">
+                                                href="/{{ $product->slug }}.html">
 
                                                 @foreach ($product->images as $image)
                                                     @if ($image->pin == 1)
@@ -241,8 +239,7 @@
                                                     href="/catalogsearch/result?category_id={{ $product->category->id }}">{{ $product->category->name }}</a>
                                             </span>
                                             <span class="product-l__name">
-                                                <a
-                                                    href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a></span>
+                                                <a href="/{{ $product->slug }}.html">{{ $product->name }}</a></span>
                                             <span class="product-l__price">@convertCurrency($product->sale_price ?? $product->price)
                                                 @if ($product->sale_price)
                                                     <span class="product-bs__discount">@convertCurrency($product->price)</span>
@@ -266,7 +263,7 @@
                                     <div class="product-l">
                                         <div class="product-l__img-wrap">
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block product-l__link"
-                                                href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">
+                                                href="/{{ $product->slug }}.html">
                                                 @foreach ($product->images as $image)
                                                     @if ($image->pin == 1)
                                                         <img src="{{ asset($image->thumbnail) }}" class="aspect__img"
@@ -280,8 +277,7 @@
                                                 <a
                                                     href="/catalogsearch/result?category_id={{ $product->category->id }}">{{ $product->category->name }}</a></span>
                                             <span class="product-l__name">
-                                                <a
-                                                    href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a>
+                                                <a href="/{{ $product->slug }}.html">{{ $product->name }}</a>
                                             </span>
                                             <span class="product-l__price">@convertCurrency($product->sale_price ?? $product->price)
                                                 @if ($product->sale_price)

@@ -17,6 +17,9 @@
     <!-- Adminlte -->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
 
+    {{-- swiper --}}
+    <link rel="stylesheet" href="{{ asset('swiper/package/swiper-bundle.min.css') }}">
+
     <!-- Toast js -->
     <link rel="stylesheet" href="{{ asset('toastjs/toastify.css') }}">
     <!-- Custom -->
@@ -113,15 +116,6 @@
         });
 
         if ($('#dataTable')) {
-            function isJsonString(str) {
-                try {
-                    JSON.parse(str);
-                } catch (e) {
-                    return false;
-                }
-                return true;
-            }
-
             function format(rowId, name, value) {
                 var names = name.split("|");
                 var values = value.split("|");
@@ -132,17 +126,22 @@
                         '</div>'
                 });
 
+                const auth = $(document).find("input[name='authId']");
+                if (auth.length & auth.val() == rowId) {
+                    return html;
+                }
+
                 html += `
-                <div class='mb-3'>
-                    <label>Action:</label><br/>
-                    <a class="btn btn-warning mr-1" href="/admin/${$('#dataTable').attr("name")}/edit/${rowId}">
-                        <i class="fas fa-pen"></i>
-                    </a>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete-${rowId}">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </div>
-            `;
+                    <div class='mb-3'>
+                        <label>Actions:</label><br/>
+                        <a class="btn btn-warning mr-1" href="/admin/${$('#dataTable').attr("name")}/edit/${rowId}">
+                            <i class="fas fa-pen"></i>
+                        </a>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete-${rowId}">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                `;
 
                 return html;
             }
@@ -152,10 +151,8 @@
                 var row = table.row(tr);
 
                 if (row.child.isShown()) {
-                    // This row is already open - close it
                     row.child.hide();
                 } else {
-                    // Open this row
                     row.child(format(tr.attr('data-row'), tr.attr('data-child-name'), tr.attr(
                             'data-child-value')))
                         .show();
@@ -190,6 +187,13 @@
                 $(this).removeAttr('disabled');
             })
         });
+
+        $('.product-image-thumb').on('click', function() {
+            var $image_element = $(this).find('img')
+            $('.product-image').prop('src', $image_element.attr('src'))
+            $('.product-image-thumb.active').removeClass('active')
+            $(this).addClass('active')
+        })
     </script>
 
     <script src="{{ asset('custom/js/message.js') }}"></script>
@@ -204,6 +208,10 @@
     <script src="{{ asset('custom/js/selectMultiFile.js') }}"></script>
     <!-- Custom UI -->
     <script defer src="{{ asset('custom/js/ui.js') }}"></script>
+
+    {{-- Swiper --}}
+    <script src="{{ asset('swiper/package/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('custom/js/swiper.js') }}"></script>
 </body>
 
 </html>

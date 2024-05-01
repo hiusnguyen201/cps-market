@@ -71,8 +71,7 @@
                                         </span>
                                     @endif
                                     <div class="product-bs">
-                                        <a
-                                            href='/{{ $item->product->category->slug }}/{{ $item->product->brand->slug }}/{{ $item->product->slug }}.html'>
+                                        <a href='/{{ $item->product->slug }}.html'>
 
                                             <div class="product-bs__container" style="min-height: auto">
                                                 <div class="product-bs__wrap">

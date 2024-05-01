@@ -58,8 +58,7 @@
 
                                                     @foreach ($item->product->images as $image)
                                                         @if ($image->pin == 1)
-                                                            <a
-                                                                href="/{{ $item->product->category->slug }}/{{ $item->product->brand->slug }}/{{ $item->product->slug }}.html">
+                                                            <a href="/{{ $item->product->slug }}.html">
                                                                 <img class="u-img-fluid"
                                                                     style="height: 100%; object-fit: contain;"
                                                                     src="{{ asset($image->thumbnail) }}" alt="">
@@ -72,7 +71,7 @@
                                                     <span class="w-r__name">
 
                                                         <a class="product-name"
-                                                            href="/{{ $item->product->category->slug }}/{{ $item->product->brand->slug }}/{{ $item->product->slug }}.html">{{ $item->product->name }}</a></span>
+                                                            href="/{{ $item->product->slug }}.html">{{ $item->product->name }}</a></span>
 
                                                     <span class="w-r__category">
 

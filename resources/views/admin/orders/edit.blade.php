@@ -15,7 +15,14 @@
                         <div class="col-sm-6 col-12 mb-3">
                             <label for="" class="form-label">Customer:</label>
                             <select disabled class="form-control select2" name="customer_id" style="width: 100%;">
-                                <option selected value="{{ $order->customer->id }}">{{ $order->customer->email }}</option>
+                                <option selected disabled value="">Select customer</option>
+                                @if ($customers && count($customers))
+                                    @foreach ($customers as $customer)
+                                        <option
+                                            {{ old('customer_id') ?? $order->customer->id == $customer->id ? 'selected' : '' }}
+                                            value="{{ $customer->id }}">{{ $customer->email }}</option>
+                                    @endforeach
+                                @endif
                             </select>
                             @error('customer_id')
                                 <span class="d-block" style="color: red">{{ $message }}</span>
@@ -27,7 +34,7 @@
                                 @if (config('constants.order_status') && count(config('constants.order_status')))
                                     @foreach (config('constants.order_status') as $status)
                                         <option
-                                            {{ (old('order_status') ? old('order_status') == $status['value'] : $status['value'] == config('constants.order_status.pending')['value']) ? 'selected' : '' }}
+                                            {{ (old('order_status') ? old('order_status') == $status['value'] : $status['value'] == $order->status) ? 'selected' : '' }}
                                             value="{{ $status['value'] }}">{{ $status['title'] }}</option>
                                     @endforeach
                                 @endif

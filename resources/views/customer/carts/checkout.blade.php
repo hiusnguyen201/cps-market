@@ -48,8 +48,7 @@
                                                             <div class="o-card__img-wrap">
                                                                 @foreach ($cart->product->images as $image)
                                                                     @if ($image->pin == 1)
-                                                                        <a
-                                                                            href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html"><img
+                                                                        <a href="/{{ $cart->product->slug }}.html"><img
                                                                                 class="u-img-fluid"
                                                                                 style="height: 100%; object-fit: contain;"
                                                                                 src="{{ asset($image->thumbnail) }}"
@@ -60,7 +59,7 @@
                                                             <div class="o-card__info-wrap">
                                                                 <span class="o-card__name product-name">
                                                                     <a
-                                                                        href="/{{ $cart->product->category->slug }}/{{ $cart->product->brand->slug }}/{{ $cart->product->slug }}.html">{{ $cart->product->name }}</a></span>
+                                                                        href="/{{ $cart->product->slug }}.html">{{ $cart->product->name }}</a></span>
                                                                 <span class="o-card__quantity">Quantity x
                                                                     {{ $cart->quantity }}</span>
                                                                 <span class="o-card__price">@convertCurrency($cart->product->sale_price ?? $cart->product->price)</span>

@@ -45,8 +45,7 @@
                         </li>
                         <li class="is-marked">
 
-                            <a
-                                href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a>
+                            <a href="/{{ $product->slug }}.html">{{ $product->name }}</a>
                         </li>
                     </ul>
                 </div>
@@ -321,8 +320,7 @@
                                     </span>
                                 @endif
                                 <div class="product-bs">
-                                    <a
-                                        href='/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html'>
+                                    <a href='/{{ $product->slug }}.html'>
 
                                         <div class="product-bs__container">
                                             <div class="product-bs__wrap">

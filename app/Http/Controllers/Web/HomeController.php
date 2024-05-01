@@ -66,7 +66,7 @@ class HomeController extends Controller
         ]);
     }
 
-    public function details($categorySlug, $brandSlug, $productSlug)
+    public function details($productSlug)
     {
         if (Auth::user() && Auth::user()->status == config("constants.user_status.inactive.value")) {
             return redirect("/auth/otp");

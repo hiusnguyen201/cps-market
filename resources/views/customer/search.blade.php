@@ -204,7 +204,7 @@
                                                     @foreach ($product->images as $image)
                                                         @if ($image->pin)
                                                             <a class="aspect aspect--bg-grey aspect--square u-d-block"
-                                                                href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">
+                                                                href="/{{ $product->slug }}.html">
 
                                                                 <img class="aspect__img"
                                                                     src="{{ asset($image->thumbnail) }}"
@@ -232,8 +232,7 @@
                                                             href="/catalogsearch/result?brand_id={{ $product->brand->id }}">{{ $product->brand->name }}</a>
                                                     </div>
                                                     <div class="product-m__name u-s-m-b-10">
-                                                        <a
-                                                            href="/{{ $product->category->slug }}/{{ $product->brand->slug }}/{{ $product->slug }}.html">{{ $product->name }}</a>
+                                                        <a href="/{{ $product->slug }}.html">{{ $product->name }}</a>
                                                     </div>
                                                     <div hidden class="product-m__rating gl-rating-style"><i
                                                             class="fas fa-star"></i><i class="fas fa-star"></i><i
