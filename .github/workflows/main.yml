@@ -17,5 +17,5 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: cps-market-htv.com
-          username: cps-market@cps-market-htv.com
+          username: cpsmarkethtv@cps-market-htv.com
           password: ${{ secrets.FTP_PASSWORD }}
