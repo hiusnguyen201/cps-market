@@ -129,8 +129,13 @@
                                 </td>
                                 <td class="align-middle">
                                     {{ date(config('constants.date_format'), strtotime($order->created_at)) }}</td>
-                                <td class="align-middle"><a
-                                        href="/admin/customers/details/{{ $order->customer->id }}">{{ $order->customer->name }}</a>
+                                <td class="align-middle">
+                                    @if (!$order->customer->deleted_at)
+                                        <a
+                                            href="/admin/customers/details/{{ $order->customer->id }}">{{ $order->customer->name }}</a>
+                                    @else
+                                        {{ $order->customer->name }}
+                                    @endif
                                 </td>
                                 <td class="align-middle">{{ $order->quantity }}</td>
                                 <td class="align-middle">@convertCurrency($order->total)</td>

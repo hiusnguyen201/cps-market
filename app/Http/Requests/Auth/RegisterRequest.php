@@ -27,7 +27,7 @@ class RegisterRequest extends FormRequest
             'name' => 'required|string|max:50',
             'phone' => ['required', 'string', 'min:10', 'max:15', 'regex:/^(84|0[3|5|7|8|9])+([0-9]{8})\b/'],
             'email' => 'required|string|max:150|email|unique:users,email',
-            'password' => 'required|string|confirmed',
+            'password' => 'required|string|min:6|confirmed',
             'password_confirmation' => 'required|string'
         ];
     }
@@ -49,6 +49,7 @@ class RegisterRequest extends FormRequest
             'email.email' => ":attribute invalid",
             'password.required' => ':attribute is required',
             'password.string' => ':attribute invalid',
+            'password.min' => ':attribute must be at least :min characters.',
             'password.confirmed' => ':attribute is not match',
             'password_confirmation.required' => ':attribute is required',
             'password_confirmation.string' => ':attribute invalid',

@@ -13,8 +13,12 @@
                 <div class="form-group row align-items-center">
                     <label for="inputCategory" class="col-sm-4 col-form-label">Customer:</label>
                     <div class="col-sm-8">
-                        <a
-                            href="{{ route('admin.customers.details', [$order->customer->id]) }}">{{ $order->customer->name }}</a>
+                        @if (!$order->customer->deleted_at)
+                            <a
+                                href="{{ route('admin.customers.details', [$order->customer->id]) }}">{{ $order->customer->name }}</a>
+                        @else
+                            {{ $order->customer->name }}
+                        @endif
                     </div>
                 </div>
 
@@ -126,20 +130,30 @@
                                             <div
                                                 class="row align-items-center justify-content-center justify-content-md-start">
                                                 <div class="col-lg-3 col-12 d-flex">
-                                                    <a class="ml-auto mr-auto"
-                                                        href="/admin/products/details/{{ $order_product->product->id }}">
-                                                        @foreach ($order_product->product->images as $image)
-                                                            @if ($image->pin)
+                                                    @foreach ($order_product->product->images as $image)
+                                                        @if ($image->pin)
+                                                            @if (!$order_product->product->deleted_at)
+                                                                <a class="ml-auto mr-auto"
+                                                                    href="/admin/products/details/{{ $order_product->product->id }}">
+                                                                    <img src="{{ asset($image->thumbnail) }}"
+                                                                        class="float-left table-img" alt="">
+                                                                </a>
+                                                            @else
                                                                 <img src="{{ asset($image->thumbnail) }}"
                                                                     class="float-left table-img" alt="">
                                                             @endif
-                                                        @endforeach
-                                                    </a>
+                                                        @endif
+                                                    @endforeach
                                                 </div>
 
                                                 <div class="col-lg-9 col-12">
-                                                    <a class="product-name" style="color: #007bff"
-                                                        href="/admin/products/details/{{ $order_product->product->id }}">{{ $order_product->product->name }}</a>
+                                                    @if (!$order_product->product->deleted_at)
+                                                        <a class="product-name" style="color: #007bff"
+                                                            href="/admin/products/details/{{ $order_product->product->id }}">{{ $order_product->product->name }}</a>
+                                                    @else
+                                                        {{ $order_product->product->name }}
+                                                    @endif
+
                                                     <span style="color: red">@convertCurrency($order_product->product->sale_price ?? $order_product->product->price)</span>
                                                     @if ($order_product->product->sale_price)
                                                         <span

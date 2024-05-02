@@ -43,9 +43,17 @@
                     <p><span style="user-select: none">#</span>{{ $product->code }}</p>
                     <hr>
                     <h4>Brand</h4>
-                    <a href="/admin/brands/{{ $product->brand_id }}">{{ $product->brand->name }}</a>
+                    @if (!$product->brand->deleted_at)
+                        <a href="/admin/brands/{{ $product->brand_id }}">{{ $product->brand->name }}</a>
+                    @else
+                        {{ $product->brand->name }}
+                    @endif
                     <h4 class="mt-3">Category</h4>
-                    <a href="/admin/categories/{{ $product->category_id }}">{{ $product->category->name }}</a>
+                    @if (!$product->brand->deleted_at)
+                        <a href="/admin/categories/{{ $product->category_id }}">{{ $product->category->name }}</a>
+                    @else
+                        {{ $product->category->name }}
+                    @endif
                     <h4 class="mt-3">Market Price</h4>
                     <div style="font-size:24px">
                         <span>@convertCurrency($product->market_price)</span>

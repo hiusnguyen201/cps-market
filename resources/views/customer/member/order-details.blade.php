@@ -110,17 +110,28 @@
                             <div class="description__img-wrap">
                                 @foreach ($order_product->product->images as $image)
                                     @if ($image->pin == 1)
-                                        <a href="/{{ $order_product->product->slug }}.html">
+                                        @if (!$order_product->product->deleted_at)
+                                            <a href="/{{ $order_product->product->slug }}.html">
+                                                <img class="u-img-fluid" style="height: 100%; object-fit: contain;"
+                                                    src="{{ asset($image->thumbnail) }}"
+                                                    alt="{{ $order_product->product->name }}">
+                                            </a>
+                                        @else
                                             <img class="u-img-fluid" style="height: 100%; object-fit: contain;"
                                                 src="{{ asset($image->thumbnail) }}"
                                                 alt="{{ $order_product->product->name }}">
-                                        </a>
+                                        @endif
                                     @endif
                                 @endforeach
                             </div>
 
-                            <div class="description-title" style="max-width: 350px"><a class="product-name"
-                                    href="/{{ $order_product->product->slug }}.html">{{ $order_product->product->name }}</a>
+                            <div class="description-title" style="max-width: 350px">
+                                @if (!$order_product->product->deleted_at)
+                                    <a class="product-name"
+                                        href="/{{ $order_product->product->slug }}.html">{{ $order_product->product->name }}</a>
+                                @else
+                                    {{ $order_product->product->name }}
+                                @endif
                             </div>
                         </div>
                         <div class="description__info-wrap">

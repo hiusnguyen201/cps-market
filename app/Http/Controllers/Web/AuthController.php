@@ -15,6 +15,7 @@ use App\Http\Requests\Auth\ResetPasswordRequest;
 
 use App\Services\CategoryService;
 use App\Services\UserService;
+use Exception;
 
 class AuthController extends Controller
 {
@@ -219,6 +220,10 @@ class AuthController extends Controller
     {
         try {
             $user = $this->userService->findOneByEmail($request->email);
+            if (!$user || $user->deleted_at) {
+                throw new Exception("User not found!");
+            }
+
             $this->userService->sendLinkResetPasswordToEmail($user);
             session()->flash("success", "Mail was sent. Please check your mail!");
         } catch (\Exception $e) {

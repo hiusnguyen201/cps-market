@@ -40,8 +40,13 @@
                                         @foreach ($brand->categories as $index => $category)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
-                                                <td><a class=""
-                                                        href="/admin/categories/details/{{ $category->id }}">{{ $category->name }}</a>
+                                                <td>
+                                                    @if (!$category->deleted_at)
+                                                        <a class=""
+                                                            href="/admin/categories/details/{{ $category->id }}">{{ $category->name }}</a>
+                                                    @else
+                                                        {{ $category->name }}
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach

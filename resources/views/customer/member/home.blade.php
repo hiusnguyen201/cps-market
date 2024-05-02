@@ -63,50 +63,52 @@
                                     @if ($index == 4)
                                     @break
                                 @endif
-                                <div class="swiper-slide">
-                                    @if ($item->product->sale_price && $item->product->price - $item->product->sale_price > 0)
-                                        <span class="product-bs__discount-label">
-                                            <span class="product-bs__discount-percent">SALE
-                                                {{ round((($item->product->price - $item->product->sale_price) * 100) / $item->product->price, 0) }}%</span>
-                                        </span>
-                                    @endif
-                                    <div class="product-bs">
-                                        <a href='/{{ $item->product->slug }}.html'>
+                                @if (!$item->product->deleted_at)
+                                    <div class="swiper-slide">
+                                        @if ($item->product->sale_price && $item->product->price - $item->product->sale_price > 0)
+                                            <span class="product-bs__discount-label">
+                                                <span class="product-bs__discount-percent">SALE
+                                                    {{ round((($item->product->price - $item->product->sale_price) * 100) / $item->product->price, 0) }}%</span>
+                                            </span>
+                                        @endif
+                                        <div class="product-bs">
+                                            <a href='/{{ $item->product->slug }}.html'>
 
-                                            <div class="product-bs__container" style="min-height: auto">
-                                                <div class="product-bs__wrap">
-                                                    <div class="aspect aspect--bg-grey aspect--square u-d-block">
-                                                        @foreach ($item->product->images as $image)
-                                                            @if ($image->pin == 1)
-                                                                <img src="{{ asset($image->thumbnail) }}"
-                                                                    class="aspect__img" alt="">
-                                                            @endif
-                                                        @endforeach
+                                                <div class="product-bs__container" style="min-height: auto">
+                                                    <div class="product-bs__wrap">
+                                                        <div class="aspect aspect--bg-grey aspect--square u-d-block">
+                                                            @foreach ($item->product->images as $image)
+                                                                @if ($image->pin == 1)
+                                                                    <img src="{{ asset($image->thumbnail) }}"
+                                                                        class="aspect__img" alt="">
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <span
-                                                    class="product-bs__category">{{ $item->product->category->name }}</span>
-                                                <span
-                                                    class="product-bs__name u-s-m-b-10">{{ $item->product->name }}</span>
-                                                <div hidden class="product-bs__rating gl-rating-style">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="far fa-star"></i>
-                                                    <span class="product-bs__review">(23)</span>
-                                                </div>
+                                                    <span
+                                                        class="product-bs__category">{{ $item->product->category->name }}</span>
+                                                    <span
+                                                        class="product-bs__name u-s-m-b-10">{{ $item->product->name }}</span>
+                                                    <div hidden class="product-bs__rating gl-rating-style">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <span class="product-bs__review">(23)</span>
+                                                    </div>
 
-                                                <span class="product-bs__price">@convertCurrency($item->product->sale_price ?? $item->product->price)
-                                                    @if ($item->product->sale_price)
-                                                        <span class="product-bs__discount">@convertCurrency($item->product->price)</span>
-                                                    @endif
-                                                </span>
-                                            </div>
-                                        </a>
+                                                    <span class="product-bs__price">@convertCurrency($item->product->sale_price ?? $item->product->price)
+                                                        @if ($item->product->sale_price)
+                                                            <span class="product-bs__discount">@convertCurrency($item->product->price)</span>
+                                                        @endif
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             @endforeach
                         </div>
                         <div class="swiper-button-prev"></div>

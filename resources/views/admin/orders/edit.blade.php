@@ -15,14 +15,7 @@
                         <div class="col-sm-6 col-12 mb-3">
                             <label for="" class="form-label">Customer:</label>
                             <select disabled class="form-control select2" name="customer_id" style="width: 100%;">
-                                <option selected disabled value="">Select customer</option>
-                                @if ($customers && count($customers))
-                                    @foreach ($customers as $customer)
-                                        <option
-                                            {{ old('customer_id') ?? $order->customer->id == $customer->id ? 'selected' : '' }}
-                                            value="{{ $customer->id }}">{{ $customer->email }}</option>
-                                    @endforeach
-                                @endif
+                                <option selected value="{{ $order->customer->id }}">{{ $order->customer->email }}</option>
                             </select>
                             @error('customer_id')
                                 <span class="d-block" style="color: red">{{ $message }}</span>
@@ -96,8 +89,12 @@
                                                             <div class='col-sm-8 col-12'>
                                                                 <div class='row flex-column text-sm-left text-center'>
                                                                     <div class='col-12'>
-                                                                        <a class="product-name"
-                                                                            href="{{ route('admin.products.details', [$order_product->product->id]) }}">{{ $order_product->product->name }}</a>
+                                                                        @if (!$order_product->product->deleted_at)
+                                                                            <a class="product-name"
+                                                                                href="{{ route('admin.products.details', [$order_product->product->id]) }}">{{ $order_product->product->name }}</a>
+                                                                        @else
+                                                                            {{ $order_product->product->name }}
+                                                                        @endif
                                                                         <input type="hidden" name="product_id[]"
                                                                             value="{{ $order_product->product->id }}">
                                                                     </div>

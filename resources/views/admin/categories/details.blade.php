@@ -43,8 +43,13 @@
                                 @foreach ($category->brands as $index => $brand)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td><a class=""
-                                                href="/admin/brands/details/{{ $brand->id }}">{{ $brand->name }}</a>
+                                        <td>
+                                            @if (!$brand->deleted_at)
+                                                <a class=""
+                                                    href="/admin/brands/details/{{ $brand->id }}">{{ $brand->name }}</a>
+                                            @else
+                                                {{ $brand->name }}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -55,19 +60,21 @@
             </div>
 
 
-            <label>Specifications:</label>
-            <div class="row align-items-center">
-                <div class="col-sm-3 col-sm-6 col-12 mb-3">
-                    <a href="/admin/categories/details/{{ $category->id }}/specifications/add"
-                        class="btn btn-success w-100 py-2">Add</a>
-                </div>
-                <div class="col-sm-3 col-sm-6 col-12 mb-3">
-                    <button class="btn btn-danger w-100 py-2" data-toggle="modal" data-target="#modal-deleteAll">Delete
-                        All</button>
-                </div>
-            </div>
 
+
+            <label>Specifications:</label>
             @if ($category->specifications && count($category->specifications) > 0)
+                <div class="row align-items-center">
+                    <div class="col-sm-3 col-sm-6 col-12 mb-3">
+                        <a href="/admin/categories/details/{{ $category->id }}/specifications/add"
+                            class="btn btn-success w-100 py-2">Add</a>
+                    </div>
+                    <div class="col-sm-3 col-sm-6 col-12 mb-3">
+                        <button class="btn btn-danger w-100 py-2" data-toggle="modal" data-target="#modal-deleteAll">Delete
+                            All</button>
+                    </div>
+                </div>
+
                 <table id="dataTable" name='categories/details/{{ $category->id }}/specifications' class="display mb-3"
                     style="width:100%">
                     <thead>
@@ -106,7 +113,7 @@
                         <thead>
                             <tr>
                                 <th width='1%'>
-                                    <input type="checkbox" class="form-check-input" id="selectAll">
+                                    <input type="checkbox" class="form-check-input-lg" id="selectAll-lg">
                                 </th>
                                 <th width='25%'>Name</th>
                                 <th>Attribute</th>
@@ -117,7 +124,7 @@
                             @foreach ($category->specifications as $specification)
                                 <tr>
                                     <td class="align-middle">
-                                        <input type="checkbox" class="form-check-input" name="id"
+                                        <input type="checkbox" class="form-check-input-lg" name="id"
                                             value="{{ $specification->id }}">
                                     </td>
 

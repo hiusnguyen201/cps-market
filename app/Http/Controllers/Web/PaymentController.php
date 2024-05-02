@@ -71,6 +71,10 @@ class PaymentController extends Controller
             $totalPrice += (($cart->product->sale_price ?? $cart->product->price) * $cart->quantity);
         }
 
+        if ($totalPrice <= 0) {
+            return redirect()->back()->with("error", "Create order failed");
+        }
+
         //before sign HMAC SHA256 signature
         $rawHash = "accessKey=" . $accessKey . "&amount=" . $totalPrice . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
         $signature = hash_hmac("sha256", $rawHash, $secretKey);

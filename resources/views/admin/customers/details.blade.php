@@ -59,20 +59,27 @@
                 </div>
                 <div class="col-sm-7 col-12 table-bordered py-3">
                     <label>Orders:</label>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Code</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($user->orders && count($user->orders))
+                    @if ($user->orders && count($user->orders))
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
                                     @foreach ($user->orders as $order)
                                         <tr>
-                                            <td><a href="/admin/orders/details/{{ $order->id }}">{{ $order->code }}</a>
+                                            <td>
+                                                @if (!$order->deleted_at)
+                                                    <a
+                                                        href="/admin/orders/details/{{ $order->id }}">{{ $order->code }}</a>
+                                                @else
+                                                    {{ $order->code }}
+                                                @endif
                                             </td>
                                             <td>
                                                 {{ date(config('constants.date_format'), strtotime($order->updated_at)) }}
@@ -89,10 +96,11 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
                 </div>
             </div>
 

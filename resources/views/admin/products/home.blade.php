@@ -138,8 +138,12 @@
                                     <span class="d-block">Code: {{ $product->code }}</span>
                                 </td>
                                 <td class="align-middle">
-                                    <a
-                                        href="/admin/categories/details/{{ $product->category->id }}">{{ $product->category->name }}</a>
+                                    @if (!$product->category->deleted_at)
+                                        <a
+                                            href="/admin/categories/details/{{ $product->category->id }}">{{ $product->category->name }}</a>
+                                    @else
+                                        {{ $product->category->name }}
+                                    @endif
                                 </td>
                                 <td class="align-middle">
                                     @convertCurrency($product->sale_price ?? $product->price)

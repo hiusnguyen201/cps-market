@@ -38,7 +38,12 @@
                                     apologize for the
                                     inconvenience.
                                     Please try again later.</p>
-                                <a class="empty__redirect-link btn--e-brand" href="/">GO TO HOME</a>
+
+                                @if (Auth::user() && Auth::user()->role->name == 'admin')
+                                    <a class="empty__redirect-link btn--e-brand" href="/admin">GO TO HOME</a>
+                                @else
+                                    <a class="empty__redirect-link btn--e-brand" href="/">GO TO HOME</a>
+                                @endif
                             </div>
                         </div>
                     </div>

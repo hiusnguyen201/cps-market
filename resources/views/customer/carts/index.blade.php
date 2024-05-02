@@ -102,7 +102,7 @@
                                                             <div class="col-8">
                                                                 <div class="input-counter ">
                                                                     <span class="input-counter__minus fas fa-minus"></span>
-                                                                    <input
+                                                                    <input disabled
                                                                         class="input-counter__text input-counter--text-primary-style"
                                                                         type="text" name="quantity"
                                                                         value="{{ $cart->quantity }}" data-min="1"
@@ -178,7 +178,7 @@
                                                         style="{{ $cart->product->deleted_at ? 'opacity: 0.6;pointer-events: none' : '' }}">
                                                         <div class="input-counter">
                                                             <span class="input-counter__minus fas fa-minus"></span>
-                                                            <input
+                                                            <input disabled
                                                                 class="input-counter__text input-counter--text-primary-style"
                                                                 type="text" name="quantity"
                                                                 value="{{ $cart->quantity }}" data-min="1"
