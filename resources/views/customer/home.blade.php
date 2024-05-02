@@ -48,45 +48,29 @@
         </div>
     </div>
 
-    <div class="u-s-p-y-60">
+    <div class="u-s-p-t-60">
         <div class="section__content">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <div class="promotion-o">
+                    <div class="col-lg-5 col-md-5 u-s-m-b-30">
+
+                        <a class="collection" href="/catalogsearch/result">
                             <div class="aspect aspect--bg-grey aspect--square">
 
-                                <img class="aspect__img" src="./images/Mobile.jpg" alt="">
+                                <img class="aspect__img collection__img" src="{{ asset('images/Sale2.jpg') }}"
+                                    alt="Sale1">
                             </div>
-                            <div class="promotion-o__content">
-
-                                <a class="promotion-o__link btn--e-white-brand" href="/catalogsearch/result">Mobile</a>
-                            </div>
-                        </div>
+                        </a>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <div class="promotion-o">
-                            <div class="aspect aspect--bg-grey aspect--square">
+                    <div class="col-lg-7 col-md-7">
 
-                                <img class="aspect__img" src="./images/Laptop.jpg" alt="">
-                            </div>
-                            <div class="promotion-o__content">
+                        <a class="collection" href="/catalogsearch/result">
+                            <div class="aspect aspect--bg-grey aspect--1286-890">
 
-                                <a class="promotion-o__link btn--e-white-brand" href="/catalogsearch/result">Laptop</a>
+                                <img class="aspect__img collection__img" src="{{ asset('images/Sale1.jpg') }}"
+                                    alt="Sale2">
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <div class="promotion-o">
-                            <div class="aspect aspect--bg-grey aspect--square">
-
-                                <img class="aspect__img" src="./images/Watch.jpg" alt="">
-                            </div>
-                            <div class="promotion-o__content">
-
-                                <a class="promotion-o__link btn--e-white-brand" href="/catalogsearch/result">Watch</a>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -137,7 +121,8 @@
                                                     </div>
 
                                                     <span class="product-bs__category">{{ $product->category->name }}</span>
-                                                    <span class="product-bs__name u-s-m-b-10">{{ $product->name }}</span>
+                                                    <span class="product-bs__name u-s-m-b-10"
+                                                        class="product-name">{{ $product->name }}</span>
                                                     <div hidden class="product-bs__rating gl-rating-style">
                                                         <i class="fas fa-star"></i>
                                                         <i class="fas fa-star"></i>
@@ -191,14 +176,15 @@
                                                 @endforeach
                                             </a>
                                         </div>
-                                        <div class="product-l__info-wrap">
+                                        <div class="product-l__info-wrap u-s-p-xy-5">
                                             <span class="product-l__category"><a
                                                     href="/catalogsearch/result?category_id={{ $product->category->id }}">{{ $product->category->name }}</a>
                                             </span>
 
                                             <span class="product-l__name">
 
-                                                <a href="/{{ $product->slug }}.html">{{ $product->name }}</a></span>
+                                                <a href="/{{ $product->slug }}.html"
+                                                    class="product-name">{{ $product->name }}</a></span>
 
                                             <span class="product-l__price">@convertCurrency($product->sale_price ?? $product->price)
                                                 @if ($product->sale_price)
@@ -234,12 +220,13 @@
                                                 @endforeach
                                             </a>
                                         </div>
-                                        <div class="product-l__info-wrap">
+                                        <div class="product-l__info-wrap u-s-p-xy-5">
                                             <span class="product-l__category"><a
                                                     href="/catalogsearch/result?category_id={{ $product->category->id }}">{{ $product->category->name }}</a>
                                             </span>
                                             <span class="product-l__name">
-                                                <a href="/{{ $product->slug }}.html">{{ $product->name }}</a></span>
+                                                <a href="/{{ $product->slug }}.html"
+                                                    class="product-name">{{ $product->name }}</a></span>
                                             <span class="product-l__price">@convertCurrency($product->sale_price ?? $product->price)
                                                 @if ($product->sale_price)
                                                     <span class="product-bs__discount">@convertCurrency($product->price)</span>
@@ -272,12 +259,13 @@
                                                 @endforeach
                                             </a>
                                         </div>
-                                        <div class="product-l__info-wrap">
+                                        <div class="product-l__info-wrap u-s-p-xy-5">
                                             <span class="product-l__category">
                                                 <a
                                                     href="/catalogsearch/result?category_id={{ $product->category->id }}">{{ $product->category->name }}</a></span>
                                             <span class="product-l__name">
-                                                <a href="/{{ $product->slug }}.html">{{ $product->name }}</a>
+                                                <a href="/{{ $product->slug }}.html"
+                                                    class="product-name">{{ $product->name }}</a>
                                             </span>
                                             <span class="product-l__price">@convertCurrency($product->sale_price ?? $product->price)
                                                 @if ($product->sale_price)

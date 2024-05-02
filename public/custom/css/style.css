@@ -375,3 +375,9 @@ input[type="range"]::-moz-range-thumb {
         display: block;
     }
 }
+
+@media screen and (max-width: 400px) {
+    .swiper {
+        width: 250px;
+    }
+}
