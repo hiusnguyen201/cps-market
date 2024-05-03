@@ -24,6 +24,7 @@ return new class extends Migration
             $table->tinyInteger("payment_status");
             $table->timestamp("paid_date")->nullable();
             $table->tinyInteger("status");
+            $table->timestamp("completed_at")->nullable();
             $table->unsignedBigInteger("customer_id");
             $table->timestamps();
             $table->softDeletes();

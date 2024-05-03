@@ -245,8 +245,10 @@ class OrderService
                     "quantity" => $order_product->product->quantity + $order_product->quantity - $request->quantity[$index]
                 ]);
 
-                if ($request->order_status == config("constants.order_status.completed.value")) {
+                if ($request->order_status == config("constants.order_status.completed.value") && $order->completed_at) {
                     $dataUpdate['sold'] = $order_product->product->sold - $order_product->quantity + +$request->quantity[$index];
+                } else if ($request->order_status == config("constants.order_status.completed.value")) {
+                    $dataUpdate['sold'] = $order_product->product->sold + +$request->quantity[$index];
                 }
 
                 $order_product->product->update($dataUpdate);
@@ -260,6 +262,7 @@ class OrderService
                 'payment_method' => $request->payment_method,
                 'payment_status' => $request->payment_status,
                 'status' => $request->order_status,
+                'completed_at' => $request->order_status == config("constants.order_status.completed.value") ? now() : null
             ]);
 
             $order->shipping_address->update([
