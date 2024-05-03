@@ -27,6 +27,10 @@ class CheckInactiveAccount
             return redirect()->back();
         }
 
-        return $next($request);
+        if ($user->status == config("constants.user_status.inactive.value")) {
+            return $next($request);
+        } else {
+            return redirect("/auth/login");
+        }
     }
 }

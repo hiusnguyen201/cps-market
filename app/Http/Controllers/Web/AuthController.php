@@ -54,6 +54,8 @@ class AuthController extends Controller
         if ($user->status == config("constants.user_status.active.value")) {
             session()->flash("success", "Login successfully");
             return $user->role->name == 'customer' ? redirect("/member") : redirect("/admin");
+        } else if ($user->status == config("constants.user_status.locked.value")) {
+            return redirect("/auth/login")->with("error", "This account is locked");
         }
 
         try {
@@ -178,6 +180,8 @@ class AuthController extends Controller
             if ($user->status == config("constants.user_status.inactive.value")) {
                 $this->userService->sendOtpToEmail($user);
                 return redirect("/auth/otp")->with('success', "We've sent a verification code to your email");
+            } else if ($user->status == config("constants.user_status.locked.value")) {
+                return redirect("/auth/login")->with("error", "This account is locked");
             } else {
                 session()->flash("success", "Login successfully");
                 return redirect("/member");

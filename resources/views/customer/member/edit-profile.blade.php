@@ -33,7 +33,7 @@
 
                                 <label class="gl-label" for="reg-lname">EMAIL *</label>
 
-                                <input class="input-text input-text--primary-style" type="email" id="reg-lname"
+                                <input disabled class="input-text input-text--primary-style" type="email" id="reg-lname"
                                     placeholder="Email..." name="email" value="{{ old('email') ?? Auth::user()->email }}"
                                     fdprocessedid="sr7ra8">
                                 @error('email')

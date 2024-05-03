@@ -307,16 +307,16 @@ class UserService
                 throw new \InvalidArgumentException('Invalid OTP! Please try again');
             }
 
+            if (Carbon::now()->gt($user_otp->expire)) {
+                $user_otp->delete();
+                throw new \InvalidArgumentException('Otp is expired');
+            }
+
             if ($user->status == config("constants.user_status.inactive")['value']) {
                 User::where("id", $user->id)->update([
                     'status' => config("constants.user_status.active")['value'],
                     'email_verified_at' => Carbon::now()
                 ]);
-            }
-
-            if (Carbon::now()->gt($user_otp->expire)) {
-                $user_otp->delete();
-                throw new \InvalidArgumentException('Otp is expired');
             }
 
             $user_otp->delete();
