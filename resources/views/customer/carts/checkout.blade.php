@@ -41,7 +41,7 @@
                                 <div class="o-summary__section u-s-m-b-30">
                                     <div class="o-summary__item-wrap gl-scroll">
                                         @if (Auth::user()->carts && count(Auth::user()->carts))
-                                            @foreach (Auth::user()->carts as $cart)
+                                            @foreach ($carts as $cart)
                                                 @if ($cart->product)
                                                     <div class="o-card">
                                                         <div class="o-card__flex">

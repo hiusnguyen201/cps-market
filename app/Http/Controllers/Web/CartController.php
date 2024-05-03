@@ -38,9 +38,17 @@ class CartController extends Controller
             [$countProductsInCart, $totalPrice] = $this->userService->countProductsAndCalculatePriceInCart(Auth::user());
         }
 
+        $cartsInStock = Auth::user()->carts;
+        $carts = []; 
+        foreach ($cartsInStock as $cartInStock) {
+            if ($cartInStock->product->quantity > 0) {
+                $carts[] = $cartInStock;
+            }
+        }
+
         return view("customer/carts/index", [
             'title' => "Cart",
-            'carts' => Auth::user() ? Auth::user()->carts : [],
+            'carts' => Auth::user() ? $carts : [],
             "categories" => $categories,
             "countProductsInCart" => $countProductsInCart ?? 0,
             "totalPrice" => $totalPrice ?? 0
@@ -107,11 +115,20 @@ class CartController extends Controller
 
         $categories = $categories = $this->categoryService->findAll();
 
+        $cartsInStock = Auth::user()->carts;
+        $carts = []; 
+        foreach ($cartsInStock as $cartInStock) {
+            if ($cartInStock->product->quantity > 0) {
+                $carts[] = $cartInStock;
+            }
+        }
+
         return view("customer/carts/checkout", [
             'title' => "Checkout",
             "categories" => $categories,
             "countProductsInCart" => $countProductsInCart ?? 0,
             "totalPrice" => $totalPrice,
+            "carts" => $carts,
         ]);
     }
 

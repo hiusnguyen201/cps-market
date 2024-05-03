@@ -71,7 +71,7 @@ class OrderService
             ]);
 
             foreach ($customer->carts as $cart) {
-                if ($cart->product) {
+                if ($cart->product && $cart->product->quantity > 0) {
                     Order_Product::create([
                         "product_id" => $cart->product->id,
                         "order_id" => $order->id,

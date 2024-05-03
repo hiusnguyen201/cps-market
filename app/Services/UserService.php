@@ -453,7 +453,7 @@ class UserService
         $countProductsInCart = 0;
         $totalPrice = 0;
         foreach ($user->carts as $cart) {
-            if ($cart->product && !$cart->product->deleted_at) {
+            if ($cart->product && !$cart->product->deleted_at &&$cart->product->quantity > 0) {
                 $countProductsInCart += $cart->quantity;
                 $totalPrice += (($cart->product->sale_price ? $cart->product->sale_price : $cart->product->price) * $cart->quantity);
             }
