@@ -144,7 +144,8 @@
                     </div>
                     <div class="col-lg-7 col-12 input-product_form">
                         <div class="input-group">
-                            <input id="product" type="number" name="quantity" class="form-control" value="0">
+                            <input min="0" id="product" type="number" name="quantity" class="form-control"
+                                value="0">
                         </div>
                     </div>
                 </div>

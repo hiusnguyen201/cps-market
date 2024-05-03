@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <div class="u-s-p-t-60">
+    <div class="u-s-p-y-60">
         <div class="section__content">
             <div class="container">
                 <div class="row">
@@ -79,7 +79,7 @@
 
     @foreach ($sections as $index => $section)
         @if ($categories[$index]->products && count($categories[$index]->products))
-            <section class="u-s-p-y-60">
+            <section class="u-s-p-b-60">
                 <div class="section__intro u-s-m-b-30">
                     <div class="container">
                         <div class="row">
@@ -176,7 +176,7 @@
                                                 @endforeach
                                             </a>
                                         </div>
-                                        <div class="product-l__info-wrap u-s-p-xy-5">
+                                        <div class="product-l__info-wrap u-s-p-r-5">
                                             <span class="product-l__category"><a
                                                     href="/catalogsearch/result?category_id={{ $product->category->id }}">{{ $product->category->name }}</a>
                                             </span>
@@ -220,7 +220,7 @@
                                                 @endforeach
                                             </a>
                                         </div>
-                                        <div class="product-l__info-wrap u-s-p-xy-5">
+                                        <div class="product-l__info-wrap u-s-p-r-5">
                                             <span class="product-l__category"><a
                                                     href="/catalogsearch/result?category_id={{ $product->category->id }}">{{ $product->category->name }}</a>
                                             </span>
@@ -259,7 +259,7 @@
                                                 @endforeach
                                             </a>
                                         </div>
-                                        <div class="product-l__info-wrap u-s-p-xy-5">
+                                        <div class="product-l__info-wrap u-s-p-r-5">
                                             <span class="product-l__category">
                                                 <a
                                                     href="/catalogsearch/result?category_id={{ $product->category->id }}">{{ $product->category->name }}</a></span>

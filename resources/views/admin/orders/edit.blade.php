@@ -23,7 +23,9 @@
                         </div>
                         <div class="col-sm-6 col-12 mb-3">
                             <label for="" class="form-label">Order Status:</label>
-                            <select name="order_status" class="form-control">
+                            <select
+                                {{ $order->status == config('constants.order_status.completed.value') ? 'disabled' : '' }}
+                                name="order_status" class="form-control">
                                 @if (config('constants.order_status') && count(config('constants.order_status')))
                                     @foreach (config('constants.order_status') as $status)
                                         <option
@@ -72,48 +74,45 @@
                                                 <tr data-product='{{ $order_product->product->id }}'>
                                                     <td class='align-middle'>
                                                         <div class='row'>
-                                                            <div class='col-sm-4 col-12'>
-                                                                <div
-                                                                    class='d-flex justify-content-sm-end justify-content-center'>
-                                                                    @if ($order_product->product->images && count($order_product->product->images))
-                                                                        @foreach ($order_product->product->images as $image)
-                                                                            @if ($image->pin)
-                                                                                <img class='float-left table-img'
-                                                                                    src="{{ asset($image->thumbnail) }}"
-                                                                                    alt="{{ $order_product->product->name }}">
-                                                                            @endif
-                                                                        @endforeach
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                            <div class='col-sm-8 col-12'>
-                                                                <div class='row flex-column text-sm-left text-center'>
-                                                                    <div class='col-12'>
-                                                                        @if (!$order_product->product->deleted_at)
-                                                                            <a class="product-name"
-                                                                                href="{{ route('admin.products.details', [$order_product->product->id]) }}">{{ $order_product->product->name }}</a>
-                                                                        @else
-                                                                            {{ $order_product->product->name }}
+                                                            <div
+                                                                class='ml-lg-2 mx-auto d-flex justify-content-lg-start justify-content-center'>
+                                                                @if ($order_product->product->images && count($order_product->product->images))
+                                                                    @foreach ($order_product->product->images as $image)
+                                                                        @if ($image->pin)
+                                                                            <img class='float-left table-img'
+                                                                                src="{{ asset($image->thumbnail) }}"
+                                                                                alt="{{ $order_product->product->name }}">
                                                                         @endif
-                                                                        <input type="hidden" name="product_id[]"
-                                                                            value="{{ $order_product->product->id }}">
-                                                                    </div>
-                                                                    <div class='col-12'>
-                                                                        <span>Current:
-                                                                            <span style='color:red'>
-                                                                                @convertCurrency($order_product->product->sale_price ?? $order_product->product->price)</span>
-                                                                            @if ($order_product->product->sale_price)
-                                                                                <span
-                                                                                    style='color:#333; text-decoration:line-through;font-size:14px;'>
-                                                                                    @convertCurrency($order_product->product->price)
-                                                                                </span>
-                                                                            @endif
-                                                                        </span>
-                                                                        <span class="d-block">
-                                                                            Order price: <span
-                                                                                style='color:red'>@convertCurrency($order_product->price)</span>
-                                                                        </span>
-                                                                    </div>
+                                                                    @endforeach
+                                                                @endif
+                                                            </div>
+                                                            <div style="flex: 1"
+                                                                class='ml-lg-1 ml-0 row text-sm-left text-center'>
+                                                                <div class='col-12'>
+                                                                    @if (!$order_product->product->deleted_at)
+                                                                        <a class="product-name"
+                                                                            href="{{ route('admin.products.details', [$order_product->product->id]) }}">{{ $order_product->product->name }}</a>
+                                                                    @else
+                                                                        {{ $order_product->product->name }}
+                                                                    @endif
+                                                                    <input type="hidden" name="product_id[]"
+                                                                        value="{{ $order_product->product->id }}">
+                                                                </div>
+                                                                <div class='col-12'>
+                                                                    <span>Current:
+                                                                        <span style='color:red'>
+                                                                            @convertCurrency($order_product->product->sale_price ?? $order_product->product->price)</span>
+                                                                        @if ($order_product->product->sale_price)
+                                                                            <span
+                                                                                style='color:#333; text-decoration:line-through;font-size:14px;'>
+                                                                                @convertCurrency($order_product->product->price)
+                                                                            </span>
+                                                                        @endif
+                                                                    </span>
+                                                                    <span class="d-block">
+                                                                        Order price: <span
+                                                                            style='color:red'>@convertCurrency($order_product->price)</span>
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </div>

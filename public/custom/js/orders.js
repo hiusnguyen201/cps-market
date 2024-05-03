@@ -63,19 +63,16 @@ function appendProduct(product) {
     <tr data-product='${product.id}'>
         <td class='align-middle'>
             <div class='row'>
-            <div class='col-sm-4 col-12'>
-                <div class='d-flex justify-content-sm-end justify-content-center'>
+                <div class='ml-lg-2 mx-auto'>
                     <img class='float-left table-img' src="${
                         window.location.origin
                     }/${imagePin.thumbnail}" alt="">
                 </div>
-            </div>
-            <div class='col-sm-8 col-12'>
-                <div class='row flex-column text-sm-left text-center'> 
+                <div style='flex:1' class='ml-lg-1 ml-0 row text-sm-left text-center'> 
                     <div class='col-12'>
-                        <a href="/admin/products/details/${product.id}">${
-        product.name
-    }</a>
+                        <a class='product-name' href="/admin/products/details/${
+                            product.id
+                        }">${product.name}</a>
                         <input type="hidden" name="product_id[]" value="${
                             product.id
                         }">        
@@ -95,7 +92,6 @@ function appendProduct(product) {
                         </span>
                     </div>
                 </div>     
-            </div>
             </div>
         </td>
         <td width='30%' class='align-middle'>

@@ -191,9 +191,15 @@ class OrderService
                     "price" => $product->sale_price ?? $product->price,
                 ]);
 
-                $product->update([
+                $dataUpdate = array([
                     "quantity" => $product->quantity - +$request->quantity[$index]
                 ]);
+
+                if ($request->order_status == config("constants.order_status.completed.value")) {
+                    $dataUpdate['sold'] = $product->sold + +$request->quantity[$index];
+                }
+
+                $product->update($dataUpdate);
             }
 
             Shipping_Address::create([
@@ -235,9 +241,15 @@ class OrderService
                     "quantity" => $request->quantity[$index],
                 ]);
 
-                $order_product->product->update([
+                $dataUpdate = array([
                     "quantity" => $order_product->product->quantity + $order_product->quantity - $request->quantity[$index]
                 ]);
+
+                if ($request->order_status == config("constants.order_status.completed.value")) {
+                    $dataUpdate['sold'] = $order_product->product->sold - $order_product->quantity + +$request->quantity[$index];
+                }
+
+                $order_product->product->update($dataUpdate);
             }
 
             $status = $order->update([
