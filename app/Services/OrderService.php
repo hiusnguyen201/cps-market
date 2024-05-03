@@ -249,6 +249,8 @@ class OrderService
                     $dataUpdate['sold'] = $order_product->product->sold - $order_product->quantity + +$request->quantity[$index];
                 } else if ($request->order_status == config("constants.order_status.completed.value")) {
                     $dataUpdate['sold'] = $order_product->product->sold + +$request->quantity[$index];
+                } else if ($request->order_status != config("constants.order_status.completed.value") && $order->completed_at) {
+                    $dataUpdate['sold'] = $order_product->product->sold - $order_product->quantity;
                 }
 
                 $order_product->product->update($dataUpdate);

@@ -23,9 +23,7 @@
                         </div>
                         <div class="col-sm-6 col-12 mb-3">
                             <label for="" class="form-label">Order Status:</label>
-                            <select
-                                {{ $order->status == config('constants.order_status.completed.value') ? 'disabled' : '' }}
-                                name="order_status" class="form-control">
+                            <select name="order_status" class="form-control">
                                 @if (config('constants.order_status') && count(config('constants.order_status')))
                                     @foreach (config('constants.order_status') as $status)
                                         <option
