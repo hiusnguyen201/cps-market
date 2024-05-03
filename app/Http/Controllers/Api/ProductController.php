@@ -34,6 +34,12 @@ class ProductController extends Controller
             ], 404);
         }
 
+        if ($product->quantity <= 0) {
+            return response()->json([
+                'message' => 'Product is out of stock',
+            ], 400);
+        }
+
         return response()->json([
             'message' => 'Success',
             'product' => $product
@@ -124,11 +130,11 @@ class ProductController extends Controller
                 'updated_at' => now()
             ]);
 
-            
-            if($product->images && count($product->images)) {
+
+            if ($product->images && count($product->images)) {
                 foreach ($product->images as $image) {
                     $path = explode("/", $image->thumbnail)[1];
-                    if(Storage::exists("public/" . $path)) {
+                    if (Storage::exists("public/" . $path)) {
                         Storage::delete("public/" . $path);
                     }
                 }
